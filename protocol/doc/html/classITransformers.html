@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -63,7 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -90,27 +90,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">ITransformers Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Inheritance diagram for ITransformers:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="classITransformers.png" usemap="#ITransformers_map" alt=""/>
-  <map id="ITransformers_map" name="ITransformers_map">
-<area href="classARequest.html" alt="ARequest" shape="rect" coords="600,56,790,80"/>
-<area href="classrequest_1_1Server.html" alt="request::Server" shape="rect" coords="600,112,790,136"/>
-<area href="structrequest_1_1server_1_1BadRequest.html" alt="request::server::BadRequest" shape="rect" coords="0,168,190,192"/>
-<area href="structrequest_1_1server_1_1Forbidden.html" alt="request::server::Forbidden" shape="rect" coords="200,168,390,192"/>
-<area href="structrequest_1_1server_1_1NoContent.html" alt="request::server::NoContent" shape="rect" coords="400,168,590,192"/>
-<area href="structrequest_1_1server_1_1NoSlots.html" alt="request::server::NoSlots" shape="rect" coords="600,168,790,192"/>
-<area href="structrequest_1_1server_1_1NotImplemented.html" alt="request::server::NotImplemented" shape="rect" coords="800,168,990,192"/>
-<area href="structrequest_1_1server_1_1Ok.html" alt="request::server::Ok" shape="rect" coords="1000,168,1190,192"/>
-<area href="structrequest_1_1server_1_1PartialContent.html" alt="request::server::PartialContent" shape="rect" coords="1200,168,1390,192"/>
-</map>
- </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5283061bfff041e4858bbba49ee1ba1f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classARequest.html">ARequest</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITransformers.html#a5283061bfff041e4858bbba49ee1ba1f">clone</a> ()=0</td></tr>
+<tr class="memitem:a5283061bfff041e4858bbba49ee1ba1f"><td class="memItemLeft" align="right" valign="top">virtual ARequest *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITransformers.html#a5283061bfff041e4858bbba49ee1ba1f">clone</a> ()=0</td></tr>
 <tr class="separator:a5283061bfff041e4858bbba49ee1ba1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acdd583a6df773776be79ec6ccf9e0597"><td class="memItemLeft" align="right" valign="top">virtual Protocol &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITransformers.html#acdd583a6df773776be79ec6ccf9e0597">serialize</a> (Protocol &amp;) const =0</td></tr>
 <tr class="separator:acdd583a6df773776be79ec6ccf9e0597"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,7 +109,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classARequest.html">ARequest</a>* ITransformers::clone </td>
+          <td class="memname">virtual ARequest* ITransformers::clone </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -139,8 +122,6 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Clone the class and return an allocated pointer </p>
-
-<p>Implemented in <a class="el" href="structrequest_1_1server_1_1NoSlots.html#a93e106ffb276e28bfb75ae414fa2fccf">request::server::NoSlots</a>, <a class="el" href="structrequest_1_1server_1_1PartialContent.html#acb59e4bdbe8e4939994ccfdda9d2147a">request::server::PartialContent</a>, <a class="el" href="structrequest_1_1server_1_1NoContent.html#a271ce2b81412e11480864df1f5fc53d5">request::server::NoContent</a>, <a class="el" href="structrequest_1_1server_1_1NotImplemented.html#a8daee6bcb2817a7946ed303ee8ca26b3">request::server::NotImplemented</a>, <a class="el" href="structrequest_1_1server_1_1Forbidden.html#adad5617cd43dcbed31895eab32c95857">request::server::Forbidden</a>, <a class="el" href="structrequest_1_1server_1_1BadRequest.html#a8af72eaa011e4c608953a3c3f2a18850">request::server::BadRequest</a>, <a class="el" href="classARequest.html#af012291dd32f3a45cca9f7571a1cb2e6">ARequest</a>, <a class="el" href="structrequest_1_1server_1_1Ok.html#a6302211ff22f1aeaea1efc6f15812bc0">request::server::Ok</a>, and <a class="el" href="classrequest_1_1Server.html#aa607832ec847ce8eac6135d8af85cb48">request::Server</a>.</p>
 
 </div>
 </div>
@@ -167,8 +148,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Serialize the class </p>
 
-<p>Implemented in <a class="el" href="classARequest.html#a37c23b44503bdb0f7637df8cad742d60">ARequest</a>, and <a class="el" href="classrequest_1_1Server.html#aaac18dba080ea58269f84649744e5baa">request::Server</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="ac87976f7672432a9a52cbda7d4644529"></a>
@@ -194,12 +173,10 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Unserialize the class </p>
 
-<p>Implemented in <a class="el" href="classARequest.html#a3c8f7716bea60d6ca47758325eef380e">ARequest</a>, and <a class="el" href="classrequest_1_1Server.html#a7756c010d21d3723663e3be08d34693f">request::Server</a>.</p>
-
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/lamber_k/Dropbox/Projects/module_5e_sem/V-and-Co-Babel/protocol/include/<a class="el" href="ITransformers_8hh_source.html">ITransformers.hh</a></li>
+<li>/home/lamber_k/Dropbox/Projects/module_5e_sem/Babel-Protocol-API/API/<a class="el" href="ITransformers_8hh_source.html">ITransformers.hh</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
