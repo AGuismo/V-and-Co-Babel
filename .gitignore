@@ -1,3 +1,6 @@
 *~
 \#*\#
 server_babel
+*.o
+*.d
+TAGS
