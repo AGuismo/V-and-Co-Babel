@@ -12,8 +12,10 @@ SRCS =	      	ARequest.cpp		\
 		Protocol.cpp		\
 		RequestFactory.cpp	\
 
+API.H=		./API/
+
 F.C	     +=	-W -Wall 
-F.I	     +=
+F.I	     += -I$(API.H)
 F.D	     +=
 
 
