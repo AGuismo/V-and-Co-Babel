@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Babel Protocol: /home/lamber_k/Dropbox/Projects/module_5e_sem/Babel-Protocol-API/API/ITransformers.hh Source File</title>
+<title>Babel Protocol: /home/lamber_k/Dropbox/Projects/module_5e_sem/Babel-Protocol-API/API/RequestCode.hh File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -86,32 +86,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">ITransformers.hh</div>  </div>
+<div class="title">RequestCode.hh File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="ITransformers_8hh.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef ITRANSFORMERS_H_</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># define ITRANFORMERS_H_</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">class   </span>Protocol;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">class   </span>ARequest;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="code" href="classITransformers.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="classITransformers.html" title="Interface for both groups. Every request need to be inherit.">ITransformers</a></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keyword">virtual</span> ~<a class="code" href="classITransformers.html" title="Interface for both groups. Every request need to be inherit.">ITransformers</a>() {};</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keyword">virtual</span> ARequest  *<a class="code" href="classITransformers.html#a5283061bfff041e4858bbba49ee1ba1f">clone</a>() = 0;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">virtual</span> Protocol  &amp;<a class="code" href="classITransformers.html#acdd583a6df773776be79ec6ccf9e0597">serialize</a>(Protocol &amp;) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">virtual</span> Protocol  &amp;<a class="code" href="classITransformers.html#ac87976f7672432a9a52cbda7d4644529">unserialize</a>(Protocol &amp;) = 0;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;};</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* ITRANSFORMERS_H_ */</span><span class="preprocessor"></span></div>
-</div><!-- fragment --></div><!-- contents -->
+<div class="textblock"><code>#include &quot;<a class="el" href="types_8hh_source.html">types.hh</a>&quot;</code><br/>
+</div>
+<p><a href="RequestCode_8hh_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacerequest"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest.html">request</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacerequest_1_1server"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest_1_1server.html">request::server</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a394f03296dea591a0626131519c99c28"><td class="memItemLeft" align="right" valign="top">static const ID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest_1_1server.html#a394f03296dea591a0626131519c99c28">request::server::OK</a> = 1000</td></tr>
+<tr class="separator:a394f03296dea591a0626131519c99c28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac23eacdf4b77361982102b8ed2764770"><td class="memItemLeft" align="right" valign="top">static const ID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest_1_1server.html#ac23eacdf4b77361982102b8ed2764770">request::server::BAD_REQ</a> = 1001</td></tr>
+<tr class="separator:ac23eacdf4b77361982102b8ed2764770"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a916a7c90b0e4fd82d3e94c696c5db6b8"><td class="memItemLeft" align="right" valign="top">static const ID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest_1_1server.html#a916a7c90b0e4fd82d3e94c696c5db6b8">request::server::FORBIDDEN</a> = 1002</td></tr>
+<tr class="separator:a916a7c90b0e4fd82d3e94c696c5db6b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa02a52d9e4a0a5b323de19bb88ffa703"><td class="memItemLeft" align="right" valign="top">static const ID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest_1_1server.html#aa02a52d9e4a0a5b323de19bb88ffa703">request::server::NOT_IMPLEMENTED</a> = 1003</td></tr>
+<tr class="separator:aa02a52d9e4a0a5b323de19bb88ffa703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c1faaf7c3e7805069cda435c5fd1fb1"><td class="memItemLeft" align="right" valign="top">static const ID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest_1_1server.html#a4c1faaf7c3e7805069cda435c5fd1fb1">request::server::NO_CONTENT</a> = 1004</td></tr>
+<tr class="separator:a4c1faaf7c3e7805069cda435c5fd1fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aece42c95dfca44cd3c5ac0490b25b119"><td class="memItemLeft" align="right" valign="top">static const ID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest_1_1server.html#aece42c95dfca44cd3c5ac0490b25b119">request::server::PARTIAL_CONTENT</a> = 1005</td></tr>
+<tr class="separator:aece42c95dfca44cd3c5ac0490b25b119"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad94c5a33df6db0f4b588b67d7c33f808"><td class="memItemLeft" align="right" valign="top">static const ID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest_1_1server.html#ad94c5a33df6db0f4b588b67d7c33f808">request::server::NO_SLOTS</a> = 1006</td></tr>
+<tr class="separator:ad94c5a33df6db0f4b588b67d7c33f808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>List of all request code </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

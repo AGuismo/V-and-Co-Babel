@@ -11,6 +11,7 @@
 class	Protocol;
 class	ARequest;
 
+/** \brief Interface for both groups. Every request need to be inherit */
 class ITransformers
 {
 public:
