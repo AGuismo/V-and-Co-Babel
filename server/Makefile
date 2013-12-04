@@ -2,6 +2,7 @@ NAME	     ?=	server_babel
 
 SRCS =	      	main.cpp		\
 		Application.cpp		\
+		Server.cpp		\
 
 DEPS.INC=
 DEPS.LNK=

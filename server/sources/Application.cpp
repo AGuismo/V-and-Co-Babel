@@ -1,7 +1,8 @@
 #include	<iostream>
 #include	"Application.hh"
 
-Application::Application()
+Application::Application():
+  _server(_service)
 {
 }
 
@@ -24,7 +25,7 @@ void	Application::init()
 
 void	Application::run()
 {
-  service.run();
+  _service.run();
 }
 
 void	Application::shutdown()
