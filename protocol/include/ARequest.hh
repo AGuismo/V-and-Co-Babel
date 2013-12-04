@@ -41,7 +41,8 @@ public:
   virtual ARequest	*clone() = 0;
   virtual Protocol	&serialize(Protocol &) const = 0;
   virtual Protocol	&unserialize(Protocol &) = 0;
-  virtual bool		operator==(const ARequest *req);
+  virtual bool		operator==(const ARequest *req) const;
+  virtual bool		operator!=(const ARequest *req) const;
 
 protected:
   request::ID	_code;
