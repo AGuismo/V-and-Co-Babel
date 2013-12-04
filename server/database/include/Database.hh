@@ -13,6 +13,7 @@ class Database : public IDatabase
   typedef Ruint16		AUTO_INCREMENT;
   typedef AUTO_INCREMENT	ID;
   typedef std::list<ID>		list_friend;
+  typedef std::list<ARequest*>	list_request;
 
 private:
   Database();
@@ -26,6 +27,10 @@ public:
   bool		saveFile(const std::string path);
 
 public:
+  bool		addRequest(const std::string &login,
+			   const ARequest *req);
+  bool		delRequest(const std::string &login,
+			   const ARequest *req);
   bool		addFriend(const std::string &login,
 			  const ID friendID);
   bool		delFriend(const std::string &login,
@@ -74,6 +79,7 @@ public:
     request::Privacy		privacy;
     request::PasswordType	password;
     list_friend			friendList;
+    list_request		requestList;
     request::Rights		rights;
 
     Client() : rights(0) {};
@@ -115,6 +121,22 @@ private:
       }
     protected:
       const Database::ID	_id;
+    };
+
+    struct			Request : public Login
+    {
+      FriendID(const ARequest *req, const std::string &login): Login(login), _req(req) {}
+      virtual bool	operator()(const Client obj) const
+      {
+	if (!Login::operator()(obj))
+	  return (false);
+	for (list_request::const_iterator it = obj.requestList.begin(); it != obj.requestList.end(); ++it)
+	  if (*(*it) == *_req)
+	    return (true);
+	return (false);
+      }
+    protected:
+      const ARequest	*_req;
     };
 
     struct			LoginPass : public Login

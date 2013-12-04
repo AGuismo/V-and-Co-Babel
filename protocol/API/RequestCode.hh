@@ -23,6 +23,16 @@ namespace request
     static const ID NO_CONTENT =	1004; /**< Request don't have */
     static const ID PARTIAL_CONTENT =	1005; /**< Request have partial content */
     static const ID NO_SLOTS =		1006; /**< No more slots available */
+
+    namespace	friends
+    {
+      static const ID UPDATE =		1300;
+    }
+  }
+
+  namespace client
+  {
+
   }
 }
 
