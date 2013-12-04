@@ -9,7 +9,6 @@
  */
 
 class	Protocol;
-class	ARequest;
 
 /** \brief Interface for both groups. Every request need to be inherit */
 class ITransformers
@@ -18,11 +17,6 @@ public:
   virtual ~ITransformers() {};
 
 public:
-
-  /**
-   *	Clone the class and return an allocated pointer
-   */
-  virtual ARequest	*clone() = 0;
 
   /**
    *	Serialize the class

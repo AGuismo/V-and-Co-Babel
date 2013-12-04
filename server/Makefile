@@ -13,7 +13,7 @@ MOD.LNK=	-L$(DIR.DB) -ldb
 
 F.C	     +=	-W -Wall -Werror
 F.I	     += $(MOD.INC) $(DEPS.INC) -I./include
-F.L	     += $(MOD.LNK) $(DEPS.LNK) -lboost_system -lboost_thread
+F.L	     += $(MOD.LNK) $(DEPS.LNK) -lboost_system -lboost_thread -lpthread
 F.D	     +=
 
 all:		start $(NAME)
