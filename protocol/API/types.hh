@@ -55,6 +55,8 @@ namespace	request
   typedef Ruint8	UsernameLen;		/**< Username Len type */
   typedef std::string	Username;		/**< Username type */
   typedef Ruint8	Status;			/**< Status type */
+  typedef Ruint16	Port;			/**< Port type */
+  typedef Ruint32	IP;			/**< IP type */
 }
 
 /** Crypt Trait Class info */
