@@ -23,6 +23,28 @@ namespace request
     static const ID NO_CONTENT =	1004; /**< Request don't have */
     static const ID PARTIAL_CONTENT =	1005; /**< Request have partial content */
     static const ID NO_SLOTS =		1006; /**< No more slots available */
+
+    /** Server Friend codes */
+    namespace	friends
+    {
+      static const ID UPDATE =		1300;
+    }
+  }
+
+  /** Client codes */
+  namespace client
+  {
+
+    /** Client Friend codes */
+    namespace	friends
+    {
+      static const ID REQUEST =		300;
+      static const ID DEL_FRIEND =	301;
+      static const ID ACCEPT =		302;
+      static const ID REFUSE =		303;
+      static const ID LIST =		304;
+    }
+
   }
 }
 

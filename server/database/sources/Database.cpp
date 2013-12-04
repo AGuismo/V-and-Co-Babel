@@ -73,6 +73,10 @@ save::Backup &	Database::save(save::Backup &backup)
       len = it->statusDetail.size();
       backup << len;
       backup.push(it->statusDetail, len);
+      len = it->friendList.size();
+      backup << len;
+      for (list_friend::iterator itFr = friendList.begin(); it != friendList.end(); ++it)
+	backup << *itFr;
     }
   _lock.unlock();
   return (backup);
@@ -89,6 +93,7 @@ save::Backup &	Database::load(save::Backup &backup)
     {
       Client	c;
       Ruint16	len;
+      ID	id;
 
       backup >> c.id;
       backup >> len;
@@ -100,6 +105,12 @@ save::Backup &	Database::load(save::Backup &backup)
       backup >> len;
       backup.pop(c.statusDetail, len);
       _clients.push_back(c);
+      backup >> len;
+      for (unsigned int i = 0; i != len; ++i)
+	{
+	  backup >> id;
+	  c.friendList.push_back(id);
+	}
     }
   _lock.unlock();
   return (backup);
@@ -151,6 +162,28 @@ bool		Database::addFriend(const std::string &login,
   return (true);
 }
 
+bool		Database::addRequest(const std::string &login,
+				     const ARequest *req)
+{
+  _lock.lock();
+  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Request(req, login));
+  if (it == _clients.end())
+    return (false);
+  it->friendList.push_back(friendID);
+  return (true);
+}
+
+bool		Database::delRequest(const std::string &login,
+				     const ARequest *req)
+{
+  _lock.lock();
+  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::FriendID(friendID, login));
+  if (it == _clients.end())
+    return (false);
+  it->friendList.push_back(friendID);
+  return (true);
+}
+
 bool		Database::delFriend(const std::string &login,
 				    const ID friendID)
 {
@@ -161,7 +194,6 @@ bool		Database::delFriend(const std::string &login,
   it->friendList.remove(friendID);
   return (true);
 }
-
 
 bool		Database::delClient(const std::string &login,
 				    const request::PasswordType &password)

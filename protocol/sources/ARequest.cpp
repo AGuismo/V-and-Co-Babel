@@ -37,6 +37,16 @@ void			ARequest::code(const request::ID code)
   _code = code;
 }
 
+bool		ARequest::operator==(const ARequest *req) const
+{
+  return (_code == req->_code);
+}
+
+bool		ARequest::operator!=(const ARequest *req) const
+{
+  return (_code != req->_code);
+}
+
 ARequest::Exception::Exception(const std::string &what) throw():
   _what(what)
 {
