@@ -151,6 +151,18 @@ bool		Database::addFriend(const std::string &login,
   return (true);
 }
 
+bool		Database::delFriend(const std::string &login,
+				    const ID friendID)
+{
+  _lock.lock();
+  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::FriendID(friendID, login));
+  if (it == _clients.end())
+    return (false);
+  it->friendList.remove(friendID);
+  return (true);
+}
+
+
 bool		Database::delClient(const std::string &login,
 				    const request::PasswordType &password)
 {

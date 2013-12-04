@@ -28,6 +28,8 @@ public:
 public:
   bool		addFriend(const std::string &login,
 			  const ID friendID);
+  bool		delFriend(const std::string &login,
+			  const ID friendID);
   bool		newClient(const std::string &login,
 			  const request::PasswordType &password,
 			  const request::Rights right_level = request::User::USER,
