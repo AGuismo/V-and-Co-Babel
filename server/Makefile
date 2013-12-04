@@ -18,7 +18,7 @@ F.D	     +=
 
 all:		start $(NAME)
 
-$(NAME):	compile compile_mods
+$(NAME):	compile_mods compile
 
 compile_mods:
 		@$(ECHO) $(ES) "Compile Modules" $(EE)

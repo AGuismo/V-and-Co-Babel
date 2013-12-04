@@ -64,7 +64,7 @@ save::Backup &	Database::save(save::Backup &backup)
       Ruint16	len = it->login.size();
       backup << len;
       backup.push(it->login, len);
-      backup.push(it->password, Crypt::PASS_SIZE);
+      backup.push(it->password, request::Crypt::PASS_SIZE);
       backup << it->rights;
       backup << it->privacy;
       backup << it->status;
@@ -89,12 +89,12 @@ save::Backup &	Database::load(save::Backup &backup)
 
       backup >> len;
       backup.pop(c.login, len);
-      backup.pop(c.password, Crypt::PASS_SIZE);
+      backup.pop(c.password, request::Crypt::PASS_SIZE);
       backup >> c.rights;
       backup >> c.privacy;
       backup >> c.status;
       backup >> len;
-      backup.pop(c.statusDetail.len);
+      backup.pop(c.statusDetail, len);
       _clients.push_back(c);
     }
   _lock.unlock();

@@ -23,9 +23,9 @@ public:
 public:
   bool		newClient(const std::string &login,
 			  const request::PasswordType &password,
-			  const request::Rights right_level = request::user::USER,
-			  const request::Privacy privacy = request::user::PRIVATE,
-			  const request::Status status = request::user::status::DISCONNECTED,
+			  const request::Rights right_level = request::User::USER,
+			  const request::Privacy privacy = request::User::PRIVATE,
+			  const request::Status status = request::User::Status::DISCONNECTED,
 			  const std::string &statusDetail = std::string(),
 			  bool trunc = false);
   bool		delClient(const std::string &login,
