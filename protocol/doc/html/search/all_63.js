@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['clone',['clone',['../classITransformers.html#a5283061bfff041e4858bbba49ee1ba1f',1,'ITransformers']]],
-  ['crypt',['Crypt',['../structCrypt.html',1,'']]]
+  ['connected',['CONNECTED',['../structrequest_1_1User_1_1Status.html#ae0dd757543af90f0704aa04461f9c06a',1,'request::User::Status']]],
+  ['crypt',['Crypt',['../structrequest_1_1Crypt.html',1,'request']]]
 ];

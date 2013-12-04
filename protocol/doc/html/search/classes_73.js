@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['server',['Server',['../classrequest_1_1Server.html',1,'request']]]
+  ['status',['Status',['../structrequest_1_1User_1_1Status.html',1,'request::User']]]
 ];

@@ -94,23 +94,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># define ITRANFORMERS_H_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">class   </span>Protocol;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">class   </span>ARequest;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="code" href="classITransformers.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="classITransformers.html" title="Interface for both groups. Every request need to be inherit.">ITransformers</a></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keyword">virtual</span> ~<a class="code" href="classITransformers.html" title="Interface for both groups. Every request need to be inherit.">ITransformers</a>() {};</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keyword">virtual</span> ARequest  *<a class="code" href="classITransformers.html#a5283061bfff041e4858bbba49ee1ba1f">clone</a>() = 0;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">virtual</span> Protocol  &amp;<a class="code" href="classITransformers.html#acdd583a6df773776be79ec6ccf9e0597">serialize</a>(Protocol &amp;) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="code" href="classITransformers.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="classITransformers.html" title="Interface for both groups. Every request need to be inherit.">ITransformers</a></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  <span class="keyword">virtual</span> ~<a class="code" href="classITransformers.html" title="Interface for both groups. Every request need to be inherit.">ITransformers</a>() {};</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">virtual</span> Protocol  &amp;<a class="code" href="classITransformers.html#acdd583a6df773776be79ec6ccf9e0597">serialize</a>(Protocol &amp;) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keyword">virtual</span> Protocol  &amp;<a class="code" href="classITransformers.html#ac87976f7672432a9a52cbda7d4644529">unserialize</a>(Protocol &amp;) = 0;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;};</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">virtual</span> Protocol  &amp;<a class="code" href="classITransformers.html#ac87976f7672432a9a52cbda7d4644529">unserialize</a>(Protocol &amp;) = 0;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;};</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* ITRANSFORMERS_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* ITRANSFORMERS_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

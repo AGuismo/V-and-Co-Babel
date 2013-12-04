@@ -50,19 +50,44 @@ typedef double			Rdouble;	/**< Double floating point precision */
 namespace	request
 {
   typedef Ruint8	Rights;			/**< User Rights type */
+  typedef Rbool		Privacy;		/**< Privacy Rights type */
   typedef Ruint16	ID;			/**< Request code ID type */
   typedef std::string	PasswordType;		/**< Password type */
   typedef Ruint8	UsernameLen;		/**< Username Len type */
   typedef std::string	Username;		/**< Username type */
   typedef Ruint8	Status;			/**< Status type */
+  typedef Ruint8	StatusDetailLen;	/**< Status detail Len type */
+  typedef std::string	StatusDetail;		/**< Status detail type */
   typedef Ruint16	Port;			/**< Port type */
   typedef Ruint32	IP;			/**< IP type */
-}
 
-/** Crypt Trait Class info */
-struct Crypt
-{
-  static const int	PASS_SIZE = 32;		/**< Cryptography Size */
-};
+  /** Crypt Trait Class info */
+  struct Crypt
+  {
+    static const unsigned int	PASS_SIZE = 32;		/**< Cryptography Size */
+  };
+
+  /** User Class info */
+  struct	User
+  {
+    static const Privacy	PRIVATE = 0;		/**< Private mode */
+    static const Privacy	PUBLIC = 1;		/**< Public mode */
+    static const Rights		ROOT = 0;		/**< Root mode */
+    static const Rights		USER = 1;		/**< User mode */
+
+    /** User Status Class info */
+    struct	Status
+    {
+      static const Status	DISCONNECTED = 0;	/**< Disconnected status */
+      static const Status	CONNECTED = 1;		/**< Connected status */
+      static const Status	ABSENT = 2;		/**< Absent status */
+      static const Status	OCCUPIED = 3;		/**< Occupied status */
+      static const Status	DELETED = 4;		/**< Deleted status */
+      static const Status	INVISIBLE = 5;		/**< Invisible status */
+    };
+
+  };
+
+}
 
 #endif /* TYPES_H_ */

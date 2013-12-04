@@ -3,6 +3,7 @@
 
 # include	<exception>
 # include	<string>
+# include	<boost/asio.hpp>
 
 class Application
 {
@@ -36,6 +37,7 @@ private:
   Application& operator=(Application const&);
 
 private:
+  boost::asio::io_service	service;
 };
 
 

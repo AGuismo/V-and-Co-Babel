@@ -24,6 +24,7 @@ void	Application::init()
 
 void	Application::run()
 {
+  service.run();
 }
 
 void	Application::shutdown()
