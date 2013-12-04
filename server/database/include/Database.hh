@@ -7,13 +7,13 @@
 # include	<boost/thread/mutex.hpp>
 # include	"IDatabase.hh"
 # include	"types.hh"
+# include	"ARequest.hh"
 
 class Database : public IDatabase
 {
   typedef Ruint16		AUTO_INCREMENT;
   typedef AUTO_INCREMENT	ID;
   typedef std::list<ID>		list_friend;
-  typedef std::list<ARequest*>	list_request;
 
 private:
   Database();
@@ -27,10 +27,6 @@ public:
   bool		saveFile(const std::string path);
 
 public:
-  bool		addRequest(const std::string &login,
-			   const ARequest *req);
-  bool		delRequest(const std::string &login,
-			   const ARequest *req);
   bool		addFriend(const std::string &login,
 			  const ID friendID);
   bool		delFriend(const std::string &login,
@@ -79,10 +75,7 @@ public:
     request::Privacy		privacy;
     request::PasswordType	password;
     list_friend			friendList;
-    list_request		requestList;
     request::Rights		rights;
-
-    Client() : rights(0) {};
   };
 
 public:
@@ -90,9 +83,7 @@ public:
 
 private:
   struct Predicate : public std::unary_function<Client, bool>
-  {
-    virtual bool	operator()(const Client obj) const = 0;
-  };
+  { virtual bool	operator()(const Client obj) const = 0; };
 
   struct predicate
   {
@@ -100,9 +91,7 @@ private:
     {
       Login(const std::string &login): _login(login) {}
       virtual bool	operator()(const Client obj) const
-      {
-	return (_login == obj.login);
-      }
+      { return (_login == obj.login); }
     protected:
       const std::string	_login;
     };
@@ -123,30 +112,12 @@ private:
       const Database::ID	_id;
     };
 
-    struct			Request : public Login
-    {
-      FriendID(const ARequest *req, const std::string &login): Login(login), _req(req) {}
-      virtual bool	operator()(const Client obj) const
-      {
-	if (!Login::operator()(obj))
-	  return (false);
-	for (list_request::const_iterator it = obj.requestList.begin(); it != obj.requestList.end(); ++it)
-	  if (*(*it) == *_req)
-	    return (true);
-	return (false);
-      }
-    protected:
-      const ARequest	*_req;
-    };
-
     struct			LoginPass : public Login
     {
       LoginPass(const std::string &login,
 		request::PasswordType p): Login(login), _pass(p) {}
       virtual bool	operator()(const Client obj) const
-      {
-	return (_login == obj.login && _pass == obj.password);
-      }
+      { return (_login == obj.login && _pass == obj.password); }
     protected:
       const request::PasswordType	_pass;
     };
@@ -157,9 +128,7 @@ private:
 		      request::PasswordType p,
 		      request::Rights r): LoginPass(login, p), _right(r) {}
       virtual bool	operator()(const Client obj) const
-      {
-	return (_login == obj.login && _pass == obj.password && _right == obj.rights);
-      }
+      { return (_login == obj.login && _pass == obj.password && _right == obj.rights); }
     protected:
       const request::Rights	_right;
     };

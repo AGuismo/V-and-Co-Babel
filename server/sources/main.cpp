@@ -4,7 +4,15 @@ int	main()
 {
   Application	app;
 
-  app.init();
+  try
+    {
+      app.init();
+    }
+  catch (const Application::InitExcept &e)
+    {
+      std::cerr << e.what() << std::endl;
+      return (0);
+    }
   app.run();
   app.shutdown();
   return (0);

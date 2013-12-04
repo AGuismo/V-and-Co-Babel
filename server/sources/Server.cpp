@@ -1,4 +1,5 @@
 #include	<boost/asio.hpp>
+#include	<boost/bind.hpp>
 #include	"Server.hh"
 
 Server::Server(boost::asio::io_service &service) :
@@ -19,10 +20,32 @@ void	Server::init()
   boost::asio::ip::tcp::endpoint	endpoint(boost::asio::ip::tcp::v4(), 44201);
 
   _acceptor.open(endpoint.protocol());
-  _acceptor.bind(endpoint());
+  _acceptor.bind(endpoint);
   _acceptor.listen();
+  start_accept();
 }
 
 void	Server::run()
 {
+  _service.run();
+}
+
+void	Server::handle_accept(Client::Pointer new_connection,
+			      const boost::system::error_code& error)
+{
+#if defined(DEBUG)
+  std::cout << "New client: " << new_connection << std::endl;
+#endif
+  if (!error)
+    new_connection->start();
+  start_accept();
+}
+
+void Server::start_accept()
+{
+  Client::Pointer	new_connection = Client::create(_acceptor.get_io_service());
+
+  _acceptor.async_accept(new_connection->socket(),
+			 boost::bind(&Server::handle_accept, this, new_connection,
+				     boost::asio::placeholders::error));
 }

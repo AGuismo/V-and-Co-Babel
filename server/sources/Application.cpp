@@ -14,7 +14,7 @@ void	Application::init()
 {
   try
     {
-
+      _server.init();
     }
   catch (...)
     {

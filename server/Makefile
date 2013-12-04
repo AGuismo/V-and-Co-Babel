@@ -3,6 +3,7 @@ NAME	     ?=	server_babel
 SRCS =	      	main.cpp		\
 		Application.cpp		\
 		Server.cpp		\
+		Client.cpp		\
 
 DIR.DB=		database
 
@@ -12,7 +13,7 @@ DEPS.LNK=
 MOD.INC=	-I$(DIR.DB)/include
 MOD.LNK=	-L$(DIR.DB) -ldb
 
-F.C	     +=	-W -Wall -Werror
+F.C	     +=	-W -Wall
 F.I	     += $(MOD.INC) $(DEPS.INC) -I./include
 F.L	     += $(MOD.LNK) $(DEPS.LNK) -lboost_system -lboost_thread -lpthread
 F.D	     +=

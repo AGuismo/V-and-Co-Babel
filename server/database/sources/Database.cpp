@@ -55,7 +55,7 @@ bool		Database::saveFile(const std::string path)
 
 save::Backup &	Database::save(save::Backup &backup)
 {
-  _lock.lock();
+  boost::mutex::scoped_lock(_lock);
   Ruint16		clientSize = _clients.size();
 
   backup << clientSize;
@@ -75,16 +75,15 @@ save::Backup &	Database::save(save::Backup &backup)
       backup.push(it->statusDetail, len);
       len = it->friendList.size();
       backup << len;
-      for (list_friend::iterator itFr = friendList.begin(); it != friendList.end(); ++it)
+      for (list_friend::iterator itFr = it->friendList.begin(); itFr != it->friendList.end(); ++itFr)
 	backup << *itFr;
     }
-  _lock.unlock();
   return (backup);
 }
 
 save::Backup &	Database::load(save::Backup &backup)
 {
-  _lock.lock();
+  boost::mutex::scoped_lock(_lock);
   Ruint16		nbClients;
 
   backup >> _maxIdClient;
@@ -112,7 +111,6 @@ save::Backup &	Database::load(save::Backup &backup)
 	  c.friendList.push_back(id);
 	}
     }
-  _lock.unlock();
   return (backup);
 }
 
@@ -124,15 +122,12 @@ bool		Database::newClient(const std::string &login,
 				    const std::string &statusDetail,
 				    bool trunc)
 {
-  _lock.lock();
+  boost::mutex::scoped_lock(_lock);
   client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
   Client		newC;
 
   if (it != _clients.end() && !trunc)
-    {
-      _lock.unlock();
-      return (false);
-    }
+    return (false);
   newC.id = _maxIdClient++;
   newC.login = login;
   newC.password = password;
@@ -143,40 +138,16 @@ bool		Database::newClient(const std::string &login,
   if (trunc && it != _clients.end())
     {
       *it = newC;
-      _lock.unlock();
       return (true);
     }
   _clients.push_back(newC);
-      _lock.unlock();
   return (true);
 }
 
 bool		Database::addFriend(const std::string &login,
 				    const ID friendID)
 {
-  _lock.lock();
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::FriendID(friendID, login));
-  if (it == _clients.end())
-    return (false);
-  it->friendList.push_back(friendID);
-  return (true);
-}
-
-bool		Database::addRequest(const std::string &login,
-				     const ARequest *req)
-{
-  _lock.lock();
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Request(req, login));
-  if (it == _clients.end())
-    return (false);
-  it->friendList.push_back(friendID);
-  return (true);
-}
-
-bool		Database::delRequest(const std::string &login,
-				     const ARequest *req)
-{
-  _lock.lock();
+  boost::mutex::scoped_lock(_lock);
   client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::FriendID(friendID, login));
   if (it == _clients.end())
     return (false);
@@ -187,7 +158,7 @@ bool		Database::delRequest(const std::string &login,
 bool		Database::delFriend(const std::string &login,
 				    const ID friendID)
 {
-  _lock.lock();
+  boost::mutex::scoped_lock(_lock);
   client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::FriendID(friendID, login));
   if (it == _clients.end())
     return (false);
@@ -198,7 +169,7 @@ bool		Database::delFriend(const std::string &login,
 bool		Database::delClient(const std::string &login,
 				    const request::PasswordType &password)
 {
-  _lock.lock();
+  boost::mutex::scoped_lock(_lock);
   client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
 
   if (it == _clients.end())
@@ -213,7 +184,7 @@ bool		Database::setStatus(const std::string &login,
 				    const request::Status &status,
 				    const std::string &message)
 {
-  _lock.lock();
+  boost::mutex::scoped_lock(_lock);
   client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
 
   if (it == _clients.end())
@@ -228,7 +199,7 @@ bool		Database::modClientPass(const std::string &login,
 					const request::PasswordType &oldpassword,
 					const request::PasswordType &newpassword)
 {
-  _lock.lock();
+  boost::mutex::scoped_lock(_lock);
   client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
 
   if (it == _clients.end())
@@ -241,22 +212,18 @@ bool		Database::modClientPass(const std::string &login,
 
 bool		Database::getClient(const std::string &login, Client &client)
 {
-  _lock.lock();
+  boost::mutex::scoped_lock(_lock);
   client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
 
   if (it == _clients.end())
-    {
-      _lock.unlock();
-      return (false);
-    }
+    return (false);
   client = *it;
-  _lock.unlock();
   return (true);
 }
 
 bool		Database::modPrivacy(const std::string &login, const request::Privacy privacy)
 {
-  _lock.lock();
+  boost::mutex::scoped_lock(_lock);
   client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
 
   if (it == _clients.end())
