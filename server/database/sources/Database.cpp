@@ -9,9 +9,9 @@ Database	&Database::getInstance()
   return (db);
 }
 
-Database::Database()
+Database::Database():
+   _maxIdClient(0)
 {
-
 }
 
 Database::~Database()
@@ -59,8 +59,10 @@ save::Backup &	Database::save(save::Backup &backup)
   Ruint16		clientSize = _clients.size();
 
   backup << clientSize;
+  backup << _maxIdClient;
   for (client_list::iterator it = _clients.begin(); it != _clients.end(); ++it)
     {
+      backup << it->id;
       Ruint16	len = it->login.size();
       backup << len;
       backup.push(it->login, len);
@@ -81,12 +83,14 @@ save::Backup &	Database::load(save::Backup &backup)
   _lock.lock();
   Ruint16		nbClients;
 
+  backup >> _maxIdClient;
   backup >> nbClients;
   for (client_list::size_type it = 0; it < nbClients; ++it)
     {
       Client	c;
       Ruint16	len;
 
+      backup >> c.id;
       backup >> len;
       backup.pop(c.login, len);
       backup.pop(c.password, request::Crypt::PASS_SIZE);
@@ -110,7 +114,7 @@ bool		Database::newClient(const std::string &login,
 				    bool trunc)
 {
   _lock.lock();
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), PredicateLogin(login));
+  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
   Client		newC;
 
   if (it != _clients.end() && !trunc)
@@ -118,6 +122,7 @@ bool		Database::newClient(const std::string &login,
       _lock.unlock();
       return (false);
     }
+  newC.id = _maxIdClient++;
   newC.login = login;
   newC.password = password;
   newC.rights = right_level;
@@ -135,11 +140,22 @@ bool		Database::newClient(const std::string &login,
   return (true);
 }
 
+bool		Database::addFriend(const std::string &login,
+				    const ID friendID)
+{
+  _lock.lock();
+  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::FriendID(friendID, login));
+  if (it == _clients.end())
+    return (false);
+  it->friendList.push_back(friendID);
+  return (true);
+}
+
 bool		Database::delClient(const std::string &login,
 				    const request::PasswordType &password)
 {
   _lock.lock();
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), PredicateLogin(login));
+  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
 
   if (it == _clients.end())
     return (false);
@@ -154,7 +170,7 @@ bool		Database::setStatus(const std::string &login,
 				    const std::string &message)
 {
   _lock.lock();
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), PredicateLogin(login));
+  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
 
   if (it == _clients.end())
     return (false);
@@ -169,7 +185,7 @@ bool		Database::modClientPass(const std::string &login,
 					const request::PasswordType &newpassword)
 {
   _lock.lock();
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), PredicateLogin(login));
+  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
 
   if (it == _clients.end())
     return (false);
@@ -182,7 +198,7 @@ bool		Database::modClientPass(const std::string &login,
 bool		Database::getClient(const std::string &login, Client &client)
 {
   _lock.lock();
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), PredicateLogin(login));
+  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
 
   if (it == _clients.end())
     {
@@ -197,7 +213,7 @@ bool		Database::getClient(const std::string &login, Client &client)
 bool		Database::modPrivacy(const std::string &login, const request::Privacy privacy)
 {
   _lock.lock();
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), PredicateLogin(login));
+  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
 
   if (it == _clients.end())
     return (false);
@@ -207,14 +223,14 @@ bool		Database::modPrivacy(const std::string &login, const request::Privacy priv
 
 bool		Database::clientExist(const std::string &login)
 {
-  return (std::find_if(_clients.begin(), _clients.end(), PredicateLogin(login)) != _clients.end());
+  return (std::find_if(_clients.begin(), _clients.end(), predicate::Login(login)) != _clients.end());
 }
 
 bool		Database::clientExist(const std::string &login,
 				      const request::PasswordType &password)
 {
   return (std::find_if(_clients.begin(), _clients.end(),
-		       PredicateLoginPass(login, password)) != _clients.end());
+		       predicate::LoginPass(login, password)) != _clients.end());
 }
 
 bool		Database::clientExist(const std::string &login,
@@ -222,5 +238,5 @@ bool		Database::clientExist(const std::string &login,
 				      const request::Rights rights)
 {
   return (std::find_if(_clients.begin(), _clients.end(),
-		       PredicateLoginPassRights(login, password, rights)) != _clients.end());
+		       predicate::LoginPassRights(login, password, rights)) != _clients.end());
 }
