@@ -68,9 +68,9 @@ void		Client::Send()
 void		Client::Receive()
 {
   _socket.async_read_some(boost::asio::buffer(_received),
-			   boost::bind(&Client::handle_read, shared_from_this(),
-				       boost::asio::placeholders::error,
-				       boost::asio::placeholders::bytes_transferred));
+			  boost::bind(&Client::handle_read, shared_from_this(),
+				      boost::asio::placeholders::error,
+				      boost::asio::placeholders::bytes_transferred));
 }
 
 void		Client::start()

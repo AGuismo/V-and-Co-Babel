@@ -14,6 +14,7 @@ class Database : public IDatabase
   typedef Ruint16		AUTO_INCREMENT;
   typedef AUTO_INCREMENT	ID;
   typedef std::list<ID>		list_friend;
+  typedef std::list<ARequest *>	list_request;
 
 private:
   Database();
@@ -57,6 +58,11 @@ public:
   bool		setClientStatus(const std::string &login,
 				const std::string &message,
 				const request::Status status);
+  template <typename Request>
+  bool		addRequest(const request::Username &login, const Request &req);
+  template <typename Request>
+  bool		delRequest(const request::Username &login, const Request &req);
+
 private:
   Database(Database const&);
   Database& operator=(Database const&);
@@ -75,6 +81,7 @@ public:
     request::Privacy		privacy;
     request::PasswordType	password;
     list_friend			friendList;
+    list_request		waitRequest;
     request::Rights		rights;
   };
 
@@ -112,6 +119,24 @@ private:
       const Database::ID	_id;
     };
 
+    template <typename T>
+    struct			WaitRequest : public Login
+    {
+      WaitRequest(const T &req, const std::string &login):
+	Login(login), _req(req) {}
+      virtual bool	operator()(const Client obj) const
+      {
+	if (!Login::operator()(obj))
+	  return (false);
+	for (list_request::const_iterator it = obj.waitRequest.begin(); it != obj.waitRequest.end(); ++it)
+	  if (*(*it) == _req)
+	    return (true);
+	return (false);
+      }
+    protected:
+      const T	&_req;
+    };
+
     struct			LoginPass : public Login
     {
       LoginPass(const std::string &login,
@@ -142,5 +167,34 @@ private:
   client_list			_clients;
   boost::mutex			_lock;
 };
+
+template <typename Request>
+bool		Database::addRequest(const request::Username &login, const Request &req)
+{
+  boost::mutex::scoped_lock(_lock);
+  client_list::iterator	itClient = std::find_if(_clients.begin(), _clients.end(),
+						predicate::WaitRequest<Request>(req, login));
+
+  if (itClient != _clients.end())
+    return (false);
+
+  Request	*new_req = new Request(req);
+
+  itClient->waitRequest.push_back(new_req);
+  return (true);
+}
+
+template <typename Request>
+bool		Database::delRequest(const request::Username &login, const Request &req)
+{
+  boost::mutex::scoped_lock(_lock);
+  client_list::iterator	itClient = std::find_if(_clients.begin(), _clients.end(),
+						predicate::WaitRequest<Request>(req, login));
+
+  if (itClient == _clients.end())
+    return (false);
+  itClient->waitRequest.remove(req);
+  return (true);
+}
 
 #endif /* DATABASE_H_ */
