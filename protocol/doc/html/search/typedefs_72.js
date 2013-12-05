@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['rbool',['Rbool',['../types_8hh.html#a89d75ddd111a8f1b4ea0ec65799c6272',1,'types.hh']]],
+  ['rbool',['Rbool',['../types_8hh.html#a9faa2a0118022c3006e584dc7f157074',1,'types.hh']]],
   ['rdouble',['Rdouble',['../types_8hh.html#a363f442056b3421890e95fabe6b2dda4',1,'types.hh']]],
   ['rfloat',['Rfloat',['../types_8hh.html#a465db05c928c957795cc9ea753af0554',1,'types.hh']]],
   ['rights',['Rights',['../namespacerequest.html#abd2864dc4cadc5696d7c078c9614a527',1,'request']]],

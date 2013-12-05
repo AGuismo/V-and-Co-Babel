@@ -1,7 +1,8 @@
 #ifndef SERVER_H_
 # define SERVER_H_
 
-#include	"Client.hh"
+# include	<list>
+# include	"Client.hh"
 
 namespace boost
 {
@@ -13,6 +14,8 @@ namespace boost
 
 class Server
 {
+  typedef std::list<Client::Pointer>	client_list;
+
 public:
   Server(boost::asio::io_service &service);
   ~Server();
@@ -20,6 +23,7 @@ public:
 public:
   void	init();
   void	run();
+  void	handleClientClose(Client::Pointer clientClosed);
 
 private:
   void	start_accept();
@@ -32,6 +36,7 @@ private:
 private:
   boost::asio::io_service		&_service;
   boost::asio::ip::tcp::acceptor	_acceptor;
+  client_list				_clientList;
 };
 
 #endif /* SERVER_H_ */

@@ -1,7 +1,8 @@
 #include	"Client.hh"
+#include	"Server.hh"
 
-Client::Client(boost::asio::io_service &service) :
-  _service(service), _socket(service)
+Client::Client(boost::asio::io_service &service, Server *server) :
+  _service(service), _socket(service), _server(server)
 {
 }
 
@@ -12,9 +13,9 @@ Client::~Client()
 #endif
 }
 
-Client::Pointer Client::create(boost::asio::io_service& io_service)
+Client::Pointer Client::create(boost::asio::io_service& io_service, Server *server)
 {
-  return Pointer(new Client(io_service));
+  return Pointer(new Client(io_service, server));
 }
 
 void		Client::handle_write(const boost::system::error_code& error,
@@ -32,6 +33,7 @@ void		Client::handle_write(const boost::system::error_code& error,
 #if defined(DEBUG)
       std::cerr << "Error when writing data" << std::endl;
 #endif
+      _server->handleClientClose(share());
     }
 }
 
@@ -51,6 +53,7 @@ void		Client::handle_read(const boost::system::error_code& error,
 #if defined(DEBUG)
       std::cerr << "Error when reading data" << std::endl;
 #endif
+      _server->handleClientClose(share());
     }
 }
 
@@ -78,4 +81,9 @@ void		Client::start()
 tcp::socket&	Client::socket()
 {
   return (_socket);
+}
+
+Client::Pointer	Client::share()
+{
+  return (shared_from_this());
 }
