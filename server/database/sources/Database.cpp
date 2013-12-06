@@ -1,6 +1,10 @@
 #include	<fstream>
 #include	"Database.hh"
-#include	"Backup.hpp"
+#include	"Serializer.hpp"
+#include	"Protocol.hpp"
+#include	"RequestFactory.hh"
+
+Salt::size_type Salt::SALT = 42;
 
 Database	&Database::getInstance()
 {
@@ -19,10 +23,18 @@ Database::~Database()
 
 }
 
+bool			Database::drop()
+{
+  boost::mutex::scoped_lock(_lock);
+  _maxIdClient = 0;
+  _clients.clear();
+  return (true);
+}
+
 bool			Database::loadFile(const std::string path)
 {
   std::fstream		stream;
-  save::Backup		bak;
+  Serializer		bak;
 
   stream.open(path.c_str(), std::ios_base::in);
   if (!stream.is_open())
@@ -30,87 +42,124 @@ bool			Database::loadFile(const std::string path)
   try
     {
       stream >> bak;
+      load(bak);
     }
-  catch (save::invalid_argument &e)
+  catch (Serializer::invalid_argument &e)
     {
       std::cerr << "Database: Unable to load file " << path << std::endl
 		<< "Error detail: " << e.what() << std::endl;
       return (false);
     }
-  load(bak);
   return (true);
 }
 
 bool		Database::saveFile(const std::string path)
 {
   std::ofstream	stream(path.c_str());
-  save::Backup	bak;
+  Serializer	bak;
 
   if (stream.bad())
     return (false);
-  save(bak);
-  stream << bak;
+  try
+    {
+      save(bak);
+      stream << bak;
+    }
+  catch (Serializer::invalid_argument &e)
+    {
+      std::cerr << "Database: Unable to Save file " << path << std::endl
+		<< "Error detail: " << e.what() << std::endl;
+      return (false);
+    }
   return (true);
 }
 
-save::Backup &	Database::save(save::Backup &backup)
+Serializer &	Database::save(Serializer &backup)
 {
   boost::mutex::scoped_lock(_lock);
-  Ruint16		clientSize = _clients.size();
+  Ruint16	clientSize = _clients.size();
+  Protocol	p(backup);
 
-  backup << clientSize;
-  backup << _maxIdClient;
+  p << _maxIdClient;
+  p << clientSize;
   for (client_list::iterator it = _clients.begin(); it != _clients.end(); ++it)
     {
-      backup << it->id;
+      p << it->id;
       Ruint16	len = it->login.size();
-      backup << len;
-      backup.push(it->login, len);
-      backup.push(it->password, request::Crypt::PASS_SIZE);
-      backup << it->rights;
-      backup << it->privacy;
-      backup << it->status;
+      p << len;
+      p.push(it->login);
+      p.push(it->password, request::Crypt::PASS_SIZE);
+      p << it->rights;
+      p << it->privacy;
+      p << it->status;
       len = it->statusDetail.size();
-      backup << len;
-      backup.push(it->statusDetail, len);
+      p << len;
+      p.push(it->statusDetail);
       len = it->friendList.size();
-      backup << len;
+      p << len;
       for (list_friend::iterator itFr = it->friendList.begin(); itFr != it->friendList.end(); ++itFr)
-	backup << *itFr;
+	p << *itFr;
+      len = it->waitRequest.size();
+      p << len;
+      for (list_request::iterator itReq = it->waitRequest.begin();
+	   itReq != it->waitRequest.end(); ++itReq)
+	(*itReq)->serialize(p);
     }
+  backup = p;
   return (backup);
 }
 
-save::Backup &	Database::load(save::Backup &backup)
+Serializer &	Database::load(Serializer &backup)
 {
   boost::mutex::scoped_lock(_lock);
   Ruint16		nbClients;
+  Protocol		p(backup);
 
-  backup >> _maxIdClient;
-  backup >> nbClients;
+  p >> _maxIdClient;
+  p >> nbClients;
   for (client_list::size_type it = 0; it < nbClients; ++it)
     {
       Client	c;
       Ruint16	len;
-      ID	id;
 
-      backup >> c.id;
-      backup >> len;
-      backup.pop(c.login, len);
-      backup.pop(c.password, request::Crypt::PASS_SIZE);
-      backup >> c.rights;
-      backup >> c.privacy;
-      backup >> c.status;
-      backup >> len;
-      backup.pop(c.statusDetail, len);
+      p >> c.id;
+      p >> len;
+      p.pop(c.login, len);
+      p.pop(c.password, request::Crypt::PASS_SIZE);
+      p >> c.rights;
+      p >> c.privacy;
+      p >> c.status;
+      p >> len;
+      p.pop(c.statusDetail, len);
       _clients.push_back(c);
-      backup >> len;
-      for (unsigned int i = 0; i != len; ++i)
+      p >> len;
+      for (Ruint16 i = 0; i < len; ++i)
 	{
-	  backup >> id;
+	  ID	id;
+
+	  p >> id;
 	  c.friendList.push_back(id);
 	}
+      p >> len;
+      for (Ruint16 i = 0; i != len; ++i)
+	{
+	  request::ID	id;
+	  ARequest	*req;
+
+	  p >> id;
+	  try
+	    {
+	      req = request::Factory::factory(id);
+	      req->unserialize(p);
+	    }
+	  catch (const ARequest::Exception &e)
+	    {
+	      throw Serializer::invalid_argument("Database Load error");
+	    }
+	  c.waitRequest.push_back(req);
+	}
     }
+  backup = p;
   return (backup);
 }
 

@@ -22,6 +22,7 @@ namespace	request
   public:
     template <typename T>
     void		add(ID id);
+    static ARequest	*factory(const request::ID code);
     static ARequest	*factory(Protocol &, const request::ID code);
     static void		factory(Protocol &, const ARequest &);
 

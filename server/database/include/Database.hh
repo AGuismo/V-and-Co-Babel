@@ -26,6 +26,7 @@ public:
 public:
   bool		loadFile(const std::string path);
   bool		saveFile(const std::string path);
+  bool		drop();
 
 public:
   bool		addFriend(const std::string &login,
@@ -68,8 +69,8 @@ private:
   Database& operator=(Database const&);
 
 public:
-  save::Backup &	save(save::Backup &);
-  save::Backup &	load(save::Backup &);
+  Serializer &	save(Serializer &);
+  Serializer &	load(Serializer &);
 
 public:
   struct			Client

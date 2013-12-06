@@ -1,18 +1,16 @@
-NAME	     ?=	server_babel
+NAME	     ?=	database_unit_test
 
 SRCS =	      	main.cpp		\
-		Application.cpp		\
-		Server.cpp		\
-		Client.cpp		\
 
-DIR.DB=		./database
-DIR.SERIALIZER=	../serializer/
-DIR.PROTOCOL=	../protocol/
+DIR.API=	../../../protocol/API
+DIR.DB=		../
+DIR.SERIALIZER=	../../../serializer/
+DIR.PROTOCOL=	../../../protocol/
 
 DEPS.INC=
 DEPS.LNK=
 
-MOD.INC=	-I$(DIR.DB)/include -I$(DIR.PROTOCOL)/include -I$(DIR.SERIALIZER)/include
+MOD.INC=	-I$(DIR.DB)/include -I$(DIR.PROTOCOL)/include -I$(DIR.SERIALIZER)/include -I$(DIR.API)
 MOD.LNK=	-L$(DIR.DB) -ldb -L$(DIR.PROTOCOL) -lprotocol -L$(DIR.SERIALIZER) -lserialize
 
 F.C	     +=	-W -Wall

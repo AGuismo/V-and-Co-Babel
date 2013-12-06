@@ -4,16 +4,19 @@
 
 
 
-NAME	     ?=	libdb.a
+NAME	     ?=	libserialize.a
 
-PROTOCOL.DIR	=	../../protocol
-SERIALIZER.DIR	=	../../serializer
 
-SRCS =		Database.cpp		\
+SRCS =		Serializer.cpp		\
+		MD5.cpp			\
+		Salt.cpp		\
 
-F.C	     +=	-W -Wall
-F.I	     +=	-I $(DIR.H) -I$(PROTOCOL.DIR)/API -I$(PROTOCOL.DIR)/include -I$(SERIALIZER.DIR)/include -I../include
+API.H=		../protocol/API/
+
+F.C	     +=	-W -Wall 
+F.I	     += -I$(API.H)
 F.D	     +=
+
 
 all:		start $(NAME)
 

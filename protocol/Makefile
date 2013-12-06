@@ -14,9 +14,10 @@ SRCS =	      	ARequest.cpp		\
 		RequestFactory.cpp	\
 
 API.H=		./API/
+SERIALIZER.DIR=	../serializer/
 
 F.C	     +=	-W -Wall 
-F.I	     += -I$(API.H)
+F.I	     += -I$(API.H) -I$(SERIALIZER.DIR)/include
 F.D	     +=
 
 
