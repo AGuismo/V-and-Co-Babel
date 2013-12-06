@@ -368,6 +368,38 @@ namespace	request
 	return (rhs);
       }
 
+      DisconnectClient::DisconnectClient():
+	Auth(request::client::auth::DISCONNECT)
+      {
+      }
+
+      DisconnectClient::~DisconnectClient()
+      {
+      }
+
+      DisconnectClient::DisconnectClient(const DisconnectClient &src) :
+	Auth(request::client::auth::DISCONNECT)
+      {
+	(void)src;
+      }
+
+      ARequest	*DisconnectClient::clone()
+      {
+	return (new DisconnectClient());
+      }
+
+      Protocol		&DisconnectClient::serialize(Protocol &rhs) const
+      {
+	DisconnectClient::serialize(rhs);
+	return (rhs);
+      }
+
+      Protocol	&DisconnectClient::unserialize(Protocol &rhs)
+      {
+	DisconnectClient::unserialize(rhs);
+	return (rhs);
+      }
+
     } // !client
 
   } // !auth

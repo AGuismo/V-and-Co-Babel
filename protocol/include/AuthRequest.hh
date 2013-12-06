@@ -115,6 +115,20 @@ namespace	request
 	request::Username	_name;
 	request::PasswordType	_password;
       };
+
+      class	DisconnectClient : public Auth
+      {
+	static const char	*DISCONNECT;
+
+	DisconnectClient();
+	~DisconnectClient();
+	DisconnectClient(const DisconnectClient &);
+
+	ARequest			*clone();
+	Protocol			&serialize(Protocol &) const;
+	Protocol			&unserialize(Protocol &);
+
+      };
     } // !client
   } // !auth
 
