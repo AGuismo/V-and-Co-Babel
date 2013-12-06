@@ -69,6 +69,52 @@ namespace	request
 	request::Username	_name;
 	request::PasswordType	_password;
       };
+
+      class	ModifyClient : public Auth
+      {
+	static const char	*MODIFY;
+
+	ModifyClient();
+	ModifyClient(const request::Username &name,
+		     const request::PasswordType &oldPassword,
+		     const request::PasswordType &newPassword);
+	~ModifyClient();
+	ModifyClient(const ModifyClient &);
+	ModifyClient	&operator=(const ModifyClient &);
+
+	ARequest			*clone();
+	Protocol			&serialize(Protocol &) const;
+	Protocol			&unserialize(Protocol &);
+
+	bool			operator==(const ARequest *req) const;
+	bool			operator!=(const ARequest *req) const;
+
+	request::Username	_name;
+	request::PasswordType	_oldPassword;
+	request::PasswordType	_newPassword;
+      };
+
+      class	ConnectClient : public Auth
+      {
+	static const char	*CONNECT;
+
+	ConnectClient();
+	ConnectClient(const request::Username &name,
+		      const request::PasswordType &password);
+	~ConnectClient();
+	ConnectClient(const ConnectClient &);
+	ConnectClient	&operator=(const ConnectClient &);
+
+	ARequest			*clone();
+	Protocol			&serialize(Protocol &) const;
+	Protocol			&unserialize(Protocol &);
+
+	bool			operator==(const ARequest *req) const;
+	bool			operator!=(const ARequest *req) const;
+
+	request::Username	_name;
+	request::PasswordType	_password;
+      };
     } // !client
   } // !auth
 
