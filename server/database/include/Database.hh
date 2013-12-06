@@ -121,21 +121,29 @@ private:
     };
 
     template <typename T>
-    struct			WaitRequest : public Login
+    struct			Request
     {
-      WaitRequest(const T &req, const std::string &login):
-	Login(login), _req(req) {}
+      Request(const T &req): _req(req) {}
       virtual bool	operator()(const Client obj) const
       {
-	if (!Login::operator()(obj))
-	  return (false);
 	for (list_request::const_iterator it = obj.waitRequest.begin(); it != obj.waitRequest.end(); ++it)
-	  if (*(*it) == _req)
+	  if (_req == *it)
 	    return (true);
 	return (false);
       }
     protected:
       const T	&_req;
+    };
+
+    template <typename T>
+    struct			WaitRequest : public Login, public Request<T>
+    {
+      WaitRequest(const std::string &login, const T &req):
+	Login(login), Request<T>(req) {}
+      virtual bool	operator()(const Client obj) const
+      {
+	return (Login::operator()(obj) && Request<T>::operator()(obj));
+      }
     };
 
     struct			LoginPass : public Login
@@ -174,14 +182,14 @@ bool		Database::addRequest(const request::Username &login, const Request &req)
 {
   boost::mutex::scoped_lock(_lock);
   client_list::iterator	itClient = std::find_if(_clients.begin(), _clients.end(),
-						predicate::WaitRequest<Request>(req, login));
+						predicate::WaitRequest<Request>(login, req));
 
   if (itClient != _clients.end())
     return (false);
 
-  Request	*new_req = new Request(req);
-
-  itClient->waitRequest.push_back(new_req);
+  std::cout << &(*itClient) << std::endl;
+  std::cout << &(_clients.front()) << std::endl;
+  itClient->waitRequest.push_back(new Request(req));
   return (true);
 }
 
@@ -190,12 +198,19 @@ bool		Database::delRequest(const request::Username &login, const Request &req)
 {
   boost::mutex::scoped_lock(_lock);
   client_list::iterator	itClient = std::find_if(_clients.begin(), _clients.end(),
-						predicate::WaitRequest<Request>(req, login));
+						predicate::WaitRequest<Request>(login, req));
 
   if (itClient == _clients.end())
     return (false);
-  itClient->waitRequest.remove(req);
-  return (true);
+  for (list_request::iterator itReq = itClient->waitRequest.begin();
+       itReq != itClient->waitRequest.end(); ++itReq)
+    if (req.operator==(*itReq))
+      {
+	delete *itReq;
+	itClient->waitRequest.erase(itReq);
+	return (true);
+      }
+  return (false);
 }
 
 #endif /* DATABASE_H_ */

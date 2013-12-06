@@ -71,18 +71,22 @@ Serializer::container_type const	&Serializer::content() const
 Serializer&	Serializer::operator LC(Rint8, val);
 Serializer&	Serializer::operator LC(Rint16, val);
 Serializer&	Serializer::operator LC(Rint32, val);
+Serializer&	Serializer::operator LC(Rint64, val);
 Serializer&	Serializer::operator LC(Ruint8, val);
 Serializer&	Serializer::operator LC(Ruint16, val);
 Serializer&	Serializer::operator LC(Ruint32, val);
+Serializer&	Serializer::operator LC(Ruint64, val);
 Serializer&	Serializer::operator LC(Rdouble, val);
 Serializer&	Serializer::operator LC(Rfloat, val);
 
 Serializer&	Serializer::operator RC(Rint8, val);
 Serializer&	Serializer::operator RC(Rint16, val);
 Serializer&	Serializer::operator RC(Rint32, val);
+Serializer&	Serializer::operator RC(Rint64, val);
 Serializer&	Serializer::operator RC(Ruint8, val);
 Serializer&	Serializer::operator RC(Ruint16, val);
 Serializer&	Serializer::operator RC(Ruint32, val);
+Serializer&	Serializer::operator RC(Ruint64, val);
 Serializer&	Serializer::operator RC(Rdouble, val);
 Serializer&	Serializer::operator RC(Rfloat, val);
 

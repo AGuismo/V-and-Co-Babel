@@ -17,11 +17,13 @@
 typedef __int8			Rint8;
 typedef __int16			Rint16;
 typedef __int32			Rint32;
+typedef __int64			Rint64;
 
 typedef unsigned __int8		Rbool;
 typedef unsigned __int8		Ruint8;
 typedef unsigned __int16	Ruint16;
 typedef unsigned __int32	Ruint32;
+typedef unsigned __int64	Ruint64;
 
 typedef float			Rfloat;
 typedef double			Rdouble;
@@ -33,11 +35,13 @@ typedef double			Rdouble;
 typedef int8_t			Rint8;		/**< 8 bytes signed int */
 typedef int16_t			Rint16;		/**< 16 bytes signed int */
 typedef int32_t			Rint32;		/**< 32 bytes signed int */
+typedef int64_t			Rint64;		/**< 64 bytes signed int */
 
 typedef uint8_t			Rbool;		/**< boolean */
 typedef uint8_t			Ruint8;		/**< 8 bytes unsigned int */
 typedef uint16_t		Ruint16;	/**< 16 bytes unsigned int */
 typedef uint32_t		Ruint32;	/**< 32 bytes unsigned int */
+typedef uint64_t		Ruint64;	/**< 64 bytes unsigned int */
 
 typedef float			Rfloat;		/**< Simple floating point precision */
 typedef double			Rdouble;	/**< Double floating point precision */
@@ -55,11 +59,14 @@ namespace	request
   typedef std::string	PasswordType;		/**< Password type */
   typedef Ruint8	UsernameLen;		/**< Username Len type */
   typedef std::string	Username;		/**< Username type */
+  typedef Ruint16	MessageLen;		/**< Message Len type */
+  typedef std::string	Message;		/**< Message type */
   typedef Ruint8	Status;			/**< Status type */
   typedef Ruint8	StatusDetailLen;	/**< Status detail Len type */
   typedef std::string	StatusDetail;		/**< Status detail type */
   typedef Ruint16	Port;			/**< Port type */
   typedef Ruint32	IP;			/**< IP type */
+  typedef Ruint64	Time;			/**< Time type */
 
   /** Crypt Trait Class info */
   struct Crypt

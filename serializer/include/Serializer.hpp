@@ -36,9 +36,11 @@ public:
 public:
   Serializer&                 operator<<(const Rint8);
   Serializer&                 operator<<(const Rint32);
+  Serializer&                 operator<<(const Rint64);
   Serializer&                 operator<<(const Rint16);
   Serializer&                 operator<<(const Ruint8);
   Serializer&                 operator<<(const Ruint32);
+  Serializer&                 operator<<(const Ruint64);
   Serializer&                 operator<<(const Ruint16);
   Serializer&                 operator<<(const Rdouble);
   Serializer&                 operator<<(const Rfloat);
@@ -46,9 +48,11 @@ public:
 
   Serializer&                 operator>>(Rint8 &);
   Serializer&                 operator>>(Rint32 &);
+  Serializer&                 operator>>(Rint64 &);
   Serializer&                 operator>>(Rint16 &);
   Serializer&                 operator>>(Ruint8 &);
   Serializer&                 operator>>(Ruint32 &);
+  Serializer&                 operator>>(Ruint64 &);
   Serializer&                 operator>>(Ruint16 &);
   Serializer&                 operator>>(Rdouble &);
   Serializer&                 operator>>(Rfloat &);

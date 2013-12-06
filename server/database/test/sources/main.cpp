@@ -2,6 +2,7 @@
 #include	<fstream>
 #include	<boost/bind.hpp>
 #include	"Database.hh"
+#include	"FriendRequest.hh"
 #include	"MD5.hh"
 
 const char	*red = "\033[22;31m";
@@ -66,6 +67,41 @@ bool	multiple_users()
   return (true);
 }
 
+bool	request_test1()
+{
+  const char	*filename = "./misc/request_test1.db";
+  request::friends::client::Request	req("toto", "tata");
+  std::ofstream	ofs(filename, std::ifstream::trunc);
+
+  Database::getInstance().drop();
+  if (!ofs.is_open())
+    throw std::runtime_error(std::string("can't open ") + filename);
+  ofs.close();
+  if (!Database::getInstance().newClient("toto", md5("poil")))
+    return (false);
+  if (!Database::getInstance().newClient("tata", md5("pwet")))
+    return (false);
+  if (!Database::getInstance().addRequest("toto", req))
+    {
+      std::cout << "Addreq fail" << std::endl;
+      return (false);
+    }
+  if (!Database::getInstance().delRequest("toto", req))
+    {
+      std::cout << "Delreq fail" << std::endl;
+      return (false);
+    }
+  if (!Database::getInstance().saveFile(filename))
+    return (false);
+  if (!Database::getInstance().loadFile(filename))
+    return (false);
+  if (!Database::getInstance().clientExist("toto", md5("poil")))
+    return (false);
+  if (!Database::getInstance().clientExist("tata", md5("pwet")))
+    return (false);
+  return (true);
+}
+
 bool	unitTest(bool (*func)())
 {
   try
@@ -94,4 +130,5 @@ int	main()
   format(unitTest(&empty), "easy test 1: empty file");
   format(unitTest(&single_user), "easy test 2: Single user");
   format(unitTest(&multiple_users), "easy test 3: Mutiple users");
+  format(unitTest(&request_test1), "easy test 4: Simple request");
 }

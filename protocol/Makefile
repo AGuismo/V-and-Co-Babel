@@ -10,6 +10,7 @@ NAME	     ?=	libprotocol.a
 SRCS =	      	ARequest.cpp		\
 		ServerRequest.cpp	\
 		FriendRequest.cpp	\
+		ChatRequest.cpp		\
 		Protocol.cpp		\
 		RequestFactory.cpp	\
 
