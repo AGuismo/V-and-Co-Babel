@@ -48,6 +48,7 @@ namespace	request
     namespace	client
     {
       const char *NewClient::NEW = "New client request";
+      const char *DelClient::DELETE = "Delete client request";
 
       NewClient::NewClient():
 	Auth(request::client::auth::NEW)
@@ -60,7 +61,6 @@ namespace	request
 	Auth(request::client::auth::NEW), _name(name), _password(password), _privacy(privacy)
       {
       }
-
       NewClient::~NewClient()
       {
       }
@@ -129,6 +129,83 @@ namespace	request
 	rhs >> _password;
 
 	rhs >> _privacy;
+	return (rhs);
+      }
+
+      DelClient::DelClient():
+	Auth(request::client::auth::DELETE)
+      {
+      }
+
+      DelClient::DelClient(const request::Username &name,
+			   const request::PasswordType &password):
+	Auth(request::client::auth::DELETE), _name(name), _password(password)
+      {
+      }
+
+      DelClient::~DelClient()
+      {
+      }
+
+      DelClient::DelClient(const DelClient &src) :
+	Auth(request::client::auth::DELETE), _name(src._name), _password(src._password)
+      {
+      }
+
+      DelClient	&DelClient::operator=(const DelClient &src)
+      {
+	if (this != &src)
+	  {
+	    _name = src._name;
+	    _password = src._password;
+	  }
+	return (*this);
+      }
+
+      ARequest	*DelClient::clone()
+      {
+	return (new DelClient());
+      }
+
+      bool	DelClient::operator==(const ARequest *req) const
+      {
+	if (ARequest::operator!=(req))
+	  return (false);
+
+	const DelClient	*tmp = dynamic_cast<const DelClient *>(req);
+	return (tmp->_name == _name && tmp->_password == _password);
+      }
+
+      bool	DelClient::operator!=(const ARequest *req) const
+      {
+	return (!operator==(req));
+      }
+
+      Protocol		&DelClient::serialize(Protocol &rhs) const
+      {
+	UsernameLen	NameLen;
+
+	DelClient::serialize(rhs);
+
+	NameLen = _name.size();
+	rhs << NameLen;
+	rhs.push(_name, NameLen);
+
+	rhs << _password;
+
+	return (rhs);
+      }
+
+      Protocol	&DelClient::unserialize(Protocol &rhs)
+      {
+	UsernameLen	NameLen;
+
+	DelClient::unserialize(rhs);
+
+	rhs >> NameLen;
+	rhs.pop(_name, NameLen);
+
+	rhs >> _password;
 
 	return (rhs);
       }

@@ -47,6 +47,28 @@ namespace	request
 	request::PasswordType	_password;
 	request::Privacy	_privacy;
       };
+
+      class	DelClient : public Auth
+      {
+	static const char	*DELETE;
+
+	DelClient();
+	DelClient(const request::Username &name,
+		  const request::PasswordType &password);
+	~DelClient();
+	DelClient(const DelClient &);
+	DelClient	&operator=(const DelClient &);
+
+	ARequest			*clone();
+	Protocol			&serialize(Protocol &) const;
+	Protocol			&unserialize(Protocol &);
+
+	bool			operator==(const ARequest *req) const;
+	bool			operator!=(const ARequest *req) const;
+
+	request::Username	_name;
+	request::PasswordType	_password;
+      };
     } // !client
   } // !auth
 
