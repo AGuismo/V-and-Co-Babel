@@ -45,7 +45,7 @@ public:
   virtual bool		operator!=(const ARequest *req) const;
 
 protected:
-  request::ID	_code;
+  request::ID		_code;
 };
 
 #endif /* AREQUEST_H_ */

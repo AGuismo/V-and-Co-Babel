@@ -58,13 +58,11 @@ namespace	request
 
     bool	Friend::operator==(const ARequest *req) const
     {
-      std::cout << __PRETTY_FUNCTION__ << std::endl;
       return (ARequest::operator==(req));
     }
 
     bool	Friend::operator!=(const ARequest *req) const
     {
-      std::cout << __PRETTY_FUNCTION__ << std::endl;
       return (ARequest::operator!=(req));
     }
 
@@ -193,7 +191,6 @@ namespace	request
 
       bool	Request::operator==(const ARequest *req) const
       {
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	if (ARequest::operator!=(req))
 	  return (false);
 
@@ -203,7 +200,6 @@ namespace	request
 
       bool	Request::operator!=(const ARequest *req) const
       {
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	return (!operator==(req));
       }
 

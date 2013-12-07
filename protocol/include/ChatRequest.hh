@@ -24,7 +24,7 @@ namespace	request
 
     namespace	client
     {
-      class	Message : public Chat
+      struct	Message : public Chat
       {
 	static const char	*MESSAGE;
 

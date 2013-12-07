@@ -84,26 +84,33 @@ Serializer &	Database::save(Serializer &backup)
   p << clientSize;
   for (client_list::iterator it = _clients.begin(); it != _clients.end(); ++it)
     {
+      request::StatusDetailLen	statusLen = it->statusDetail.size();
+      Ruint16			len;
+      request::UsernameLen	userLen;
+
       p << it->id;
-      Ruint16	len = it->login.size();
-      p << len;
-      p.push(it->login);
+      userLen = it->login.size();
+      p << userLen;
+      p.push(it->login, userLen);
       p.push(it->password, request::Crypt::PASS_SIZE);
       p << it->rights;
       p << it->privacy;
       p << it->status;
-      len = it->statusDetail.size();
-      p << len;
-      p.push(it->statusDetail);
+      p << statusLen;
+      p.push(it->statusDetail, statusLen);
       len = it->friendList.size();
       p << len;
       for (list_friend::iterator itFr = it->friendList.begin(); itFr != it->friendList.end(); ++itFr)
-	p << *itFr;
+	{
+	  ID	id = *itFr;
+
+	  p << id;
+	}
       len = it->waitRequest.size();
       p << len;
       for (list_request::iterator itReq = it->waitRequest.begin();
-	   itReq != it->waitRequest.end(); ++itReq)
-	(*itReq)->serialize(p);
+      	   itReq != it->waitRequest.end(); ++itReq)
+      	(*itReq)->serialize(p);
     }
   backup = p;
   return (backup);
@@ -119,19 +126,20 @@ Serializer &	Database::load(Serializer &backup)
   p >> nbClients;
   for (client_list::size_type it = 0; it < nbClients; ++it)
     {
-      Client	c;
-      Ruint16	len;
+      Client		c;
+      request::UsernameLen	userLen;
+      request::StatusDetailLen	statLen;
+      Ruint16		len;
 
       p >> c.id;
-      p >> len;
-      p.pop(c.login, len);
+      p >> userLen;
+      p.pop(c.login, userLen);
       p.pop(c.password, request::Crypt::PASS_SIZE);
       p >> c.rights;
       p >> c.privacy;
       p >> c.status;
-      p >> len;
-      p.pop(c.statusDetail, len);
-      _clients.push_back(c);
+      p >> statLen;
+      p.pop(c.statusDetail, statLen);
       p >> len;
       for (Ruint16 i = 0; i < len; ++i)
 	{
@@ -142,22 +150,23 @@ Serializer &	Database::load(Serializer &backup)
 	}
       p >> len;
       for (Ruint16 i = 0; i != len; ++i)
-	{
-	  request::ID	id;
-	  ARequest	*req;
+      	{
+      	  request::ID	id;
+      	  ARequest	*req;
 
-	  p >> id;
-	  try
-	    {
-	      req = request::Factory::factory(id);
-	      req->unserialize(p);
-	    }
-	  catch (const ARequest::Exception &e)
-	    {
-	      throw Serializer::invalid_argument("Database Load error");
-	    }
-	  c.waitRequest.push_back(req);
-	}
+      	  p >> id;
+      	  try
+      	    {
+      	      req = request::Factory::factory(id);
+      	      req->unserialize(p);
+      	    }
+      	  catch (const ARequest::Exception &e)
+      	    {
+      	      throw Serializer::invalid_argument("Database Load error");
+      	    }
+      	  c.waitRequest.push_back(req);
+      	}
+      _clients.push_back(c);
     }
   backup = p;
   return (backup);

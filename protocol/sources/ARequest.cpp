@@ -39,13 +39,11 @@ void			ARequest::code(const request::ID code)
 
 bool		ARequest::operator==(const ARequest *req) const
 {
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return (_code == req->_code);
 }
 
 bool		ARequest::operator!=(const ARequest *req) const
 {
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return (_code != req->_code);
 }
 

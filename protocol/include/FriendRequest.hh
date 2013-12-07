@@ -37,12 +37,12 @@ namespace	request
 	Request(const Request &);
 	Request	&operator=(const Request &);
 
-	ARequest			*clone();
-	Protocol			&serialize(Protocol &) const;
-	Protocol			&unserialize(Protocol &);
+	ARequest	*clone();
+	Protocol	&serialize(Protocol &) const;
+	Protocol	&unserialize(Protocol &);
 
-	bool			operator==(const ARequest *req) const;
-	bool			operator!=(const ARequest *req) const;
+	bool		operator==(const ARequest *req) const;
+	bool		operator!=(const ARequest *req) const;
 
 	request::Username	from;
 	request::Username	to;
@@ -58,12 +58,12 @@ namespace	request
 	DelFriend(const DelFriend &);
 	DelFriend	&operator=(const DelFriend &);
 
-	ARequest			*clone();
-	Protocol			&serialize(Protocol &) const;
-	Protocol			&unserialize(Protocol &);
+	ARequest	*clone();
+	Protocol	&serialize(Protocol &) const;
+	Protocol	&unserialize(Protocol &);
 
-	bool			operator==(const ARequest *req) const;
-	bool			operator!=(const ARequest *req) const;
+	bool		operator==(const ARequest *req) const;
+	bool		operator!=(const ARequest *req) const;
 
 	request::Username	from;
 	request::Username	to;
@@ -77,11 +77,11 @@ namespace	request
 	Accept(const request::Username &from, const request::Username &to);
 	~Accept();
 	Accept(const Accept &);
-	Accept	&operator=(const Accept &);
+	Accept			&operator=(const Accept &);
 
-	ARequest			*clone();
-	Protocol			&serialize(Protocol &) const;
-	Protocol			&unserialize(Protocol &);
+	ARequest		*clone();
+	Protocol		&serialize(Protocol &) const;
+	Protocol		&unserialize(Protocol &);
 
 	bool			operator==(const ARequest *req) const;
 	bool			operator!=(const ARequest *req) const;
@@ -98,11 +98,11 @@ namespace	request
 	Refuse(const request::Username &from, const request::Username &to);
 	~Refuse();
 	Refuse(const Refuse &);
-	Refuse	&operator=(const Refuse &);
+	Refuse			&operator=(const Refuse &);
 
-	ARequest			*clone();
-	Protocol			&serialize(Protocol &) const;
-	Protocol			&unserialize(Protocol &);
+	ARequest		*clone();
+	Protocol		&serialize(Protocol &) const;
+	Protocol		&unserialize(Protocol &);
 
 	bool			operator==(const ARequest *req) const;
 	bool			operator!=(const ARequest *req) const;
@@ -118,9 +118,9 @@ namespace	request
 	List();
 	~List();
 	List(const List &);
-	List	&operator=(const List &);
+	List			&operator=(const List &);
 
-	ARequest			*clone();
+	ARequest		*clone();
       };
 
     } // !client
@@ -137,16 +137,16 @@ namespace	request
 	Update(const Update &);
 	Update	&operator=(const Update &);
 
-	ARequest			*clone();
-	Protocol			&serialize(Protocol &) const;
-	Protocol			&unserialize(Protocol &);
+	ARequest		*clone();
+	Protocol		&serialize(Protocol &) const;
+	Protocol		&unserialize(Protocol &);
 
 	bool			operator==(const ARequest *req) const;
 	bool			operator!=(const ARequest *req) const;
 
 	request::Status		status;
 	request::StatusDetail	detail;
-	request::Username		username;
+	request::Username	username;
       };
 
     } // !server

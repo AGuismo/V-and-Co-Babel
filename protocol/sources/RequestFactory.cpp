@@ -2,12 +2,31 @@
 #include	"RequestFactory.hh"
 #include	"Protocol.hpp"
 #include	"ARequest.hh"
+#include	"FriendRequest.hh"
+#include	"ServerRequest.hh"
+#include	"ChatRequest.hh"
 
 namespace	request
 {
 
   Factory::Factory()
   {
+    _lnk[request::server::OK] = new request::server::Ok;
+    _lnk[request::server::BAD_REQ] = new request::server::BadRequest;
+    _lnk[request::server::FORBIDDEN] = new request::server::Forbidden;
+    _lnk[request::server::NOT_IMPLEMENTED] = new request::server::NotImplemented;
+    _lnk[request::server::NO_CONTENT] = new request::server::NoContent;
+    _lnk[request::server::PARTIAL_CONTENT] = new request::server::PartialContent;
+    _lnk[request::server::NO_SLOTS] = new request::server::NoSlots;
+
+    _lnk[request::server::friends::UPDATE] = new request::friends::server::Update;
+    _lnk[request::client::friends::REQUEST] = new request::friends::client::Request;
+    _lnk[request::client::friends::DEL_FRIEND] = new request::friends::client::DelFriend;
+    _lnk[request::client::friends::ACCEPT] = new request::friends::client::Accept;
+    _lnk[request::client::friends::REFUSE] = new request::friends::client::Refuse;
+    _lnk[request::client::friends::LIST] = new request::friends::client::List;
+
+    _lnk[request::client::chat::MESSAGE] = new request::chat::client::Message;
   }
 
   Factory::~Factory()

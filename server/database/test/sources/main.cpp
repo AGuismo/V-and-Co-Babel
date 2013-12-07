@@ -82,15 +82,7 @@ bool	request_test1()
   if (!Database::getInstance().newClient("tata", md5("pwet")))
     return (false);
   if (!Database::getInstance().addRequest("toto", req))
-    {
-      std::cout << "Addreq fail" << std::endl;
-      return (false);
-    }
-  if (!Database::getInstance().delRequest("toto", req))
-    {
-      std::cout << "Delreq fail" << std::endl;
-      return (false);
-    }
+    return (false);
   if (!Database::getInstance().saveFile(filename))
     return (false);
   if (!Database::getInstance().loadFile(filename))
@@ -98,6 +90,8 @@ bool	request_test1()
   if (!Database::getInstance().clientExist("toto", md5("poil")))
     return (false);
   if (!Database::getInstance().clientExist("tata", md5("pwet")))
+    return (false);
+  if (!Database::getInstance().delRequest("toto", req))
     return (false);
   return (true);
 }

@@ -76,8 +76,8 @@ public:
   struct			Client
   {
     ID				id;
-    std::string			login;
-    std::string			statusDetail;
+    request::Username		login;
+    request::Username		statusDetail;
     request::Status		status;
     request::Privacy		privacy;
     request::PasswordType	password;
@@ -127,7 +127,7 @@ private:
       virtual bool	operator()(const Client obj) const
       {
 	for (list_request::const_iterator it = obj.waitRequest.begin(); it != obj.waitRequest.end(); ++it)
-	  if (_req == *it)
+	  if (*(*it) == &_req)
 	    return (true);
 	return (false);
       }
@@ -186,9 +186,10 @@ bool		Database::addRequest(const request::Username &login, const Request &req)
 
   if (itClient != _clients.end())
     return (false);
+  itClient = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
+  if (itClient == _clients.end())
+    return (false);
 
-  std::cout << &(*itClient) << std::endl;
-  std::cout << &(_clients.front()) << std::endl;
   itClient->waitRequest.push_back(new Request(req));
   return (true);
 }
@@ -206,7 +207,6 @@ bool		Database::delRequest(const request::Username &login, const Request &req)
        itReq != itClient->waitRequest.end(); ++itReq)
     if (req.operator==(*itReq))
       {
-	delete *itReq;
 	itClient->waitRequest.erase(itReq);
 	return (true);
       }
