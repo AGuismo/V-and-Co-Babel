@@ -18,6 +18,9 @@ ConsumerParser::~ConsumerParser()
 
 void	ConsumerParser::saveContext()
 {
+#if defined(DEBUG)
+  std::cout << "ConsumerParser::saveContext()" << std::endl;
+#endif
   // std::cout << "~~~ Save context at pos " << std::distance(_inputData.begin(), _rwHeader)
   // 	    << " (Character : {" << *_rwHeader << "})" << std::endl;
   _contexts.push(_rwHeader);
@@ -25,6 +28,9 @@ void	ConsumerParser::saveContext()
 
 void	ConsumerParser::restoreContext()
 {
+#if defined(DEBUG)
+  std::cout << "ConsumerParser::restoreContext()" << std::endl;
+#endif
   _rwHeader = _contexts.top();
   _contexts.pop();
   // std::cout << "~~~ Restore context at pos " << std::distance(_inputData.begin(), _rwHeader)
@@ -36,13 +42,19 @@ bool		ConsumerParser::addData()
 {
   std::string	out;
 
+#if defined(DEBUG)
+  std::cout << "ConsumerParser::addData()" << std::endl;
+#endif
   try
     {
       out = _stream.nextString();
     }
-  catch (const ProducterStream::Exception &e)
+  catch (const std::runtime_error &e)
     {
       _isEOF = true;
+#if defined(DEBUG)
+      std::cout << "ConsumerParser::addData(): " << "Fail" << std::endl;
+#endif
       return (false);
     }
   _inputData += out;
@@ -51,6 +63,9 @@ bool		ConsumerParser::addData()
 
 bool		ConsumerParser::skipBlanks()
 {
+#if defined(DEBUG)
+      std::cout << "ConsumerParser::skipBlanks(): " << std::endl;
+#endif
   while (std::isspace(*_rwHeader))
     {
       _rwHeader++;
@@ -68,6 +83,9 @@ void		ConsumerParser::skipBlank(bool skipped)
 
 bool		ConsumerParser::readText(char *text)
 {
+#if defined(DEBUG)
+      std::cout << "ConsumerParser::readText(): " << std::endl;
+#endif
   saveContext();
   if (_skipBlank)
     skipBlanks();
@@ -90,6 +108,9 @@ bool		ConsumerParser::readText(char *text)
 
 bool		ConsumerParser::readEOF()
 {
+#if defined(DEBUG)
+      std::cout << "ConsumerParser::readEOF(): " << std::endl;
+#endif
   if (_skipBlank)
     skipBlanks();
   if (_isEOF && _rwHeader == _inputData.end())
@@ -99,6 +120,9 @@ bool		ConsumerParser::readEOF()
 
   bool		ConsumerParser::readUntil(char c, std::string &output)
 {
+#if defined(DEBUG)
+      std::cout << "ConsumerParser::readUntil(): " << std::endl;
+#endif
   if (_rwHeader == _inputData.end() && !addData())
     return (false);
   saveContext();
@@ -130,6 +154,9 @@ bool		ConsumerParser::readInteger(std::string &output)
 {
   bool		isNum = false;
 
+#if defined(DEBUG)
+      std::cout << "ConsumerParser::readInteger(): " << std::endl;
+#endif
   saveContext();
   if (_skipBlank)
     skipBlanks();
@@ -151,6 +178,9 @@ bool		ConsumerParser::readInteger(std::string &output)
 
 bool		ConsumerParser::readIdentifier(std::string &output)
 {
+#if defined(DEBUG)
+      std::cout << "ConsumerParser::readIdentifier(): " << std::endl;
+#endif
   if (_rwHeader == _inputData.end() && !addData())
       return (false);
   saveContext();

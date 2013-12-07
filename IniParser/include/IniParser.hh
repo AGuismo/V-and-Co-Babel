@@ -27,7 +27,7 @@ namespace	parser
   private:
     bool	readIni();
     bool	readSection();
-    bool	readVars();
+    bool	readVars(key &, value &);
     bool	readValue(value &);
     bool	readKey(key &);
 

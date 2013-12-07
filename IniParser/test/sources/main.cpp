@@ -43,7 +43,7 @@ int			main(int ac, char *av[])
       std::cerr << "Unable to load file: " << av[1] << std::endl;
       return (0);
     }
-  ini.addKey("user", "name");
+  ini.addKey("user", "username");
   ini.addKey("user", "password");
   ini.addKey("user", "age");
   ini.addKey("user", "birthday");
