@@ -33,6 +33,7 @@ void		Client::handle_write(const boost::system::error_code& error,
 #if defined(DEBUG)
       std::cerr << "Error when writing data" << std::endl;
 #endif
+      (void)bytes_transferred;
       _server->handleClientClose(share());
     }
 }
@@ -53,6 +54,7 @@ void		Client::handle_read(const boost::system::error_code& error,
 #if defined(DEBUG)
       std::cerr << "Error when reading data" << std::endl;
 #endif
+      (void)bytes_transferred;
       _server->handleClientClose(share());
     }
 }
