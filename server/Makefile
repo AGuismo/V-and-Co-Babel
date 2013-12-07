@@ -6,6 +6,7 @@ SRCS =	      	main.cpp		\
 		Client.cpp		\
 
 DIR.DB=		./database
+DIR.INIPARSER=	../IniParser
 DIR.SERIALIZER=	../serializer/
 DIR.PROTOCOL=	../protocol/
 
@@ -13,7 +14,9 @@ DEPS.INC=
 DEPS.LNK=
 
 MOD.INC=	-I$(DIR.DB)/include -I$(DIR.PROTOCOL)/include -I$(DIR.SERIALIZER)/include
+MOD.INC+=	-I$(DIR.INIPARSER)/include
 MOD.LNK=	-L$(DIR.DB) -ldb -L$(DIR.PROTOCOL) -lprotocol -L$(DIR.SERIALIZER) -lserialize
+MOD.LNK+=	-L$(DIR.INIPARSER) -liniparser
 
 F.C	     +=	-W -Wall
 F.I	     += $(MOD.INC) $(DEPS.INC) -I./include
@@ -27,6 +30,7 @@ $(NAME):	compile_mods compile
 compile_mods:
 		@$(ECHO) $(ES) "Compile Modules" $(EE)
 		@make --no-print-directory -C $(DIR.DB) all F.D=$(F.D)
+		@make --no-print-directory -C $(DIR.INIPARSER) all F.D=$(F.D)
 		@make --no-print-directory -C $(DIR.SERIALIZER) all F.D=$(F.D)
 		@make --no-print-directory -C $(DIR.PROTOCOL) all F.D=$(F.D)
 
@@ -36,6 +40,7 @@ compile_deps:
 clean_mods:
 		@$(ECHO) $(ES) "Clean Modules" $(EE)
 		@make --no-print-directory -C $(DIR.DB) clean
+		@make --no-print-directory -C $(DIR.INIPARSER) clean
 		@make --no-print-directory -C $(DIR.SERIALIZER) clean
 		@make --no-print-directory -C $(DIR.PROTOCOL) clean
 
@@ -45,6 +50,7 @@ clean_deps:
 fclean_mods:
 		@$(ECHO) $(ES) "Full clean Modules" $(EE)
 		@make --no-print-directory -C $(DIR.DB) fclean
+		@make --no-print-directory -C $(DIR.INIPARSER) fclean
 		@make --no-print-directory -C $(DIR.SERIALIZER) fclean
 		@make --no-print-directory -C $(DIR.PROTOCOL) fclean
 
