@@ -13,13 +13,13 @@ DIR.PROTOCOL=	../protocol/
 DEPS.INC=
 DEPS.LNK=
 
-MOD.INC=	-I$(DIR.DB)/include -I$(DIR.PROTOCOL)/include -I$(DIR.SERIALIZER)/include
-MOD.INC+=	-I$(DIR.INIPARSER)/include
+MOD.INC=	-I$(DIR.DB)/include -I$(DIR.PROTOCOL)/include -I$(DIR.PROTOCOL)/API
+MOD.INC+=	-I$(DIR.INIPARSER)/include -I$(DIR.SERIALIZER)/include
 MOD.LNK=	-L$(DIR.DB) -ldb -L$(DIR.PROTOCOL) -lprotocol -L$(DIR.SERIALIZER) -lserialize
 MOD.LNK+=	-L$(DIR.INIPARSER) -liniparser
 
 F.C	     +=	-W -Wall
-F.I	     += $(MOD.INC) $(DEPS.INC) -I./include
+F.I	     += $(MOD.INC) $(DEPS.INC)
 F.L	     += $(MOD.LNK) $(DEPS.LNK) -lboost_system -lboost_thread -lpthread
 F.D	     +=
 

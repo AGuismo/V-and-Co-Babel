@@ -24,6 +24,7 @@ public:
   void	init();
   void	run();
   void	handleClientClose(Client::Pointer clientClosed);
+  void	handle_request(Client::Pointer from, const ARequest *);
 
 private:
   void	start_accept();

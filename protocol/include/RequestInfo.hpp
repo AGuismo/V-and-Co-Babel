@@ -7,16 +7,6 @@
 
 namespace	request
 {
-  // struct	detail
-  // {
-  //   static const char	*OK;
-  //   static const char	*BAD_REQ;
-  //   static const char	*FORBIDDEN;
-  //   static const char	*NOT_IMPLEMENTED;
-  //   static const char	*NO_CONTENT;
-  //   static const char	*PARTIAL_CONTENT;
-  //   static const char	*NO_SLOTS;
-  // };
 
   template <typename T> struct	Info;
 

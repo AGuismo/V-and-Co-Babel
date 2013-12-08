@@ -16,10 +16,10 @@ Protocol::Protocol(const Serializer &src)
   _container = src.content();
 }
 
-ARequest		*Protocol::consume(std::vector<Byte> &input, int &extracted)
+ARequest		*Protocol::consume(const serialized_data &input, int &extracted)
 {
   Protocol		p;
-  request::ID	code;
+  request::ID		code;
   ARequest		*req;
 
 #if defined(DEBUG)
@@ -47,10 +47,10 @@ ARequest		*Protocol::consume(std::vector<Byte> &input, int &extracted)
   return (req);
 }
 
-std::vector<Protocol::Byte>	Protocol::product(const ARequest &output)
+Protocol::serialized_data	Protocol::product(const ARequest &output)
 {
   Protocol		p;
-  std::vector<Byte>	bytes;
+  serialized_data	bytes;
 
 #if defined(DEBUG)
   std::cout << "Protocol::product(): " << "Request id -" << output.code() << "- Contruction..." << std::endl;

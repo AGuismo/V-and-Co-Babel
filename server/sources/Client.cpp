@@ -2,7 +2,7 @@
 #include	"Server.hh"
 
 Client::Client(boost::asio::io_service &service, Server *server) :
-  _service(service), _socket(service), _server(server)
+  _service(service), _input(DEFAULT_SIZE), _socket(service), _server(server)
 {
 }
 
@@ -26,7 +26,7 @@ void		Client::handle_write(const boost::system::error_code& error,
 #if defined(DEBUG)
       std::cout << "Send: " << bytes_transferred << " octets" << std::endl;
 #endif
-      Receive();
+      async_read();
     }
   else
     {
@@ -38,16 +38,51 @@ void		Client::handle_write(const boost::system::error_code& error,
     }
 }
 
+void		Client::handle_request(const ARequest *req)
+{
+  _server->handle_request(shared_from_this(), req);
+}
+
+bool		Client::unserialize_data(buffer &buff)
+{
+  int		extracted;
+  ARequest	*req;
+
+  try
+    {
+      req = Protocol::consume(buff, extracted);
+    }
+  catch (const Protocol::ConstructRequest &e)
+    {
+      return (false);
+    }
+  buff.erase(buff.begin(), buff.begin() + extracted);
+  handle_request(req);
+  delete req;
+  return (true);
+}
+
 void		Client::handle_read(const boost::system::error_code& error,
 				    std::size_t bytes_transferred)
 {
+  buffer	data(_bufferised.size() + bytes_transferred);
+
   if (!error)
     {
 #if defined(DEBUG)
       std::cout << "Received: " << bytes_transferred << " octets: \"" << _received.data() << "\"" << std::endl;
 #endif
-      _received.assign(0);
-      Receive();
+      if (!_bufferised.empty())
+	{
+	  data.insert(data.end(), _bufferised.begin(), _bufferised.end());
+	}
+      data.insert(data.end(), _input.begin(), _input.end());
+      while (unserialize_data(data));
+      if (data.empty())
+	_bufferised.clear();
+      else
+	_bufferised = data;
+      async_read();
     }
   else
     {
@@ -59,17 +94,18 @@ void		Client::handle_read(const boost::system::error_code& error,
     }
 }
 
-void		Client::Send()
+template <typename BUFF>
+void		Client::async_write(const BUFF &buff)
 {
-  boost::asio::async_write(_socket, boost::asio::buffer("Hello World !"),
+  boost::asio::async_write(_socket, boost::asio::buffer(buff),
 			   boost::bind(&Client::handle_write, shared_from_this(),
 				       boost::asio::placeholders::error,
 				       boost::asio::placeholders::bytes_transferred));
 }
 
-void		Client::Receive()
+void		Client::async_read()
 {
-  _socket.async_read_some(boost::asio::buffer(_received),
+  _socket.async_read_some(boost::asio::buffer(_input),
 			  boost::bind(&Client::handle_read, shared_from_this(),
 				      boost::asio::placeholders::error,
 				      boost::asio::placeholders::bytes_transferred));
@@ -77,7 +113,7 @@ void		Client::Receive()
 
 void		Client::start()
 {
-  Send();
+  async_write("Hello World!");
 }
 
 tcp::socket&	Client::socket()

@@ -67,6 +67,15 @@ namespace	request
   typedef Ruint16	Port;			/**< Port type */
   typedef Ruint32	IP;			/**< IP type */
   typedef Ruint64	Time;			/**< Time type */
+  typedef Ruint8	IdxAnswer;		/**< Idx of the answer type */
+  typedef Ruint16	AnswerLen;		/**< Size of the answer type */
+  typedef std::string	Answer;			/**< Answer type */
+  typedef Ruint8	FromLen;		/**< Size of the name of the sender type */
+  typedef std::string	From;			/**< Name of the sender type */
+  typedef Rdouble	SinceWhen;		/**< Time when the message was received type */
+  typedef Ruint8	Options;		/**< Options type */
+  typedef Ruint16	MsgLen;			/**< Size of the message type */
+  typedef std::string	Msg;			/**< message type */
 
   /** Crypt Trait Class info */
   struct Crypt
@@ -95,6 +104,6 @@ namespace	request
 
   };
 
-}
+} // !request
 
 #endif /* TYPES_H_ */

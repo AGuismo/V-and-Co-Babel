@@ -30,6 +30,11 @@ void	Server::run()
   _service.run();
 }
 
+void	Server::handle_request(Client::Pointer from, const ARequest *req)
+{
+
+}
+
 void	Server::handle_accept(Client::Pointer new_connection,
 			      const boost::system::error_code& error)
 {

@@ -26,14 +26,17 @@ public:
   private:
     std::string		_what;
   };
+public:
+  typedef Serializer::Byte	Byte;
+  typedef std::vector<Byte>	serialized_data;
 
 public:
   Protocol();
   virtual ~Protocol();
 
 public:
-  static ARequest			*consume(std::vector<Serializer::Byte> &, int &);
-  static std::vector<Serializer::Byte>	product(const ARequest &);
+  static ARequest		*consume(const serialized_data &, int &);
+  static serialized_data	product(const ARequest &);
 
 public:
   Protocol(const Serializer &);

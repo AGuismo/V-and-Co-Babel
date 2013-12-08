@@ -5,6 +5,8 @@
 # include	<boost/bind.hpp>
 # include	<boost/shared_ptr.hpp>
 # include	<boost/enable_shared_from_this.hpp>
+# include	<vector>
+# include	"Protocol.hpp"
 
 using	boost::asio::ip::tcp;
 class	Server;
@@ -12,7 +14,9 @@ class	Server;
 class Client : public boost::enable_shared_from_this<Client>
 {
 public:
-  typedef boost::shared_ptr<Client> Pointer;
+  static const int					DEFAULT_SIZE = 1024;
+  typedef boost::shared_ptr<Client>			Pointer;
+  typedef Protocol::serialized_data			buffer;
 
 public:
   static Pointer create(boost::asio::io_service& io_service, Server *);
@@ -20,6 +24,8 @@ public:
   virtual ~Client();
 
 private:
+  bool		unserialize_data(buffer &buff);
+  void		handle_request(const ARequest *req);
   void		handle_write(const boost::system::error_code& error,
 			     std::size_t bytes_transferred);
   void		handle_read(const boost::system::error_code& error,
@@ -27,8 +33,9 @@ private:
 
 public:
   void		start();
-  void		Send();
-  void		Receive();
+  void		async_read();
+  template <typename BUFF>
+  void		async_write(const BUFF &buff);
   tcp::socket	&socket();
   Pointer	share();
 
@@ -38,7 +45,8 @@ private:
 
 private:
   boost::asio::io_service	&_service;
-  boost::array<char, 1024>	_received;
+  buffer			_input;
+  buffer			_bufferised;
   tcp::socket			_socket;
   Server			*_server;
 };
