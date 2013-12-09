@@ -42,7 +42,7 @@
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include;c:\local\boost_1_55_0</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include;c:\local\boost_1_55_0\</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
