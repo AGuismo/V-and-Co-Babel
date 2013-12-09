@@ -16,6 +16,12 @@ void	Application::init()
     {
       _server.init();
     }
+  catch (const Server::Exception &e)
+    {
+      std::cerr << "Failed to load due to Server init exception: "
+		<< e.what() << std::endl;
+      throw InitExcept("Unable to load Application");
+    }
   catch (...)
     {
       std::cerr << "An exception has occured" << std::endl;

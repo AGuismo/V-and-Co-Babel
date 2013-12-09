@@ -1,6 +1,7 @@
 #include	<boost/asio.hpp>
 #include	<boost/bind.hpp>
 #include	"Server.hh"
+#include	"IRequestPlugin.hh"
 
 Server::Server(boost::asio::io_service &service) :
   _service(service), _acceptor(service)
@@ -19,6 +20,15 @@ void	Server::init()
 {
   boost::asio::ip::tcp::endpoint	endpoint(boost::asio::ip::tcp::v4(), 44201);
 
+  try
+    {
+      _plugs.addPlugin("auth", request::PluginManager::loadPlugin("./misc/lib/auth.dll"));
+    }
+  catch (const plugin::Exception &e)
+    {
+      std::cerr << "Server::init() failed to load: " << e.what() << std::endl;
+      throw Server::Exception("Failed to load plugins");
+    }
   _acceptor.open(endpoint.protocol());
   _acceptor.bind(endpoint);
   _acceptor.listen();
@@ -59,4 +69,39 @@ void Server::start_accept()
 			 boost::bind(&Server::handle_accept, this, new_connection,
 				     boost::asio::placeholders::error));
   _clientList.push_back(new_connection->share());
+}
+
+
+///////////////////////
+//  Exception Class  //
+///////////////////////
+
+Server::Exception::Exception(const std::string &what) throw() :
+  _what(what)
+{
+
+}
+
+Server::Exception::Exception(const Exception &src) throw() :
+  _what(src._what)
+{
+
+}
+
+Server::Exception::~Exception() throw()
+{
+}
+
+Server::Exception	&Server::Exception::operator=(const Server::Exception &src) throw()
+{
+  if (&src != this)
+    {
+      _what = src._what;
+    }
+  return (*this);
+}
+
+const char	*Server::Exception::what() const throw()
+{
+  return (_what.c_str());
 }
