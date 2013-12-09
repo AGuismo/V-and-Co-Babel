@@ -12,6 +12,7 @@ var searchData=
   ['rbool',['Rbool',['../types_8hh.html#a9faa2a0118022c3006e584dc7f157074',1,'types.hh']]],
   ['rdouble',['Rdouble',['../types_8hh.html#a363f442056b3421890e95fabe6b2dda4',1,'types.hh']]],
   ['refuse',['REFUSE',['../namespacerequest_1_1client_1_1friends.html#abadfc74e4b26ecc2d85f9a4464fec0ee',1,'request::client::friends::REFUSE()'],['../namespacerequest_1_1client_1_1call.html#a13252405741762796d49c3a93dbb67dc',1,'request::client::call::REFUSE()']]],
+  ['remove',['REMOVE',['../namespacerequest_1_1client_1_1auth.html#ad1f404cb0f9a29c909b00800b85e2521',1,'request::client::auth']]],
   ['request',['request',['../namespacerequest.html',1,'request'],['../namespacerequest_1_1client_1_1friends.html#af55c4b0c96e965e72971c39e2f0d12bb',1,'request::client::friends::REQUEST()']]],
   ['requestcode_2ehh',['RequestCode.hh',['../RequestCode_8hh.html',1,'']]],
   ['rfloat',['Rfloat',['../types_8hh.html#a465db05c928c957795cc9ea753af0554',1,'types.hh']]],
