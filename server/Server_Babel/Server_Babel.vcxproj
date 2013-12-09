@@ -10,32 +10,19 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\include\Database.hh" />
-    <ClInclude Include="..\include\IDatabase.hh" />
-    <ClInclude Include="..\include\ISavable.hh" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\sources\Database.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\serializer\serializer\serializer.vcxproj">
-      <Project>{75219cf9-86e6-419b-b2e7-31eeb47ac113}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D08B4714-51F4-457C-9E5D-36C528F9F78B}</ProjectGuid>
-    <RootNamespace>Database</RootNamespace>
+    <ProjectGuid>{5CAE6F42-AFBD-4895-9310-9C6B48F47DAD}</ProjectGuid>
+    <RootNamespace>Server_Babel</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -52,20 +39,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\protocol\API;c:\local\boost_1_55_0\;$(ProjectDir)\..\..\..\protocol\include;$(ProjectDir)\..\..\..\serializer\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include;c:\local\boost_1_55_0</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\protocol\API;c:\local\boost_1_55_0\;$(ProjectDir)\..\..\..\protocol\include;$(ProjectDir)\..\..\..\serializer\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32;DEBUG</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-gd-1_55.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>c:\local\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,14 +64,43 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>c:\local\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\Application.hh" />
+    <ClInclude Include="..\include\Client.hh" />
+    <ClInclude Include="..\include\IAuthPlugin.hh" />
+    <ClInclude Include="..\include\IPlugin.hh" />
+    <ClInclude Include="..\include\PluginManager.hh" />
+    <ClInclude Include="..\include\Server.hh" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\sources\Application.cpp" />
+    <ClCompile Include="..\sources\Client.cpp" />
+    <ClCompile Include="..\sources\main.cpp" />
+    <ClCompile Include="..\sources\Server.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\IniParser\IniParser\IniParser.vcxproj">
+      <Project>{d3f438a3-5528-421b-916f-837a8f38cb10}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\protocol\Protocol\Protocol.vcxproj">
+      <Project>{d69a5c00-cd7c-4ba7-a23e-4d2bb1d8b76c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\serializer\serializer\serializer.vcxproj">
+      <Project>{75219cf9-86e6-419b-b2e7-31eeb47ac113}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\database\Database\Database.vcxproj">
+      <Project>{d08b4714-51f4-457c-9e5d-36c528f9f78b}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

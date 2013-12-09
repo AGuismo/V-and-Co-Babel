@@ -40,11 +40,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetExt>.lib</TargetExt>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\..\include;$(ProjectDir)\..\..\..\libraries\network\network\include;$(ProjectDir)\..\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\API;$(ProjectDir)\..\..\serializer\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetExt>.lib</TargetExt>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\..\include;$(ProjectDir)\..\..\..\libraries\network\network\include;$(ProjectDir)\..\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(ProjectDir)\..\include;$(ProjectDir)\..\API;$(ProjectDir)\..\..\serializer\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -73,58 +73,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\sources\AGameRequest.cpp" />
-    <ClCompile Include="..\sources\AliveRequest.cpp" />
-    <ClCompile Include="..\sources\ARequest.cpp" />
-    <ClCompile Include="..\sources\AuthRequest.cpp" />
-    <ClCompile Include="..\sources\BuffRequest.cpp" />
-    <ClCompile Include="..\sources\ChatRecvRequest.cpp" />
-    <ClCompile Include="..\sources\ChatSendRequest.cpp" />
-    <ClCompile Include="..\sources\DeathRequest.cpp" />
-    <ClCompile Include="..\sources\ElemRequest.cpp" />
-    <ClCompile Include="..\sources\EventRequest.cpp" />
-    <ClCompile Include="..\sources\LeaveRequest.cpp" />
-    <ClCompile Include="..\sources\LooseRequest.cpp" />
-    <ClCompile Include="..\sources\NextStage.cpp" />
-    <ClCompile Include="..\sources\PartyRequest.cpp" />
-    <ClCompile Include="..\sources\Protocol.cpp" />
-    <ClCompile Include="..\sources\RequestFactory.cpp" />
-    <ClCompile Include="..\sources\RootRequest.cpp" />
-    <ClCompile Include="..\sources\ScoreRequest.cpp" />
-    <ClCompile Include="..\sources\ServerRequest.cpp" />
-    <ClCompile Include="..\sources\SessionRequest.cpp" />
-    <ClCompile Include="..\sources\VictoryRequest.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\include\AGameRequest.hh" />
-    <ClInclude Include="..\include\AliveRequest.h" />
+    <ClInclude Include="..\API\ITransformers.hh" />
+    <ClInclude Include="..\API\RequestCode.hh" />
+    <ClInclude Include="..\API\types.hh" />
     <ClInclude Include="..\include\ARequest.hh" />
     <ClInclude Include="..\include\AuthRequest.hh" />
-    <ClInclude Include="..\include\BuffRequest.h" />
-    <ClInclude Include="..\include\ChatRecvRequest.h" />
-    <ClInclude Include="..\include\ChatSendRequest.h" />
-    <ClInclude Include="..\include\DeathRequest.h" />
-    <ClInclude Include="..\include\ElemRequest.hh" />
-    <ClInclude Include="..\include\EventRequest.hh" />
-    <ClInclude Include="..\include\ITransformers.hh" />
-    <ClInclude Include="..\include\LeaveRequest.h" />
-    <ClInclude Include="..\include\LooseRequest.h" />
-    <ClInclude Include="..\include\NextStage.hh" />
-    <ClInclude Include="..\include\PartyRequest.hh" />
+    <ClInclude Include="..\include\ChatRequest.hh" />
+    <ClInclude Include="..\include\FriendRequest.hh" />
     <ClInclude Include="..\include\Protocol.hpp" />
-    <ClInclude Include="..\include\RequestCode.hh" />
     <ClInclude Include="..\include\RequestFactory.hh" />
     <ClInclude Include="..\include\RequestInfo.hpp" />
-    <ClInclude Include="..\include\RootRequest.hh" />
-    <ClInclude Include="..\include\ScoreRequest.h" />
     <ClInclude Include="..\include\ServerRequest.hh" />
-    <ClInclude Include="..\include\SessionRequest.hh" />
-    <ClInclude Include="..\include\types.hh" />
-    <ClInclude Include="..\include\VictoryRequest.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\libraries\network\network\network.vcxproj">
-      <Project>{42c7e464-716a-4975-83ca-a8445b8abf0e}</Project>
+    <ClCompile Include="..\sources\ARequest.cpp" />
+    <ClCompile Include="..\sources\AuthRequest.cpp" />
+    <ClCompile Include="..\sources\ChatRequest.cpp" />
+    <ClCompile Include="..\sources\FriendRequest.cpp" />
+    <ClCompile Include="..\sources\Protocol.cpp" />
+    <ClCompile Include="..\sources\RequestFactory.cpp" />
+    <ClCompile Include="..\sources\ServerRequest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\serializer\serializer\serializer.vcxproj">
+      <Project>{75219cf9-86e6-419b-b2e7-31eeb47ac113}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

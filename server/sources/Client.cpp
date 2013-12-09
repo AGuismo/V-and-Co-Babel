@@ -70,7 +70,7 @@ void		Client::handle_read(const boost::system::error_code& error,
   if (!error)
     {
 #if defined(DEBUG)
-      std::cout << "Received: " << bytes_transferred << " octets: \"" << _received.data() << "\"" << std::endl;
+      std::cout << "Received: " << bytes_transferred << " octets: \"" << _input.data() << "\"" << std::endl;
 #endif
       if (!_bufferised.empty())
 	{

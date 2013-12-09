@@ -1,5 +1,6 @@
 #include	<ctype.h>
 #include	<cstring>
+#include	<locale>
 #include	<stdexcept>
 #include	"ConsumerParser.hpp"
 #include	"ProducterStream.hpp"
@@ -51,7 +52,8 @@ bool		ConsumerParser::addData()
     }
   catch (const std::runtime_error &e)
     {
-      _isEOF = true;
+	  (void)e;
+	  _isEOF = true;
 #if defined(DEBUG)
       std::cout << "ConsumerParser::addData(): " << "Fail" << std::endl;
 #endif
@@ -66,7 +68,7 @@ bool		ConsumerParser::skipBlanks()
 #if defined(DEBUG)
       std::cout << "ConsumerParser::skipBlanks(): " << std::endl;
 #endif
-  while (std::isspace(*_rwHeader))
+  while (std::isspace(*_rwHeader, std::locale()))
     {
       _rwHeader++;
       if (_rwHeader == _inputData.end())
@@ -164,7 +166,7 @@ bool		ConsumerParser::readInteger(std::string &output)
     {
       if (_rwHeader == _inputData.end() && !addData())
 	break;
-      if (!std::isdigit(*_rwHeader))
+      if (!std::isdigit(*_rwHeader, std::locale()))
       	break;
       isNum = true;
       output.push_back(*_rwHeader);
@@ -186,7 +188,7 @@ bool		ConsumerParser::readIdentifier(std::string &output)
   saveContext();
   if (_skipBlank)
     skipBlanks();
-  if (!(std::isalpha(*_rwHeader) || *_rwHeader == '_'))
+  if (!(std::isalpha(*_rwHeader, std::locale()) || *_rwHeader == '_'))
     {
       restoreContext();
       return (false);
@@ -197,7 +199,7 @@ bool		ConsumerParser::readIdentifier(std::string &output)
     {
       if (_rwHeader == _inputData.end() && !addData())
 	break;
-      if (!(std::isalnum(*_rwHeader) || *_rwHeader == '_'))
+	  if (!(std::isalnum(*_rwHeader, std::locale()) || *_rwHeader == '_'))
 	break;
       output.push_back(*_rwHeader);
       ++_rwHeader;

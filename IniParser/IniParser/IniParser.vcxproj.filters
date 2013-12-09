@@ -15,18 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\Database.hh">
+    <ClInclude Include="..\include\ConsumerParser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\IDatabase.hh">
+    <ClInclude Include="..\include\IniParser.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\ISavable.hh">
+    <ClInclude Include="..\include\ProducterStream.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\sources\Database.cpp">
+    <ClCompile Include="..\sources\ConsumerParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sources\IniParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sources\ProducterStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

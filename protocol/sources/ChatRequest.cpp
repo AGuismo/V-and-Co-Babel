@@ -104,7 +104,7 @@ namespace	request
 	UsernameLen	UserLen;
 	MessageLen	MsgLen;
 
-	Message::serialize(rhs);
+	Chat::serialize(rhs);
 
 	UserLen = from.size();
 	rhs << UserLen;
@@ -127,7 +127,7 @@ namespace	request
 	UsernameLen	UserLen;
 	MessageLen	MsgLen;
 
-	Message::unserialize(rhs);
+	Chat::unserialize(rhs);
 
 	rhs >> UserLen;
 	rhs.pop(from, UserLen);

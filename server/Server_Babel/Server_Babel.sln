@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server_Babel", "Server_Babel.vcxproj", "{5CAE6F42-AFBD-4895-9310-9C6B48F47DAD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C} = {D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}
+		{D08B4714-51F4-457C-9E5D-36C528F9F78B} = {D08B4714-51F4-457C-9E5D-36C528F9F78B}
+		{D3F438A3-5528-421B-916F-837A8F38CB10} = {D3F438A3-5528-421B-916F-837A8F38CB10}
+		{75219CF9-86E6-419B-B2E7-31EEB47AC113} = {75219CF9-86E6-419B-B2E7-31EEB47AC113}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "serializer", "..\..\serializer\serializer\serializer.vcxproj", "{75219CF9-86E6-419B-B2E7-31EEB47AC113}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IniParser", "..\..\IniParser\IniParser\IniParser.vcxproj", "{D3F438A3-5528-421B-916F-837A8F38CB10}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Protocol", "..\..\protocol\Protocol\Protocol.vcxproj", "{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75219CF9-86E6-419B-B2E7-31EEB47AC113} = {75219CF9-86E6-419B-B2E7-31EEB47AC113}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Database", "..\database\Database\Database.vcxproj", "{D08B4714-51F4-457C-9E5D-36C528F9F78B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C} = {D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}
+		{75219CF9-86E6-419B-B2E7-31EEB47AC113} = {75219CF9-86E6-419B-B2E7-31EEB47AC113}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CAE6F42-AFBD-4895-9310-9C6B48F47DAD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5CAE6F42-AFBD-4895-9310-9C6B48F47DAD}.Debug|Win32.Build.0 = Debug|Win32
+		{5CAE6F42-AFBD-4895-9310-9C6B48F47DAD}.Release|Win32.ActiveCfg = Release|Win32
+		{5CAE6F42-AFBD-4895-9310-9C6B48F47DAD}.Release|Win32.Build.0 = Release|Win32
+		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Debug|Win32.ActiveCfg = Debug|Win32
+		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Debug|Win32.Build.0 = Debug|Win32
+		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Release|Win32.ActiveCfg = Release|Win32
+		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Release|Win32.Build.0 = Release|Win32
+		{D3F438A3-5528-421B-916F-837A8F38CB10}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D3F438A3-5528-421B-916F-837A8F38CB10}.Debug|Win32.Build.0 = Debug|Win32
+		{D3F438A3-5528-421B-916F-837A8F38CB10}.Release|Win32.ActiveCfg = Release|Win32
+		{D3F438A3-5528-421B-916F-837A8F38CB10}.Release|Win32.Build.0 = Release|Win32
+		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}.Debug|Win32.Build.0 = Debug|Win32
+		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}.Release|Win32.ActiveCfg = Release|Win32
+		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}.Release|Win32.Build.0 = Release|Win32
+		{D08B4714-51F4-457C-9E5D-36C528F9F78B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D08B4714-51F4-457C-9E5D-36C528F9F78B}.Debug|Win32.Build.0 = Debug|Win32
+		{D08B4714-51F4-457C-9E5D-36C528F9F78B}.Release|Win32.ActiveCfg = Release|Win32
+		{D08B4714-51F4-457C-9E5D-36C528F9F78B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

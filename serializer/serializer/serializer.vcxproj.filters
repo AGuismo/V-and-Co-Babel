@@ -15,18 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\Database.hh">
+    <ClInclude Include="..\include\MD5.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\IDatabase.hh">
+    <ClInclude Include="..\include\Salt.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\ISavable.hh">
+    <ClInclude Include="..\include\Serializer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\sources\Database.cpp">
+    <ClCompile Include="..\sources\MD5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sources\Salt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sources\Serializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

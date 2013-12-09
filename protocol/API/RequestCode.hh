@@ -56,7 +56,7 @@ namespace request
     namespace auth
     {
       static const ID NEW =		100; /**< Add a new account */
-      static const ID DELETE =		101; /**< Delete an account */
+      static const ID REMOVE =		101; /**< Delete an account */
       static const ID MODIFY =		102; /**< Modify an account */
       static const ID CONNECT =		103; /**< Connect to the server */
       static const ID DISCONNECT =	104; /**< Disconnect your client */

@@ -47,7 +47,7 @@ namespace	request
     namespace	client
     {
       const char *NewClient::NEW = "New client request";
-      const char *DelClient::DELETE = "Delete client request";
+      const char *DelClient::REMOVE = "Delete client request";
 
       NewClient::NewClient():
 	Auth(request::client::auth::NEW)
@@ -103,7 +103,7 @@ namespace	request
       {
 	UsernameLen	NameLen;
 
-	NewClient::serialize(rhs);
+	Auth::serialize(rhs);
 
 	NameLen = _name.size();
 	rhs << NameLen;
@@ -120,7 +120,7 @@ namespace	request
       {
 	UsernameLen	NameLen;
 
-	NewClient::unserialize(rhs);
+	Auth::unserialize(rhs);
 
 	rhs >> NameLen;
 	rhs.pop(_name, NameLen);
@@ -132,13 +132,13 @@ namespace	request
       }
 
       DelClient::DelClient():
-	Auth(request::client::auth::DELETE)
+	Auth(request::client::auth::REMOVE)
       {
       }
 
       DelClient::DelClient(const request::Username &name,
 			   const request::PasswordType &password):
-	Auth(request::client::auth::DELETE), _name(name), _password(password)
+	Auth(request::client::auth::REMOVE), _name(name), _password(password)
       {
       }
 
@@ -147,7 +147,7 @@ namespace	request
       }
 
       DelClient::DelClient(const DelClient &src) :
-	Auth(request::client::auth::DELETE), _name(src._name), _password(src._password)
+	Auth(request::client::auth::REMOVE), _name(src._name), _password(src._password)
       {
       }
 
@@ -184,7 +184,7 @@ namespace	request
       {
 	UsernameLen	NameLen;
 
-	DelClient::serialize(rhs);
+	Auth::serialize(rhs);
 
 	NameLen = _name.size();
 	rhs << NameLen;
@@ -199,7 +199,7 @@ namespace	request
       {
 	UsernameLen	NameLen;
 
-	DelClient::unserialize(rhs);
+	Auth::unserialize(rhs);
 
 	rhs >> NameLen;
 	rhs.pop(_name, NameLen);
@@ -264,7 +264,7 @@ namespace	request
       {
 	UsernameLen	NameLen;
 
-	ModifyClient::serialize(rhs);
+	Auth::serialize(rhs);
 
 	NameLen = _name.size();
 	rhs << NameLen;
@@ -279,7 +279,7 @@ namespace	request
       {
 	UsernameLen	NameLen;
 
-	ModifyClient::unserialize(rhs);
+	Auth::unserialize(rhs);
 
 	rhs >> NameLen;
 	rhs.pop(_name, NameLen);
@@ -343,7 +343,7 @@ namespace	request
       {
 	UsernameLen	NameLen;
 
-	ConnectClient::serialize(rhs);
+	Auth::serialize(rhs);
 
 	NameLen = _name.size();
 	rhs << NameLen;
@@ -358,7 +358,7 @@ namespace	request
       {
 	UsernameLen	NameLen;
 
-	ConnectClient::unserialize(rhs);
+	Auth::unserialize(rhs);
 
 	rhs >> NameLen;
 	rhs.pop(_name, NameLen);
@@ -390,13 +390,13 @@ namespace	request
 
       Protocol		&DisconnectClient::serialize(Protocol &rhs) const
       {
-	DisconnectClient::serialize(rhs);
+	Auth::serialize(rhs);
 	return (rhs);
       }
 
       Protocol	&DisconnectClient::unserialize(Protocol &rhs)
       {
-	DisconnectClient::unserialize(rhs);
+	Auth::unserialize(rhs);
 	return (rhs);
       }
 

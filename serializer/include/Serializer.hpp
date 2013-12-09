@@ -5,7 +5,6 @@
 # include	<deque>
 # include	<vector>
 # include	"types.hh"
-# include	"RequestCode.hh"
 # include	"Salt.hpp"
 
 class Serializer

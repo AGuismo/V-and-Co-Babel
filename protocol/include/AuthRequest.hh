@@ -50,7 +50,7 @@ namespace	request
 
       class	DelClient : public Auth
       {
-	static const char	*DELETE;
+	static const char	*REMOVE;
 
 	DelClient();
 	DelClient(const request::Username &name,
