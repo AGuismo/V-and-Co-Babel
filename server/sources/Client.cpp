@@ -1,3 +1,8 @@
+#if defined(DEBUG)
+# include	<locale>
+# include	<iomanip>
+# include	<cctype>
+#endif
 #include	"Client.hh"
 #include	"Server.hh"
 
@@ -52,7 +57,7 @@ bool		Client::unserialize_data(buffer &buff)
     {
       req = Protocol::consume(buff, extracted);
     }
-  catch (const Protocol::ConstructRequest &e)
+  catch (const Serializer::invalid_argument &e)
     {
       return (false);
     }
@@ -65,18 +70,27 @@ bool		Client::unserialize_data(buffer &buff)
 void		Client::handle_read(const boost::system::error_code& error,
 				    std::size_t bytes_transferred)
 {
-  buffer	data(_bufferised.size() + bytes_transferred);
+  buffer	data;
 
   if (!error)
     {
 #if defined(DEBUG)
-      std::cout << "Received: " << bytes_transferred << " octets: \"" << _input.data() << "\"" << std::endl;
+      std::cout << "Received: " << bytes_transferred << " octets." << std::endl;
+      for (std::size_t it = 0; it < bytes_transferred; ++it)
+	{
+	  if (it != 0 && it % 4 == 0)
+	    std::cout << " ";
+	  if (it != 0 && it % 16 == 0)
+	    std::cout << std::endl;
+	  std::cout << std::hex << std::setfill('0') << std::setw(2) << (int)_input[it];
+	}
+      std::cout << std::dec << std::endl;
 #endif
       if (!_bufferised.empty())
 	{
 	  data.insert(data.end(), _bufferised.begin(), _bufferised.end());
 	}
-      data.insert(data.end(), _input.begin(), _input.end());
+      data.insert(data.end(), _input.begin(), _input.begin() + bytes_transferred);
       while (unserialize_data(data));
       if (data.empty())
 	_bufferised.clear();
@@ -113,7 +127,7 @@ void		Client::async_read()
 
 void		Client::start()
 {
-  async_write("Hello World!");
+  async_read();
 }
 
 tcp::socket&	Client::socket()

@@ -5,6 +5,7 @@
 #include	"FriendRequest.hh"
 #include	"ServerRequest.hh"
 #include	"ChatRequest.hh"
+#include	"AuthRequest.hh"
 
 namespace	request
 {
@@ -18,6 +19,12 @@ namespace	request
     _lnk[request::server::NO_CONTENT] = new request::server::NoContent;
     _lnk[request::server::PARTIAL_CONTENT] = new request::server::PartialContent;
     _lnk[request::server::NO_SLOTS] = new request::server::NoSlots;
+
+    _lnk[request::client::auth::NEW] = new request::auth::client::NewClient;
+    _lnk[request::client::auth::REMOVE] = new request::auth::client::DelClient;
+    _lnk[request::client::auth::MODIFY] = new request::auth::client::ModifyClient;
+    _lnk[request::client::auth::CONNECT] = new request::auth::client::ConnectClient;
+    _lnk[request::client::auth::DISCONNECT] = new request::auth::client::DisconnectClient;
 
     _lnk[request::server::friends::UPDATE] = new request::friends::server::Update;
     _lnk[request::client::friends::REQUEST] = new request::friends::client::Request;

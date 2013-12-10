@@ -24,7 +24,7 @@ namespace	request
 
     namespace	client
     {
-      class	NewClient : public Auth
+      struct	NewClient : public Auth
       {
 	static const char	*NEW;
 
@@ -48,7 +48,7 @@ namespace	request
 	request::Privacy	_privacy;
       };
 
-      class	DelClient : public Auth
+      struct	DelClient : public Auth
       {
 	static const char	*REMOVE;
 
@@ -70,7 +70,7 @@ namespace	request
 	request::PasswordType	_password;
       };
 
-      class	ModifyClient : public Auth
+      struct	ModifyClient : public Auth
       {
 	static const char	*MODIFY;
 
@@ -94,7 +94,7 @@ namespace	request
 	request::PasswordType	_newPassword;
       };
 
-      class	ConnectClient : public Auth
+      struct	ConnectClient : public Auth
       {
 	static const char	*CONNECT;
 
@@ -116,7 +116,7 @@ namespace	request
 	request::PasswordType	_password;
       };
 
-      class	DisconnectClient : public Auth
+      struct	DisconnectClient : public Auth
       {
 	static const char	*DISCONNECT;
 

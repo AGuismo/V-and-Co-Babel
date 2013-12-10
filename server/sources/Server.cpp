@@ -4,7 +4,7 @@
 #include	"IRequestPlugin.hh"
 
 Server::Server(boost::asio::io_service &service) :
-  _service(service), _acceptor(service)
+  _service(service), _acceptor(service), _calls(this)
 {
 
 }
@@ -22,7 +22,10 @@ void	Server::init()
 
   try
     {
-      _plugs.addPlugin("auth", request::PluginManager::loadPlugin("./misc/lib/auth.dll"));
+      _plugs.loadPlugin("./misc/lib/auth.so", "auth");
+      /* ... */
+
+      _calls.loadPlugins(_plugs);
     }
   catch (const plugin::Exception &e)
     {
@@ -42,7 +45,21 @@ void	Server::run()
 
 void	Server::handle_request(Client::Pointer from, const ARequest *req)
 {
-
+#if defined(DEBUG)
+  std::cout << "Server::handle_request: " << req->code() << std::endl;
+#endif
+  if (_calls(from, req))
+    {
+#if defined(DEBUG)
+  std::cout << "Server::handle_request: Call complete" << std::endl;
+#endif
+    }
+  else
+    {
+#if defined(DEBUG)
+  std::cout << "Server::handle_request: Call don't exist" << std::endl;
+#endif
+    }
 }
 
 void	Server::handle_accept(Client::Pointer new_connection,

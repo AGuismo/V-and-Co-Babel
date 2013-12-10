@@ -25,4 +25,9 @@ namespace	request
   };
 } // !request
 
+extern	"C"
+{
+  request::IRequestPlugin	*loadPlugin(void);
+}
+
 #endif /* IREQUESTPLUGIN_H_ */

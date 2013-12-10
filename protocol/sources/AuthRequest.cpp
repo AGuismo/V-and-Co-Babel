@@ -109,7 +109,7 @@ namespace	request
 	rhs << NameLen;
 	rhs.push(_name, NameLen);
 
-	rhs << _password;
+	rhs.push(_password, request::Crypt::PASS_SIZE);
 
 	rhs << _privacy;
 
@@ -125,7 +125,7 @@ namespace	request
 	rhs >> NameLen;
 	rhs.pop(_name, NameLen);
 
-	rhs >> _password;
+	rhs.pop(_password, request::Crypt::PASS_SIZE);
 
 	rhs >> _privacy;
 	return (rhs);
@@ -190,7 +190,7 @@ namespace	request
 	rhs << NameLen;
 	rhs.push(_name, NameLen);
 
-	rhs << _password;
+	rhs.push(_password, request::Crypt::PASS_SIZE);
 
 	return (rhs);
       }
@@ -204,7 +204,7 @@ namespace	request
 	rhs >> NameLen;
 	rhs.pop(_name, NameLen);
 
-	rhs >> _password;
+	rhs.pop(_password, request::Crypt::PASS_SIZE);
 
 	return (rhs);
       }
@@ -270,8 +270,8 @@ namespace	request
 	rhs << NameLen;
 	rhs.push(_name, NameLen);
 
-	rhs << _oldPassword;
-	rhs << _newPassword;
+	rhs.push(_oldPassword, request::Crypt::PASS_SIZE);
+	rhs.push(_newPassword, request::Crypt::PASS_SIZE);
 	return (rhs);
       }
 
@@ -284,8 +284,8 @@ namespace	request
 	rhs >> NameLen;
 	rhs.pop(_name, NameLen);
 
-	rhs >> _oldPassword;
-	rhs >> _newPassword;
+	rhs.pop(_oldPassword, request::Crypt::PASS_SIZE);
+	rhs.pop(_newPassword, request::Crypt::PASS_SIZE);
 
 	return (rhs);
       }
@@ -349,7 +349,7 @@ namespace	request
 	rhs << NameLen;
 	rhs.push(_name, NameLen);
 
-	rhs << _password;
+	rhs.push(_password, request::Crypt::PASS_SIZE);
 
 	return (rhs);
       }
@@ -363,7 +363,7 @@ namespace	request
 	rhs >> NameLen;
 	rhs.pop(_name, NameLen);
 
-	rhs >> _password;
+	rhs.pop(_password, request::Crypt::PASS_SIZE);
 
 	return (rhs);
       }

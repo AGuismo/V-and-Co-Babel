@@ -34,39 +34,30 @@ namespace	plugin
     Manager() {}
     virtual ~Manager() {}
 
-  protected:
-    static IPlugin<Key, Sign>	*loadPlugin(const std::string &path)
-    {
-      return (0);
-    }
-
-    static void			unloadPlugin(IPlugin<Key, Sign> *plug)
-    {
-      plug->unload();
-    }
-
   public:
-    void			addPlugin(const std::string &name, IPlugin<Key, Sign> *plug)
+    virtual void	addPlugin(const std::string &name, IPlugin<Key, Sign> *plug)
     {
       if (_plugins.find(name) != _plugins.end())
-	delPlugin(name);
+	_plugins[name]->unload();
       _plugins[name] = plug;
     }
 
-    void			delPlugin(const std::string &name)
+    virtual void	delPlugin(const std::string &name)
     {
       typename plugin_map::iterator	it = _plugins.find(name);
 
       if (it == _plugins.end())
 	return ;
-      unloadPlugin(it->second);
+      it->second->unload();
       _plugins.erase(it);
     }
 
-    IPlugin<Key, Sign>		*getPlugin(const std::string &name) const
+    virtual IPlugin<Key, Sign>	*getPlugin(const std::string &name)
     {
       return (_plugins[name]);
     }
+
+    const plugin_map	&getAllPlugins() const {return (_plugins);}
 
   private:
     Manager(Manager const&);
@@ -74,6 +65,7 @@ namespace	plugin
 
   protected:
     plugin_map	_plugins;
+
   };
 }
 

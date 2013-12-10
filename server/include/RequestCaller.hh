@@ -12,15 +12,23 @@ namespace	request
 
   class PluginCaller : public plugin::Caller<request::ID,
 					     void (*)(Server *, Client::Pointer, const ARequest *)>
-{
-public:
-  PluginCaller();
-  virtual ~PluginCaller();
+  {
+  private:
+    typedef void (*request_callback)(Server *, Client::Pointer, const ARequest *);
+    typedef std::map<request::ID, request_callback>	callback_map;
+  public:
+    PluginCaller(Server *);
+    virtual ~PluginCaller();
 
-private:
-  PluginCaller(PluginCaller const&);
-  PluginCaller& operator=(PluginCaller const&);
-};
+    bool		operator()(Client::Pointer, const ARequest *);
+
+  private:
+    PluginCaller(PluginCaller const&);
+    PluginCaller& operator=(PluginCaller const&);
+
+  private:
+    Server	*_server;
+  };
 
 }
 

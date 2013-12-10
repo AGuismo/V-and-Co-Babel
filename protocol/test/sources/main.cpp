@@ -3,247 +3,198 @@
 #include	<iomanip>
 #include	<vector>
 #include	<typeinfo>
-#if defined(WIN32)
-# include	<winsock2.h>
-#endif
+#include	<boost/asio.hpp>
+#include	<boost/bind.hpp>
+#include	<boost/shared_ptr.hpp>
+#include	<boost/enable_shared_from_this.hpp>
 #include	"types.hh"
 #include	"RequestCode.hh"
 #include	"AuthRequest.hh"
-#include	"PartyRequest.hh"
-#include	"SessionRequest.hh"
-#include	"ServerRequest.hh"
-#include	"ARequest.hh"
 #include	"Protocol.hpp"
-#include	"TcpClient.h"
-#include	"streamManager.h"
-#include	"MD5.hh"
-#include	"AMonitorable.h"
-#include	"AliveRequest.h"
-#include	"UdpClient.h"
-#include	"RequestInfo.hpp"
-#include	"EventRequest.hh"
-#include	"LeaveRequest.h"
-#include	"ElemRequest.hh"
 
-struct	stdin : public net::AMonitorable
+using boost::asio::ip::tcp;
+
+class		client : public boost::enable_shared_from_this<client>
 {
-  int	fd;
-  int	getSocket() const {return fd;};
+public:
+  typedef boost::shared_ptr<client> Ptr;
+
+public:
+  static Ptr create(boost::asio::io_service& io_service, const std::string &ip, const std::string &port)
+  {
+    Ptr new_client(new client(io_service));
+    new_client->connect(ip, port);
+
+    return (new_client);
+  }
+
+public:
+  client::Ptr	ptr()
+  {
+    return (shared_from_this());
+  }
+
+  void	write(const std::vector<Protocol::Byte> &data)
+  {
+
+    boost::asio::async_write(_socket, boost::asio::buffer(data),
+			     boost::bind(&client::write_handler,
+			    shared_from_this(),
+			    boost::asio::placeholders::error,
+			    boost::asio::placeholders::bytes_transferred));
+  }
+
+  void	read()
+  {
+    _socket.async_read_some(boost::asio::buffer(_arr),
+			    boost::bind(&client::read_handler,
+					shared_from_this(),
+					boost::asio::placeholders::error,
+					boost::asio::placeholders::bytes_transferred));
+  }
+
+
+private:
+  explicit client(boost::asio::io_service& io_service) :
+    _service(io_service), _socket(io_service)
+  {
+  }
+
+  void	connect(const std::string &ip, const std::string &port)
+  {
+    tcp::resolver		resolver(_service);
+    tcp::resolver::query	query(ip, port);
+    tcp::resolver::iterator	endpoint_iterator = resolver.resolve(query);
+
+    boost::asio::connect(_socket, endpoint_iterator);
+    read();
+  }
+
+  void read_handler(const boost::system::error_code& error, const size_t bytes_transferred)
+  {
+    if (error)
+      {
+	std::cerr << "read error: " << boost::system::system_error(error).what() << std::endl;
+	return;
+      }
+    std::vector<Protocol::Byte>	bytes(_arr.begin(), _arr.begin() + bytes_transferred);
+    int				count;
+    ARequest			*req;
+
+    try
+      {
+	req = Protocol::consume(bytes, count);
+      }
+    catch (...)
+      {
+	std::cout << "Get Req fail" << std::endl;
+	return ;
+      }
+    std::cout << "Extracted: " << count << std::endl;
+    std::cout << "Received request code: " << req->code()
+	      << std::endl;
+    read();
+  }
+
+  void write_handler(const boost::system::error_code& error, const size_t bytes_transferred)
+  {
+    if (error)
+      {
+	std::cerr << "write error: " << boost::system::system_error(error).what() << std::endl;
+	return;
+      }
+    std::cout << "Write send " << bytes_transferred << std::endl;
+    read();
+  }
+
+private:
+  boost::asio::io_service		&_service;
+  tcp::socket				_socket;
+  boost::array<Protocol::Byte, 1024>	_arr;
 };
 
-const char	*detail(const ARequest *req)
-{
-  if (typeid(*req) == typeid(ServerRequest))
-    return (Info<ServerRequest>::Detail(req->code()));
-  return ("None");
-}
 
-ARequest                        *uget_req(net::UdpClient &client)
+class		input : public boost::enable_shared_from_this<input>
 {
-    std::vector<Protocol::Byte>   bytes;
-    int                           count;
-    ARequest                      *req;
+public:
+  typedef boost::shared_ptr<input> Ptr;
 
-    client.lookRead(bytes, 512);
-  try
+public:
+  static Ptr create(boost::asio::io_service& io_service, client::Ptr clientPtr)
   {
-      req = Protocol::consume(bytes, count);
+    Ptr new_input(new input(io_service, clientPtr));
+    new_input->read();
+    return (new_input);
   }
-  catch (...)
+
+private:
+  explicit input(boost::asio::io_service& io_service, client::Ptr clientPtr) :
+    _input(io_service), _client(clientPtr)
   {
-      return (0);
+    _input.assign(STDIN_FILENO);
   }
-  std::cout << "Extracted: " << count << std::endl;
-  std::cout << "Received request code: " << req->code()
-            << ". Detail: " << detail(req) << std::endl;
-  client.readFromBuffer(bytes, count);
-  return (req);
-}
 
-void            usend_req(net::UdpClient &client, AGameRequest *req, requestCode::SessionID id)
-{
-    std::vector<Protocol::Byte>   bytes;
+  void read()
+  {
+    boost::asio::async_read(_input,
+			    boost::asio::buffer(&_command, sizeof(_command)),
+			    boost::bind(&input::read_handler,
+					shared_from_this(),
+					boost::asio::placeholders::error,
+					boost::asio::placeholders::bytes_transferred));
+  }
 
-    req->SessionID(id);
+
+  void		send_req(ARequest *req)
+  {
+    std::vector<Protocol::Byte>	bytes;
+
     std::cout << "Send request code: " << req->code()
-	      << ". Detail: " << detail(req) << std::endl;
+	      << std::endl;
     bytes = Protocol::product(*req);
-    std::cout << "nb bytes = " << bytes.size() << std::endl;
-    client.writeIntoBuffer(bytes, bytes.size());
-    client.send();
-}
+    _client->write(bytes);
+  }
 
-ARequest			*get_req(net::TcpClient &client)
-{
-  std::vector<Protocol::Byte>	bytes;
-  int				count;
-  ARequest			*req;
 
-  client.lookRead(bytes, 512);
-  try
-    {
-      req = Protocol::consume(bytes, count);
-    }
-  catch (...)
-    {
-      std::cout << "Get Req fail" << std::endl;
-      return (0);
-    }
-  std::cout << "Extracted: " << count << std::endl;
-  std::cout << "Received request code: " << req->code()
-	    << ". Detail: " << detail(req) << std::endl;
-  client.readFromBuffer(bytes, count);
-  return (req);
-}
+  void read_handler(const boost::system::error_code& error, const size_t bytes_transferred)
+  {
+    if (error)
+      {
+	std::cerr << "read error: " << boost::system::system_error(error).what() << std::endl;
+	return;
+      }
 
-void		send_req(net::TcpClient &client, ARequest *req)
-{
-  std::vector<Protocol::Byte>	bytes;
+    switch (_command)
+      {
+      case '\0':
+	exit(0);
+      case 'a':
+	send_req(new request::auth::client::ConnectClient("Ruby", md5("1664")));
+	break;
+      case 'h':
+	std::cout << "a: " << "Auth::Connect" << std::endl;
+	  break;
+      default:
+	break;
+      }
+    this->read();
+  }
 
-  std::cout << "Send request code: " << req->code()
-	    << ". Detail: " << detail(req) << std::endl;
-  bytes = Protocol::product(*req);
-  client.writeIntoBuffer(bytes, bytes.size());
-  client.send();
-}
+private:
+  boost::asio::posix::stream_descriptor _input;
+  char					_command;
+  client::Ptr				_client;
+};
 
 int			main(int ac, char **av)
 {
-  bool			activated = true;
-  net::TcpClient	client;
-  net::UdpClient	uclient;
-  net::streamManager	m;
-  stdin			input;
-  requestCode::SessionID id = 0;
+  if (ac != 3)
+    return (0);
 
-  input.fd = 0;
-  if (ac == 2)
-  {
-    client.init(av[1], "44201");
-    uclient.init(av[1], "44202");
-  }
-  else
-  {
-    client.init("127.0.0.1", "44201");
-    uclient.init("127.0.0.1", "44202");
-  }
-  client.monitor(true, false);
-  uclient.monitor(true, false);
-  input.monitor(true, false);
-  m.setMonitor(client);
-  m.setMonitor(uclient);
-  m.setMonitor(input);
-  while (activated)
-    {
-      m.run();
-      if (input.read())
-	{
-	  char	input;
+  boost::asio::io_service	io_service;
+  client::Ptr			client = client::create(io_service, av[1], av[2]);
+  input::Ptr			input = input::create(io_service, client->ptr());
 
-	  std::cin >> input;
-	  // if (std::cin.eof() == 1)
-	  //   break;
-	  switch (input)
-	    {
-	    case '\0':
-	      activated = false;
-	      break;
-	    case 'a':
-	      send_req(client, new Auth::Connect("Ruby", md5("1664")));
-	      break;
-	    case 'b':
-	      send_req(client, new Auth::NewUser("Ruby", md5("1664")));
-	      break;
-	    case 'c':
-	      send_req(client, new Party::List());
-	      break;
-	    case 'd':
-	      send_req(client, new Party::Create("Toto", 4));
-	      break;
-	    case 'e':
-	      send_req(client, new Party::Start());
-	      break;
-	    case 'f':
-	      send_req(client, new Party::Cancel());
-	      break;
-	    case 'g':
-	      send_req(client, new Party::Join("test"));
-	      break;
-	    case 'h':
-	      std::cout << "a: " << "Auth::Connect" << std::endl
-			<< "b: " << "Auth::NewUser" << std::endl
-			<< "c: " << "Party::List" << std::endl
-			<< "d: " << "Party::Create" << std::endl
-			<< "e: " << "Party::Start" << std::endl
-			<< "f: " << "Party::Cancel" << std::endl
-			<< "i: " << "AliveRequest" << std::endl
-			<< "j: " << "moveRequest" << std::endl
-			<< "k: " << "fireRequest" << std::endl
-			<< "l: " << "LeaveRequest" << std::endl
-			<< "g: " << "Party::Join" << std::endl;
-	      break;
-	    case 'i':
-		usend_req(uclient, new AliveRequest(), id);
-	      break;
-	    case 'j':
-		usend_req(uclient, new EventRequest(0, 2), id);
-	      break;
-	    case 'k':
-		usend_req(uclient, new EventRequest(1, 1), id);
-	      break;
-	    case 'l':
-		usend_req(uclient, new LeaveRequest(), id);
-	      break;
-	    default:
-	      break;
-	    }
-	}
-      if (client.isDisconnected())
-	{
-	  std::cout << "Disconnected" << std::endl;
-	  break;
-	}
-      if (client.read())
-	{
-	  ARequest	*req;
-
-	  client.recv();
-	  while ((req = get_req(client)) != 0)
-	  {
-	      if (SessionRequest *session = dynamic_cast<SessionRequest *>(req))
-	      {
-		  id = session->SessionID();
-		  std::cout << "ID client is " << id;
-	      }
-	  }
-	}
-      if (uclient.read())
-	{
-	  ARequest	*req;
-
-	  uclient.recv();
-	  while ((req = uget_req(uclient)) != 0)
-	  {
-	      if (ElemRequest *elem = dynamic_cast<ElemRequest *>(req))
-	      {
-		  (void)elem;
-		  //id = elem->SessionID();
-		  //std::cout << "ELEM REQUEST :: ID client is " << id;
-		  //std::cout << " : " << elem->pos() << std::endl;
-	      }
-	      else if (DeathRequest *elem = dynamic_cast<DeathRequest *>(req))
-	      {
-		  (void)elem;
-		  std::cout << "YOU ARE DEAD" << std::endl;
-	      }
-	      else if (LooseRequest *elem = dynamic_cast<LooseRequest *>(req))
-	      {
-		  (void)elem;
-		  std::cout << "YOU LOOSE" << std::endl;
-	      }
-	  }
-	}
-    }
-  client.close();
+  io_service.run();
   return (0);
 }

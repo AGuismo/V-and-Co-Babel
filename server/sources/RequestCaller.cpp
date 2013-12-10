@@ -2,7 +2,8 @@
 
 namespace	request
 {
-  PluginCaller::PluginCaller()
+  PluginCaller::PluginCaller(Server *serv):
+    _server(serv)
   {
 
   }
@@ -12,4 +13,13 @@ namespace	request
 
   }
 
+  bool	PluginCaller::operator()(Client::Pointer client, const ARequest *req)
+  {
+    callback_map::iterator	it = _calls.find(req->code());
+
+    if (it == _calls.end())
+      return (false);
+    it->second(_server, client, req);
+    return (true);
+  }
 }
