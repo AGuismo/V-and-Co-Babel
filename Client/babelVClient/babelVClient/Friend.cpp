@@ -3,7 +3,7 @@
 
 void					Friend::setFriendPersonalMessage(QString &newPm)
 {
-	_friendPersonalMessage = newPm;
+	_personalMsg = newPm;
 }
 
 void					Friend::setCallStatus(bool newCallStatus)
@@ -24,4 +24,14 @@ void					Friend::insertMsg(QString &msg)
 void					Friend::setCurrentMsg(QString &curMsg)
 {
 	_curgMsg = curMsg;
+}
+
+Friend::Friend(QString &friendName, QString &friendStatus)
+{
+	_name = friendName;
+	_personalMsg = friendStatus;
+}
+
+Friend::~Friend()
+{
 }

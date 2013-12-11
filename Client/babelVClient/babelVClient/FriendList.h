@@ -9,7 +9,7 @@
 class FriendList
 {
 private:
-	typedef	QMap<QString &, Friend *>	friend_type;
+	typedef	QMap<QString , Friend *>	friend_type;
 
 private:
 	friend_type							_friendList;

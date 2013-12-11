@@ -7,8 +7,8 @@
 class Friend
 {
 private:
-	QString					_friendName;
-	QString					_friendPersonalMessage;
+	QString					_name;
+	QString					_personalMsg;
 
 private:
 	int						_status;
@@ -32,7 +32,7 @@ public:
 	void					setCurrentMsg(QString &curMsg);
 
 public:
-	Friend(QString friendName, QString friendStatus);
+	Friend(QString &friendName, QString &friendStatus);
 	~Friend();
 };
 

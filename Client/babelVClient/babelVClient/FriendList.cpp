@@ -8,12 +8,11 @@ void						FriendList::insertFriend(QString &friendName, QString &friendStatus)
 
 Friend						*FriendList::getClient(QString &friendName)
 {
-//	Friend					*tmpFriend;
 	friend_type::iterator	it = _friendList.find(friendName);
 
 	if (it != _friendList.end())
 	{
-		 it.value();
+		return it.value();
 	}
 	return NULL;
 }
