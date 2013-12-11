@@ -1,9 +1,9 @@
 #ifndef REQUESTCALLER_H_
 # define REQUESTCALLER_H_
 
-# include	"PluginCaller.hpp"
-# include	"types.hh"
 # include	"Client.hh"
+# include	"types.hh"
+# include	"PluginCaller.hpp"
 
 class		ARequest;
 

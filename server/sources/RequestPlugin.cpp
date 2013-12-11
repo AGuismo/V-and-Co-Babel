@@ -1,5 +1,5 @@
-#include	"RequestPlugin.hh"
 #include	"Server.hh"
+#include	"RequestPlugin.hh"
 
 namespace	request
 {

@@ -14,6 +14,9 @@ int	main(int ac, char *av[])
   catch (const Application::InitExcept &e)
     {
       std::cerr << e.what() << std::endl;
+#if defined(WIN32)
+	  system("pause");
+#endif
       return (0);
     }
   app.run();

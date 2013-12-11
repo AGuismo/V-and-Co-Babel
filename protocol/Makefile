@@ -12,6 +12,8 @@ SRCS =	      	ARequest.cpp		\
 		FriendRequest.cpp	\
 		ChatRequest.cpp		\
 		AuthRequest.cpp		\
+		PersoRequest.cpp	\
+		CallRequest.cpp		\
 		Protocol.cpp		\
 		RequestFactory.cpp	\
 
