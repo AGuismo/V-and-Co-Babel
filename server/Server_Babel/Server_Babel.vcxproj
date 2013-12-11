@@ -39,10 +39,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\;$(ProjectDir)\..\..\MDynamic\MDynamic\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\;$(ProjectDir)\..\..\MDynamic\MDynamic\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -75,21 +75,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Application.hh" />
+    <ClInclude Include="..\include\BabelPlugin.hh" />
     <ClInclude Include="..\include\Client.hh" />
     <ClInclude Include="..\include\IAuthPlugin.hh" />
     <ClInclude Include="..\include\IPlugin.hh" />
+    <ClInclude Include="..\include\IRequestPlugin.hh" />
+    <ClInclude Include="..\include\PluginCaller.hpp" />
     <ClInclude Include="..\include\PluginManager.hh" />
+    <ClInclude Include="..\include\PluginManager.hpp" />
+    <ClInclude Include="..\include\RequestCaller.hh" />
+    <ClInclude Include="..\include\RequestPlugin.hh" />
     <ClInclude Include="..\include\Server.hh" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\sources\Application.cpp" />
     <ClCompile Include="..\sources\Client.cpp" />
     <ClCompile Include="..\sources\main.cpp" />
+    <ClCompile Include="..\sources\PluginException.cpp" />
+    <ClCompile Include="..\sources\RequestCaller.cpp" />
+    <ClCompile Include="..\sources\RequestPlugin.cpp" />
     <ClCompile Include="..\sources\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\IniParser\IniParser\IniParser.vcxproj">
       <Project>{d3f438a3-5528-421b-916f-837a8f38cb10}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MDynamic\MDynamic\MDynamic.vcxproj">
+      <Project>{101d96ac-34aa-4787-995e-be636a0ac62f}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\protocol\Protocol\Protocol.vcxproj">
       <Project>{d69a5c00-cd7c-4ba7-a23e-4d2bb1d8b76c}</Project>

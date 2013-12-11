@@ -22,10 +22,10 @@ void	Server::init()
 
   try
     {
-      _plugs.loadPlugin("./misc/lib/auth.so", "auth");
+  /*    _plugs.loadPlugin("./misc/lib/auth.so", "auth");*/
       /* ... */
 
-      _calls.loadPlugins(_plugs);
+      /*_calls.loadPlugins(_plugs);*/
     }
   catch (const plugin::Exception &e)
     {
