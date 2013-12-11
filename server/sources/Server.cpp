@@ -32,7 +32,8 @@ void	Server::run()
 
 void	Server::handle_request(Client::Pointer from, const ARequest *req)
 {
-
+  (void)from;
+  (void)req;
 }
 
 void	Server::handle_accept(Client::Pointer new_connection,
