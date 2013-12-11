@@ -2,7 +2,10 @@
 # define SERVER_H_
 
 # include	<list>
+# include	<string>
 # include	"Client.hh"
+# include	"RequestPlugin.hh"
+# include	"RequestCaller.hh"
 
 namespace boost
 {
@@ -11,10 +14,32 @@ namespace boost
     class io_service;
   }
 }
+class	ARequest;
 
 class Server
 {
   typedef std::list<Client::Pointer>	client_list;
+
+public:
+  typedef void (*request_handler)(Server *, Client::Pointer, const ARequest *);
+
+public:
+  class Exception
+  {
+  public:
+    Exception(const std::string &) throw();
+    virtual ~Exception() throw();
+
+  public:
+    Exception(Exception const&) throw();
+    Exception& operator=(Exception const&) throw();
+
+  public:
+    const char	*what() const throw();
+
+  private:
+    std::string	_what;
+  };
 
 public:
   Server(boost::asio::io_service &service);
@@ -38,6 +63,8 @@ private:
   boost::asio::io_service		&_service;
   boost::asio::ip::tcp::acceptor	_acceptor;
   client_list				_clientList;
+  request::PluginManager		_plugs;
+  request::PluginCaller			_calls;
 };
 
 #endif /* SERVER_H_ */

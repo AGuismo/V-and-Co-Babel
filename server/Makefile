@@ -4,23 +4,29 @@ SRCS =	      	main.cpp		\
 		Application.cpp		\
 		Server.cpp		\
 		Client.cpp		\
+					\
+		PluginException.cpp	\
+		RequestPlugin.cpp	\
+		RequestCaller.cpp	\
 
 DIR.DB=		./database
 DIR.INIPARSER=	../IniParser
 DIR.SERIALIZER=	../serializer/
 DIR.PROTOCOL=	../protocol/
+DIR.DYNAMIC=	../MDynamic/MDynamic
 
 DEPS.INC=
 DEPS.LNK=
 
 MOD.INC=	-I$(DIR.DB)/include -I$(DIR.PROTOCOL)/include -I$(DIR.PROTOCOL)/API
-MOD.INC+=	-I$(DIR.INIPARSER)/include -I$(DIR.SERIALIZER)/include
-MOD.LNK=	-L$(DIR.DB) -ldb -L$(DIR.PROTOCOL) -lprotocol -L$(DIR.SERIALIZER) -lserialize
-MOD.LNK+=	-L$(DIR.INIPARSER) -liniparser
+MOD.INC+=	-I$(DIR.INIPARSER)/include -I$(DIR.SERIALIZER)/include -I$(DIR.DYNAMIC)/include
+MOD.LNK=	-Wl,--whole-archive -L$(DIR.PROTOCOL) -lprotocol -Wl,-export-dynamic
+MOD.LNK+=	-L$(DIR.DB) -ldb -L$(DIR.SERIALIZER) -lserialize
+MOD.LNK+=	-L$(DIR.INIPARSER) -liniparser -L$(DIR.DYNAMIC) -lMDynamic -Wl,--no-whole-archive
 
 F.C	     +=	-W -Wall
 F.I	     += $(MOD.INC) $(DEPS.INC)
-F.L	     += $(MOD.LNK) $(DEPS.LNK) -lboost_system -lboost_thread -lpthread
+F.L	     += $(MOD.LNK) $(DEPS.LNK) -lboost_system -lboost_thread -lpthread -ldl
 F.D	     +=
 
 all:		start $(NAME)
@@ -33,6 +39,7 @@ compile_mods:
 		@make --no-print-directory -C $(DIR.INIPARSER) all F.D=$(F.D)
 		@make --no-print-directory -C $(DIR.SERIALIZER) all F.D=$(F.D)
 		@make --no-print-directory -C $(DIR.PROTOCOL) all F.D=$(F.D)
+		@make --no-print-directory -C $(DIR.DYNAMIC) all F.D=$(F.D)
 
 compile_deps:
 		@$(ECHO) $(ES) "Compile Dependancies" $(EE)
@@ -43,6 +50,7 @@ clean_mods:
 		@make --no-print-directory -C $(DIR.INIPARSER) clean
 		@make --no-print-directory -C $(DIR.SERIALIZER) clean
 		@make --no-print-directory -C $(DIR.PROTOCOL) clean
+		@make --no-print-directory -C $(DIR.DYNAMIC) clean
 
 clean_deps:
 		@$(ECHO) $(ES) "Clean Dependancies" $(EE)
@@ -53,6 +61,7 @@ fclean_mods:
 		@make --no-print-directory -C $(DIR.INIPARSER) fclean
 		@make --no-print-directory -C $(DIR.SERIALIZER) fclean
 		@make --no-print-directory -C $(DIR.PROTOCOL) fclean
+		@make --no-print-directory -C $(DIR.DYNAMIC) fclean
 
 fclean_deps:
 		@$(ECHO) $(ES) "Full clean Dependancies" $(EE)
