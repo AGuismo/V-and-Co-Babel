@@ -12,6 +12,22 @@ class ProducterStream;
 
 class ConsumerParser
 {
+public:
+  class Exception
+  {
+  public:
+    Exception(const std::string &, ConsumerParser &) throw();
+    virtual ~Exception() throw();
+    virtual const char	*what() const throw();
+
+  public:
+    Exception(Exception const&) throw();
+    Exception& operator=(Exception const&) throw();
+
+  protected:
+    std::string	_what;
+  };
+
 protected:
   typedef std::string::iterator			Context;
   typedef std::string::iterator			Capture;
@@ -57,6 +73,8 @@ protected:
   std::string		_inputData;
   bool			_isEOF;
   capture_map		_captures;
+
+  friend class	ConsumerParser::Exception;
 };
 
 inline bool	ConsumerParser::peekChar(char c)

@@ -1,5 +1,6 @@
 #include	<iostream>
 #include	"Application.hh"
+#include	"Env.hh"
 
 Application::Application():
   _server(_service)
@@ -10,10 +11,26 @@ Application::~Application()
 {
 }
 
-void	Application::init()
+void	Application::init(const char *confPath)
 {
   try
     {
+      if (confPath == 0)
+	{
+	  if (!Env::getInstance().loadFile())
+	    {
+	      std::cerr << "Error while loading conf file" << std::endl;
+	      return ;
+	    }
+	}
+      else
+	{
+	  if (!Env::getInstance().loadFile(confPath))
+	    {
+	      std::cerr << "Error while loading conf file" << std::endl;
+	      return ;
+	    }
+	}
       _server.init();
     }
   catch (const Server::Exception &e)

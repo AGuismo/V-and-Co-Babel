@@ -35,7 +35,11 @@ ARequest		*Protocol::consume(const serialized_data &input, int &extracted)
     {
       req = request::Factory::factory(p, code);
     }
-  catch (ARequest::Exception &e)
+  catch (const Serializer::invalid_argument &e)
+    {
+      throw ConstructRequest(e.what());
+    }
+  catch (const ARequest::Exception &e)
     {
       throw ConstructRequest(e.what());
     }

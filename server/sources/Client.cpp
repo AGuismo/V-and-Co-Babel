@@ -48,6 +48,12 @@ void		Client::handle_request(const ARequest *req)
   _server->handle_request(shared_from_this(), req);
 }
 
+bool		Client::serialize_data(const ARequest &req)
+{
+  async_write(Protocol::product(req));
+  return (true);
+}
+
 bool		Client::unserialize_data(buffer &buff)
 {
   int		extracted;
