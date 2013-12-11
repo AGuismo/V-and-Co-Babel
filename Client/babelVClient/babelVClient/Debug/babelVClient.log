@@ -1,0 +1,48 @@
+﻿Build started 11/12/2013 20:56:03.
+     1>Project "C:\Users\Guismo\Documents\Visual Studio 2012\Projects\babelVClient\babelVClient\babelVClient.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtCore /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtGui /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtMultimedia /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtMultimediaWidgets /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtNetwork /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtQml /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtQuick /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtSql /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtTest /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtWebKit /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\ActiveQt /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtConcurrent /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtHelp /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtOpenGL /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtPrintSupport /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtScript /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtSvg /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtWebkitWidgets /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtWidgets /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtXml /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtXmlPatterns /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_MULTIMEDIA_LIB /D QT_MULTIMEDIAWIDGETS_LIB /D QT_NETWORK_LIB /D QT_QML_LIB /D QT_QUICK_LIB /D QT_SQL_LIB /D QT_TESTLIB_LIB /D QT_CONCURRENT_LIB /D QT_HELP_LIB /D QT_OPENGL_LIB /D QT_PRINTSUPPORT_LIB /D QT_SCRIPT_LIB /D QT_SVG_LIB /D QT_WEBKITWIDGETS_LIB /D QT_WIDGETS_LIB /D QT_XML_LIB /D QT_XMLPATTERNS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t- /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt FriendList.cpp
+         FriendList.cpp
+     1>c:\qt\qt5.1.1\5.1.1\msvc2012\include\qtcore\qmap.h(216): error C2464: 'QString &' : cannot use 'new' to allocate a reference
+                 c:\qt\qt5.1.1\5.1.1\msvc2012\include\qtcore\qmap.h(212) : while compiling class template member function 'QMapNode<Key,T> *QMapData<Key,T>::createNode(Key,const T &,QMapNode<Key,T> *,bool)'
+                 with
+                 [
+                     Key=QString &,
+                     T=Friend *
+                 ]
+                 c:\qt\qt5.1.1\5.1.1\msvc2012\include\qtcore\qmap.h(663) : see reference to function template instantiation 'QMapNode<Key,T> *QMapData<Key,T>::createNode(Key,const T &,QMapNode<Key,T> *,bool)' being compiled
+                 with
+                 [
+                     Key=QString &,
+                     T=Friend *
+                 ]
+                 c:\qt\qt5.1.1\5.1.1\msvc2012\include\qtcore\qmap.h(523) : see reference to class template instantiation 'QMapData<Key,T>' being compiled
+                 with
+                 [
+                     Key=QString &,
+                     T=Friend *
+                 ]
+                 c:\qt\qt5.1.1\5.1.1\msvc2012\include\qtcore\qmap.h(523) : while compiling class template member function 'QMap<Key,T>::iterator QMap<Key,T>::end(void)'
+                 with
+                 [
+                     Key=QString &,
+                     T=Friend *
+                 ]
+                 FriendList.cpp(14) : see reference to function template instantiation 'QMap<Key,T>::iterator QMap<Key,T>::end(void)' being compiled
+                 with
+                 [
+                     Key=QString &,
+                     T=Friend *
+                 ]
+                 c:\users\guismo\documents\visual studio 2012\projects\babelvclient\babelvclient\FriendList.h(15) : see reference to class template instantiation 'QMap<Key,T>' being compiled
+                 with
+                 [
+                     Key=QString &,
+                     T=Friend *
+                 ]
+     1>c:\qt\qt5.1.1\5.1.1\msvc2012\include\qtcore\qmap.h(220): error C2300: 'QString' : class does not have a destructor called '~Key'
+     1>Done Building Project "C:\Users\Guismo\Documents\Visual Studio 2012\Projects\babelVClient\babelVClient\babelVClient.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.81
