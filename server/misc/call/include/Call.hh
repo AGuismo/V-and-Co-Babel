@@ -17,6 +17,9 @@ public:
 							  const ARequest *)> &);
 
 private:
+  static bool	searchClient(Server *serv, const std::string &name, Client::Pointer &);
+
+private:
   static void	call(Server *serv, Client::Pointer sender, const ARequest *req);
   static void	accept(Server *serv, Client::Pointer sender, const ARequest *req);
   static void	refuse(Server *serv, Client::Pointer sender, const ARequest *req);

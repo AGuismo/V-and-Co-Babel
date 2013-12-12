@@ -3,9 +3,12 @@
 #include	"Server.hh"
 #include	"IRequestPlugin.hh"
 #include	"Env.hh"
+#include	"RequestPlugin.hh"
+#include	"RequestCaller.hh"
 
 Server::Server(boost::asio::io_service &service) :
-  _service(service), _acceptor(service), _calls(this)
+  _service(service), _acceptor(service), _plugs(new request::PluginManager),
+  _calls(new request::PluginCaller(this))
 {
 
 }
@@ -29,14 +32,14 @@ void	Server::init()
 	{
 	  if (it->used)
 	    {
-	      _plugs.loadPlugin(it->path, it->name);
+	      _plugs->loadPlugin(it->path, it->name);
 #if defined(DEBUG)
 	      std::cout << "Plugins: " << it->name << ": loaded" << std::endl;
 #endif
 	    }
 	}
 
-      _calls.loadPlugins(_plugs);
+      _calls->loadPlugins(*_plugs);
     }
   catch (const plugin::Exception &e)
     {
@@ -49,6 +52,11 @@ void	Server::init()
   start_accept();
 }
 
+const Server::client_list	&Server::getClients() const
+{
+  return (_clientList);
+}
+
 void	Server::run()
 {
   _service.run();
@@ -59,7 +67,7 @@ void	Server::handle_request(Client::Pointer from, const ARequest *req)
 #if defined(DEBUG)
   std::cout << "Server::handle_request: " << req->code() << std::endl;
 #endif
-  if (_calls(from, req))
+  if ((*_calls)(from, req))
     {
 #if defined(DEBUG)
   std::cout << "Server::handle_request: Call complete" << std::endl;
