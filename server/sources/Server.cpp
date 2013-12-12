@@ -2,6 +2,7 @@
 #include	<boost/bind.hpp>
 #include	"Server.hh"
 #include	"IRequestPlugin.hh"
+#include	"Env.hh"
 
 Server::Server(boost::asio::io_service &service) :
   _service(service), _acceptor(service), _calls(this)
@@ -22,10 +23,20 @@ void	Server::init()
 
   try
     {
-  /*    _plugs.loadPlugin("./misc/lib/auth.so", "auth");*/
-      /* ... */
+      Env::plugin_list	plugs = Env::getInstance().plugin.plugins;
 
-      /*_calls.loadPlugins(_plugs);*/
+      for (Env::plugin_list::const_iterator it = plugs.begin(); it != plugs.end(); ++it)
+	{
+	  if (it->used)
+	    {
+	      _plugs.loadPlugin(it->path, it->name);
+#if defined(DEBUG)
+	      std::cout << "Plugins: " << it->name << ": loaded" << std::endl;
+#endif
+	    }
+	}
+
+      _calls.loadPlugins(_plugs);
     }
   catch (const plugin::Exception &e)
     {

@@ -27,7 +27,7 @@ MOD.LNK+=	-L$(DIR.INIPARSER) -liniparser -L$(DIR.DYNAMIC) -lMDynamic -Wl,--no-wh
 
 F.C	     +=	-W -Wall
 F.I	     += $(MOD.INC) $(DEPS.INC)
-F.L	     += $(MOD.LNK) $(DEPS.LNK) -lboost_system -lboost_thread -lpthread -ldl
+F.L	     += $(MOD.LNK) $(DEPS.LNK) -lboost_system -lboost_thread -lboost_filesystem -lpthread -ldl
 F.D	     +=
 
 all:		start $(NAME)
