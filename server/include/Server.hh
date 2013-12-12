@@ -4,8 +4,6 @@
 # include	<list>
 # include	<string>
 # include	"Client.hh"
-# include	"RequestPlugin.hh"
-# include	"RequestCaller.hh"
 
 namespace boost
 {
@@ -16,11 +14,16 @@ namespace boost
 }
 class	ARequest;
 
+namespace	request
+{
+  class	PluginManager;
+  class	PluginCaller;
+}
+
 class Server
 {
-  typedef std::list<Client::Pointer>	client_list;
-
 public:
+  typedef std::list<Client::Pointer>	client_list;
   typedef void (*request_handler)(Server *, Client::Pointer, const ARequest *);
 
 public:
@@ -46,10 +49,11 @@ public:
   ~Server();
 
 public:
-  void	init();
-  void	run();
-  void	handleClientClose(Client::Pointer clientClosed);
-  void	handle_request(Client::Pointer from, const ARequest *);
+  void			init();
+  void			run();
+  void			handleClientClose(Client::Pointer clientClosed);
+  void			handle_request(Client::Pointer from, const ARequest *);
+  const client_list	&getClients() const;
 
 private:
   void	start_accept();
@@ -63,8 +67,8 @@ private:
   boost::asio::io_service		&_service;
   boost::asio::ip::tcp::acceptor	_acceptor;
   client_list				_clientList;
-  request::PluginManager		_plugs;
-  request::PluginCaller			_calls;
+  request::PluginManager		*_plugs;
+  request::PluginCaller			*_calls;
 };
 
 #endif /* SERVER_H_ */

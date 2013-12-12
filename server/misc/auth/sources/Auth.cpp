@@ -49,11 +49,11 @@ void	Auth::new_account(Server *serv, Client::Pointer sender, const ARequest *req
   std::cout << "Auth::new_account()" << std::endl;
   if (Database::getInstance().newClient(origin->_name, origin->_password))
     {
-      sender->serialize_data(request::server::Ok());
       sender->InfosClient._isConnect = false;
       sender->InfosClient._name = origin->_name;
       sender->InfosClient._privacy = request::User::PUBLIC;
       sender->InfosClient._status = request::User::Status::DISCONNECTED;
+      sender->serialize_data(request::server::Ok());
     }
   else
     sender->serialize_data(request::server::Forbidden());

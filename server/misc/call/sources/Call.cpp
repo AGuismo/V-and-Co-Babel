@@ -6,6 +6,7 @@
 #include	"ServerRequest.hh"
 #include	"Database.hh"
 #include	"types.hh"
+#include	"Server.hh"
 
 Call::Call()
 {
@@ -41,10 +42,26 @@ void	Call::unload()
   delete this;
 }
 
+bool	Call::searchClient(Server *serv, const std::string &name, Client::Pointer &client)
+{
+  const Server::client_list	&clients = serv->getClients();
+
+  for (Server::client_list::const_iterator it = clients.begin(); it != clients.end(); ++it)
+    {
+      if ((*it)->InfosClient._name == name)
+	{
+	  client = *it;
+	  return (true);
+	}
+    }
+  return (false);
+}
+
 void	Call::call(Server *serv, Client::Pointer sender, const ARequest *req)
 {
   (void)serv;
   const request::call::client::CallClient	*origin = dynamic_cast<const request::call::client::CallClient *>(req);
+  Client::Pointer				receiver;
 
   std::cout << "Call::call()" << std::endl;
   std::cout << "From : " << origin->_from << std::endl;
@@ -54,8 +71,13 @@ void	Call::call(Server *serv, Client::Pointer sender, const ARequest *req)
   if (Database::getInstance().clientExist(origin->_from) &&
       Database::getInstance().clientExist(origin->_to))
     {
+      if (searchClient(serv, origin->_from, receiver))
+	{
+	  receiver->serialize_data(*req);
+	  return ;
+	}
     }
-
+  sender->serialize_data(request::server::Forbidden());
   /* FORWARD LA REQUETE */
 
 }
