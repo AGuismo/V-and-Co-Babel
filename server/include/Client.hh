@@ -49,6 +49,14 @@ private:
   buffer			_bufferised;
   tcp::socket			_socket;
   Server			*_server;
+
+  struct
+  {
+    bool			_isConnect;
+    std::string			_name;
+    request::Privacy		_privacy;
+    request::Status		_status;
+  }				InfosClient;
 };
 
 #endif /* CLIENT_H_ */
