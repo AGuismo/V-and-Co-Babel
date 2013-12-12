@@ -14,12 +14,14 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -28,169 +30,281 @@ class Ui_ServerTester
 {
 public:
     QWidget *centralWidget;
-    QPushButton *ButtonQuit;
-    QLineEdit *lineAdress;
+    QGridLayout *gridLayout_4;
+    QGridLayout *gridLayout;
+    QPushButton *pushButton_3;
+    QPushButton *pushButton_12;
+    QPushButton *pushButton_7;
+    QPushButton *pushButton_2;
+    QPushButton *pushButton_11;
+    QPushButton *pushButton_6;
+    QPushButton *pushButton_8;
+    QPushButton *pushButton_4;
+    QPushButton *pushButton_9;
+    QPushButton *pushButton_17;
+    QPushButton *pushButton_14;
+    QPushButton *pushButton_18;
+    QPushButton *pushButton_16;
+    QPushButton *pushButton_5;
+    QPushButton *pushButton_10;
+    QPushButton *pushButton_15;
+    QPushButton *pushButton_13;
+    QPushButton *pushButton;
+    QVBoxLayout *verticalLayout;
+    QLabel *labelTitre;
+    QVBoxLayout *verticalLayout_3;
+    QLabel *labelServerBrowser;
+    QTextBrowser *ServerBrowser;
+    QVBoxLayout *verticalLayout_2;
     QLabel *labelAdress;
     QLabel *labelPort;
-    QLineEdit *linePort;
     QLabel *labelStatus;
-    QLabel *connectStatus;
-    QPushButton *ButtonConnect;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton_3;
-    QPushButton *pushButton_4;
-    QPushButton *pushButton_5;
-    QPushButton *pushButton_6;
-    QPushButton *pushButton_7;
-    QPushButton *pushButton_8;
-    QPushButton *pushButton_9;
-    QPushButton *pushButton_10;
-    QPushButton *pushButton_11;
-    QPushButton *pushButton_12;
-    QPushButton *pushButton_13;
-    QPushButton *pushButton_14;
-    QPushButton *pushButton_15;
-    QPushButton *pushButton_16;
-    QPushButton *pushButton_17;
-    QPushButton *pushButton_18;
+    QGridLayout *gridLayout_2;
     QLabel *labelEditCmd;
-    QLineEdit *lineEditCmd;
     QPushButton *ButtonSend;
-    QFrame *line_2;
-    QLabel *labelTitre;
-    QTextBrowser *ServerBrowser;
-    QLabel *labelServerBrowser;
-    QFrame *line_3;
-    QFrame *line_4;
+    QLineEdit *lineEditCmd;
+    QPushButton *ButtonQuit;
     QFrame *line_5;
+    QLabel *connectStatus;
+    QLineEdit *lineAdress;
+    QLineEdit *linePort;
+    QPushButton *ButtonConnect;
+    QFrame *line_2;
+    QFrame *line_4;
+    QFrame *line_3;
 
     void setupUi(QMainWindow *ServerTester)
     {
         if (ServerTester->objectName().isEmpty())
             ServerTester->setObjectName(QStringLiteral("ServerTester"));
-        ServerTester->resize(685, 442);
+        ServerTester->resize(592, 398);
         centralWidget = new QWidget(ServerTester);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        ButtonQuit = new QPushButton(centralWidget);
-        ButtonQuit->setObjectName(QStringLiteral("ButtonQuit"));
-        ButtonQuit->setGeometry(QRect(332, 390, 331, 41));
-        lineAdress = new QLineEdit(centralWidget);
-        lineAdress->setObjectName(QStringLiteral("lineAdress"));
-        lineAdress->setGeometry(QRect(130, 50, 111, 22));
-        labelAdress = new QLabel(centralWidget);
-        labelAdress->setObjectName(QStringLiteral("labelAdress"));
-        labelAdress->setGeometry(QRect(30, 50, 101, 16));
-        labelPort = new QLabel(centralWidget);
-        labelPort->setObjectName(QStringLiteral("labelPort"));
-        labelPort->setGeometry(QRect(40, 80, 81, 16));
-        linePort = new QLineEdit(centralWidget);
-        linePort->setObjectName(QStringLiteral("linePort"));
-        linePort->setGeometry(QRect(130, 80, 51, 22));
-        labelStatus = new QLabel(centralWidget);
-        labelStatus->setObjectName(QStringLiteral("labelStatus"));
-        labelStatus->setGeometry(QRect(70, 110, 51, 16));
-        connectStatus = new QLabel(centralWidget);
-        connectStatus->setObjectName(QStringLiteral("connectStatus"));
-        connectStatus->setGeometry(QRect(130, 110, 161, 16));
-        ButtonConnect = new QPushButton(centralWidget);
-        ButtonConnect->setObjectName(QStringLiteral("ButtonConnect"));
-        ButtonConnect->setGeometry(QRect(90, 130, 91, 41));
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(340, 130, 93, 28));
-        pushButton_2 = new QPushButton(centralWidget);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(340, 170, 93, 28));
+        gridLayout_4 = new QGridLayout(centralWidget);
+        gridLayout_4->setSpacing(6);
+        gridLayout_4->setContentsMargins(11, 11, 11, 11);
+        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        gridLayout = new QGridLayout();
+        gridLayout->setSpacing(6);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         pushButton_3 = new QPushButton(centralWidget);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
-        pushButton_3->setGeometry(QRect(340, 210, 93, 28));
-        pushButton_4 = new QPushButton(centralWidget);
-        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
-        pushButton_4->setGeometry(QRect(340, 250, 93, 28));
-        pushButton_5 = new QPushButton(centralWidget);
-        pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
-        pushButton_5->setGeometry(QRect(340, 290, 93, 28));
-        pushButton_6 = new QPushButton(centralWidget);
-        pushButton_6->setObjectName(QStringLiteral("pushButton_6"));
-        pushButton_6->setGeometry(QRect(450, 130, 93, 28));
-        pushButton_7 = new QPushButton(centralWidget);
-        pushButton_7->setObjectName(QStringLiteral("pushButton_7"));
-        pushButton_7->setGeometry(QRect(450, 170, 93, 28));
-        pushButton_8 = new QPushButton(centralWidget);
-        pushButton_8->setObjectName(QStringLiteral("pushButton_8"));
-        pushButton_8->setGeometry(QRect(450, 210, 93, 28));
-        pushButton_9 = new QPushButton(centralWidget);
-        pushButton_9->setObjectName(QStringLiteral("pushButton_9"));
-        pushButton_9->setGeometry(QRect(450, 250, 93, 28));
-        pushButton_10 = new QPushButton(centralWidget);
-        pushButton_10->setObjectName(QStringLiteral("pushButton_10"));
-        pushButton_10->setGeometry(QRect(450, 290, 93, 28));
-        pushButton_11 = new QPushButton(centralWidget);
-        pushButton_11->setObjectName(QStringLiteral("pushButton_11"));
-        pushButton_11->setGeometry(QRect(560, 130, 93, 28));
+
+        gridLayout->addWidget(pushButton_3, 2, 0, 1, 1);
+
         pushButton_12 = new QPushButton(centralWidget);
         pushButton_12->setObjectName(QStringLiteral("pushButton_12"));
-        pushButton_12->setGeometry(QRect(560, 170, 93, 28));
-        pushButton_13 = new QPushButton(centralWidget);
-        pushButton_13->setObjectName(QStringLiteral("pushButton_13"));
-        pushButton_13->setGeometry(QRect(560, 210, 93, 28));
-        pushButton_14 = new QPushButton(centralWidget);
-        pushButton_14->setObjectName(QStringLiteral("pushButton_14"));
-        pushButton_14->setGeometry(QRect(560, 250, 93, 28));
-        pushButton_15 = new QPushButton(centralWidget);
-        pushButton_15->setObjectName(QStringLiteral("pushButton_15"));
-        pushButton_15->setGeometry(QRect(560, 290, 93, 28));
-        pushButton_16 = new QPushButton(centralWidget);
-        pushButton_16->setObjectName(QStringLiteral("pushButton_16"));
-        pushButton_16->setGeometry(QRect(340, 330, 93, 28));
+
+        gridLayout->addWidget(pushButton_12, 1, 2, 1, 1);
+
+        pushButton_7 = new QPushButton(centralWidget);
+        pushButton_7->setObjectName(QStringLiteral("pushButton_7"));
+
+        gridLayout->addWidget(pushButton_7, 1, 1, 1, 1);
+
+        pushButton_2 = new QPushButton(centralWidget);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+
+        gridLayout->addWidget(pushButton_2, 1, 0, 1, 1);
+
+        pushButton_11 = new QPushButton(centralWidget);
+        pushButton_11->setObjectName(QStringLiteral("pushButton_11"));
+
+        gridLayout->addWidget(pushButton_11, 0, 2, 1, 1);
+
+        pushButton_6 = new QPushButton(centralWidget);
+        pushButton_6->setObjectName(QStringLiteral("pushButton_6"));
+
+        gridLayout->addWidget(pushButton_6, 0, 1, 1, 1);
+
+        pushButton_8 = new QPushButton(centralWidget);
+        pushButton_8->setObjectName(QStringLiteral("pushButton_8"));
+
+        gridLayout->addWidget(pushButton_8, 2, 1, 1, 1);
+
+        pushButton_4 = new QPushButton(centralWidget);
+        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+
+        gridLayout->addWidget(pushButton_4, 3, 0, 1, 1);
+
+        pushButton_9 = new QPushButton(centralWidget);
+        pushButton_9->setObjectName(QStringLiteral("pushButton_9"));
+
+        gridLayout->addWidget(pushButton_9, 3, 1, 1, 1);
+
         pushButton_17 = new QPushButton(centralWidget);
         pushButton_17->setObjectName(QStringLiteral("pushButton_17"));
-        pushButton_17->setGeometry(QRect(450, 330, 93, 28));
+
+        gridLayout->addWidget(pushButton_17, 5, 1, 1, 1);
+
+        pushButton_14 = new QPushButton(centralWidget);
+        pushButton_14->setObjectName(QStringLiteral("pushButton_14"));
+
+        gridLayout->addWidget(pushButton_14, 3, 2, 1, 1);
+
         pushButton_18 = new QPushButton(centralWidget);
         pushButton_18->setObjectName(QStringLiteral("pushButton_18"));
-        pushButton_18->setGeometry(QRect(560, 330, 93, 28));
-        labelEditCmd = new QLabel(centralWidget);
-        labelEditCmd->setObjectName(QStringLiteral("labelEditCmd"));
-        labelEditCmd->setGeometry(QRect(340, 40, 161, 16));
-        lineEditCmd = new QLineEdit(centralWidget);
-        lineEditCmd->setObjectName(QStringLiteral("lineEditCmd"));
-        lineEditCmd->setGeometry(QRect(340, 60, 231, 22));
-        ButtonSend = new QPushButton(centralWidget);
-        ButtonSend->setObjectName(QStringLiteral("ButtonSend"));
-        ButtonSend->setGeometry(QRect(580, 60, 81, 28));
-        line_2 = new QFrame(centralWidget);
-        line_2->setObjectName(QStringLiteral("line_2"));
-        line_2->setGeometry(QRect(320, 110, 361, 20));
-        line_2->setFrameShape(QFrame::HLine);
-        line_2->setFrameShadow(QFrame::Sunken);
+
+        gridLayout->addWidget(pushButton_18, 5, 2, 1, 1);
+
+        pushButton_16 = new QPushButton(centralWidget);
+        pushButton_16->setObjectName(QStringLiteral("pushButton_16"));
+
+        gridLayout->addWidget(pushButton_16, 5, 0, 1, 1);
+
+        pushButton_5 = new QPushButton(centralWidget);
+        pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
+
+        gridLayout->addWidget(pushButton_5, 4, 0, 1, 1);
+
+        pushButton_10 = new QPushButton(centralWidget);
+        pushButton_10->setObjectName(QStringLiteral("pushButton_10"));
+
+        gridLayout->addWidget(pushButton_10, 4, 1, 1, 1);
+
+        pushButton_15 = new QPushButton(centralWidget);
+        pushButton_15->setObjectName(QStringLiteral("pushButton_15"));
+
+        gridLayout->addWidget(pushButton_15, 4, 2, 1, 1);
+
+        pushButton_13 = new QPushButton(centralWidget);
+        pushButton_13->setObjectName(QStringLiteral("pushButton_13"));
+
+        gridLayout->addWidget(pushButton_13, 2, 2, 1, 1);
+
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        gridLayout->addWidget(pushButton, 0, 0, 1, 1);
+
+
+        gridLayout_4->addLayout(gridLayout, 4, 3, 3, 1);
+
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(6);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         labelTitre = new QLabel(centralWidget);
         labelTitre->setObjectName(QStringLiteral("labelTitre"));
-        labelTitre->setGeometry(QRect(70, 20, 141, 21));
         QFont font;
         font.setPointSize(12);
         labelTitre->setFont(font);
-        ServerBrowser = new QTextBrowser(centralWidget);
-        ServerBrowser->setObjectName(QStringLiteral("ServerBrowser"));
-        ServerBrowser->setGeometry(QRect(20, 220, 271, 201));
+
+        verticalLayout->addWidget(labelTitre);
+
+
+        gridLayout_4->addLayout(verticalLayout, 0, 0, 1, 2);
+
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         labelServerBrowser = new QLabel(centralWidget);
         labelServerBrowser->setObjectName(QStringLiteral("labelServerBrowser"));
-        labelServerBrowser->setGeometry(QRect(30, 190, 201, 16));
-        line_3 = new QFrame(centralWidget);
-        line_3->setObjectName(QStringLiteral("line_3"));
-        line_3->setGeometry(QRect(320, 370, 361, 16));
-        line_3->setFrameShape(QFrame::HLine);
-        line_3->setFrameShadow(QFrame::Sunken);
-        line_4 = new QFrame(centralWidget);
-        line_4->setObjectName(QStringLiteral("line_4"));
-        line_4->setGeometry(QRect(300, 10, 20, 421));
-        line_4->setFrameShape(QFrame::VLine);
-        line_4->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_3->addWidget(labelServerBrowser);
+
+        ServerBrowser = new QTextBrowser(centralWidget);
+        ServerBrowser->setObjectName(QStringLiteral("ServerBrowser"));
+
+        verticalLayout_3->addWidget(ServerBrowser);
+
+
+        gridLayout_4->addLayout(verticalLayout_3, 6, 0, 3, 2);
+
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        labelAdress = new QLabel(centralWidget);
+        labelAdress->setObjectName(QStringLiteral("labelAdress"));
+
+        verticalLayout_2->addWidget(labelAdress);
+
+        labelPort = new QLabel(centralWidget);
+        labelPort->setObjectName(QStringLiteral("labelPort"));
+
+        verticalLayout_2->addWidget(labelPort);
+
+        labelStatus = new QLabel(centralWidget);
+        labelStatus->setObjectName(QStringLiteral("labelStatus"));
+
+        verticalLayout_2->addWidget(labelStatus);
+
+
+        gridLayout_4->addLayout(verticalLayout_2, 1, 0, 3, 1);
+
+        gridLayout_2 = new QGridLayout();
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        labelEditCmd = new QLabel(centralWidget);
+        labelEditCmd->setObjectName(QStringLiteral("labelEditCmd"));
+
+        gridLayout_2->addWidget(labelEditCmd, 0, 0, 1, 1);
+
+        ButtonSend = new QPushButton(centralWidget);
+        ButtonSend->setObjectName(QStringLiteral("ButtonSend"));
+
+        gridLayout_2->addWidget(ButtonSend, 1, 1, 1, 1);
+
+        lineEditCmd = new QLineEdit(centralWidget);
+        lineEditCmd->setObjectName(QStringLiteral("lineEditCmd"));
+
+        gridLayout_2->addWidget(lineEditCmd, 1, 0, 1, 1);
+
+
+        gridLayout_4->addLayout(gridLayout_2, 0, 3, 3, 1);
+
+        ButtonQuit = new QPushButton(centralWidget);
+        ButtonQuit->setObjectName(QStringLiteral("ButtonQuit"));
+
+        gridLayout_4->addWidget(ButtonQuit, 8, 3, 1, 1);
+
         line_5 = new QFrame(centralWidget);
         line_5->setObjectName(QStringLiteral("line_5"));
-        line_5->setGeometry(QRect(10, 170, 291, 16));
         line_5->setFrameShape(QFrame::HLine);
         line_5->setFrameShadow(QFrame::Sunken);
+
+        gridLayout_4->addWidget(line_5, 5, 0, 1, 2);
+
+        connectStatus = new QLabel(centralWidget);
+        connectStatus->setObjectName(QStringLiteral("connectStatus"));
+
+        gridLayout_4->addWidget(connectStatus, 3, 1, 1, 1);
+
+        lineAdress = new QLineEdit(centralWidget);
+        lineAdress->setObjectName(QStringLiteral("lineAdress"));
+
+        gridLayout_4->addWidget(lineAdress, 1, 1, 1, 1);
+
+        linePort = new QLineEdit(centralWidget);
+        linePort->setObjectName(QStringLiteral("linePort"));
+
+        gridLayout_4->addWidget(linePort, 2, 1, 1, 1);
+
+        ButtonConnect = new QPushButton(centralWidget);
+        ButtonConnect->setObjectName(QStringLiteral("ButtonConnect"));
+
+        gridLayout_4->addWidget(ButtonConnect, 4, 0, 1, 2);
+
+        line_2 = new QFrame(centralWidget);
+        line_2->setObjectName(QStringLiteral("line_2"));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+
+        gridLayout_4->addWidget(line_2, 3, 3, 1, 1);
+
+        line_4 = new QFrame(centralWidget);
+        line_4->setObjectName(QStringLiteral("line_4"));
+        line_4->setFrameShape(QFrame::VLine);
+        line_4->setFrameShadow(QFrame::Sunken);
+
+        gridLayout_4->addWidget(line_4, 0, 2, 9, 1);
+
+        line_3 = new QFrame(centralWidget);
+        line_3->setObjectName(QStringLiteral("line_3"));
+        line_3->setFrameShape(QFrame::HLine);
+        line_3->setFrameShadow(QFrame::Sunken);
+
+        gridLayout_4->addWidget(line_3, 7, 3, 1, 1);
+
         ServerTester->setCentralWidget(centralWidget);
 
         retranslateUi(ServerTester);
@@ -204,36 +318,37 @@ public:
     void retranslateUi(QMainWindow *ServerTester)
     {
         ServerTester->setWindowTitle(QApplication::translate("ServerTester", "ServerTester", 0));
-        ButtonQuit->setText(QApplication::translate("ServerTester", "Close", 0));
-        lineAdress->setText(QString());
-        labelAdress->setText(QApplication::translate("ServerTester", "Server Adress :", 0));
-        labelPort->setText(QApplication::translate("ServerTester", "Server Port :", 0));
-        linePort->setText(QString());
-        labelStatus->setText(QApplication::translate("ServerTester", "Status :", 0));
-        connectStatus->setText(QApplication::translate("ServerTester", "Disconnected", 0));
-        ButtonConnect->setText(QApplication::translate("ServerTester", "Connect !", 0));
-        pushButton->setText(QApplication::translate("ServerTester", "Connect", 0));
-        pushButton_2->setText(QApplication::translate("ServerTester", "Call", 0));
         pushButton_3->setText(QApplication::translate("ServerTester", "Status Afk", 0));
-        pushButton_4->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_5->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_6->setText(QApplication::translate("ServerTester", "Create Acc", 0));
-        pushButton_7->setText(QApplication::translate("ServerTester", "Chat", 0));
-        pushButton_8->setText(QApplication::translate("ServerTester", "Status Online", 0));
-        pushButton_9->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_10->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_11->setText(QApplication::translate("ServerTester", "add Friend", 0));
         pushButton_12->setText(QApplication::translate("ServerTester", "Disconnect", 0));
-        pushButton_13->setText(QApplication::translate("ServerTester", "Status Offline", 0));
-        pushButton_14->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_15->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_16->setText(QApplication::translate("ServerTester", "PushButton", 0));
+        pushButton_7->setText(QApplication::translate("ServerTester", "Chat", 0));
+        pushButton_2->setText(QApplication::translate("ServerTester", "Call", 0));
+        pushButton_11->setText(QApplication::translate("ServerTester", "add Friend", 0));
+        pushButton_6->setText(QApplication::translate("ServerTester", "Create Acc", 0));
+        pushButton_8->setText(QApplication::translate("ServerTester", "Status Online", 0));
+        pushButton_4->setText(QApplication::translate("ServerTester", "PushButton", 0));
+        pushButton_9->setText(QApplication::translate("ServerTester", "PushButton", 0));
         pushButton_17->setText(QApplication::translate("ServerTester", "PushButton", 0));
+        pushButton_14->setText(QApplication::translate("ServerTester", "PushButton", 0));
         pushButton_18->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        labelEditCmd->setText(QApplication::translate("ServerTester", "Test your own command :", 0));
-        ButtonSend->setText(QApplication::translate("ServerTester", "Send", 0));
+        pushButton_16->setText(QApplication::translate("ServerTester", "PushButton", 0));
+        pushButton_5->setText(QApplication::translate("ServerTester", "PushButton", 0));
+        pushButton_10->setText(QApplication::translate("ServerTester", "PushButton", 0));
+        pushButton_15->setText(QApplication::translate("ServerTester", "PushButton", 0));
+        pushButton_13->setText(QApplication::translate("ServerTester", "Status Offline", 0));
+        pushButton->setText(QApplication::translate("ServerTester", "Connect", 0));
         labelTitre->setText(QApplication::translate("ServerTester", "BABEL TESTER", 0));
         labelServerBrowser->setText(QApplication::translate("ServerTester", "Server answer browser :", 0));
+        labelAdress->setText(QApplication::translate("ServerTester", "Server Adress :", 0));
+        labelPort->setText(QApplication::translate("ServerTester", "Server Port :", 0));
+        labelStatus->setText(QApplication::translate("ServerTester", "Status :", 0));
+        labelEditCmd->setText(QApplication::translate("ServerTester", "Test your own command :", 0));
+        ButtonSend->setText(QApplication::translate("ServerTester", "Send", 0));
+        lineEditCmd->setText(QApplication::translate("ServerTester", "Hello World !", 0));
+        ButtonQuit->setText(QApplication::translate("ServerTester", "Close", 0));
+        connectStatus->setText(QApplication::translate("ServerTester", "Disconnected", 0));
+        lineAdress->setText(QApplication::translate("ServerTester", "127.0.0.1", 0));
+        linePort->setText(QApplication::translate("ServerTester", "44201", 0));
+        ButtonConnect->setText(QApplication::translate("ServerTester", "Connect !", 0));
     } // retranslateUi
 
 };

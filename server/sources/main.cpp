@@ -21,5 +21,11 @@ int	main(int ac, char *av[])
     }
   app.run();
   app.shutdown();
-  return (0);
+#if defined(WIN32)
+  char	path[1024];
+  GetCurrentDirectory(1024, path);
+  std::cout << path << std::endl;
+  system("pause");
+#endif
+  return(0);
 }

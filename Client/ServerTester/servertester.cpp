@@ -34,13 +34,12 @@ void ServerTester::on_ButtonQuit_clicked()
     this->close();
 }
 
-void ServerTester::on_ButtonConnect_clicked()
+void ServerTester::connection()
 {
-    bool    ok;
-    QString tmp;
+	bool	ok;
+	QString	tmp;
 
-    tcpSocket->connectToHost(ui->lineAdress->text(), ui->linePort->text().toInt(&ok));
-
+	tcpSocket->connectToHost(ui->lineAdress->text(), ui->linePort->text().toInt(&ok));
     if (tcpSocket->waitForConnected(30) == true)
         {
             tmp.append("Connected to host");
@@ -51,5 +50,11 @@ void ServerTester::on_ButtonConnect_clicked()
             tmp.append("Failed to connect to host");
             tcpSocket->close();
         }
-    ui->connectStatus->setText(tmp);
+	ui->connectStatus->setText(tmp);
+}
+
+void ServerTester::on_ButtonConnect_clicked()
+{
+	ui->connectStatus->setText("Connecting to host...");
+	this->connection();
 }

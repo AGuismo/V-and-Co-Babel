@@ -30,6 +30,8 @@ private slots:
 	void on_ButtonSend_clicked();
     void on_ButtonConnect_clicked();
 
+	void	connection();
+
 private:
     Ui::ServerTester	*ui;
     QUdpSocket          *udpSocket;

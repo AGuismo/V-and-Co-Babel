@@ -69,6 +69,9 @@ bool		ConsumerParser::skipBlanks()
 #if defined(DEBUG)
   std::cout << "ConsumerParser::skipBlanks(): " << std::endl;
 #endif
+  if (_rwHeader == _inputData.end())
+	  if (!addData())
+		  return (false);
   while (std::isspace(*_rwHeader, std::locale()))
     {
       _rwHeader++;

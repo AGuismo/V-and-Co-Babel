@@ -1,0 +1,14 @@
+﻿La génération a démarré 12/12/2013 13:50:24.
+     1>Projet "C:\Users\sauvia_c\Documents\GitHub\V-and-Co-Babel\server\database\Database\Database.vcxproj" sur le nœud 3 (Build cible(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /D _MBCS /D WIN32 /D DEBUG /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\sources\Database.cpp
+         Database.cpp
+     1>c:\users\sauvia_c\documents\github\v-and-co-babel\server\database\sources\database.cpp(163): warning C4101: 'e' : variable locale non référencée
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\Users\sauvia_c\Documents\GitHub\V-and-Co-Babel\server\Server_Babel\Debug\Database.lib" /NOLOGO Debug\Database.obj
+         Database.vcxproj -> C:\Users\sauvia_c\Documents\GitHub\V-and-Co-Babel\server\Server_Babel\Debug\Database.lib
+     1>Génération du projet "C:\Users\sauvia_c\Documents\GitHub\V-and-Co-Babel\server\database\Database\Database.vcxproj" terminée (Build cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:00:05.53

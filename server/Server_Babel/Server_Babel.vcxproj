@@ -39,10 +39,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\;$(ProjectDir)\..\..\MDynamic\MDynamic\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\;$(ProjectDir)\..\..\MDynamic\MDynamic\include;$(ProjectDir)\..\..\IniParser\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\;$(ProjectDir)\..\..\MDynamic\MDynamic\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\database\include;$(ProjectDir)\..\..\protocol\API;$(ProjectDir)\..\..\protocol\include;$(ProjectDir)\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\;$(ProjectDir)\..\..\MDynamic\MDynamic\include;$(ProjectDir)\..\..\IniParser\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -53,7 +53,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-gd-1_55.lib;</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-gd-1_55.lib;libboost_filesystem-vc120-mt-gd-1_55.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -71,12 +71,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-1_55.lib;libboost_filesystem-vc120-mt-1_55.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Application.hh" />
     <ClInclude Include="..\include\BabelPlugin.hh" />
     <ClInclude Include="..\include\Client.hh" />
+    <ClInclude Include="..\include\Env.hh" />
     <ClInclude Include="..\include\IAuthPlugin.hh" />
     <ClInclude Include="..\include\IPlugin.hh" />
     <ClInclude Include="..\include\IRequestPlugin.hh" />
@@ -90,6 +92,7 @@
   <ItemGroup>
     <ClCompile Include="..\sources\Application.cpp" />
     <ClCompile Include="..\sources\Client.cpp" />
+    <ClCompile Include="..\sources\Env.cpp" />
     <ClCompile Include="..\sources\main.cpp" />
     <ClCompile Include="..\sources\PluginException.cpp" />
     <ClCompile Include="..\sources\RequestCaller.cpp" />
