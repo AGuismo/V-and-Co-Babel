@@ -1,14 +1,26 @@
-#include "MainWindow.h"
+#include		"FriendList.h"
+#include		"MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent)	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 	setWindowTitle("VBabel");
-	/*QGridLayout		*ly = new QGridLayout;
+}
 
-	ly->addWidget(ui.centralWidget);
+Ui::MainWindowClass			&MainWindow::getUi()
+{
+	return (ui);
+}
 
-	setLayout(ly);*/
+MainWindow							&MainWindow::getInstance()
+{
+	static MainWindow				MainWindow;
+//	MainWindow.getUi().setupUi(this);
+//	setWindowTitle("VBabel");
+
+	
+
+	return (MainWindow);
 }
 
 MainWindow::~MainWindow()

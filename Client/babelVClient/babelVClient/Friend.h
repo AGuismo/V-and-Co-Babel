@@ -3,15 +3,19 @@
 
 #include	<QString>
 #include	<QList>
+#include	<QListWidgetitem>
 
 class Friend
 {
+private:
+	QListWidgetItem *		_friendWidget;
+
 private:
 	QString					_name;
 	QString					_personalMsg;
 
 private:
-	int						_status;
+	size_t					_status;
 	bool					_callStatus;
 
 private:
@@ -32,8 +36,12 @@ public:
 	void					setCurrentMsg(QString &curMsg);
 
 public:
-	Friend(QString &friendName, QString &friendStatus);
+	Friend(QString &friendName, QString &friendMsgPerso, size_t status);
 	~Friend();
+
+private:
+	Friend(const Friend &);
+	Friend					operator=(const Friend &);
 };
 
 #endif // !FRIEND_H

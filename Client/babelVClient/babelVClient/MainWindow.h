@@ -10,12 +10,18 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 
-public:
+private:
+	Ui::MainWindowClass ui;
+
+private:
 	MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
-private:
-	Ui::MainWindowClass ui;
+public:
+	Ui::MainWindowClass			&getUi();
+
+public:
+	static MainWindow &getInstance();
 };
 
 #endif // MAINWINDOW_H

@@ -9,6 +9,9 @@ class FriendListWidget : public QListWidget
 	Q_OBJECT
 
 public:
+	void				addFriendItem(QIcon &iconStatus, QString &name, QString &personalMsg);
+
+public:
 	FriendListWidget(QWidget *parent = 0);
 	~FriendListWidget();
 };

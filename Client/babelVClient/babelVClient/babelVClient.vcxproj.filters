@@ -102,5 +102,8 @@
     <ClInclude Include="Friend.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="Env.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
