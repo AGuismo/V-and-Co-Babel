@@ -8,6 +8,7 @@
 
 class Application
 {
+  static const char	*confFile;
 public:
   class InitExcept : public std::exception
   {
@@ -29,7 +30,7 @@ public:
   virtual ~Application();
 
 public:
-  void	init();
+  void	init(const char *confPath = 0);
   void	run();
   void	shutdown();
 

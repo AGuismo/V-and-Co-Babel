@@ -1,0 +1,28 @@
+﻿Build started 12/12/2013 02:37:29.
+     1>Project "C:\Users\Guismo\Documents\GitHub\V-and-Co-Babel\Client\babelVClient\babelVClient\babelVClient.vcxproj" on node 2 (Build target(s)).
+     1>CustomBuild:
+         Uic'ing MainWindow.ui...
+     1>C:\Users\Guismo\Documents\GitHub\V-and-Co-Babel\Client\babelVClient\babelVClient\MainWindow.ui : warning : The name 'layoutWidget' (QWidget) is already in use, defaulting to 'layoutWidget1'.
+     1>C:\Users\Guismo\Documents\GitHub\V-and-Co-Babel\Client\babelVClient\babelVClient\MainWindow.ui : warning : The name 'layoutWidget' (QWidget) is already in use, defaulting to 'layoutWidget2'.
+     1>C:\Users\Guismo\Documents\GitHub\V-and-Co-Babel\Client\babelVClient\babelVClient\MainWindow.ui : warning : The name 'layoutWidget' (QWidget) is already in use, defaulting to 'layoutWidget3'.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtCore /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtGui /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtMultimedia /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtMultimediaWidgets /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtNetwork /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtQml /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtQuick /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtSql /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtTest /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtWebKit /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\ActiveQt /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtConcurrent /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtHelp /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtOpenGL /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtPrintSupport /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtScript /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtSvg /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtWebkitWidgets /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtWidgets /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtXml /IC:\Qt\Qt5.1.1\5.1.1\msvc2012\include\QtXmlPatterns /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_MULTIMEDIA_LIB /D QT_MULTIMEDIAWIDGETS_LIB /D QT_NETWORK_LIB /D QT_QML_LIB /D QT_QUICK_LIB /D QT_SQL_LIB /D QT_TESTLIB_LIB /D QT_CONCURRENT_LIB /D QT_HELP_LIB /D QT_OPENGL_LIB /D QT_PRINTSUPPORT_LIB /D QT_SCRIPT_LIB /D QT_SVG_LIB /D QT_WEBKITWIDGETS_LIB /D QT_WIDGETS_LIB /D QT_XML_LIB /D QT_XMLPATTERNS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t- /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt GeneratedFiles\Debug\moc_MainWindow.cpp MainWindow.cpp main.cpp
+         moc_MainWindow.cpp
+         MainWindow.cpp
+         main.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Guismo\Documents\GitHub\V-and-Co-Babel\Client\babelVClient\Win32\Debug\\babelVClient.exe" /NOLOGO /LIBPATH:C:\Qt\Qt5.1.1\5.1.1\msvc2012\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Multimediad.lib Qt5MultimediaWidgetsd.lib Qt5Networkd.lib Qt5Qmld.lib Qt5Quickd.lib Qt5Sqld.lib Qt5Testd.lib Qt5WebKitd.lib Qt5AxContainerd.lib Qt5AxBased.lib Qt5Concurrentd.lib Qt5Helpd.lib Qt5OpenGLd.lib opengl32.lib glu32.lib Qt5PrintSupportd.lib Qt5Scriptd.lib Qt5Svgd.lib Qt5WebkitWidgetsd.lib Qt5Widgetsd.lib Qt5Xmld.lib Qt5XmlPatternsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Guismo\Documents\GitHub\V-and-Co-Babel\Client\babelVClient\Win32\Debug\babelVClient.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Guismo\Documents\GitHub\V-and-Co-Babel\Client\babelVClient\Win32\Debug\babelVClient.lib" /MACHINE:X86 /SAFESEH Debug\Friend.obj
+         Debug\FriendList.obj
+         Debug\FriendListWidget.obj
+         Debug\moc_FriendListWidget.obj
+         Debug\moc_MainWindow.obj
+         Debug\qrc_MainWindow.obj
+         Debug\main.obj
+         Debug\MainWindow.obj
+         babelVClient.vcxproj -> C:\Users\Guismo\Documents\GitHub\V-and-Co-Babel\Client\babelVClient\Win32\Debug\babelVClient.exe
+     1>Done Building Project "C:\Users\Guismo\Documents\GitHub\V-and-Co-Babel\Client\babelVClient\babelVClient\babelVClient.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.86

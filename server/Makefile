@@ -4,6 +4,7 @@ SRCS =	      	main.cpp		\
 		Application.cpp		\
 		Server.cpp		\
 		Client.cpp		\
+		Env.cpp			\
 					\
 		PluginException.cpp	\
 		RequestPlugin.cpp	\

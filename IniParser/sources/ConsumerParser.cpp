@@ -1,3 +1,4 @@
+#include	<sstream>
 #include	<ctype.h>
 #include	<cstring>
 #include	<locale>
@@ -52,8 +53,8 @@ bool		ConsumerParser::addData()
     }
   catch (const std::runtime_error &e)
     {
-	  (void)e;
-	  _isEOF = true;
+      (void)e;
+      _isEOF = true;
 #if defined(DEBUG)
       std::cout << "ConsumerParser::addData(): " << "Fail" << std::endl;
 #endif
@@ -66,7 +67,7 @@ bool		ConsumerParser::addData()
 bool		ConsumerParser::skipBlanks()
 {
 #if defined(DEBUG)
-      std::cout << "ConsumerParser::skipBlanks(): " << std::endl;
+  std::cout << "ConsumerParser::skipBlanks(): " << std::endl;
 #endif
   while (std::isspace(*_rwHeader, std::locale()))
     {
@@ -86,7 +87,7 @@ void		ConsumerParser::skipBlank(bool skipped)
 bool		ConsumerParser::readText(char *text)
 {
 #if defined(DEBUG)
-      std::cout << "ConsumerParser::readText(): " << std::endl;
+  std::cout << "ConsumerParser::readText(): " << std::endl;
 #endif
   saveContext();
   if (_skipBlank)
@@ -111,7 +112,7 @@ bool		ConsumerParser::readText(char *text)
 bool		ConsumerParser::readEOF()
 {
 #if defined(DEBUG)
-      std::cout << "ConsumerParser::readEOF(): " << std::endl;
+  std::cout << "ConsumerParser::readEOF(): " << std::endl;
 #endif
   if (_skipBlank)
     skipBlanks();
@@ -120,10 +121,10 @@ bool		ConsumerParser::readEOF()
   return (false);
 }
 
-  bool		ConsumerParser::readUntil(char c, std::string &output)
+bool		ConsumerParser::readUntil(char c, std::string &output)
 {
 #if defined(DEBUG)
-      std::cout << "ConsumerParser::readUntil(): " << std::endl;
+  std::cout << "ConsumerParser::readUntil(): " << std::endl;
 #endif
   if (_rwHeader == _inputData.end() && !addData())
     return (false);
@@ -157,7 +158,7 @@ bool		ConsumerParser::readInteger(std::string &output)
   bool		isNum = false;
 
 #if defined(DEBUG)
-      std::cout << "ConsumerParser::readInteger(): " << std::endl;
+  std::cout << "ConsumerParser::readInteger(): " << std::endl;
 #endif
   saveContext();
   if (_skipBlank)
@@ -181,10 +182,10 @@ bool		ConsumerParser::readInteger(std::string &output)
 bool		ConsumerParser::readIdentifier(std::string &output)
 {
 #if defined(DEBUG)
-      std::cout << "ConsumerParser::readIdentifier(): " << std::endl;
+  std::cout << "ConsumerParser::readIdentifier(): " << std::endl;
 #endif
   if (_rwHeader == _inputData.end() && !addData())
-      return (false);
+    return (false);
   saveContext();
   if (_skipBlank)
     skipBlanks();
@@ -199,10 +200,63 @@ bool		ConsumerParser::readIdentifier(std::string &output)
     {
       if (_rwHeader == _inputData.end() && !addData())
 	break;
-	  if (!(std::isalnum(*_rwHeader, std::locale()) || *_rwHeader == '_'))
+      if (!(std::isalnum(*_rwHeader, std::locale()) || *_rwHeader == '_'))
 	break;
       output.push_back(*_rwHeader);
       ++_rwHeader;
     }
   return (true);
+}
+
+/////////////////////
+// Exception Class //
+/////////////////////
+
+ConsumerParser::Exception::Exception(const std::string &what, ConsumerParser &parser) throw():
+  _what(what)
+{
+  std::string::iterator	begin_line = parser._rwHeader;
+  std::string::iterator	end_line = parser._rwHeader;
+  std::string		line;
+  std::string		arrow;
+  std::size_t		linum = 0;
+  std::stringstream	ss;
+
+  while (begin_line != parser._inputData.begin() && *begin_line != '\n')
+    --begin_line;
+  while (end_line != parser._inputData.end() && *end_line != '\n')
+    ++end_line;
+  for (std::string::iterator it = parser._inputData.begin(); it != parser._rwHeader; ++it)
+    {
+      if (*it == '\n')
+	linum++;
+    }
+  line.assign(begin_line, end_line);
+  arrow.append(std::distance(begin_line, parser._rwHeader), '-');
+  arrow.append("^");
+  ss << "Error at line " << linum << std::endl << line << std::endl << arrow << std::endl;
+  _what = ss.str();
+}
+
+ConsumerParser::Exception::Exception(const ConsumerParser::Exception &src) throw():
+  _what(src._what)
+{
+}
+
+ConsumerParser::Exception::~Exception() throw()
+{
+}
+
+ConsumerParser::Exception	&ConsumerParser::Exception::operator=(const Exception &src) throw()
+{
+  if (this != &src)
+    {
+      _what = src._what;
+    }
+  return (*this);
+}
+
+const char	*ConsumerParser::Exception::what() const throw()
+{
+  return (_what.c_str());
 }

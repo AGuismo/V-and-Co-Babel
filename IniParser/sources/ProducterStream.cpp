@@ -23,7 +23,7 @@ bool		ProducterStream::loadFile(const char *path)
   std::ifstream	*newStream;
 
   newStream = new std::ifstream(path);
-  if (newStream->bad())
+  if (!newStream->is_open())
     {
       delete newStream;
       return (false);

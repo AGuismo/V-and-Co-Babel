@@ -32,6 +32,7 @@ private:
 			    std::size_t bytes_transferred);
 
 public:
+  bool		serialize_data(const ARequest &req);
   void		start();
   void		async_read();
   template <typename BUFF>
