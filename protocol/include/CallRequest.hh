@@ -24,7 +24,7 @@ namespace	request
 
     namespace	client
     {
-      class	CallClient : public Call
+      struct	CallClient : public Call
       {
 	static const char	*CALL;
 
@@ -48,7 +48,7 @@ namespace	request
 	request::Options		_option;
       };
 
-      class	AcceptClient : public Call
+      struct	AcceptClient : public Call
       {
 	static const char	*ACCEPT;
 
@@ -70,7 +70,7 @@ namespace	request
 	request::Username		_to;
       };
 
-      class	RefuseClient : public Call
+      struct	RefuseClient : public Call
       {
 	static const char	*REFUSE;
 
@@ -92,7 +92,7 @@ namespace	request
 	request::Username	_to;
       };
 
-      class	HangupClient : public Call
+      struct	HangupClient : public Call
       {
 	static const char	*HANG_UP;
 

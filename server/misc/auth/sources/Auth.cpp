@@ -3,7 +3,9 @@
 #include	"IRequestPlugin.hh"
 #include	"RequestCode.hh"
 #include	"AuthRequest.hh"
+#include	"ServerRequest.hh"
 #include	"Database.hh"
+#include	"types.hh"
 
 Auth::Auth()
 {
@@ -41,34 +43,36 @@ void	Auth::unload()
 
 void	Auth::new_account(Server *serv, Client::Pointer sender, const ARequest *req)
 {
+  (void)serv;
   const request::auth::client::NewClient	*origin = dynamic_cast<const request::auth::client::NewClient *>(req);
 
   std::cout << "Auth::new_account()" << std::endl;
   if (Database::getInstance().newClient(origin->_name, origin->_password))
     {
-      sender->serialize_request(request::server::OK);
+      sender->serialize_data(request::server::Ok());
       sender->InfosClient._isConnect = false;
       sender->InfosClient._name = origin->_name;
-      sender->InfosClient._privacy = origin->_status;
-      sender->InfosClient._status = request::status::DISCONNECT;
+      sender->InfosClient._privacy = request::User::PUBLIC;
+      sender->InfosClient._status = request::User::Status::DISCONNECTED;
     }
   else
-    sender->serialize_request(request::server::FORBIDDEN);
+    sender->serialize_data(request::server::Forbidden());
 }
 
 void	Auth::connect(Server *serv, Client::Pointer sender, const ARequest *req)
 {
+  (void)serv;
   const request::auth::client::ConnectClient	*origin = dynamic_cast<const request::auth::client::ConnectClient *>(req);
 
   std::cout << "Auth::connect()" << std::endl;
   if (Database::getInstance().clientExist(origin->_name, origin->_password))
     {
-      sender->serialize_request(request::server::OK);
+      sender->serialize_data(request::server::Ok());
       sender->InfosClient._isConnect = true;
-      sender->InfosClient._status = request::status::CONNECT;
+      sender->InfosClient._status = request::User::Status::CONNECTED;
     }
   else
-    sender->serialize_request(request::server::FORBIDDEN);
+    sender->serialize_data(request::server::Forbidden());
 }
 
 void	Auth::disconnect(Server *serv, Client::Pointer sender, const ARequest *req)
@@ -77,9 +81,11 @@ void	Auth::disconnect(Server *serv, Client::Pointer sender, const ARequest *req)
 
   std::cout << "Auth::disconnect()" << std::endl;
   // if (Database::getInstance().clientExist(origin->_name, origin->_password))
-  sender->serialize_request(request::server::OK);
+  (void)origin;
+  (void)serv;
+  sender->serialize_data(request::server::Ok());
   sender->InfosClient._isConnect = false;
-  sender->InfosClient._status = request::status::DISCONNECT;
+  sender->InfosClient._status = request::User::Status::DISCONNECTED;
   // else
   //   sender->serialize_request(request::server::FORBIDDEN);
 }

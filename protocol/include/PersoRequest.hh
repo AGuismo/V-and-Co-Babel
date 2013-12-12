@@ -24,7 +24,7 @@ namespace	request
 
     namespace	client
     {
-      class	ModifyPrivacy : public Perso
+      struct	ModifyPrivacy : public Perso
       {
 	static const char	*PRIVACY_MODE;
 
@@ -44,7 +44,7 @@ namespace	request
 	request::Privacy	_privacy;
       };
 
-      class	StatusClient : public Perso
+      struct	StatusClient : public Perso
       {
 	static const char	*STATUS;
 
@@ -66,7 +66,7 @@ namespace	request
 	request::StatusDetail	_statusDetails;
       };
 
-      class	MissedCallClient : public Perso
+      struct	MissedCallClient : public Perso
       {
 	static const char	*MISSED_CALLS;
 
@@ -79,7 +79,7 @@ namespace	request
 
       };
 
-      class	GetMissedClient : public Perso
+      struct	GetMissedClient : public Perso
       {
 	static const char	*GET_MISSED;
 
@@ -99,7 +99,7 @@ namespace	request
 	request::IdxAnswer	_idxAnswer;
       };
 
-      class	DelMissedClient : public Perso
+      struct	DelMissedClient : public Perso
       {
 	static const char	*DEL_MISSED;
 
@@ -119,7 +119,7 @@ namespace	request
 	request::IdxAnswer	_idxAnswer;
       };
 
-      class	SetAutoAnswerClient : public Perso
+      struct	SetAutoAnswerClient : public Perso
       {
 	static const char	*SET_AUTO_ANSWER;
 
@@ -139,7 +139,7 @@ namespace	request
 	request::Answer	_answer;
       };
 
-      class	UnsetAutoAnswer : public Perso
+      struct	UnsetAutoAnswer : public Perso
       {
 	static const char	*UNSET_AUTO_ANSWER;
 

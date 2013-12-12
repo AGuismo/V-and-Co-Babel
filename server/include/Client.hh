@@ -51,6 +51,7 @@ private:
   tcp::socket			_socket;
   Server			*_server;
 
+public:
   struct
   {
     bool			_isConnect;
