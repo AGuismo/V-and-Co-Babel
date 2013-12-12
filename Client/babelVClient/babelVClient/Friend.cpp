@@ -33,11 +33,6 @@ Friend::Friend(QString &friendName, QString &personalMsg, size_t status)
 	_personalMsg = personalMsg;
 	_callStatus = false;
 	_status = status;
-	
-	MainWindow::getInstance().getUi().friendListW->addFriendItem(QIcon("./Img/Online.png"), friendName, personalMsg);
-//	QIcon("./Img/Online.png")
-//	MainWindow::getMainWindowUi()
-
 }
 
 Friend::~Friend()

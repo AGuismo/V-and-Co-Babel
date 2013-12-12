@@ -13,15 +13,18 @@ class MainWindow : public QMainWindow
 private:
 	Ui::MainWindowClass ui;
 
-private:
-	MainWindow(QWidget *parent = 0);
-	~MainWindow();
+public slots:
+   void on_friend_clicked(QListWidgetItem *);
 
 public:
 	Ui::MainWindowClass			&getUi();
 
 public:
 	static MainWindow &getInstance();
+
+private:
+	MainWindow(QWidget *parent = 0);
+	~MainWindow();
 };
 
 #endif // MAINWINDOW_H
