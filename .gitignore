@@ -6,3 +6,11 @@ server_babel
 TAGS
 *.a
 *.so
+*.tlog
+*.lastbuildstate
+*.idb
+*.pdb
+*.obj
+*.log
+*.exe
+*.ilk
