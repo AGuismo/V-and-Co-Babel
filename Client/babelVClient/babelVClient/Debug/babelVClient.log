@@ -1,4 +1,4 @@
-﻿Build started 12/12/2013 23:41:27.
+﻿Build started 13/12/2013 02:30:36.
      1>Project "C:\Users\Guismo\Documents\GitHub\V-and-Co-Babel\Client\babelVClient\babelVClient\babelVClient.vcxproj" on node 2 (Build target(s)).
      1>CustomBuild:
          Uic'ing MainWindow.ui...
@@ -24,4 +24,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:06.18
+Time Elapsed 00:00:06.23

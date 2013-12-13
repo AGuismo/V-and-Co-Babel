@@ -34,5 +34,4 @@ MainWindow							&MainWindow::getInstance()
 
 MainWindow::~MainWindow()
 {
-
 }
