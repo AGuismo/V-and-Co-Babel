@@ -1,15 +1,15 @@
 #include					"FriendList.h"
 #include					"MainWindow.h"
 
+#include					"Env.h" //à virer
 #include					<qdebug.h>
 
 void						FriendList::insertFriend(QString &friendName, QString &friendMsgPerso, size_t status)
 {
 	_friendList.insert(friendName, new Friend(friendName, friendMsgPerso, status));
-	MainWindow::getInstance().getUi().friendListW->addFriendItem(QIcon("./Img/Online.png"), friendName, friendMsgPerso);
+	MainWindow::getInstance().getUi().friendListW->addFriendItem(QIcon("./Img/Online.png"), friendName, friendMsgPerso); //à modifier
 }
 
-// à refaire
 Friend						*FriendList::getFriend(QString &friendName)
 {
 	friend_type::iterator	it = _friendList.find(friendName);
@@ -51,15 +51,22 @@ bool								FriendList::insertCurrentTxtMsg(QString &friendName, QString &msg)
 	return false;
 }
 
+
 bool								FriendList::removeFriend(QString &friendName)
 {
-	QList<QListWidgetItem	*>				tmpList;
+	QList<QListWidgetItem *>				tmpList;
 	QListWidgetItem							*tmpItem;
-	friend_type::iterator	it = _friendList.find(friendName);
+	Friend									*tmpFriend;
 
-	if (it != _friendList.end())
+	if ((tmpFriend = getFriend(friendName)) != NULL)
 	{
-		tmpList = MainWindow::getInstance().getUi().friendListW->findItems(friendName, Qt::MatchStartsWith);
+//		qDebug() << ":" << friendName.size() << ":" << Env::getInstance().selectedFriend.friendName.size() << ":";
+		tmpList = MainWindow::getInstance().getUi().friendListW->findItems(friendName, Qt::MatchStartsWith); // à check
+		if (tmpList.isEmpty())
+		{
+//			qDebug() << "NOTOK";
+			return false;
+		}
 		while (!tmpList.isEmpty())
 		{
 			tmpItem = tmpList.takeFirst();
@@ -74,11 +81,11 @@ bool								FriendList::removeFriend(QString &friendName)
 
 bool								FriendList::updateFriendStatus(QString &friendName, size_t newStatus)
 {
-	friend_type::iterator	it = _friendList.find(friendName);
+	Friend							*tmpFriend;
 
-	if (it != _friendList.end())
+	if ((tmpFriend = getFriend(friendName)) != NULL)
 	{
-		(*it)->setStatus(newStatus);
+		tmpFriend->setStatus(newStatus);
 		return true;
 	}
 	return false;
@@ -86,11 +93,11 @@ bool								FriendList::updateFriendStatus(QString &friendName, size_t newStatus
 
 bool								FriendList::updateFriendPersonalMsg(QString &friendName, QString &newPersonalMsg)
 {
-	friend_type::iterator	it = _friendList.find(friendName);
+	Friend							*tmpFriend;
 
-	if (it != _friendList.end())
+	if ((tmpFriend = getFriend(friendName)) != NULL)
 	{
-		(*it)->setFriendPersonalMessage(newPersonalMsg);
+		tmpFriend->setFriendPersonalMessage(newPersonalMsg);
 		return true;
 	}
 	return false;
@@ -98,11 +105,11 @@ bool								FriendList::updateFriendPersonalMsg(QString &friendName, QString &ne
 
 bool								FriendList::updateFriendCallStatus(QString &friendName, bool newCallStatus)
 {
-	friend_type::iterator	it = _friendList.find(friendName);
+	Friend							*tmpFriend;
 
-	if (it != _friendList.end())
+	if ((tmpFriend = getFriend(friendName)) != NULL)
 	{
-		(*it)->setCallStatus(newCallStatus);
+		tmpFriend->setCallStatus(newCallStatus);
 		return true;
 	}
 	return false;
@@ -110,11 +117,11 @@ bool								FriendList::updateFriendCallStatus(QString &friendName, bool newCall
 
 bool								FriendList::insertTxtMsg(QString &friendName, QString &msg)
 {
-	friend_type::iterator	it = _friendList.find(friendName);
+	Friend							*tmpFriend;
 
-	if (it != _friendList.end())
+	if ((tmpFriend = getFriend(friendName)) != NULL)
 	{
-		(*it)->insertMsg(msg);
+		tmpFriend->insertMsg(msg);
 		return true;
 	}
 	return false;

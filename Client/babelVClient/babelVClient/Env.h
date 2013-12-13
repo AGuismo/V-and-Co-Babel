@@ -27,8 +27,17 @@ public:
 
   struct
   {
+	size_t					status;
+	bool					connected;
+	bool					incall;
+  }							userInfo;
+  
+  struct
+  {
     QString					friendName;
   }							selectedFriend;
+
+
 
 public:
 	FriendList				friendList;
@@ -39,6 +48,7 @@ public:
 private:
   void						initAuthenticateInfo();
   void						initCallInfo();
+  void						initUserInfo();
   void						initSelectedFriend();
 
 private:

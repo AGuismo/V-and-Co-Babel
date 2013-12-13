@@ -23,6 +23,12 @@ void			Env::initSelectedFriend()
   selectedFriend.friendName = "";
 }
 
+void			Env::initUserInfo()
+{
+	userInfo.status = 0; // à check
+	userInfo.connected = false;
+	userInfo.incall = false;
+}
 
 Env		&Env::getInstance()
 {
@@ -35,6 +41,7 @@ Env::Env()
 {
   initAuthenticateInfo();
   initCallInfo();
+  initUserInfo();
   initSelectedFriend();
 }
 

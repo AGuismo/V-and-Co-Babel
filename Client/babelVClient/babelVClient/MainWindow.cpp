@@ -35,7 +35,7 @@ void						MainWindow::on_send_txt_msg()
 	}
 }
 
-void						MainWindow::on_friend_clicked(QListWidgetItem *friendClicked)
+void						MainWindow::on_friend_clicked(QListWidgetItem *friendClicked) // à faire plus beau !
 {
 	QString					friendGlobal(friendClicked->text());
 	QList<QString>			*conversationList;
