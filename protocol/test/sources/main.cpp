@@ -169,11 +169,35 @@ private:
       case '\0':
 	exit(0);
       case 'a':
-	send_req(new request::auth::client::ConnectClient("Ruby", md5("1664")));
+	send_req(new request::auth::client::NewClient("Client", md5("poil"), false));
+	break;
+      case 'b':
+	send_req(new request::auth::client::ConnectClient("Client", md5("poil")));
+	break;
+      case 'c':
+	send_req(new request::auth::client::ModifyClient("Client", md5("poil"), md5("poilu")));
+	break;
+      case 'd':
+	send_req(new request::auth::client::DisconnectClient());
+	break;
+      case 'e':
+	send_req(new request::auth::client::ConnectClient("Client", md5("poil")));
+	break;
+      case 'f':
+	send_req(new request::auth::client::ConnectClient("Client", md5("poilu")));
+	break;
+      case 'g':
+	send_req(new request::auth::client::DelClient("Client", md5("poilu")));
 	break;
       case 'h':
-	std::cout << "a: " << "Auth::Connect" << std::endl;
-	  break;
+	send_req(new request::auth::client::DisconnectClient());
+	break;
+      case 'i':
+	send_req(new request::auth::client::DelClient("Client", md5("poilu")));
+	break;
+      case 'j':
+	send_req(new request::auth::client::ConnectClient("Client", md5("poilu")));
+	break;
       default:
 	break;
       }

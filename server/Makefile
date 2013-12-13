@@ -34,7 +34,7 @@ F.D	     +=
 all:		start $(NAME)
 
 plugins:
-		@make --no-print-directory -C $(DIR.PLUGS) install
+		@make --no-print-directory -C $(DIR.PLUGS) install F.D=$(F.D)
 
 $(NAME):	compile_mods compile
 
@@ -73,8 +73,16 @@ fclean_deps:
 
 clean:		remove_objects clean_mods
 
+clean_plugins:
+		@make --no-print-directory -C $(DIR.PLUGS) clean
+
 fclean:		clean remove_name fclean_mods
 
+fclean_plugins:
+		@make --no-print-directory -C $(DIR.PLUGS) fclean
+
 re:		fclean all
+
+re_plugins:	fclean_plugins plugins
 
 include .libmake

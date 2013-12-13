@@ -52,9 +52,11 @@ void	Auth::new_account(Server *serv, Client::Pointer sender, const ARequest *req
   (void)serv;
   const request::auth::client::NewClient	*origin = dynamic_cast<const request::auth::client::NewClient *>(req);
 
-  std::cout << "Auth::new_account()" << std::endl;
   if (Database::getInstance().newClient(origin->_name, origin->_password))
     {
+#if defined(DEBUG)
+      std::cout << "Create a new account for : [" << origin->_name << "]" << std::endl;
+#endif
       sender->InfosClient._isConnect = false;
       sender->InfosClient._name = origin->_name;
       sender->InfosClient._privacy = request::User::PUBLIC;
@@ -62,7 +64,12 @@ void	Auth::new_account(Server *serv, Client::Pointer sender, const ARequest *req
       sender->serialize_data(request::server::Ok());
     }
   else
-    sender->serialize_data(request::server::Forbidden());
+    {
+#if defined(DEBUG)
+      std::cout << "Fail create a new account for : [" << origin->_name << "]" << std::endl;
+#endif
+      sender->serialize_data(request::server::Forbidden());
+    }
 }
 
 void	Auth::connect(Server *serv, Client::Pointer sender, const ARequest *req)
@@ -70,15 +77,23 @@ void	Auth::connect(Server *serv, Client::Pointer sender, const ARequest *req)
   (void)serv;
   const request::auth::client::ConnectClient	*origin = dynamic_cast<const request::auth::client::ConnectClient *>(req);
 
-  std::cout << "Auth::connect()" << std::endl;
-  if (Database::getInstance().clientExist(origin->_name, origin->_password))
+  if (sender->InfosClient._isConnect == false &&
+      Database::getInstance().clientExist(origin->_name, origin->_password))
     {
+#if defined(DEBUG)
+      std::cout << "Connection on the account : [" << origin->_name << "]" << std::endl;
+#endif
       sender->serialize_data(request::server::Ok());
       sender->InfosClient._isConnect = true;
       sender->InfosClient._status = request::User::Status::CONNECTED;
     }
   else
-    sender->serialize_data(request::server::Forbidden());
+    {
+#if defined(DEBUG)
+      std::cout << "Fail connection on the account : [" << origin->_name << "]" << std::endl;
+#endif
+      sender->serialize_data(request::server::Forbidden());
+    }
 }
 
 void	Auth::modify(Server *serv, Client::Pointer sender, const ARequest *req)
@@ -87,10 +102,21 @@ void	Auth::modify(Server *serv, Client::Pointer sender, const ARequest *req)
   const request::auth::client::ModifyClient	*origin = dynamic_cast<const request::auth::client::ModifyClient *>(req);
 
   std::cout << "Auth::modify()" << std::endl;
-  if (Database::getInstance().modClientPass(origin->_name, origin->_oldPassword, origin->_newPassword))
-    sender->serialize_data(request::server::Ok());
+  if (sender->InfosClient._isConnect == true &&
+      Database::getInstance().modClientPass(origin->_name, origin->_oldPassword, origin->_newPassword))
+    {
+#if defined(DEBUG)
+      std::cout << "Succeed of changing password on the account : [" << origin->_name << "]" << std::endl;
+#endif
+      sender->serialize_data(request::server::Ok());
+    }
   else
-    sender->serialize_data(request::server::Forbidden());
+    {
+#if defined(DEBUG)
+      std::cout << "Failed of changing password on the account : [" << origin->_name << "]" << std::endl;
+#endif
+      sender->serialize_data(request::server::Forbidden());
+    }
 }
 
 void	Auth::remove(Server *serv, Client::Pointer sender, const ARequest *req)
@@ -99,10 +125,21 @@ void	Auth::remove(Server *serv, Client::Pointer sender, const ARequest *req)
   const request::auth::client::DelClient	*origin = dynamic_cast<const request::auth::client::DelClient *>(req);
 
   std::cout << "Auth::delete()" << std::endl;
-  if (Database::getInstance().delClient(origin->_name, origin->_password))
-    sender->serialize_data(request::server::Ok());
+  if (sender->InfosClient._isConnect == false &&
+      Database::getInstance().delClient(origin->_name, origin->_password))
+    {
+#if defined(DEBUG)
+      std::cout << "The account : [" << origin->_name << "] has been deleted" << std::endl;
+#endif
+      sender->serialize_data(request::server::Ok());
+    }
   else
-    sender->serialize_data(request::server::Forbidden());
+    {
+#if defined(DEBUG)
+      std::cout << "Failed to deleted the account : [" << origin->_name << "]" << std::endl;
+#endif
+      sender->serialize_data(request::server::Forbidden());
+    }
 }
 
 
@@ -113,9 +150,22 @@ void	Auth::disconnect(Server *serv, Client::Pointer sender, const ARequest *req)
   std::cout << "Auth::disconnect()" << std::endl;
   (void)origin;
   (void)serv;
-  sender->serialize_data(request::server::Ok());
-  sender->InfosClient._isConnect = false;
-  sender->InfosClient._status = request::User::Status::DISCONNECTED;
+
+  if (sender->InfosClient._isConnect == true)
+    {
+#if defined(DEBUG)
+      std::cout << "The client has been disconnected" << std::endl;
+#endif
+      sender->serialize_data(request::server::Ok());
+      sender->InfosClient._isConnect = false;
+      sender->InfosClient._status = request::User::Status::DISCONNECTED;
+    }
+  else
+    {
+#if defined(DEBUG)
+      std::cout << "Can't disconnect the client" << std::endl;
+#endif
+    }
 }
 
 void	Auth::setActions(std::map<request::ID, void (*)(Server *, Client::Pointer, const ARequest *)> &map)
