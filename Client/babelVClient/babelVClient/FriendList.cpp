@@ -9,8 +9,8 @@ void						FriendList::insertFriend(QString &friendName, QString &friendMsgPerso,
 	MainWindow::getInstance().getUi().friendListW->addFriendItem(QIcon("./Img/Online.png"), friendName, friendMsgPerso);
 }
 
-
-Friend						*FriendList::getClient(QString &friendName)
+// à refaire
+Friend						*FriendList::getFriend(QString &friendName)
 {
 	friend_type::iterator	it = _friendList.find(friendName);
 
@@ -19,6 +19,36 @@ Friend						*FriendList::getClient(QString &friendName)
 		return it.value();
 	}
 	return NULL;
+}
+
+QList<QString>						*FriendList::getClientConversation(QString &friendName)
+{
+	Friend							*tmpFriend;
+
+	if ((tmpFriend = getFriend(friendName)) != NULL)
+		return tmpFriend->getConversation();
+	return NULL;
+}
+
+QString								*FriendList::getClientCurrentMsg(QString &friendName)
+{
+	Friend							*tmpFriend;
+
+	if ((tmpFriend = getFriend(friendName)) != NULL)
+		return tmpFriend->getCurrentMsg();
+	return NULL;
+}
+
+bool								FriendList::insertCurrentTxtMsg(QString &friendName, QString &msg)
+{
+	Friend							*tmpFriend;
+
+	if ((tmpFriend = getFriend(friendName)) != NULL)
+	{
+		tmpFriend->setCurrentMsg(msg);
+		return true;
+	}
+	return false;
 }
 
 bool								FriendList::removeFriend(QString &friendName)
@@ -78,12 +108,16 @@ bool								FriendList::updateFriendCallStatus(QString &friendName, bool newCall
 	return false;
 }
 
-
-FriendList							&FriendList::getInstance()
+bool								FriendList::insertTxtMsg(QString &friendName, QString &msg)
 {
-	static FriendList				FriendList;
+	friend_type::iterator	it = _friendList.find(friendName);
 
-	return (FriendList);
+	if (it != _friendList.end())
+	{
+		(*it)->insertMsg(msg);
+		return true;
+	}
+	return false;
 }
 
 FriendList::~FriendList()

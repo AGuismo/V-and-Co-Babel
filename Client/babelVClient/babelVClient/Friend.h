@@ -36,6 +36,10 @@ public:
 	void					setCurrentMsg(QString &curMsg);
 
 public:
+	MSG_LIST				*getConversation();
+	MSG						*getCurrentMsg();
+
+public:
 	Friend(QString &friendName, QString &friendMsgPerso, size_t status);
 	~Friend();
 

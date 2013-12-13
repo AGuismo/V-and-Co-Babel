@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Env.cpp" />
     <ClCompile Include="Friend.cpp" />
     <ClCompile Include="FriendList.cpp" />
     <ClCompile Include="FriendListWidget.cpp" />

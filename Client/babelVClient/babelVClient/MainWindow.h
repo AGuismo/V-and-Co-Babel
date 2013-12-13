@@ -11,16 +11,18 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 private:
-	Ui::MainWindowClass ui;
+	Ui::MainWindowClass			ui;
 
 public slots:
-   void on_friend_clicked(QListWidgetItem *);
+   void							on_friend_clicked(QListWidgetItem *);
+   void							on_delete_friend_clicked();
+   void							on_send_txt_msg();
 
 public:
 	Ui::MainWindowClass			&getUi();
 
 public:
-	static MainWindow &getInstance();
+	static MainWindow			&getInstance();
 
 private:
 	MainWindow(QWidget *parent = 0);
