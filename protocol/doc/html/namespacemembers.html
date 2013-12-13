@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_s"><span>s</span></a></li>
       <li><a href="#index_t"><span>t</span></a></li>
       <li><a href="#index_u"><span>u</span></a></li>
+      <li><a href="#index_v"><span>v</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -100,7 +101,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -123,6 +124,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>AnswerLen
 : <a class="el" href="namespacerequest.html#a4a0d4b03cb9c4ccced51008bf1c02891">request</a>
 </li>
+<li>AUTO_ANSWER
+: <a class="el" href="namespacerequest_1_1server_1_1perso.html#a5afffde3fb0b3ce53f73278bb154433a">request::server::perso</a>
+</li>
 </ul>
 
 
@@ -135,8 +139,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
 <li>CALL
-: <a class="el" href="namespacerequest_1_1server_1_1call.html#a38fe859f3c7a589d8b7b3cb1774c0b72">request::server::call</a>
-, <a class="el" href="namespacerequest_1_1client_1_1call.html#a1305eef017472c8917f0536b34ffdd3a">request::client::call</a>
+: <a class="el" href="namespacerequest_1_1client_1_1call.html#a1305eef017472c8917f0536b34ffdd3a">request::client::call</a>
 </li>
 <li>CONNECT
 : <a class="el" href="namespacerequest_1_1client_1_1auth.html#a498b0aebad41dbe648802cb61c627a2e">request::client::auth</a>
@@ -172,12 +175,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
 <li>GET_MISSED
-: <a class="el" href="namespacerequest_1_1client_1_1perso.html#a266f29ac2b30f9ff56acf26015d5c44e">request::client::perso</a>
+: <a class="el" href="namespacerequest_1_1server_1_1perso.html#ae6f7fdbda0f4839ba556d58e50447c6f">request::server::perso</a>
+, <a class="el" href="namespacerequest_1_1client_1_1perso.html#a266f29ac2b30f9ff56acf26015d5c44e">request::client::perso</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
+<li>HANDSHAKE
+: <a class="el" href="namespacerequest_1_1server_1_1auth.html#afd669d96290072e0ebbccc341f05677d">request::server::auth</a>
+</li>
 <li>HANG_UP
 : <a class="el" href="namespacerequest_1_1client_1_1call.html#aca033177b9bf0a6ca29ee0a973b7c203">request::client::call</a>
 </li>
@@ -205,18 +212,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
-<li>Message
-: <a class="el" href="namespacerequest.html#a258ea73afba4483e67262765ef21a868">request</a>
+<li>Major
+: <a class="el" href="namespacerequest.html#a58fb076842e058ef617ba9172eb16f0c">request</a>
 </li>
 <li>MESSAGE
-: <a class="el" href="namespacerequest_1_1server_1_1chat.html#a053f07a22c9519660667a255ab390eb4">request::server::chat</a>
-, <a class="el" href="namespacerequest_1_1client_1_1chat.html#a79b1ebd7392f8fb99f5ce2a91abb5a70">request::client::chat</a>
+: <a class="el" href="namespacerequest_1_1client_1_1chat.html#a79b1ebd7392f8fb99f5ce2a91abb5a70">request::client::chat</a>
+</li>
+<li>Message
+: <a class="el" href="namespacerequest.html#a258ea73afba4483e67262765ef21a868">request</a>
 </li>
 <li>MessageLen
 : <a class="el" href="namespacerequest.html#ad27f426cc1d45ce1b82186818affc061">request</a>
 </li>
+<li>Minor
+: <a class="el" href="namespacerequest.html#a033192da88166426bda12c021d4560f7">request</a>
+</li>
 <li>MISSED_CALLS
 : <a class="el" href="namespacerequest_1_1client_1_1perso.html#a3389ff7334d90a184a0618628f7274e5">request::client::perso</a>
+, <a class="el" href="namespacerequest_1_1server_1_1perso.html#a35cfee7165ceb4827d123502bd688175">request::server::perso</a>
 </li>
 <li>MODIFY
 : <a class="el" href="namespacerequest_1_1client_1_1auth.html#a4cfd3a54ba6f77e54ace1136eb7f0144">request::client::auth</a>
@@ -263,6 +276,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>PasswordType
 : <a class="el" href="namespacerequest.html#a293687cda56f07db649c26e632c1a577">request</a>
 </li>
+<li>PING
+: <a class="el" href="namespacerequest_1_1server_1_1perso.html#a2513ac4c76563a35c3a12414ca9871a3">request::server::perso</a>
+</li>
+<li>PingID
+: <a class="el" href="namespacerequest.html#ac012d1f92c7d1e4a62c631def03136de">request</a>
+</li>
+<li>PingPongID
+: <a class="el" href="namespacerequest.html#aa9075a49865544b8228e3f79c490209e">request</a>
+</li>
+<li>PONG
+: <a class="el" href="namespacerequest_1_1client_1_1perso.html#af95db12cda709f3ac8dc6f02d0c3395b">request::client::perso</a>
+</li>
 <li>Port
 : <a class="el" href="namespacerequest.html#a57687beb6dfc9672e32d32fbc5d0bb27">request</a>
 </li>
@@ -299,17 +324,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>SinceWhen
 : <a class="el" href="namespacerequest.html#a81585e2d8aa8cce5e4f2bccca680b157">request</a>
 </li>
-<li>STATUS
-: <a class="el" href="namespacerequest_1_1client_1_1perso.html#a1ab917f3e12cb91fea6d6fab85091104">request::client::perso</a>
-</li>
 <li>Status
 : <a class="el" href="namespacerequest.html#ae2a5baaf4d49873899374a39bb9415ad">request</a>
+</li>
+<li>STATUS
+: <a class="el" href="namespacerequest_1_1client_1_1perso.html#a1ab917f3e12cb91fea6d6fab85091104">request::client::perso</a>
 </li>
 <li>StatusDetail
 : <a class="el" href="namespacerequest.html#a73d388e45f303511b916ffbbbc30767e">request</a>
 </li>
 <li>StatusDetailLen
 : <a class="el" href="namespacerequest.html#a1271e0bd7064fd15f984cb98fb64669d">request</a>
+</li>
+<li>Stream
+: <a class="el" href="namespacerequest.html#aacf8e76c79b67f0407eb87e8df137f0b">request</a>
+</li>
+<li>STREAM_DATA
+: <a class="el" href="namespacerequest_1_1server_1_1perso.html#a19e9aadfbaa9d1948474285ab4fd0203">request::server::perso</a>
+</li>
+<li>StreamLen
+: <a class="el" href="namespacerequest.html#a454de025765c91b29cc624f00a8f56fc">request</a>
 </li>
 </ul>
 
@@ -336,6 +370,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>UsernameLen
 : <a class="el" href="namespacerequest.html#a05c817564f2cff0e1d52646c56d944ba">request</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
+<li>Version
+: <a class="el" href="namespacerequest.html#aeeb541619041dedf367db36602dfbced">request</a>
+</li>
+<li>VersionType
+: <a class="el" href="namespacerequest.html#a0e819c7b0141af8f68ca50c3cfa1da46">request</a>
 </li>
 </ul>
 </div><!-- contents -->

@@ -1,13 +1,14 @@
 var searchData=
 [
   ['auth',['auth',['../namespacerequest_1_1client_1_1auth.html',1,'request::client']]],
+  ['auth',['auth',['../namespacerequest_1_1server_1_1auth.html',1,'request::server']]],
   ['call',['call',['../namespacerequest_1_1client_1_1call.html',1,'request::client']]],
   ['call',['call',['../namespacerequest_1_1server_1_1call.html',1,'request::server']]],
   ['chat',['chat',['../namespacerequest_1_1client_1_1chat.html',1,'request::client']]],
-  ['chat',['chat',['../namespacerequest_1_1server_1_1chat.html',1,'request::server']]],
   ['client',['client',['../namespacerequest_1_1client.html',1,'request']]],
   ['friends',['friends',['../namespacerequest_1_1server_1_1friends.html',1,'request::server']]],
   ['friends',['friends',['../namespacerequest_1_1client_1_1friends.html',1,'request::client']]],
+  ['perso',['perso',['../namespacerequest_1_1server_1_1perso.html',1,'request::server']]],
   ['perso',['perso',['../namespacerequest_1_1client_1_1perso.html',1,'request::client']]],
   ['rbool',['Rbool',['../types_8hh.html#a9faa2a0118022c3006e584dc7f157074',1,'types.hh']]],
   ['rdouble',['Rdouble',['../types_8hh.html#a363f442056b3421890e95fabe6b2dda4',1,'types.hh']]],

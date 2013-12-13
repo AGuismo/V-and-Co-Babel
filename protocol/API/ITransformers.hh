@@ -4,7 +4,7 @@
 /**
  *
  *	\file	ITransformers.hh
- *	API Class reference for the protocol
+ *	\brief API Class reference for the protocol
  *
  */
 

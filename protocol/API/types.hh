@@ -60,12 +60,14 @@ typedef double			Rdouble;	/**< Double floating point precision */
 # define	UNSET_OPTION(option, type)	(option &= ~type)			/**< Unset an option describe in options struct */
 # define	GET_OPTION(option, type)	(option & type)				/**< Get an option describe in options struct */
 
-/** request Namespace */
+/** \brief request Namespace */
 namespace	request
 {
   typedef Ruint8	Rights;			/**< User Rights type */
   typedef Rbool		Privacy;		/**< Privacy Rights type */
   typedef Ruint16	ID;			/**< Request code ID type */
+  typedef Ruint16	PingID;			/**< Ping ID type */
+  typedef Ruint16	VersionType;		/**< Version type */
   typedef std::string	PasswordType;		/**< Password type */
   typedef Ruint8	UsernameLen;		/**< Username Len type */
   typedef std::string	Username;		/**< Username type */
@@ -82,6 +84,8 @@ namespace	request
   typedef std::string	Answer;			/**< Answer type */
   typedef Ruint8	FromLen;		/**< Size of the name of the sender type */
   typedef std::string	From;			/**< Name of the sender type */
+  typedef Ruint16	StreamLen;		/**< Size of the stream type */
+  typedef std::string	Stream;			/**< Stream type */
   typedef Rdouble	SinceWhen;		/**< Time when the message was received type */
   typedef Ruint8	Options;		/**< Options type */
   typedef Ruint16	MsgLen;			/**< Size of the message type */
@@ -94,20 +98,20 @@ namespace	request
   typedef Ruint32	IP;			/**< IP type */
   typedef Ruint16	Port;			/**< Port type */
 
-  /** Crypt Trait Class info */
+  /** \brief Crypt Trait Class info */
   struct Crypt
   {
     static const unsigned int	PASS_SIZE = 32;		/**< Cryptography Size */
   };
 
-  /** Define the current Version of API */
+  /** \brief Define the current Version of API */
   struct	version
   {
     static const Major		MAJOR = 1;		/**< Current Major version */
     static const Minor		MINOR = 1;		/**< Current Minor version */
   };
 
-  /** options list */
+  /** \brief options list */
   struct	options
   {
     static const Options	AUDIO = 1;		/**< Audio Mode */
@@ -115,7 +119,7 @@ namespace	request
     static const Options	CONF = 4;		/**< Conf Mode */
   };
 
-  /** User Class info */
+  /** \brief User Class info */
   struct	User
   {
     static const Privacy	PRIVATE = 0;		/**< Private mode */
@@ -123,7 +127,7 @@ namespace	request
     static const Rights		ROOT = 0;		/**< Root mode */
     static const Rights		USER = 1;		/**< User mode */
 
-    /** User Status Class info */
+    /** \brief User Status Class info */
     struct	Status
     {
       static const request::Status	DISCONNECTED = 0;	/**< Disconnected status */

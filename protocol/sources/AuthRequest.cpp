@@ -383,6 +383,11 @@ namespace	request
 	(void)src;
       }
 
+      DisconnectClient	&DisconnectClient::operator=(const DisconnectClient &src)
+      {
+	return (*this);
+      }
+
       ARequest	*DisconnectClient::clone()
       {
 	return (new DisconnectClient());
@@ -401,6 +406,71 @@ namespace	request
       }
 
     } // !client
+
+    namespace	server
+    {
+      Handshake::Handshake():
+	Auth(request::server::auth::HANDSHAKE)
+      {
+      }
+
+      Handshake::Handshake(const request::Version ver):
+	Auth(request::server::auth::HANDSHAKE), version(ver)
+      {
+      }
+
+      Handshake	&Handshake::operator=(const Handshake &src)
+      {
+	if (this != &src)
+	  {
+	    version = src.version;
+	  }
+	return (*this);
+      }
+
+      Handshake::~Handshake()
+      {
+      }
+
+      Handshake::Handshake(const Handshake &src) :
+	Auth(request::server::auth::HANDSHAKE), version(src.version)
+      {
+      }
+
+      ARequest	*Handshake::clone()
+      {
+	return (new Handshake());
+      }
+
+      Protocol		&Handshake::serialize(Protocol &rhs) const
+      {
+	Auth::serialize(rhs);
+	rhs << version;
+	return (rhs);
+      }
+
+      Protocol	&Handshake::unserialize(Protocol &rhs)
+      {
+	Auth::unserialize(rhs);
+	rhs >> version;
+	return (rhs);
+      }
+
+      bool	Handshake::operator==(const ARequest *req) const
+      {
+	if (ARequest::operator!=(req))
+	  return (false);
+
+	const Handshake	*tmp = dynamic_cast<const Handshake *>(req);
+	return (tmp->version == version);
+      }
+
+      bool	Handshake::operator!=(const ARequest *req) const
+      {
+	return (!operator==(req));
+      }
+
+    } // ! server
 
   } // !auth
 

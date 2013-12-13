@@ -4,16 +4,16 @@
 /**
  *
  *	\file	RequestCode.hh
- *	List of all request code
+ *	\brief List of all request code
  *
  */
 
 # include	"types.hh"
 
-/** request Namespace */
+/** \brief request Namespace */
 namespace request
 {
-  /** Server codes */
+  /** \brief Server codes */
   namespace server
   {
     static const ID OK =		1000; /**< Everything went fine */
@@ -24,11 +24,13 @@ namespace request
     static const ID PARTIAL_CONTENT =	1005; /**< Request have partial content */
     static const ID NO_SLOTS =		1006; /**< No more slots available */
 
+    /** \brief Server Auth code */
     namespace	auth
     {
       static const ID HANDSHAKE =	1100; /**< Send a handshake to the client */
     }
 
+    /** \brief Server Perso codes */
     namespace perso
     {
       static const ID  MISSED_CALLS =	1200; /**< Get the number of missed calls */
@@ -37,29 +39,23 @@ namespace request
       static const ID  AUTO_ANSWER =	1203; /**< Set an auto answer message */
       static const ID  PING =		1204; /**< Ping request */
     }
-    /** Server Friend codes */
+
+    /** \brief Server Friend codes */
     namespace friends
     {
       static const ID UPDATE =		1300; /**< Friend status update */
     }
 
-    /** Server Call codes */
+    /** \brief Server Call codes */
     namespace call
     {
       static const ID TIMEOUT =		1400; /**< Call Timeout */
-      static const ID CALL =		1401; /**< Call someone */
-    }
-
-    /** Server Chat codes */
-    namespace chat
-    {
-      static const ID MESSAGE =		1500; /**< Send a message to a client */
     }
   }
-  /** Client codes */
+  /** \brief Client codes */
   namespace client
   {
-    /** Client authentification request codes */
+    /** \brief Client authentification request codes */
     namespace auth
     {
       static const ID NEW =		100; /**< Add a new account */
@@ -69,7 +65,7 @@ namespace request
       static const ID DISCONNECT =	104; /**< Disconnect your client */
     }
 
-    /** Client Personnal request codes */
+    /** \brief Client Personnal request codes */
     namespace perso
     {
       static const ID PRIVACY_MODE =		200; /**< Set the privacy mode */
@@ -78,11 +74,11 @@ namespace request
       static const ID GET_MISSED =		203; /**< Get missed call informations */
       static const ID DEL_MISSED =		204; /**< Delete missed call */
       static const ID SET_AUTO_ANSWER =		205; /**< Set an auto answer message */
-      static const ID PONG =			206; /**< Pong response */
+      static const ID PONG =			206; /**< Respond to a Ping */
       static const ID UNSET_AUTO_ANSWER =	207; /**< Delete your auto answer message */
     }
 
-    /** Client Friend codes */
+    /** \brief Client Friend codes */
     namespace friends
     {
       static const ID REQUEST =		300; /**< Send a friend request */
@@ -92,7 +88,7 @@ namespace request
       static const ID LIST =		304; /**< List all your friends */
     }
 
-    /** Client Calls request codes */
+    /** \brief Client Calls request codes */
     namespace call
     {
       static const ID CALL =		400; /**< Call someone */
@@ -101,7 +97,7 @@ namespace request
       static const ID HANG_UP =		403; /**< Hang up the current Call */
     }
 
-    /** Client Chat codes */
+    /** \brief Client Chat codes */
     namespace chat
     {
       static const ID MESSAGE =		500; /**< Send a message */

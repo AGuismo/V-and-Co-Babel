@@ -123,6 +123,7 @@ namespace	request
 	DisconnectClient();
 	~DisconnectClient();
 	DisconnectClient(const DisconnectClient &);
+	DisconnectClient	&operator=(const DisconnectClient &src);
 
 	ARequest			*clone();
 	Protocol			&serialize(Protocol &) const;
@@ -130,13 +131,31 @@ namespace	request
 
       };
     } // !client
+
+    namespace	server
+    {
+      struct	Handshake : public Auth
+      {
+	static const char	*HANDSHAKE;
+
+	Handshake();
+	Handshake(const request::Version);
+	~Handshake();
+	Handshake(const Handshake &);
+	Handshake	&operator=(const Handshake &src);
+
+	ARequest			*clone();
+	Protocol			&serialize(Protocol &) const;
+	Protocol			&unserialize(Protocol &);
+
+	bool			operator==(const ARequest *req) const;
+	bool			operator!=(const ARequest *req) const;
+
+	request::Version	version;
+      };
+
+    } // !server
   } // !auth
-
-  namespace	server
-  {
-
-  } // !server
-
 } // !request
 
 
