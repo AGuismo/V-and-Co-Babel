@@ -36,6 +36,12 @@ plugin::IPlugin<request::ID, void (*)(Server *, Client::Pointer, const ARequest 
   return (new Friends(*this));
 }
 
+void	Friends::getVersion(plugin::version::major &maj, plugin::version::minor &min) const
+{
+  maj = plugin::version::MAJOR;
+  min = plugin::version::MINOR;
+}
+
 void	Friends::unload()
 {
   delete this;

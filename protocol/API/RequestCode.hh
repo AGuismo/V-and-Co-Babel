@@ -24,11 +24,18 @@ namespace request
     static const ID PARTIAL_CONTENT =	1005; /**< Request have partial content */
     static const ID NO_SLOTS =		1006; /**< No more slots available */
 
+    namespace	auth
+    {
+      static const ID HANDSHAKE =	1100; /**< Send a handshake to the client */
+    }
+
     namespace perso
     {
       static const ID  MISSED_CALLS =	1200; /**< Get the number of missed calls */
-      static const ID  GET_MISSED =	1201; /**< Get a missed call information */
+      static const ID  STREAM_DATA =	1201; /**< Get a missed call information */
+      static const ID  GET_MISSED =	1202; /**< Get a missed call information */
       static const ID  AUTO_ANSWER =	1203; /**< Set an auto answer message */
+      static const ID  PING =		1204; /**< Ping request */
     }
     /** Server Friend codes */
     namespace friends
@@ -71,7 +78,8 @@ namespace request
       static const ID GET_MISSED =		203; /**< Get missed call informations */
       static const ID DEL_MISSED =		204; /**< Delete missed call */
       static const ID SET_AUTO_ANSWER =		205; /**< Set an auto answer message */
-      static const ID UNSET_AUTO_ANSWER =	206; /**< Delete your auto answer message */
+      static const ID PONG =			206; /**< Pong response */
+      static const ID UNSET_AUTO_ANSWER =	207; /**< Delete your auto answer message */
     }
 
     /** Client Friend codes */

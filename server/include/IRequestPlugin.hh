@@ -22,6 +22,8 @@ namespace	request
     virtual void	setActions(std::map<request::ID, void (*)(Server *,
 								  Client::Pointer,
 								  const ARequest *)> &) = 0;
+    virtual void	getVersion(plugin::version::major &,
+				   plugin::version::minor &) const = 0;
   };
 } // !request
 

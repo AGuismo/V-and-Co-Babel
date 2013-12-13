@@ -15,6 +15,7 @@ DIR.INIPARSER=	../IniParser
 DIR.SERIALIZER=	../serializer/
 DIR.PROTOCOL=	../protocol/
 DIR.DYNAMIC=	../MDynamic/MDynamic
+DIR.PLUGS=	./misc
 
 DEPS.INC=
 DEPS.LNK=
@@ -31,6 +32,9 @@ F.L	     += $(MOD.LNK) $(DEPS.LNK) -lboost_system -lboost_thread -lboost_filesys
 F.D	     +=
 
 all:		start $(NAME)
+
+plugins:
+		@make --no-print-directory -C $(DIR.PLUGS) install
 
 $(NAME):	compile_mods compile
 

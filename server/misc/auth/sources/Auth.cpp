@@ -41,6 +41,12 @@ void	Auth::unload()
   delete this;
 }
 
+void	Auth::getVersion(plugin::version::major &maj, plugin::version::minor &min) const
+{
+  maj = plugin::version::MAJOR;
+  min = plugin::version::MINOR;
+}
+
 void	Auth::new_account(Server *serv, Client::Pointer sender, const ARequest *req)
 {
   (void)serv;

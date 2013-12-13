@@ -15,6 +15,7 @@ public:
   void		setActions(std::map<request::ID, void (*)(Server *,
 							  Client::Pointer,
 							  const ARequest *)> &);
+  void		getVersion(plugin::version::major &maj, plugin::version::minor &min) const;
 
 private:
   static bool	searchClient(Server *serv, const std::string &name, Client::Pointer &);

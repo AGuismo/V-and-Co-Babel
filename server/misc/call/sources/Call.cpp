@@ -42,6 +42,12 @@ void	Call::unload()
   delete this;
 }
 
+void	Call::getVersion(plugin::version::major &maj, plugin::version::minor &min) const
+{
+  maj = plugin::version::MAJOR;
+  min = plugin::version::MINOR;
+}
+
 bool	Call::searchClient(Server *serv, const std::string &name, Client::Pointer &client)
 {
   const Server::client_list	&clients = serv->getClients();

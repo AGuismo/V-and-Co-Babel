@@ -41,6 +41,12 @@ void	Chat::unload()
   delete this;
 }
 
+void	Chat::getVersion(plugin::version::major &maj, plugin::version::minor &min) const
+{
+  maj = plugin::version::MAJOR;
+  min = plugin::version::MINOR;
+}
+
 void	Chat::message(Server *serv, Client::Pointer sender, const ARequest *req)
 {
   (void)serv;

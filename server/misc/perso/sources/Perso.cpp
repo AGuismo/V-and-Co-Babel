@@ -41,6 +41,12 @@ void	Perso::unload()
   delete this;
 }
 
+void	Perso::getVersion(plugin::version::major &maj, plugin::version::minor &min) const
+{
+  maj = plugin::version::MAJOR;
+  min = plugin::version::MINOR;
+}
+
 void	Perso::privacy_mode(Server *serv, Client::Pointer sender, const ARequest *req)
 {
   (void)serv;
