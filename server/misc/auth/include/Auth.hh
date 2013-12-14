@@ -3,7 +3,15 @@
 
 # include	"IRequestPlugin.hh"
 
-class Auth : public request::IRequestPlugin
+#if defined(WIN32)
+# if defined(PLUGIN_API_EXPORT)
+#  define CALL_PLUGIN_DLL_EXPORT	__declspec(dllexport)
+# endif
+#elif defined(linux)
+# define CALL_PLUGIN_DLL_EXPORT
+#endif
+
+class CALL_PLUGIN_DLL_EXPORT Auth : public request::IRequestPlugin
 {
 public:
   Auth();

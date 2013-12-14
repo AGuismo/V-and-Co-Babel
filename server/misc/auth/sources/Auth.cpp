@@ -1,11 +1,10 @@
 #include	<iostream>
 #include	"Auth.hh"
-#include	"IRequestPlugin.hh"
+#include	"types.hh"
 #include	"RequestCode.hh"
 #include	"AuthRequest.hh"
 #include	"ServerRequest.hh"
 #include	"Database.hh"
-#include	"types.hh"
 
 Auth::Auth()
 {
@@ -105,8 +104,7 @@ void	Auth::setActions(std::map<request::ID, void (*)(Server *, Client::Pointer, 
   map[request::client::auth::DISCONNECT] = &Auth::disconnect;
 }
 
-
 request::IRequestPlugin	*loadPlugin()
 {
-  return (new Auth);
+	return (new Auth);
 }

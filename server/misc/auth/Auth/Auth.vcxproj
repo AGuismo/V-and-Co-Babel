@@ -11,18 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D3F438A3-5528-421B-916F-837A8F38CB10}</ProjectGuid>
-    <RootNamespace>IniParser</RootNamespace>
+    <ProjectGuid>{257730C5-B868-4E4B-8514-C1F5D2401FBF}</ProjectGuid>
+    <RootNamespace>Auth</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -39,23 +39,30 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include</IncludePath>
-    <TargetExt>.lib</TargetExt>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
+    <TargetExt>.dll</TargetExt>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include</IncludePath>
-    <TargetExt>.lib</TargetExt>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);DEBUG;WIN32</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDLL;WIN32;PLUGIN_API_EXPORT;_WIN32_WINNT=0x0501;%(PreprocessorDefinitions);WIN32;DEBUG;</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-gd-1_55.lib;libboost_filesystem-vc120-mt-gd-1_55.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
+      <ForceFileOutput>UndefinedSymbolOnly</ForceFileOutput>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -64,23 +71,22 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDLL;WIN32;PLUGIN_API_EXPORT;SERVER_PLUGIN_IMPORT;%(PreprocessorDefinitions);WIN32;_WIN32_WINNT=0x0501</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-1_55.lib;libboost_filesystem-vc120-mt-1_55.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
+      <ForceFileOutput>UndefinedSymbolOnly</ForceFileOutput>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\ConsumerParser.hpp" />
-    <ClInclude Include="..\include\IniParser.hh" />
-    <ClInclude Include="..\include\ProducterStream.hpp" />
+    <ClInclude Include="..\include\Auth.hh" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\sources\ConsumerParser.cpp" />
-    <ClCompile Include="..\sources\IniParser.cpp" />
-    <ClCompile Include="..\sources\ProducterStream.cpp" />
+    <ClCompile Include="..\sources\Auth.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
