@@ -266,7 +266,7 @@ public:
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         sendBoxTextEdit = new QTextEdit(centralWidget);
         sendBoxTextEdit->setObjectName(QStringLiteral("sendBoxTextEdit"));
-        sendBoxTextEdit->setMaximumSize(QSize(16777215, 100));
+        sendBoxTextEdit->setMaximumSize(QSize(16777215, 60));
 
         verticalLayout_4->addWidget(sendBoxTextEdit);
 
