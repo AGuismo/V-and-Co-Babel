@@ -74,6 +74,9 @@
     <ClCompile Include="FriendList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Env.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.ui">

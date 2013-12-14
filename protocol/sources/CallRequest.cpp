@@ -58,8 +58,10 @@ namespace	request
 
       CallClient::CallClient(const request::Username &from,
 			     const request::Username &to,
-			     const request::Options &option):
-	Call(request::client::call::CALL), _from(from), _to(to), _option(option)
+			     const request::Options  &option,
+			     const request::IP	     &ip,
+			     const request::Port     &port):
+	Call(request::client::call::CALL), _from(from), _to(to), _option(option), _ip(ip), _port(port)
       {
       }
       CallClient::~CallClient()
@@ -67,7 +69,7 @@ namespace	request
       }
 
       CallClient::CallClient(const CallClient &src) :
-	Call(request::client::call::CALL), _from(src._from), _to(src._to), _option(src._option)
+	Call(request::client::call::CALL), _from(src._from), _to(src._to), _option(src._option), _ip(src._ip), _port(src._port)
       {
       }
 
@@ -78,6 +80,8 @@ namespace	request
 	    _from = src._from;
 	    _to = src._to;
 	    _option = src._option;
+	    _ip = src._ip;
+	    _port = src._port;
 	  }
 	return (*this);
       }
@@ -93,7 +97,7 @@ namespace	request
 	  return (false);
 
 	const CallClient	*tmp = dynamic_cast<const CallClient *>(req);
-	return (tmp->_from == _from && tmp->_to == _to && tmp->_option == _option);
+	return (tmp->_from == _from && tmp->_to == _to && tmp->_option == _option && tmp->_ip == _ip && tmp->_port == _port);
       }
 
       bool	CallClient::operator!=(const ARequest *req) const
@@ -119,6 +123,10 @@ namespace	request
 	rhs << lenTo;
 	rhs.push(_to, lenTo);
 
+	rhs << _ip;
+
+	rhs << _port;
+
 	return (rhs);
       }
 
@@ -138,6 +146,10 @@ namespace	request
 	rhs >> lenTo;
 	rhs.pop(_to, lenTo);
 
+	rhs >> _ip;
+
+	rhs >> _port;
+
 	return (rhs);
       }
 
@@ -147,8 +159,10 @@ namespace	request
       }
 
       AcceptClient::AcceptClient(const request::Username &from,
-			     const request::Username &to):
-	Call(request::client::call::ACCEPT), _from(from), _to(to)
+				 const request::Username &to,
+				 const request::IP	 &ip,
+				 const request::Port	 &port):
+	Call(request::client::call::ACCEPT), _from(from), _to(to), _ip(ip), _port(port)
       {
       }
       AcceptClient::~AcceptClient()
@@ -156,7 +170,7 @@ namespace	request
       }
 
       AcceptClient::AcceptClient(const AcceptClient &src) :
-	Call(request::client::call::ACCEPT), _from(src._from), _to(src._to)
+	Call(request::client::call::ACCEPT), _from(src._from), _to(src._to), _ip(src._ip), _port(src._port)
       {
       }
 
@@ -166,6 +180,8 @@ namespace	request
 	  {
 	    _from = src._from;
 	    _to = src._to;
+	    _ip = src._ip;
+	    _port = src._port;
 	  }
 	return (*this);
       }
@@ -181,7 +197,7 @@ namespace	request
 	  return (false);
 
 	const AcceptClient	*tmp = dynamic_cast<const AcceptClient *>(req);
-	return (tmp->_from == _from && tmp->_to == _to);
+	return (tmp->_from == _from && tmp->_to == _to && tmp->_ip == _ip && tmp->_port == _port);
       }
 
       bool	AcceptClient::operator!=(const ARequest *req) const
@@ -204,6 +220,10 @@ namespace	request
 	rhs << lenTo;
 	rhs.push(_to, lenTo);
 
+	rhs << _ip;
+
+	rhs << _port;
+
 	return (rhs);
       }
 
@@ -219,6 +239,10 @@ namespace	request
 
 	rhs >> lenTo;
 	rhs.pop(_to, lenTo);
+
+	rhs >> _ip;
+
+	rhs >> _port;
 
 	return (rhs);
       }

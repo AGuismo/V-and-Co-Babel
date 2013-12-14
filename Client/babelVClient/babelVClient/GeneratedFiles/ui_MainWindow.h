@@ -19,7 +19,6 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -28,6 +27,7 @@
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <friendlistwidget.h>
@@ -47,34 +47,34 @@ public:
     QLabel *selectedFriendIconStatusLabel;
     QSpacerItem *horizontalSpacer_2;
     QFrame *line_4;
-    QSpacerItem *verticalSpacer;
     QGridLayout *gridLayout_2;
-    QLabel *label_3;
     QLabel *label_2;
+    QLabel *label_3;
+    QSpacerItem *horizontalSpacer;
     QComboBox *comboBox_2;
     QLabel *label_4;
-    QSpacerItem *horizontalSpacer;
     QGridLayout *gridLayout_3;
     QFrame *line_2;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
-    QPushButton *pushButton_3;
+    QPushButton *deleteSelectedFriendPushButton;
     QSpacerItem *horizontalSpacer_5;
     QSpacerItem *horizontalSpacer_4;
     QFrame *line_3;
     QHBoxLayout *horizontalLayout_2;
-    QTextBrowser *selectedFriendMsgBox;
+    QTextBrowser *friendMsgBox;
     QVBoxLayout *verticalLayout_2;
     QLabel *notificationListLabel;
     QListWidget *notificationListWidget;
-    QHBoxLayout *horizontalLayout;
-    QLineEdit *lineEdit;
+    QVBoxLayout *verticalLayout_4;
+    QTextEdit *sendBoxTextEdit;
     QPushButton *sendBoxPushButton;
+    QFrame *line;
     QVBoxLayout *verticalLayout;
     QLabel *friendListLabel;
     FriendListWidget *friendListW;
-    QFrame *line;
     QSpacerItem *verticalSpacer_2;
+    QSpacerItem *verticalSpacer;
     QMenuBar *menuBar;
     QMenu *menuVBabel;
     QStatusBar *statusBar;
@@ -83,7 +83,7 @@ public:
     {
         if (MainWindowClass->objectName().isEmpty())
             MainWindowClass->setObjectName(QStringLiteral("MainWindowClass"));
-        MainWindowClass->resize(628, 591);
+        MainWindowClass->resize(630, 371);
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout_4 = new QGridLayout(centralWidget);
@@ -143,14 +143,17 @@ public:
 
         gridLayout_4->addLayout(verticalLayout_3, 2, 3, 1, 1);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout_4->addItem(verticalSpacer, 1, 0, 1, 1);
-
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setSpacing(6);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
         gridLayout_2->setSizeConstraint(QLayout::SetDefaultConstraint);
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setEnabled(false);
+        label_2->setFont(font1);
+
+        gridLayout_2->addWidget(label_2, 1, 0, 1, 1);
+
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QStringLiteral("label_3"));
         label_3->setEnabled(false);
@@ -158,12 +161,9 @@ public:
 
         gridLayout_2->addWidget(label_3, 0, 0, 1, 1);
 
-        label_2 = new QLabel(centralWidget);
-        label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setEnabled(false);
-        label_2->setFont(font1);
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_2->addWidget(label_2, 1, 0, 1, 1);
+        gridLayout_2->addItem(horizontalSpacer, 0, 2, 1, 1);
 
         comboBox_2 = new QComboBox(centralWidget);
         comboBox_2->setObjectName(QStringLiteral("comboBox_2"));
@@ -177,10 +177,6 @@ public:
         label_4->setFont(font);
 
         gridLayout_2->addWidget(label_4, 0, 1, 1, 1);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_2->addItem(horizontalSpacer, 0, 2, 1, 1);
 
 
         gridLayout_4->addLayout(gridLayout_2, 2, 0, 1, 2);
@@ -207,11 +203,11 @@ public:
 
         gridLayout_3->addWidget(pushButton_2, 1, 2, 1, 1);
 
-        pushButton_3 = new QPushButton(centralWidget);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
-        pushButton_3->setEnabled(true);
+        deleteSelectedFriendPushButton = new QPushButton(centralWidget);
+        deleteSelectedFriendPushButton->setObjectName(QStringLiteral("deleteSelectedFriendPushButton"));
+        deleteSelectedFriendPushButton->setEnabled(true);
 
-        gridLayout_3->addWidget(pushButton_3, 1, 3, 1, 1);
+        gridLayout_3->addWidget(deleteSelectedFriendPushButton, 1, 3, 1, 1);
 
         horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -234,10 +230,10 @@ public:
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        selectedFriendMsgBox = new QTextBrowser(centralWidget);
-        selectedFriendMsgBox->setObjectName(QStringLiteral("selectedFriendMsgBox"));
+        friendMsgBox = new QTextBrowser(centralWidget);
+        friendMsgBox->setObjectName(QStringLiteral("friendMsgBox"));
 
-        horizontalLayout_2->addWidget(selectedFriendMsgBox);
+        horizontalLayout_2->addWidget(friendMsgBox);
 
 
         gridLayout_4->addLayout(horizontalLayout_2, 3, 3, 2, 1);
@@ -265,21 +261,29 @@ public:
 
         gridLayout_4->addLayout(verticalLayout_2, 4, 1, 2, 1);
 
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        lineEdit = new QLineEdit(centralWidget);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        sendBoxTextEdit = new QTextEdit(centralWidget);
+        sendBoxTextEdit->setObjectName(QStringLiteral("sendBoxTextEdit"));
+        sendBoxTextEdit->setMaximumSize(QSize(16777215, 60));
 
-        horizontalLayout->addWidget(lineEdit);
+        verticalLayout_4->addWidget(sendBoxTextEdit);
 
         sendBoxPushButton = new QPushButton(centralWidget);
         sendBoxPushButton->setObjectName(QStringLiteral("sendBoxPushButton"));
 
-        horizontalLayout->addWidget(sendBoxPushButton);
+        verticalLayout_4->addWidget(sendBoxPushButton);
 
 
-        gridLayout_4->addLayout(horizontalLayout, 5, 3, 1, 1);
+        gridLayout_4->addLayout(verticalLayout_4, 5, 3, 1, 1);
+
+        line = new QFrame(centralWidget);
+        line->setObjectName(QStringLiteral("line"));
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        gridLayout_4->addWidget(line, 2, 2, 4, 1);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
@@ -295,29 +299,24 @@ public:
 
         friendListW = new FriendListWidget(centralWidget);
         friendListW->setObjectName(QStringLiteral("friendListW"));
-        friendListW->setMinimumSize(QSize(160, 400));
-        friendListW->setMaximumSize(QSize(400, 1800));
 
         verticalLayout->addWidget(friendListW);
 
 
         gridLayout_4->addLayout(verticalLayout, 4, 0, 2, 1);
 
-        line = new QFrame(centralWidget);
-        line->setObjectName(QStringLiteral("line"));
-        line->setFrameShape(QFrame::VLine);
-        line->setFrameShadow(QFrame::Sunken);
-
-        gridLayout_4->addWidget(line, 2, 2, 4, 1);
-
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout_4->addItem(verticalSpacer_2, 6, 3, 1, 1);
+        gridLayout_4->addItem(verticalSpacer_2, 6, 1, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout_4->addItem(verticalSpacer, 1, 0, 1, 1);
 
         MainWindowClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindowClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 628, 21));
+        menuBar->setGeometry(QRect(0, 0, 630, 21));
         menuVBabel = new QMenu(menuBar);
         menuVBabel->setObjectName(QStringLiteral("menuVBabel"));
         MainWindowClass->setMenuBar(menuBar);
@@ -339,12 +338,12 @@ public:
         selectedFriendNameLabel->setText(QApplication::translate("MainWindowClass", "Selected Friend", 0));
         selectedFriendPersonalMsgLabel->setText(QApplication::translate("MainWindowClass", "Selected Friend Personal Message", 0));
         selectedFriendIconStatusLabel->setText(QApplication::translate("MainWindowClass", "Icon", 0));
-        label_3->setText(QApplication::translate("MainWindowClass", "User", 0));
         label_2->setText(QApplication::translate("MainWindowClass", "User Personal Message................", 0));
+        label_3->setText(QApplication::translate("MainWindowClass", "User", 0));
         label_4->setText(QApplication::translate("MainWindowClass", "Icon", 0));
         pushButton->setText(QApplication::translate("MainWindowClass", "Call", 0));
         pushButton_2->setText(QApplication::translate("MainWindowClass", "Add", 0));
-        pushButton_3->setText(QApplication::translate("MainWindowClass", "Delete", 0));
+        deleteSelectedFriendPushButton->setText(QApplication::translate("MainWindowClass", "Delete", 0));
         notificationListLabel->setText(QApplication::translate("MainWindowClass", "Notifications", 0));
         sendBoxPushButton->setText(QApplication::translate("MainWindowClass", "Send", 0));
         friendListLabel->setText(QApplication::translate("MainWindowClass", "Friends", 0));

@@ -27,6 +27,8 @@ public:
 
 private:
   static void	new_account(Server *serv, Client::Pointer sender, const ARequest *req);
+  static void	modify(Server *serv, Client::Pointer sender, const ARequest *req);
+  static void	remove(Server *serv, Client::Pointer sender, const ARequest *req);
   static void	connect(Server *serv, Client::Pointer sender, const ARequest *req);
   static void	disconnect(Server *serv, Client::Pointer sender, const ARequest *req);
 

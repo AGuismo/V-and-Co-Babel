@@ -74,12 +74,22 @@ void	Call::call(Server *serv, Client::Pointer sender, const ARequest *req)
   std::cout << "To : " << origin->_to << std::endl;
   std::cout << "Option : " << origin->_option << std::endl;
 
-  if (Database::getInstance().clientExist(origin->_from) &&
+  if (sender->InfosClient._isConnect &&
+      Database::getInstance().clientExist(origin->_from) &&
       Database::getInstance().clientExist(origin->_to))
     {
-      if (searchClient(serv, origin->_from, receiver))
+#if defined(DEBUG)
+      std::cout << "Receive a call request from [" << origin->_from << "] to [" << origin->_to << "]" << std::endl;
+#endif
+      if (searchClient(serv, origin->_to, receiver))
 	{
-	  receiver->serialize_data(*req);
+#if defined(DEBUG)
+	  std::cout << "Sending..." << std::endl;
+#endif
+	  request::call::client::CallClient fwd(*origin);
+	  fwd._ip = sender->socket().remote_endpoint().address().to_v4().to_ulong();
+
+	  receiver->serialize_data(fwd);
 	  return ;
 	}
     }
