@@ -3,8 +3,8 @@
 
 #include <QtWidgets/QMainWindow>
 
-
-#include "ui_MainWindow.h"
+#include	"ConnectWindow.h"
+#include	"ui_MainWindow.h"
 
 class MainWindow : public QMainWindow
 {
@@ -12,6 +12,9 @@ class MainWindow : public QMainWindow
 
 private:
 	Ui::MainWindowClass			ui;
+
+private:
+	ConnectWindow				_connectWindow;
 
 public slots:
    void							on_friend_clicked(QListWidgetItem *);
