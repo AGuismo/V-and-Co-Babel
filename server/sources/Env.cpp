@@ -17,7 +17,8 @@ const Env::file_extension	Env::plugin::LIBRARY_EXTENSION =	".so";
 
 Env::Env()
 {
-  server.Port = server::PORT;
+  server.ClientPort = server::CLIENT_PORT;
+  server.MaintenancePort = server::MAINTENANCE_PORT;
   server.confPath = server::CONF_PATH;
   database.DatabasePath = database::DB_PATH;
   plugin.LibraryPath = plugin::LIBRARY_PATH;
@@ -54,7 +55,8 @@ bool		Env::loadFile()
 		<< e.what() << std::endl;
       return (false);
     }
-  set(server.Port, "server", "PORT", ini.output());
+  set(server.ClientPort, "server", "CLIENT_PORT", ini.output());
+  set(server.MaintenancePort, "server", "MAINTENANCE_PORT", ini.output());
   set(database.DatabasePath, "database", "PATH", ini.output());
   set(plugin.LibraryPath, "plugin", "PATH", ini.output());
   return (loadPlugins(ini.output()));

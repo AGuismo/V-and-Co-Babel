@@ -26,10 +26,13 @@ public:
 
   struct				server
   {
-    static const unsigned short int	PORT     =	44201;
+    static const unsigned short int	CLIENT_PORT	   =	44201;
+    static const unsigned short int	MAINTENANCE_PORT   =	44202;
+
     static const file_path		CONF_PATH;
 
-    unsigned short int			Port;
+    unsigned short int			ClientPort;
+    unsigned short int			MaintenancePort;
     file_path				confPath;
   }					server;
 
