@@ -102,20 +102,57 @@ void	Call::accept(Server *serv, Client::Pointer sender, const ARequest *req)
 {
   (void)serv;
   const request::call::client::AcceptClient	*origin = dynamic_cast<const request::call::client::AcceptClient *>(req);
+  Client::Pointer				receiver;
 
   std::cout << "Call::accept()" << std::endl;
   std::cout << "From : " << origin->_from << std::endl;
   std::cout << "To : " << origin->_to << std::endl;
+  if (sender->InfosClient._isConnect &&
+      Database::getInstance().clientExist(origin->_from) &&
+      Database::getInstance().clientExist(origin->_to))
+    {
+#if defined(DEBUG)
+      std::cout << "Receive an accept request from [" << origin->_from << "] to [" << origin->_to << "]" << std::endl;
+#endif
+      if (searchClient(serv, origin->_to, receiver))
+	{
+#if defined(DEBUG)
+	  std::cout << "Sending..." << std::endl;
+#endif
+	  request::call::client::AcceptClient fwd(*origin);
+	  fwd._ip = sender->socket().remote_endpoint().address().to_v4().to_ulong();
+
+	  receiver->serialize_data(fwd);
+	  return ;
+	}
+    }
 }
 
 void	Call::refuse(Server *serv, Client::Pointer sender, const ARequest *req)
 {
   (void)serv;
   const request::call::client::RefuseClient	*origin = dynamic_cast<const request::call::client::RefuseClient *>(req);
+  Client::Pointer				receiver;
 
   std::cout << "Call::refuse()" << std::endl;
   std::cout << "From : " << origin->_from << std::endl;
   std::cout << "To : " << origin->_to << std::endl;
+  if (sender->InfosClient._isConnect &&
+      Database::getInstance().clientExist(origin->_from) &&
+      Database::getInstance().clientExist(origin->_to))
+    {
+#if defined(DEBUG)
+      std::cout << "Receive a refuse request from [" << origin->_from << "] to [" << origin->_to << "]" << std::endl;
+#endif
+      if (searchClient(serv, origin->_to, receiver))
+	{
+#if defined(DEBUG)
+	  std::cout << "Sending..." << std::endl;
+#endif
+	  receiver->serialize_data(*origin);
+	  return ;
+	}
+    }
 }
 
 void	Call::hangup(Server *serv, Client::Pointer sender, const ARequest *req)
