@@ -5,6 +5,7 @@
 #endif
 #include	"Client.hh"
 #include	"Server.hh"
+#include	"AuthRequest.hh"
 
 Client::Client(boost::asio::io_service &service, Server *server) :
   _service(service), _input(DEFAULT_SIZE), _socket(service), _server(server)
@@ -134,6 +135,8 @@ void		Client::async_read()
 
 void		Client::start()
 {
+  serialize_data(request::auth::server::Handshake(SET_VERSION(request::version::MAJOR,
+							      request::version::MINOR)));
   async_read();
 }
 

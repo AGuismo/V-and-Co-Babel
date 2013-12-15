@@ -7,6 +7,7 @@
 #include	"ChatRequest.hh"
 #include	"AuthRequest.hh"
 #include	"CallRequest.hh"
+#include	"PersoRequest.hh"
 
 namespace	request
 {
@@ -21,11 +22,22 @@ namespace	request
     _lnk[request::server::PARTIAL_CONTENT] = new request::server::PartialContent;
     _lnk[request::server::NO_SLOTS] = new request::server::NoSlots;
 
+    _lnk[request::client::perso::PRIVACY_MODE] = new request::perso::client::ModifyPrivacy;
+    _lnk[request::client::perso::STATUS] = new request::perso::client::StatusClient;
+    _lnk[request::client::perso::MISSED_CALLS] = new request::perso::client::MissedCallClient;
+    _lnk[request::client::perso::DEL_MISSED] = new request::perso::client::DelMissedClient;
+    _lnk[request::client::perso::SET_AUTO_ANSWER] = new request::perso::client::SetAutoAnswerClient;
+    _lnk[request::client::perso::UNSET_AUTO_ANSWER] = new request::perso::client::UnsetAutoAnswer;
+    _lnk[request::server::perso::MISSED_CALLS] = new request::perso::server::MissedCallServer;
+    _lnk[request::server::perso::GET_MISSED] = new request::perso::server::GetMissedServer;
+    _lnk[request::server::perso::AUTO_ANSWER] = new request::perso::server::AutoAnswerServer;
+
     _lnk[request::client::auth::NEW] = new request::auth::client::NewClient;
     _lnk[request::client::auth::REMOVE] = new request::auth::client::DelClient;
     _lnk[request::client::auth::MODIFY] = new request::auth::client::ModifyClient;
     _lnk[request::client::auth::CONNECT] = new request::auth::client::ConnectClient;
     _lnk[request::client::auth::DISCONNECT] = new request::auth::client::DisconnectClient;
+    _lnk[request::server::auth::HANDSHAKE] = new request::auth::server::Handshake;
 
     _lnk[request::server::friends::UPDATE] = new request::friends::server::Update;
     _lnk[request::client::friends::REQUEST] = new request::friends::client::Request;

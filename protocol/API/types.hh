@@ -54,7 +54,7 @@ typedef double			Rdouble;	/**< Double floating point precision */
 # define	SET_MINOR(version, minor)	((version &= 0x00FF) += minor)		/**< Set the minor */
 # define	GET_MAJOR(version)		(version >> 8)				/**< Get the major*/
 # define	SET_MAJOR(version, major)	((version &= 0xFF) += (major << 8))	/**< Set the major */
-# define	SET_VERSION(major, minor)	(major << 8 + minor)			/**< Set the version */
+# define	SET_VERSION(major, minor)	((major << 8) + minor)			/**< Set the version */
 
 # define	SET_OPTION(option, type)	(option |= type)			/**< Set an option describe in options struct */
 # define	UNSET_OPTION(option, type)	(option &= ~type)			/**< Unset an option describe in options struct */

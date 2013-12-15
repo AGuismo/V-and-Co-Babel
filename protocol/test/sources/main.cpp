@@ -155,14 +155,22 @@ private:
     std::cout << "TCP Extracted: " << count << std::endl;
     std::cout << "TCP Received request code: " << req->code()
 	      << std::endl;
-    if (req->code() == request::client::call::ACCEPT)
-      accept_call(req);
-    if (req->code() == request::client::call::CALL)
+    switch (req->code())
       {
+      case request::client::call::ACCEPT:
+	accept_call(req);
+	break;
+      case request::client::call::CALL:
 	g_receiver_portUDP = dynamic_cast<const request::call::client::CallClient *>(req)->_port;
 	g_udp_ip_receiver = dynamic_cast<const request::call::client::CallClient *>(req)->_ip;
 	std::cout << std::hex << g_udp_ip_receiver << ":" << std::dec
 		  << g_receiver_portUDP << std::endl;
+	break;
+      case request::server::auth::HANDSHAKE:
+	std::cout << "Handshake: " << std::endl
+		  << "Major: " << GET_MAJOR(dynamic_cast<const request::auth::server::Handshake *>(req)->version) << std::endl
+		  << "Minor: " << GET_MINOR(dynamic_cast<const request::auth::server::Handshake *>(req)->version) << std::endl;
+	break;
       }
     readTCP();
   }
