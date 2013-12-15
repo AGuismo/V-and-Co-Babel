@@ -37,6 +37,7 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindowClass
 {
 public:
+    QAction *actionConnect;
     QWidget *centralWidget;
     QGridLayout *gridLayout_4;
     QVBoxLayout *verticalLayout_3;
@@ -77,6 +78,7 @@ public:
     QSpacerItem *verticalSpacer;
     QMenuBar *menuBar;
     QMenu *menuVBabel;
+    QMenu *menuConnection;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindowClass)
@@ -84,6 +86,8 @@ public:
         if (MainWindowClass->objectName().isEmpty())
             MainWindowClass->setObjectName(QStringLiteral("MainWindowClass"));
         MainWindowClass->resize(630, 371);
+        actionConnect = new QAction(MainWindowClass);
+        actionConnect->setObjectName(QStringLiteral("actionConnect"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout_4 = new QGridLayout(centralWidget);
@@ -319,12 +323,16 @@ public:
         menuBar->setGeometry(QRect(0, 0, 630, 21));
         menuVBabel = new QMenu(menuBar);
         menuVBabel->setObjectName(QStringLiteral("menuVBabel"));
+        menuConnection = new QMenu(menuBar);
+        menuConnection->setObjectName(QStringLiteral("menuConnection"));
         MainWindowClass->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindowClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindowClass->setStatusBar(statusBar);
 
         menuBar->addAction(menuVBabel->menuAction());
+        menuBar->addAction(menuConnection->menuAction());
+        menuConnection->addAction(actionConnect);
 
         retranslateUi(MainWindowClass);
 
@@ -334,6 +342,7 @@ public:
     void retranslateUi(QMainWindow *MainWindowClass)
     {
         MainWindowClass->setWindowTitle(QApplication::translate("MainWindowClass", "MainWindow", 0));
+        actionConnect->setText(QApplication::translate("MainWindowClass", "Connect", 0));
         activeFriendCallPushButton->setText(QApplication::translate("MainWindowClass", "Call", 0));
         selectedFriendNameLabel->setText(QApplication::translate("MainWindowClass", "Selected Friend", 0));
         selectedFriendPersonalMsgLabel->setText(QApplication::translate("MainWindowClass", "Selected Friend Personal Message", 0));
@@ -348,6 +357,7 @@ public:
         sendBoxPushButton->setText(QApplication::translate("MainWindowClass", "Send", 0));
         friendListLabel->setText(QApplication::translate("MainWindowClass", "Friends", 0));
         menuVBabel->setTitle(QApplication::translate("MainWindowClass", "VBabel", 0));
+        menuConnection->setTitle(QApplication::translate("MainWindowClass", "Connection", 0));
     } // retranslateUi
 
 };

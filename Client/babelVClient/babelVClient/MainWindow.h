@@ -17,6 +17,7 @@ public slots:
    void							on_friend_clicked(QListWidgetItem *);
    void							on_delete_friend_clicked();
    void							on_send_txt_msg();
+   void							on_connect_window_triggered();
 
 public:
 	Ui::MainWindowClass			&getUi();
