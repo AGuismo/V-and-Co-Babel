@@ -79,6 +79,7 @@ void	Server::handle_request(Client::Pointer from, const ARequest *req)
   std::cout << "Server::handle_request: Call don't exist" << std::endl;
 #endif
     }
+  delete req;
 }
 
 void	Server::handle_accept(Client::Pointer new_connection,

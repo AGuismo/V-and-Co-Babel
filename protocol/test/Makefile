@@ -10,9 +10,9 @@ MOD.INC=	-I$(DIR.PROT)/include -I$(DIR.API) -I$(DIR.SER)/include
 
 MOD.LNK=	-L$(DIR.PROT) -lprotocol -L$(DIR.SER) -lserialize
 
-F.C	     +=	-W -Wall
+F.C	     +=	-W -Wall --std=c++0x -Dlinux
 F.I	     +=	-I./include $(MOD.INC) -I../include $(DEPS.INC)
-F.L	     += $(MOD.LNK) $(DEPS.LNK) -Wl,-rpath=$(DIR.NET) -lboost_system -lpthread
+F.L	     += $(MOD.LNK) $(DEPS.LNK) -Wl,-rpath=$(DIR.NET) -lboost_system -lboost_thread -lpthread
 F.D	     +=
 
 all:		start $(NAME)

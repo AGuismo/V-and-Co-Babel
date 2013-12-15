@@ -5,6 +5,8 @@
 #include	<typeinfo>
 #include	<boost/asio.hpp>
 #include	<boost/bind.hpp>
+#include	<boost/array.hpp>
+#include	<boost/thread.hpp>
 #include	<boost/shared_ptr.hpp>
 #include	<boost/enable_shared_from_this.hpp>
 #include	"types.hh"
@@ -13,8 +15,10 @@
 #include	"CallRequest.hh"
 #include	"Protocol.hpp"
 
-static unsigned short g_portUDP;
-static unsigned short g_portTCP;
+static unsigned short	g_portTCP;
+static unsigned short	g_server_portUDP;
+static unsigned short	g_receiver_portUDP;
+static unsigned long	g_udp_ip_receiver;
 
 using boost::asio::ip::tcp;
 using boost::asio::ip::udp;
@@ -59,28 +63,38 @@ public:
 					 boost::asio::placeholders::bytes_transferred));
   }
 
-  void	writeUDP(const std::vector<Protocol::Byte> &data)
+  void	writeUDP()
   {
+    std::vector<Protocol::Byte>	data;
+    udp::endpoint receiver_endpoint (boost::asio::ip::address_v4(g_udp_ip_receiver),
+				     g_receiver_portUDP);
 
-    _udpSock.async_send(boost::asio::buffer(data),
-			boost::bind(&client::write_udp_handler,
-				    shared_from_this(),
-				    boost::asio::placeholders::error,
-				    boost::asio::placeholders::bytes_transferred));
+    data.assign(40, 0);
+    _udpServerSock.send_to(boost::asio::buffer(data), receiver_endpoint);
+    _t.expires_from_now(boost::posix_time::seconds(5));
+    _t.async_wait(boost::bind(&client::writeUDP,
+			      shared_from_this()));
   }
 
   void	readUDP()
   {
-    _udpSock.async_receive(boost::asio::buffer(_udp),
-			   boost::bind(&client::read_udp_handler,
-				       shared_from_this(),
-				       boost::asio::placeholders::error,
-				       boost::asio::placeholders::bytes_transferred));
+    _udpServerSock.async_receive(boost::asio::buffer(_udp),
+				 boost::bind(&client::read_udp_handler,
+					     shared_from_this(),
+					     boost::asio::placeholders::error,
+					     boost::asio::placeholders::bytes_transferred));
+  }
+
+  void	startAudio()
+  {
+    // _audioThread = boost::thread(&foo);
+    _t.expires_from_now(boost::posix_time::seconds(5));
   }
 
 private:
   explicit client(boost::asio::io_service& io_service) :
-    _service(io_service), _tcpSock(io_service), _udpSock(io_service)
+    _service(io_service), _tcpSock(io_service), _udpClientSock(io_service),_udpServerSock(io_service),
+    _t(io_service)
   {
   }
 
@@ -100,9 +114,22 @@ private:
     unsigned short	portVal;
 
     ss >> portVal;
-    _udpSock.open(udp::v4());
-    _udpSock.bind(udp::endpoint(udp::v4(), portVal));
+    _udpServerSock.open(udp::v4());
+    _udpServerSock.bind(udp::endpoint(udp::v4(), portVal));
     readUDP();
+    // _t.expires_from_now(boost::posix_time::seconds(5));
+    _t.async_wait(boost::bind(&client::writeUDP,
+			      shared_from_this()));
+  }
+
+  void	accept_call(const ARequest *req)
+  {
+    const request::call::client::AcceptClient	*origin = dynamic_cast<const request::call::client::AcceptClient *>(req);
+
+    g_udp_ip_receiver = origin->_ip;
+    g_receiver_portUDP = origin->_port;
+    std::cout << std::hex << g_udp_ip_receiver << ":" << std::dec << g_receiver_portUDP << std::endl;
+    startAudio();
   }
 
   void read_tcp_handler(const boost::system::error_code& error, const size_t bytes_transferred)
@@ -128,6 +155,15 @@ private:
     std::cout << "TCP Extracted: " << count << std::endl;
     std::cout << "TCP Received request code: " << req->code()
 	      << std::endl;
+    if (req->code() == request::client::call::ACCEPT)
+      accept_call(req);
+    if (req->code() == request::client::call::CALL)
+      {
+	g_receiver_portUDP = dynamic_cast<const request::call::client::CallClient *>(req)->_port;
+	g_udp_ip_receiver = dynamic_cast<const request::call::client::CallClient *>(req)->_ip;
+	std::cout << std::hex << g_udp_ip_receiver << ":" << std::dec
+		  << g_receiver_portUDP << std::endl;
+      }
     readTCP();
   }
 
@@ -167,9 +203,12 @@ private:
 private:
   boost::asio::io_service		&_service;
   tcp::socket				_tcpSock;
-  udp::socket				_udpSock;
+  udp::socket				_udpClientSock;
+  udp::socket				_udpServerSock;
   boost::array<Protocol::Byte, 1024>	_arr;
   boost::array<Protocol::Byte, 1024>	_udp;
+  boost::asio::deadline_timer		_t;
+  boost::thread				_audioThread;
 };
 
 
@@ -239,16 +278,18 @@ private:
 	send_req(new request::auth::client::ConnectClient("tata", md5("poil")));
 	break;
       case 'e':
-	send_req(new request::call::client::CallClient("toto", "tata", 1, 0x7F000001, g_portUDP));
+	send_req(new request::call::client::CallClient("toto", "tata", 1, 0x7F000001, g_server_portUDP));
 	break;
       case 'f':
-	send_req(new request::call::client::CallClient("tata", "toto", 1, 0x7F000001, g_portUDP));
+	send_req(new request::call::client::CallClient("tata", "toto", 1, 0x7F000001, g_server_portUDP));
 	break;
       case 'g':
-	send_req(new request::call::client::AcceptClient("toto", "tata", 0x7F000001, g_portUDP));
+	send_req(new request::call::client::AcceptClient("toto", "tata", 0x7F000001, g_server_portUDP));
+	_client->startAudio();
 	break;
       case 'h':
-	send_req(new request::call::client::AcceptClient("tata", "toto", 0x7F000001, g_portUDP));
+	send_req(new request::call::client::AcceptClient("tata", "toto", 0x7F000001, g_server_portUDP));
+	_client->startAudio();
 	break;
       case 'i':
 	send_req(new request::call::client::RefuseClient("toto", "tata"));
@@ -275,14 +316,14 @@ int			main(int ac, char **av)
   if (ac != 4)
     return (0);
 
+  g_portTCP = std::atoi(av[2]);
+  g_server_portUDP = std::atoi(av[3]);
+  std::cout << "g_server_portUDP: " << g_server_portUDP << std::endl;
+
+
   boost::asio::io_service	io_service;
   client::Ptr			client = client::create(io_service, av[1], av[2], av[3]);
   input::Ptr			input = input::create(io_service, client->ptr());
-
-  ss << av[2];
-  ss >> g_portTCP;
-  ss << av[3];
-  ss >> g_portUDP;
 
   io_service.run();
   return (0);
