@@ -50,7 +50,6 @@ public:
 
 public:
   void			init();
-  void			run();
   void			handleClientClose(Client::Pointer clientClosed);
   void			handle_request(Client::Pointer from, const ARequest *);
   const client_list	&getClients() const;
@@ -66,7 +65,6 @@ private:
 private:
   boost::asio::io_service		&_service;
   boost::asio::ip::tcp::acceptor	_acceptor;
-  boost::asio::ip::tcp::acceptor	_maintenance;
   client_list				_clientList;
   request::PluginManager		*_plugs;
   request::PluginCaller			*_calls;

@@ -7,7 +7,7 @@
 #include	"RequestCaller.hh"
 
 Server::Server(boost::asio::io_service &service) :
-  _service(service), _acceptor(service), _maintenance(service), _plugs(new request::PluginManager),
+  _service(service), _acceptor(service), _plugs(new request::PluginManager),
   _calls(new request::PluginCaller(this))
 {
 
@@ -48,21 +48,12 @@ void	Server::init()
   _acceptor.bind(boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(),
 						Env::getInstance().server.ClientPort));
   _acceptor.listen();
-  // _maintenance.open(boost::asio::ip::tcp::v4());
-  // _maintenance.bind(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"),
-  // 						   Env::getInstance().server.MaintenancePort));
-  // _maintenance.listen();
   start_accept();
 }
 
 const Server::client_list	&Server::getClients() const
 {
   return (_clientList);
-}
-
-void	Server::run()
-{
-  _service.run();
 }
 
 void	Server::handle_request(Client::Pointer from, const ARequest *req)

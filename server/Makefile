@@ -1,14 +1,16 @@
 NAME	     ?=	server_babel
 
-SRCS =	      	main.cpp		\
-		Application.cpp		\
-		Server.cpp		\
-		Client.cpp		\
-		Env.cpp			\
-					\
-		PluginException.cpp	\
-		RequestPlugin.cpp	\
-		RequestCaller.cpp	\
+SRCS =	      	main.cpp			\
+		Application.cpp			\
+		Server.cpp			\
+		Client.cpp			\
+		Maintenance.cpp			\
+		MaintenanceConnection.cpp	\
+		Env.cpp				\
+						\
+		PluginException.cpp		\
+		RequestPlugin.cpp		\
+		RequestCaller.cpp		\
 
 DIR.DB=		./database
 DIR.INIPARSER=	../IniParser
