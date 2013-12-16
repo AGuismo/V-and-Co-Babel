@@ -11,6 +11,6 @@
 # define		WRITE_TO_FILE		(0)
 # define		PA_SAMPLE_TYPE		paInt16
 # define		SAMPLE_SILENCE		(0)
-typedef			short				SAMPLE;
+typedef			float				SAMPLE;
 
 #endif
