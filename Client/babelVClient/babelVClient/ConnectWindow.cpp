@@ -25,12 +25,14 @@ void					ConnectWindow::on_connect_button_clicked()
 
 	if (true)
 	{
-		ui.serverResponseTextBrowser->append("Success\n");
+		ui.serverResponseLabel->setText("Success\n");
 		Env::getInstance().userInfo.connected = true;
 	}
 	else
 	{
-		ui.serverResponseTextBrowser->append("Failure\n");
+		
+		ui.serverResponseLabel->setText("Failure\n");
+		Env::getInstance().userInfo.connected = false;
 	}
 
 }
