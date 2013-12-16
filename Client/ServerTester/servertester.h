@@ -36,7 +36,26 @@ private slots:
 	void on_ButtonSend_clicked();
     void on_ButtonConnect_clicked();
 
+	void on_aButton_clicked();
+	void on_bButton_clicked();
+	void on_cButton_clicked();
+	void on_dButton_clicked();
+	void on_eButton_clicked();
+	void on_fButton_clicked();
+	void on_gButton_clicked();
+	void on_hButton_clicked();
+	void on_iButton_clicked();
+	void on_jButton_clicked();
+	void on_kButton_clicked();
+	void on_lButton_clicked();
+	void on_mButton_clicked();
+	void on_nButton_clicked();
+	void on_oButton_clicked();
+	void on_pButton_clicked();
+	void on_qButton_clicked();
+
 	void	connection();
+	void	appel();
 	void	send_req(ARequest *req);
 
 private:
@@ -44,6 +63,8 @@ private:
     QUdpSocket          *udpSocket;
     QTcpSocket          *tcpSocket;
     QByteArray          buff;
+
+	int					udpSocket_int;
 };
 
 #endif // SERVERTESTER_H
