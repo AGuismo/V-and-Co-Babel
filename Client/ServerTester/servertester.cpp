@@ -5,11 +5,22 @@
 #include "servertester.h"
 #include "ui_servertester.h"
 
-#include	"types.hh"
-#include	"RequestCode.hh"
-#include	"AuthRequest.hh"
-#include	"CallRequest.hh"
-#include	"Protocol.hpp"
+
+
+void		ServerTester::send_req(ARequest *req)
+  {
+    std::vector<Protocol::Byte>	bytes;
+	std::vector<Protocol::Byte>::const_iterator	it;
+
+    std::cout << "Send request code: " << req->code()
+	      << std::endl;
+    bytes = Protocol::product(*req);
+	QByteArray datagram;
+	for (it = bytes.begin(); it != bytes.end(); ++it)
+		datagram.push_back(*it);
+    tcpSocket->write(datagram.data(), datagram.size());
+    //_client->writeTCP(bytes);
+  }
 
 ServerTester::ServerTester(QWidget *parent) :
     QMainWindow(parent),
@@ -63,4 +74,5 @@ void ServerTester::on_ButtonConnect_clicked()
 {
 	ui->connectStatus->setText("Connecting to host...");
 	this->connection();
+	//this->send_req(new request::auth::client::NewClient("toto", md5("poil"), false));
 }
