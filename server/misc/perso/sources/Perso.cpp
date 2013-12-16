@@ -52,9 +52,23 @@ void	Perso::privacy_mode(Server *serv, Client::Pointer sender, const ARequest *r
   (void)serv;
   const request::perso::client::ModifyPrivacy	*origin = dynamic_cast<const request::perso::client::ModifyPrivacy *>(req);
 
-  std::cout << "Perso::privacy_mode()" << std::endl;
-  std::cout << "Privacy : " << origin->_privacy << std::endl;
-
+#if defined(DEBUG)
+  std::cout << "Set Privacy request" << std::endl;
+#endif
+  if (Database::getInstance().modPrivacy(sender->InfosClient._name, origin->_privacy))
+    {
+#if defined(DEBUG)
+      std::cout << "Privacy set" << std::endl;
+#endif
+      sender->serialize_data(request::server::Ok());
+    }
+  else
+    {
+#if defined(DEBUG)
+      std::cout << "Can't set Privacy" << std::endl;
+#endif
+      sender->serialize_data(request::server::Forbidden());
+    }
 }
 
 void	Perso::status(Server *serv, Client::Pointer sender, const ARequest *req)
@@ -62,9 +76,23 @@ void	Perso::status(Server *serv, Client::Pointer sender, const ARequest *req)
   (void)serv;
   const request::perso::client::StatusClient	*origin = dynamic_cast<const request::perso::client::StatusClient *>(req);
 
-  std::cout << "Perso::accept()" << std::endl;
-  std::cout << "Status : " << origin->_status << std::endl;
-  std::cout << "Status details : " << origin->_statusDetails << std::endl;
+#if defined(DEBUG)
+  std::cout << "Change status request" << std::endl;
+#endif
+  if (Database::getInstance().setStatus(sender->InfosClient._name, origin->_status, origin->_statusDetails))
+    {
+#if defined(DEBUG)
+      std::cout << "Status has been set" << std::endl;
+#endif
+      sender->serialize_data(request::server::Ok());
+    }
+  else
+    {
+#if defined(DEBUG)
+      std::cout << "Status has been set" << std::endl;
+#endif
+      sender->serialize_data(request::server::Forbidden());
+    }
 }
 
 void	Perso::missed_calls(Server *serv, Client::Pointer sender, const ARequest *req)
@@ -102,6 +130,14 @@ void	Perso::set_auto_answer(Server *serv, Client::Pointer sender, const ARequest
   std::cout << "Answer : " << origin->_answer << std::endl;
 }
 
+void	Perso::pong(Server *serv, Client::Pointer sender, const ARequest *req)
+{
+  (void)serv;
+  const request::perso::client::Pong	*origin = dynamic_cast<const request::perso::client::Pong *>(req);
+
+  std::cout << "Perso::Pong()" << std::endl;
+}
+
 void	Perso::unset_auto_answer(Server *serv, Client::Pointer sender, const ARequest *req)
 {
   (void)serv;
@@ -109,7 +145,6 @@ void	Perso::unset_auto_answer(Server *serv, Client::Pointer sender, const AReque
 
   std::cout << "Perso::unset_auto_answer()" << std::endl;
 }
-
 
 void	Perso::setActions(std::map<request::ID, void (*)(Server *, Client::Pointer, const ARequest *)> &map)
 {
@@ -119,6 +154,7 @@ void	Perso::setActions(std::map<request::ID, void (*)(Server *, Client::Pointer,
   map[request::client::perso::GET_MISSED] = &Perso::get_missed;
   map[request::client::perso::DEL_MISSED] = &Perso::del_missed;
   map[request::client::perso::SET_AUTO_ANSWER] = &Perso::set_auto_answer;
+  map[request::client::perso::PONG] = &Perso::pong;
   map[request::client::perso::UNSET_AUTO_ANSWER] = &Perso::unset_auto_answer;
 }
 

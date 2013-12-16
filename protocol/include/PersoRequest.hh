@@ -139,6 +139,27 @@ namespace	request
 	request::Answer	_answer;
       };
 
+      struct	Pong : public Perso
+      {
+	static const char	*PONG;
+
+	Pong();
+	Pong(const request::ID &id);
+	~Pong();
+	Pong(const Pong &);
+	Pong	&operator=(const Pong &);
+
+	ARequest			*clone();
+	Protocol			&serialize(Protocol &) const;
+	Protocol			&unserialize(Protocol &);
+
+	bool			operator==(const ARequest *req) const;
+	bool			operator!=(const ARequest *req) const;
+
+	request::ID	_id;
+      };
+
+
       struct	UnsetAutoAnswer : public Perso
       {
 	static const char	*UNSET_AUTO_ANSWER;
@@ -221,6 +242,25 @@ namespace	request
 	request::Answer		_answer;
       };
 
+      struct	Ping : public Perso
+      {
+	static const char	*PING;
+
+	Ping();
+	Ping(const request::ID &id);
+	~Ping();
+	Ping(const Ping &);
+	Ping	&operator=(const Ping &);
+
+	ARequest			*clone();
+	Protocol			&serialize(Protocol &) const;
+	Protocol			&unserialize(Protocol &);
+
+	bool			operator==(const ARequest *req) const;
+	bool			operator!=(const ARequest *req) const;
+
+	request::ID		_id;
+      };
 
     } // !server
   } // !perso

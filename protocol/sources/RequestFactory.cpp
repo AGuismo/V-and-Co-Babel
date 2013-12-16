@@ -27,10 +27,12 @@ namespace	request
     _lnk[request::client::perso::MISSED_CALLS] = new request::perso::client::MissedCallClient;
     _lnk[request::client::perso::DEL_MISSED] = new request::perso::client::DelMissedClient;
     _lnk[request::client::perso::SET_AUTO_ANSWER] = new request::perso::client::SetAutoAnswerClient;
+    _lnk[request::client::perso::PONG] = new request::perso::client::Pong;
     _lnk[request::client::perso::UNSET_AUTO_ANSWER] = new request::perso::client::UnsetAutoAnswer;
     _lnk[request::server::perso::MISSED_CALLS] = new request::perso::server::MissedCallServer;
     _lnk[request::server::perso::GET_MISSED] = new request::perso::server::GetMissedServer;
     _lnk[request::server::perso::AUTO_ANSWER] = new request::perso::server::AutoAnswerServer;
+    _lnk[request::server::perso::PING] = new request::perso::server::Ping;
 
     _lnk[request::client::auth::NEW] = new request::auth::client::NewClient;
     _lnk[request::client::auth::REMOVE] = new request::auth::client::DelClient;
