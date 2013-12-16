@@ -27,6 +27,16 @@ void					Friend::setCurrentMsg(QString &curMsg)
 	_curgMsg = curMsg;
 }
 
+QList<QString>			*Friend::getConversation()
+{
+	return (&_msgList);
+}
+
+QString					*Friend::getCurrentMsg()
+{
+	return (&_curgMsg);
+}
+
 Friend::Friend(QString &friendName, QString &personalMsg, size_t status)
 {
 	_name = friendName;

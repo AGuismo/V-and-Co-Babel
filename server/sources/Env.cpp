@@ -17,7 +17,8 @@ const Env::file_extension	Env::plugin::LIBRARY_EXTENSION =	".so";
 
 Env::Env()
 {
-  server.Port = server::PORT;
+  server.ClientPort = server::CLIENT_PORT;
+  server.MaintenancePort = server::MAINTENANCE_PORT;
   server.confPath = server::CONF_PATH;
   database.DatabasePath = database::DB_PATH;
   plugin.LibraryPath = plugin::LIBRARY_PATH;
@@ -54,7 +55,8 @@ bool		Env::loadFile()
 		<< e.what() << std::endl;
       return (false);
     }
-  set(server.Port, "server", "PORT", ini.output());
+  set(server.ClientPort, "server", "CLIENT_PORT", ini.output());
+  set(server.MaintenancePort, "server", "MAINTENANCE_PORT", ini.output());
   set(database.DatabasePath, "database", "PATH", ini.output());
   set(plugin.LibraryPath, "plugin", "PATH", ini.output());
   return (loadPlugins(ini.output()));
@@ -76,10 +78,14 @@ bool		Env::isPluginSection(const parser::Ini::section &sectionName,
 
 const Env::file_path		Env::resolveFilePath(const Env::file_path &file)
 {
-  boost::filesystem::path	p(server.confPath);
   std::stringstream		ss;
+  std::string			parentPath(".");
+  std::size_t			pos;
 
-  ss << p.parent_path().c_str() << "/" << plugin.LibraryPath << "/"
+  pos = server.confPath.rfind('/');
+  if (pos != std::string::npos)
+	parentPath = server.confPath.substr(0, pos);
+  ss << parentPath << "/" << plugin.LibraryPath << "/"
      << file << plugin::LIBRARY_EXTENSION;
   return (ss.str());
 }

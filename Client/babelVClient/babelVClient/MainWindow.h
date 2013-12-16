@@ -3,24 +3,30 @@
 
 #include <QtWidgets/QMainWindow>
 
-
-#include "ui_MainWindow.h"
+#include	"ConnectWindow.h"
+#include	"ui_MainWindow.h"
 
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 
 private:
-	Ui::MainWindowClass ui;
+	Ui::MainWindowClass			ui;
+
+private:
+	ConnectWindow				_connectWindow;
 
 public slots:
-   void on_friend_clicked(QListWidgetItem *);
+   void							on_friend_clicked(QListWidgetItem *);
+   void							on_delete_friend_clicked();
+   void							on_send_txt_msg();
+   void							on_connect_window_triggered();
 
 public:
 	Ui::MainWindowClass			&getUi();
 
 public:
-	static MainWindow &getInstance();
+	static MainWindow			&getInstance();
 
 private:
 	MainWindow(QWidget *parent = 0);

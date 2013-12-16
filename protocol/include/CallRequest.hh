@@ -1,5 +1,5 @@
-#ifndef PERSOREQUEST_H_
-# define PERSOREQUEST_H_
+#ifndef CALLREQUEST_H_
+# define CALLREQUEST_H_
 
 # include	"ARequest.hh"
 
@@ -31,7 +31,9 @@ namespace	request
 	CallClient();
 	CallClient(const request::Username &from,
 		   const request::Username &to,
-		   const request::Options &option);
+		   const request::Options &option,
+		   const request::IP	   &ip,
+		   const request::Port	   &port);
 	~CallClient();
 	CallClient(const CallClient &);
 	CallClient	&operator=(const CallClient &);
@@ -46,6 +48,8 @@ namespace	request
 	request::Username		_from;
 	request::Username		_to;
 	request::Options		_option;
+	request::IP			_ip;
+	request::Port			_port;
       };
 
       struct	AcceptClient : public Call
@@ -54,7 +58,9 @@ namespace	request
 
 	AcceptClient();
 	AcceptClient(const request::Username &from,
-		     const request::Username &to);
+		     const request::Username &to,
+		     const request::IP	     &ip,
+		     const request::Port     &port);
 	~AcceptClient();
 	AcceptClient(const AcceptClient &);
 	AcceptClient	&operator=(const AcceptClient &);
@@ -68,6 +74,8 @@ namespace	request
 
 	request::Username		_from;
 	request::Username		_to;
+	request::IP			_ip;
+	request::Port			_port;
       };
 
       struct	RefuseClient : public Call

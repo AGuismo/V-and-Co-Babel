@@ -385,6 +385,7 @@ namespace	request
 
       DisconnectClient	&DisconnectClient::operator=(const DisconnectClient &src)
       {
+	(void)src;
 	return (*this);
       }
 

@@ -7,7 +7,7 @@
 #include	"RequestCaller.hh"
 
 Server::Server(boost::asio::io_service &service) :
-  _service(service), _acceptor(service), _plugs(new request::PluginManager),
+  _service(service), _acceptor(service), _maintenance(service), _plugs(new request::PluginManager),
   _calls(new request::PluginCaller(this))
 {
 
@@ -22,8 +22,6 @@ Server::~Server()
 
 void	Server::init()
 {
-  boost::asio::ip::tcp::endpoint	endpoint(boost::asio::ip::tcp::v4(), 44201);
-
   try
     {
       Env::plugin_list	plugs = Env::getInstance().plugin.plugins;
@@ -46,9 +44,14 @@ void	Server::init()
       std::cerr << "Server::init() failed to load: " << e.what() << std::endl;
       throw Server::Exception("Failed to load plugins");
     }
-  _acceptor.open(endpoint.protocol());
-  _acceptor.bind(endpoint);
+  _acceptor.open(boost::asio::ip::tcp::v4());
+  _acceptor.bind(boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(),
+						Env::getInstance().server.ClientPort));
   _acceptor.listen();
+  // _maintenance.open(boost::asio::ip::tcp::v4());
+  // _maintenance.bind(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"),
+  // 						   Env::getInstance().server.MaintenancePort));
+  // _maintenance.listen();
   start_accept();
 }
 
@@ -79,6 +82,7 @@ void	Server::handle_request(Client::Pointer from, const ARequest *req)
   std::cout << "Server::handle_request: Call don't exist" << std::endl;
 #endif
     }
+  delete req;
 }
 
 void	Server::handle_accept(Client::Pointer new_connection,

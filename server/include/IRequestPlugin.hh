@@ -1,16 +1,26 @@
 #ifndef IREQUESTPLUGIN_H_
 # define IREQUESTPLUGIN_H_
 
+# include	"Client.hh"
 # include	"IPlugin.hh"
 # include	"types.hh"
-# include	"Client.hh"
 
 class		Server;
 class		ARequest;
 
+#if defined(WIN32)
+# if defined(PLUGIN_API_EXPORT)
+#  define PLUGIN_DLL_EXPORT	__declspec(dllexport)
+# else
+#  define PLUGIN_DLL_EXPORT
+# endif
+#elif defined(linux)
+# define PLUGIN_DLL_EXPORT
+#endif
+
 namespace	request
 {
-  class IRequestPlugin : public plugin::IPlugin<request::ID,
+  class PLUGIN_DLL_EXPORT IRequestPlugin : public plugin::IPlugin<request::ID,
 						void (*)(Server *, Client::Pointer, const ARequest *)>
   {
   public:
@@ -29,7 +39,7 @@ namespace	request
 
 extern	"C"
 {
-  request::IRequestPlugin	*loadPlugin(void);
+  PLUGIN_DLL_EXPORT request::IRequestPlugin	*loadPlugin(void);
 }
 
 #endif /* IREQUESTPLUGIN_H_ */

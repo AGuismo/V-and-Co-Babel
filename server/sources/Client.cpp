@@ -5,6 +5,7 @@
 #endif
 #include	"Client.hh"
 #include	"Server.hh"
+#include	"AuthRequest.hh"
 
 Client::Client(boost::asio::io_service &service, Server *server) :
   _service(service), _input(DEFAULT_SIZE), _socket(service), _server(server)
@@ -39,13 +40,10 @@ void		Client::handle_write(const boost::system::error_code& error,
       std::cerr << "Error when writing data" << std::endl;
 #endif
       (void)bytes_transferred;
-      _server->handleClientClose(share());
+      _service.post(boost::bind(&Server::handleClientClose,
+				_server,
+				share()));
     }
-}
-
-void		Client::handle_request(const ARequest *req)
-{
-  _server->handle_request(shared_from_this(), req);
 }
 
 bool		Client::serialize_data(const ARequest &req)
@@ -68,8 +66,10 @@ bool		Client::unserialize_data(buffer &buff)
       return (false);
     }
   buff.erase(buff.begin(), buff.begin() + extracted);
-  handle_request(req);
-  delete req;
+  _service.post(boost::bind(&Server::handle_request,
+			    _server,
+			    shared_from_this(),
+			    req));
   return (true);
 }
 
@@ -110,7 +110,9 @@ void		Client::handle_read(const boost::system::error_code& error,
       std::cerr << "Error when reading data" << std::endl;
 #endif
       (void)bytes_transferred;
-      _server->handleClientClose(share());
+      _service.post(boost::bind(&Server::handleClientClose,
+				_server,
+				share()));
     }
 }
 
@@ -133,6 +135,8 @@ void		Client::async_read()
 
 void		Client::start()
 {
+  serialize_data(request::auth::server::Handshake(SET_VERSION(request::version::MAJOR,
+							      request::version::MINOR)));
   async_read();
 }
 

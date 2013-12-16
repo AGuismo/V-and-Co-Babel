@@ -21,10 +21,16 @@
     <ClInclude Include="..\include\AuthRequest.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\CallRequest.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\include\ChatRequest.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\FriendRequest.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\PersoRequest.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Protocol.hpp">
@@ -56,10 +62,16 @@
     <ClCompile Include="..\sources\AuthRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\sources\CallRequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\sources\ChatRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\sources\FriendRequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sources\PersoRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\sources\Protocol.cpp">

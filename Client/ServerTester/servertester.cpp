@@ -5,6 +5,12 @@
 #include "servertester.h"
 #include "ui_servertester.h"
 
+#include	"types.hh"
+#include	"RequestCode.hh"
+#include	"AuthRequest.hh"
+#include	"CallRequest.hh"
+#include	"Protocol.hpp"
+
 ServerTester::ServerTester(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ServerTester)
