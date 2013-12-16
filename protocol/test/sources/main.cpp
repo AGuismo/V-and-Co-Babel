@@ -14,6 +14,8 @@
 #include	"AuthRequest.hh"
 #include	"CallRequest.hh"
 #include	"Protocol.hpp"
+#include	"Bridge.hh"
+#include	"FakeAudio.hh"
 
 static unsigned short	g_portTCP;
 static unsigned short	g_server_portUDP;
@@ -90,14 +92,14 @@ public:
 
   void	startAudio()
   {
-    // _audioThread = boost::thread(roynetFunction());
+    _audio.run();
     _t.expires_from_now(boost::posix_time::seconds(5));
   }
 
 private:
   explicit client(boost::asio::io_service& io_service) :
     _service(io_service), _tcpSock(io_service), _udpClientSock(io_service),_udpServerSock(io_service),
-    _t(io_service)
+    _t(io_service), _audio(_bridge)
   {
   }
 
@@ -220,6 +222,8 @@ private:
   boost::array<Protocol::Byte, 1024>	_udp;
   boost::asio::deadline_timer		_t;
   boost::thread				_audioThread;
+  Bridge				_bridge;
+  FakeAudio				_audio;
 };
 
 
