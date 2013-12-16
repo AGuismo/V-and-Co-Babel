@@ -10,9 +10,13 @@
 #include	"types.hh"
 #include	"RequestCode.hh"
 #include	"AuthRequest.hh"
+#include	"CallRequest.hh"
 #include	"Protocol.hpp"
 
 using boost::asio::ip::tcp;
+
+static std::string g_client = "";
+static std::string g_client_join = "";
 
 class		client : public boost::enable_shared_from_this<client>
 {
@@ -169,35 +173,44 @@ private:
       case '\0':
 	exit(0);
       case 'a':
-	send_req(new request::auth::client::NewClient("Client", md5("poil"), false));
+	send_req(new request::auth::client::NewClient(g_client, md5("poil"), false));
 	break;
       case 'b':
-	send_req(new request::auth::client::ConnectClient("Client", md5("poil")));
+	send_req(new request::auth::client::ConnectClient(g_client, md5("poil")));
 	break;
       case 'c':
-	send_req(new request::auth::client::ModifyClient("Client", md5("poil"), md5("poilu")));
+	send_req(new request::call::client::CallClient(g_client, g_client_join, 1, 0, 4242));
 	break;
       case 'd':
-	send_req(new request::auth::client::DisconnectClient());
+	send_req(new request::call::client::AcceptClient(g_client, g_client_join, 0, 4242));
 	break;
       case 'e':
-	send_req(new request::auth::client::ConnectClient("Client", md5("poil")));
+	send_req(new request::call::client::RefuseClient(g_client, g_client_join));
 	break;
-      case 'f':
-	send_req(new request::auth::client::ConnectClient("Client", md5("poilu")));
-	break;
-      case 'g':
-	send_req(new request::auth::client::DelClient("Client", md5("poilu")));
-	break;
-      case 'h':
-	send_req(new request::auth::client::DisconnectClient());
-	break;
-      case 'i':
-	send_req(new request::auth::client::DelClient("Client", md5("poilu")));
-	break;
-      case 'j':
-	send_req(new request::auth::client::ConnectClient("Client", md5("poilu")));
-	break;
+      // case 'c':
+      // 	send_req(new request::auth::client::ModifyClient(g_client, md5("poil"), md5("poilu")));
+      // 	break;
+      // case 'd':
+      // 	send_req(new request::auth::client::DisconnectClient());
+      // 	break;
+      // case 'e':
+      // 	send_req(new request::auth::client::ConnectClient(g_client, md5("poil")));
+      // 	break;
+      // case 'f':
+      // 	send_req(new request::auth::client::ConnectClient(g_client, md5("poilu")));
+      // 	break;
+      // case 'g':
+      // 	send_req(new request::auth::client::DelClient(g_client, md5("poilu")));
+      // 	break;
+      // case 'h':
+      // 	send_req(new request::auth::client::DisconnectClient());
+      // 	break;
+      // case 'i':
+      // 	send_req(new request::auth::client::DelClient(g_client, md5("poilu")));
+      // 	break;
+      // case 'j':
+      // 	send_req(new request::auth::client::ConnectClient(g_client, md5("poilu")));
+      // 	break;
       default:
 	break;
       }
@@ -210,14 +223,22 @@ private:
   client::Ptr				_client;
 };
 
+
+
 int			main(int ac, char **av)
 {
-  if (ac != 3)
-    return (0);
+  if (ac != 5)
+    {
+      std::cerr << "USAGE : ./request_serializer IP PORT CLIENT_NAME CLIENT_JOIN" << std::endl;
+      return (0);
+    }
 
   boost::asio::io_service	io_service;
   client::Ptr			client = client::create(io_service, av[1], av[2]);
   input::Ptr			input = input::create(io_service, client->ptr());
+
+  g_client = av[3];
+  g_client_join = av[4];
 
   io_service.run();
   return (0);

@@ -6,6 +6,7 @@
 #include	"ServerRequest.hh"
 #include	"ChatRequest.hh"
 #include	"AuthRequest.hh"
+#include	"CallRequest.hh"
 
 namespace	request
 {
@@ -32,6 +33,11 @@ namespace	request
     _lnk[request::client::friends::ACCEPT] = new request::friends::client::Accept;
     _lnk[request::client::friends::REFUSE] = new request::friends::client::Refuse;
     _lnk[request::client::friends::LIST] = new request::friends::client::List;
+
+    _lnk[request::client::call::CALL] = new request::call::client::CallClient;
+    _lnk[request::client::call::ACCEPT] = new request::call::client::AcceptClient;
+    _lnk[request::client::call::REFUSE] = new request::call::client::RefuseClient;
+    _lnk[request::client::call::HANG_UP] = new request::call::client::HangupClient;
 
     _lnk[request::client::chat::MESSAGE] = new request::chat::client::Message;
   }
