@@ -8,11 +8,17 @@ MainWindow::MainWindow(QWidget *parent)	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 	setWindowTitle("VBabel");
-
+	
 	connect(ui.friendListW, SIGNAL(itemActivated(QListWidgetItem *)), this, SLOT(on_friend_clicked(QListWidgetItem *)));
 	connect(ui.friendListW, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(on_friend_clicked(QListWidgetItem *)));
 	connect(ui.deleteSelectedFriendPushButton, SIGNAL(clicked()), this, SLOT(on_delete_friend_clicked()));
 	connect(ui.sendBoxPushButton, SIGNAL(clicked()), this, SLOT(on_send_txt_msg()));
+	connect(ui.actionConnect, SIGNAL(triggered()), this, SLOT(on_connect_window_triggered()));
+}
+
+void						MainWindow::on_connect_window_triggered()
+{
+	_connectWindow.show();
 }
 
 void						MainWindow::on_send_txt_msg()

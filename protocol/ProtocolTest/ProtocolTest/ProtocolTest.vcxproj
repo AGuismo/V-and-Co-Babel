@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\..\..\include;$(SolutionDir)\..\include;$(SolutionDir)\..\..\..\libraries\network\network\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\..\..\include$;$(SolutionDir)\..\API;$(SolutionDir)\..\..\Serializer\include;$(SolutionDir)\..\include;$(IncludePath);C:\program files\boost\boost_1_55_0\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -83,9 +83,6 @@
     <ClCompile Include="..\..\test\sources\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\libraries\network\network\network.vcxproj">
-      <Project>{42c7e464-716a-4975-83ca-a8445b8abf0e}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\Protocol\Protocol.vcxproj">
       <Project>{d69a5c00-cd7c-4ba7-a23e-4d2bb1d8b76c}</Project>
     </ProjectReference>

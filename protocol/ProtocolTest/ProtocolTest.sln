@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProtocolTest", "ProtocolTes
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Protocol", "..\Protocol\Protocol.vcxproj", "{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "network", "..\..\..\libraries\network\network\network.vcxproj", "{42C7E464-716A-4975-83CA-A8445B8ABF0E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "serializer", "..\..\serializer\serializer\serializer.vcxproj", "{75219CF9-86E6-419B-B2E7-31EEB47AC113}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}.Debug|Win32.Build.0 = Debug|Win32
 		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}.Release|Win32.ActiveCfg = Release|Win32
 		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}.Release|Win32.Build.0 = Release|Win32
-		{42C7E464-716A-4975-83CA-A8445B8ABF0E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{42C7E464-716A-4975-83CA-A8445B8ABF0E}.Debug|Win32.Build.0 = Debug|Win32
-		{42C7E464-716A-4975-83CA-A8445B8ABF0E}.Release|Win32.ActiveCfg = Release|Win32
-		{42C7E464-716A-4975-83CA-A8445B8ABF0E}.Release|Win32.Build.0 = Release|Win32
+		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Debug|Win32.ActiveCfg = Debug|Win32
+		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Debug|Win32.Build.0 = Debug|Win32
+		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Release|Win32.ActiveCfg = Release|Win32
+		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

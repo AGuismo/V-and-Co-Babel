@@ -155,7 +155,7 @@ namespace	request
 
     namespace	server
     {
-      class	MissedCallServer : public Perso
+      struct	MissedCallServer : public Perso
       {
 	static const char	*MISSED_CALLS;
 
@@ -175,7 +175,7 @@ namespace	request
 	int		_nbMissed;
       };
 
-      class	GetMissedServer : public Perso
+      struct	GetMissedServer : public Perso
       {
 	static const char	*GET_MISSED;
 
@@ -199,7 +199,7 @@ namespace	request
 	request::SinceWhen	_since;
       };
 
-      class	AutoAnswerServer : public Perso
+      struct	AutoAnswerServer : public Perso
       {
 	static const char	*AUTO_ANSWER;
 

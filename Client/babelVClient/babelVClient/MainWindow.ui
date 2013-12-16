@@ -370,9 +370,21 @@
      <string>VBabel</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuConnection">
+    <property name="title">
+     <string>Connection</string>
+    </property>
+    <addaction name="actionConnect"/>
+   </widget>
    <addaction name="menuVBabel"/>
+   <addaction name="menuConnection"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionConnect">
+   <property name="text">
+    <string>Connect</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

@@ -118,11 +118,10 @@ void	Call::accept(Server *serv, Client::Pointer sender, const ARequest *req)
       if (searchClient(serv, origin->_to, receiver))
 	{
 #if defined(DEBUG)
-	  std::cout << "Accept Send..." << std::endl;
+	  std::cout << "Sending..." << std::endl;
 #endif
 	  request::call::client::AcceptClient fwd(*origin);
 	  fwd._ip = sender->socket().remote_endpoint().address().to_v4().to_ulong();
-
 	  if (receiver->InfosClient._isConnect &&
 	      receiver->InfosClient._status == request::User::Status::CONNECTED)
 	    receiver->serialize_data(fwd);
@@ -153,17 +152,14 @@ void	Call::refuse(Server *serv, Client::Pointer sender, const ARequest *req)
 #if defined(DEBUG)
 	  std::cout << "Refuse Send..." << std::endl;
 #endif
-	  request::call::client::RefuseClient fwd(*origin);
-
 	  if (receiver->InfosClient._isConnect &&
 	      receiver->InfosClient._status == request::User::Status::CONNECTED)
-	    receiver->serialize_data(fwd);
+	    receiver->serialize_data(*origin);
 	  else
 	    sender->serialize_data(request::server::Forbidden());
 	  return ;
 	}
     }
-  sender->serialize_data(request::server::Forbidden());
 }
 
 void	Call::hangup(Server *serv, Client::Pointer sender, const ARequest *req)
