@@ -90,7 +90,7 @@ public:
 
   void	startAudio()
   {
-    // _audioThread = boost::thread(&foo);
+    // _audioThread = boost::thread(roynetFunction());
     _t.expires_from_now(boost::posix_time::seconds(5));
   }
 
@@ -324,7 +324,7 @@ private:
 
 int			main(int ac, char **av)
 {
-  if (ac != 5)
+  if (ac != 4)
     {
       std::cerr << "USAGE : ./request_serializer IP PORT_TCP PORT_UDP" << std::endl;
       return (0);
@@ -333,15 +333,13 @@ int			main(int ac, char **av)
 
   g_portTCP = std::atoi(av[2]);
   g_server_portUDP = std::atoi(av[3]);
+
   std::cout << "g_server_portUDP: " << g_server_portUDP << std::endl;
 
 
   boost::asio::io_service	io_service;
   client::Ptr			client = client::create(io_service, av[1], av[2], av[3]);
   input::Ptr			input = input::create(io_service, client->ptr());
-
-  g_client = av[3];
-  g_client_join = av[4];
 
   io_service.run();
   return (0);

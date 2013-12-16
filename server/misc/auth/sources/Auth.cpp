@@ -56,10 +56,7 @@ void	Auth::new_account(Server *serv, Client::Pointer sender, const ARequest *req
 #if defined(DEBUG)
       std::cout << "Create a new account for : [" << origin->_name << "]" << std::endl;
 #endif
-      sender->InfosClient._isConnect = false;
       sender->InfosClient._name = origin->_name;
-      sender->InfosClient._privacy = request::User::PUBLIC;
-      sender->InfosClient._status = request::User::Status::DISCONNECTED;
       sender->serialize_data(request::server::Ok());
     }
   else

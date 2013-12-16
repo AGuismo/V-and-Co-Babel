@@ -10,6 +10,10 @@
 Client::Client(boost::asio::io_service &service, Server *server) :
   _service(service), _input(DEFAULT_SIZE), _socket(service), _server(server)
 {
+  InfosClient._isConnect = false;
+  InfosClient._name = "";
+  InfosClient._privacy = request::User::PUBLIC;
+  InfosClient._status = request::User::Status::DISCONNECTED;
 }
 
 Client::~Client()
