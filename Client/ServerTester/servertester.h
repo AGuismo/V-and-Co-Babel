@@ -4,6 +4,12 @@
 #include <QMainWindow>
 #include <QtWidgets>
 
+#include	"types.hh"
+#include	"RequestCode.hh"
+#include	"AuthRequest.hh"
+#include	"CallRequest.hh"
+#include	"Protocol.hpp"
+
 QT_BEGIN_NAMESPACE
 class QDialogButtonBox;
 class QLabel;
@@ -31,6 +37,7 @@ private slots:
     void on_ButtonConnect_clicked();
 
 	void	connection();
+	void	send_req(ARequest *req);
 
 private:
     Ui::ServerTester	*ui;

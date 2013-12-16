@@ -75,6 +75,7 @@ void	Call::call(Server *serv, Client::Pointer sender, const ARequest *req)
   std::cout << "Option : " << origin->_option << std::endl;
 
   if (sender->InfosClient._isConnect &&
+      sender->InfosClient._status == request::User::Status::CONNECTED &&
       Database::getInstance().clientExist(origin->_from) &&
       Database::getInstance().clientExist(origin->_to))
     {
@@ -84,18 +85,20 @@ void	Call::call(Server *serv, Client::Pointer sender, const ARequest *req)
       if (searchClient(serv, origin->_to, receiver))
 	{
 #if defined(DEBUG)
-	  std::cout << "Sending..." << std::endl;
+	  std::cout << "Call send ..." << std::endl;
 #endif
 	  request::call::client::CallClient fwd(*origin);
 	  fwd._ip = sender->socket().remote_endpoint().address().to_v4().to_ulong();
 
-	  receiver->serialize_data(fwd);
+	  if (receiver->InfosClient._isConnect &&
+	      receiver->InfosClient._status == request::User::Status::CONNECTED)
+	    receiver->serialize_data(fwd);
+	  else
+	    sender->serialize_data(request::server::Forbidden());
 	  return ;
 	}
     }
   sender->serialize_data(request::server::Forbidden());
-  /* FORWARD LA REQUETE */
-
 }
 
 void	Call::accept(Server *serv, Client::Pointer sender, const ARequest *req)
@@ -104,10 +107,8 @@ void	Call::accept(Server *serv, Client::Pointer sender, const ARequest *req)
   const request::call::client::AcceptClient	*origin = dynamic_cast<const request::call::client::AcceptClient *>(req);
   Client::Pointer				receiver;
 
-  std::cout << "Call::accept()" << std::endl;
-  std::cout << "From : " << origin->_from << std::endl;
-  std::cout << "To : " << origin->_to << std::endl;
   if (sender->InfosClient._isConnect &&
+      sender->InfosClient._status == request::User::Status::CONNECTED &&
       Database::getInstance().clientExist(origin->_from) &&
       Database::getInstance().clientExist(origin->_to))
     {
@@ -121,11 +122,15 @@ void	Call::accept(Server *serv, Client::Pointer sender, const ARequest *req)
 #endif
 	  request::call::client::AcceptClient fwd(*origin);
 	  fwd._ip = sender->socket().remote_endpoint().address().to_v4().to_ulong();
-
-	  receiver->serialize_data(fwd);
+	  if (receiver->InfosClient._isConnect &&
+	      receiver->InfosClient._status == request::User::Status::CONNECTED)
+	    receiver->serialize_data(fwd);
+	  else
+	    sender->serialize_data(request::server::Forbidden());
 	  return ;
 	}
     }
+  sender->serialize_data(request::server::Forbidden());
 }
 
 void	Call::refuse(Server *serv, Client::Pointer sender, const ARequest *req)
@@ -134,10 +139,8 @@ void	Call::refuse(Server *serv, Client::Pointer sender, const ARequest *req)
   const request::call::client::RefuseClient	*origin = dynamic_cast<const request::call::client::RefuseClient *>(req);
   Client::Pointer				receiver;
 
-  std::cout << "Call::refuse()" << std::endl;
-  std::cout << "From : " << origin->_from << std::endl;
-  std::cout << "To : " << origin->_to << std::endl;
   if (sender->InfosClient._isConnect &&
+      sender->InfosClient._status == request::User::Status::CONNECTED &&
       Database::getInstance().clientExist(origin->_from) &&
       Database::getInstance().clientExist(origin->_to))
     {
@@ -147,9 +150,13 @@ void	Call::refuse(Server *serv, Client::Pointer sender, const ARequest *req)
       if (searchClient(serv, origin->_to, receiver))
 	{
 #if defined(DEBUG)
-	  std::cout << "Sending..." << std::endl;
+	  std::cout << "Refuse Send..." << std::endl;
 #endif
-	  receiver->serialize_data(*origin);
+	  if (receiver->InfosClient._isConnect &&
+	      receiver->InfosClient._status == request::User::Status::CONNECTED)
+	    receiver->serialize_data(*origin);
+	  else
+	    sender->serialize_data(request::server::Forbidden());
 	  return ;
 	}
     }

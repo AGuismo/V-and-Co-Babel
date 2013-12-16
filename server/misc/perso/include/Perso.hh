@@ -24,6 +24,7 @@ private:
   static void	get_missed(Server *serv, Client::Pointer sender, const ARequest *req);
   static void	del_missed(Server *serv, Client::Pointer sender, const ARequest *req);
   static void	set_auto_answer(Server *serv, Client::Pointer sender, const ARequest *req);
+  static void	pong(Server *serv, Client::Pointer sender, const ARequest *req);
   static void	unset_auto_answer(Server *serv, Client::Pointer sender, const ARequest *req);
 
 public:

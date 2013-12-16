@@ -89,91 +89,109 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         pushButton_3 = new QPushButton(centralWidget);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_3, 2, 0, 1, 1);
 
         pushButton_12 = new QPushButton(centralWidget);
         pushButton_12->setObjectName(QStringLiteral("pushButton_12"));
+        pushButton_12->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_12, 1, 2, 1, 1);
 
         pushButton_7 = new QPushButton(centralWidget);
         pushButton_7->setObjectName(QStringLiteral("pushButton_7"));
+        pushButton_7->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_7, 1, 1, 1, 1);
 
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        pushButton_2->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_2, 1, 0, 1, 1);
 
         pushButton_11 = new QPushButton(centralWidget);
         pushButton_11->setObjectName(QStringLiteral("pushButton_11"));
+        pushButton_11->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_11, 0, 2, 1, 1);
 
         pushButton_6 = new QPushButton(centralWidget);
         pushButton_6->setObjectName(QStringLiteral("pushButton_6"));
+        pushButton_6->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_6, 0, 1, 1, 1);
 
         pushButton_8 = new QPushButton(centralWidget);
         pushButton_8->setObjectName(QStringLiteral("pushButton_8"));
+        pushButton_8->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_8, 2, 1, 1, 1);
 
         pushButton_4 = new QPushButton(centralWidget);
         pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+        pushButton_4->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_4, 3, 0, 1, 1);
 
         pushButton_9 = new QPushButton(centralWidget);
         pushButton_9->setObjectName(QStringLiteral("pushButton_9"));
+        pushButton_9->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_9, 3, 1, 1, 1);
 
         pushButton_17 = new QPushButton(centralWidget);
         pushButton_17->setObjectName(QStringLiteral("pushButton_17"));
+        pushButton_17->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_17, 5, 1, 1, 1);
 
         pushButton_14 = new QPushButton(centralWidget);
         pushButton_14->setObjectName(QStringLiteral("pushButton_14"));
+        pushButton_14->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_14, 3, 2, 1, 1);
 
         pushButton_18 = new QPushButton(centralWidget);
         pushButton_18->setObjectName(QStringLiteral("pushButton_18"));
+        pushButton_18->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_18, 5, 2, 1, 1);
 
         pushButton_16 = new QPushButton(centralWidget);
         pushButton_16->setObjectName(QStringLiteral("pushButton_16"));
+        pushButton_16->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_16, 5, 0, 1, 1);
 
         pushButton_5 = new QPushButton(centralWidget);
         pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
+        pushButton_5->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_5, 4, 0, 1, 1);
 
         pushButton_10 = new QPushButton(centralWidget);
         pushButton_10->setObjectName(QStringLiteral("pushButton_10"));
+        pushButton_10->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_10, 4, 1, 1, 1);
 
         pushButton_15 = new QPushButton(centralWidget);
         pushButton_15->setObjectName(QStringLiteral("pushButton_15"));
+        pushButton_15->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_15, 4, 2, 1, 1);
 
         pushButton_13 = new QPushButton(centralWidget);
         pushButton_13->setObjectName(QStringLiteral("pushButton_13"));
+        pushButton_13->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton_13, 2, 2, 1, 1);
 
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(pushButton, 0, 0, 1, 1);
 
@@ -241,6 +259,7 @@ public:
 
         ButtonSend = new QPushButton(centralWidget);
         ButtonSend->setObjectName(QStringLiteral("ButtonSend"));
+        ButtonSend->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout_2->addWidget(ButtonSend, 1, 1, 1, 1);
 
@@ -254,6 +273,7 @@ public:
 
         ButtonQuit = new QPushButton(centralWidget);
         ButtonQuit->setObjectName(QStringLiteral("ButtonQuit"));
+        ButtonQuit->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout_4->addWidget(ButtonQuit, 8, 3, 1, 1);
 
@@ -281,6 +301,7 @@ public:
 
         ButtonConnect = new QPushButton(centralWidget);
         ButtonConnect->setObjectName(QStringLiteral("ButtonConnect"));
+        ButtonConnect->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout_4->addWidget(ButtonConnect, 4, 0, 1, 2);
 

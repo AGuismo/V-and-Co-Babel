@@ -23,6 +23,9 @@ static unsigned long	g_udp_ip_receiver;
 using boost::asio::ip::tcp;
 using boost::asio::ip::udp;
 
+static std::string g_client = "";
+static std::string g_client_join = "";
+
 class		client : public boost::enable_shared_from_this<client>
 {
 public:
@@ -317,12 +320,16 @@ private:
   client::Ptr				_client;
 };
 
+
+
 int			main(int ac, char **av)
 {
+  if (ac != 5)
+    {
+      std::cerr << "USAGE : ./request_serializer IP PORT_TCP PORT_UDP" << std::endl;
+      return (0);
+    }
   std::stringstream	ss;
-
-  if (ac != 4)
-    return (0);
 
   g_portTCP = std::atoi(av[2]);
   g_server_portUDP = std::atoi(av[3]);
@@ -332,6 +339,9 @@ int			main(int ac, char **av)
   boost::asio::io_service	io_service;
   client::Ptr			client = client::create(io_service, av[1], av[2], av[3]);
   input::Ptr			input = input::create(io_service, client->ptr());
+
+  g_client = av[3];
+  g_client_join = av[4];
 
   io_service.run();
   return (0);

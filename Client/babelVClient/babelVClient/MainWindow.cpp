@@ -8,11 +8,21 @@ MainWindow::MainWindow(QWidget *parent)	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 	setWindowTitle("VBabel");
-
+	
+	// Friend List Widget
 	connect(ui.friendListW, SIGNAL(itemActivated(QListWidgetItem *)), this, SLOT(on_friend_clicked(QListWidgetItem *)));
 	connect(ui.friendListW, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(on_friend_clicked(QListWidgetItem *)));
 	connect(ui.deleteSelectedFriendPushButton, SIGNAL(clicked()), this, SLOT(on_delete_friend_clicked()));
+	// SendBox buttoon
 	connect(ui.sendBoxPushButton, SIGNAL(clicked()), this, SLOT(on_send_txt_msg()));
+	connect(ui.sendBoxTextEdit, SIGNAL(return), this, SLOT(on_send_txt_msg()));
+	// Connect Window
+	connect(ui.actionConnect, SIGNAL(triggered()), this, SLOT(on_connect_window_triggered()));
+}
+
+void						MainWindow::on_connect_window_triggered()
+{
+	_connectWindow.show();
 }
 
 void						MainWindow::on_send_txt_msg()
@@ -21,7 +31,7 @@ void						MainWindow::on_send_txt_msg()
 	{
 		QList<QString>		*conversationList;
 
-		Env::getInstance().friendList.insertTxtMsg(Env::getInstance().selectedFriend.friendName, ui.sendBoxTextEdit->toPlainText());
+		Env::getInstance().friendList.insertTxtMsg(Env::getInstance().selectedFriend.friendName, ui.sendBoxTextEdit->text());
 		ui.sendBoxTextEdit->clear();
 		ui.friendMsgBox->clear();
 		
@@ -43,7 +53,7 @@ void						MainWindow::on_friend_clicked(QListWidgetItem *friendClicked) // à fai
 
 
 	if (Env::getInstance().selectedFriend.friendName.size() != 0)
-		Env::getInstance().friendList.insertCurrentTxtMsg(Env::getInstance().selectedFriend.friendName, ui.sendBoxTextEdit->toPlainText());
+		Env::getInstance().friendList.insertCurrentTxtMsg(Env::getInstance().selectedFriend.friendName, ui.sendBoxTextEdit->text());
 
 	Env::getInstance().selectedFriend.friendName = friendGlobal.left(friendGlobal.indexOf("\n"));
 	qDebug() << Env::getInstance().selectedFriend.friendName;
@@ -76,9 +86,9 @@ Ui::MainWindowClass			&MainWindow::getUi()
 	return (ui);
 }
 
-MainWindow							&MainWindow::getInstance()
+MainWindow					&MainWindow::getInstance()
 {
-	static MainWindow				MainWindow;
+	static MainWindow		MainWindow;
 
 	return (MainWindow);
 }

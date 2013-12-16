@@ -27,10 +27,12 @@ namespace	request
     _lnk[request::client::perso::MISSED_CALLS] = new request::perso::client::MissedCallClient;
     _lnk[request::client::perso::DEL_MISSED] = new request::perso::client::DelMissedClient;
     _lnk[request::client::perso::SET_AUTO_ANSWER] = new request::perso::client::SetAutoAnswerClient;
+    _lnk[request::client::perso::PONG] = new request::perso::client::Pong;
     _lnk[request::client::perso::UNSET_AUTO_ANSWER] = new request::perso::client::UnsetAutoAnswer;
     _lnk[request::server::perso::MISSED_CALLS] = new request::perso::server::MissedCallServer;
     _lnk[request::server::perso::GET_MISSED] = new request::perso::server::GetMissedServer;
     _lnk[request::server::perso::AUTO_ANSWER] = new request::perso::server::AutoAnswerServer;
+    _lnk[request::server::perso::PING] = new request::perso::server::Ping;
 
     _lnk[request::client::auth::NEW] = new request::auth::client::NewClient;
     _lnk[request::client::auth::REMOVE] = new request::auth::client::DelClient;
@@ -45,6 +47,11 @@ namespace	request
     _lnk[request::client::friends::ACCEPT] = new request::friends::client::Accept;
     _lnk[request::client::friends::REFUSE] = new request::friends::client::Refuse;
     _lnk[request::client::friends::LIST] = new request::friends::client::List;
+
+    _lnk[request::client::call::CALL] = new request::call::client::CallClient;
+    _lnk[request::client::call::ACCEPT] = new request::call::client::AcceptClient;
+    _lnk[request::client::call::REFUSE] = new request::call::client::RefuseClient;
+    _lnk[request::client::call::HANG_UP] = new request::call::client::HangupClient;
 
     _lnk[request::client::chat::MESSAGE] = new request::chat::client::Message;
 
