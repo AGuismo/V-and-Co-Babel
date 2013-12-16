@@ -38,6 +38,7 @@ class Ui_MainWindowClass
 {
 public:
     QAction *actionConnect;
+    QAction *actionCreate_account;
     QWidget *centralWidget;
     QGridLayout *gridLayout_4;
     QSpacerItem *verticalSpacer;
@@ -79,6 +80,7 @@ public:
     QMenuBar *menuBar;
     QMenu *menuVBabel;
     QMenu *menuConnection;
+    QMenu *menuManage_account;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindowClass)
@@ -88,6 +90,8 @@ public:
         MainWindowClass->resize(824, 549);
         actionConnect = new QAction(MainWindowClass);
         actionConnect->setObjectName(QStringLiteral("actionConnect"));
+        actionCreate_account = new QAction(MainWindowClass);
+        actionCreate_account->setObjectName(QStringLiteral("actionCreate_account"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout_4 = new QGridLayout(centralWidget);
@@ -324,6 +328,8 @@ public:
         menuVBabel->setObjectName(QStringLiteral("menuVBabel"));
         menuConnection = new QMenu(menuBar);
         menuConnection->setObjectName(QStringLiteral("menuConnection"));
+        menuManage_account = new QMenu(menuBar);
+        menuManage_account->setObjectName(QStringLiteral("menuManage_account"));
         MainWindowClass->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindowClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -331,7 +337,9 @@ public:
 
         menuBar->addAction(menuVBabel->menuAction());
         menuBar->addAction(menuConnection->menuAction());
+        menuBar->addAction(menuManage_account->menuAction());
         menuConnection->addAction(actionConnect);
+        menuManage_account->addAction(actionCreate_account);
 
         retranslateUi(MainWindowClass);
 
@@ -342,6 +350,7 @@ public:
     {
         MainWindowClass->setWindowTitle(QApplication::translate("MainWindowClass", "MainWindow", 0));
         actionConnect->setText(QApplication::translate("MainWindowClass", "Connect", 0));
+        actionCreate_account->setText(QApplication::translate("MainWindowClass", "Create account", 0));
         label_2->setText(QApplication::translate("MainWindowClass", "User Personal Message................", 0));
         label_3->setText(QApplication::translate("MainWindowClass", "User", 0));
         label_4->setText(QApplication::translate("MainWindowClass", "Icon", 0));
@@ -357,6 +366,7 @@ public:
         deleteSelectedFriendPushButton->setText(QApplication::translate("MainWindowClass", "Delete", 0));
         menuVBabel->setTitle(QApplication::translate("MainWindowClass", "VBabel", 0));
         menuConnection->setTitle(QApplication::translate("MainWindowClass", "Connection", 0));
+        menuManage_account->setTitle(QApplication::translate("MainWindowClass", "Manage account", 0));
     } // retranslateUi
 
 };

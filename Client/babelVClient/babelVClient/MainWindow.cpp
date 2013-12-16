@@ -15,14 +15,21 @@ MainWindow::MainWindow(QWidget *parent)	: QMainWindow(parent)
 	connect(ui.deleteSelectedFriendPushButton, SIGNAL(clicked()), this, SLOT(on_delete_friend_clicked()));
 	// SendBox buttoon
 	connect(ui.sendBoxPushButton, SIGNAL(clicked()), this, SLOT(on_send_txt_msg()));
-	connect(ui.sendBoxTextEdit, SIGNAL(return), this, SLOT(on_send_txt_msg()));
+	connect(ui.sendBoxTextEdit, SIGNAL(returnPressed()), this, SLOT(on_send_txt_msg()));
 	// Connect Window
 	connect(ui.actionConnect, SIGNAL(triggered()), this, SLOT(on_connect_window_triggered()));
+	// Create account Window
+	connect(ui.actionCreate_account, SIGNAL(triggered()), this, SLOT(on_create_account_window_triggered()));
 }
 
 void						MainWindow::on_connect_window_triggered()
 {
 	_connectWindow.show();
+}
+
+void						MainWindow::on_create_account_window_triggered()
+{
+	_createAccountWindow.show();
 }
 
 void						MainWindow::on_send_txt_msg()

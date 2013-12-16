@@ -369,13 +369,25 @@
     </property>
     <addaction name="actionConnect"/>
    </widget>
+   <widget class="QMenu" name="menuManage_account">
+    <property name="title">
+     <string>Manage account</string>
+    </property>
+    <addaction name="actionCreate_account"/>
+   </widget>
    <addaction name="menuVBabel"/>
    <addaction name="menuConnection"/>
+   <addaction name="menuManage_account"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionConnect">
    <property name="text">
     <string>Connect</string>
+   </property>
+  </action>
+  <action name="actionCreate_account">
+   <property name="text">
+    <string>Create account</string>
    </property>
   </action>
  </widget>

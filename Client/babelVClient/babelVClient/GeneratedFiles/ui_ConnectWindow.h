@@ -26,66 +26,79 @@ class Ui_ConnectWindow
 {
 public:
     QGridLayout *gridLayout;
+    QLineEdit *passwordLineEdit;
+    QLabel *passwordLabel;
+    QPushButton *connectPushButton;
+    QLineEdit *loginLineEdit;
     QLabel *serverResponseLabel;
     QPushButton *closePushButton;
     QLabel *loginLabel;
-    QLineEdit *loginLineEdit;
-    QPushButton *connectPushButton;
-    QLabel *passwordLabel;
-    QLineEdit *passwordLineEdit;
+    QLabel *label;
 
     void setupUi(QDialog *ConnectWindow)
     {
         if (ConnectWindow->objectName().isEmpty())
             ConnectWindow->setObjectName(QStringLiteral("ConnectWindow"));
-        ConnectWindow->resize(272, 99);
+        ConnectWindow->resize(267, 118);
         gridLayout = new QGridLayout(ConnectWindow);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        serverResponseLabel = new QLabel(ConnectWindow);
-        serverResponseLabel->setObjectName(QStringLiteral("serverResponseLabel"));
+        passwordLineEdit = new QLineEdit(ConnectWindow);
+        passwordLineEdit->setObjectName(QStringLiteral("passwordLineEdit"));
+
+        gridLayout->addWidget(passwordLineEdit, 2, 1, 1, 2);
+
+        passwordLabel = new QLabel(ConnectWindow);
+        passwordLabel->setObjectName(QStringLiteral("passwordLabel"));
         QFont font;
         font.setPointSize(10);
-        font.setBold(true);
-        font.setWeight(75);
-        serverResponseLabel->setFont(font);
+        passwordLabel->setFont(font);
 
-        gridLayout->addWidget(serverResponseLabel, 2, 0, 1, 1);
-
-        closePushButton = new QPushButton(ConnectWindow);
-        closePushButton->setObjectName(QStringLiteral("closePushButton"));
-
-        gridLayout->addWidget(closePushButton, 2, 1, 1, 1);
-
-        loginLabel = new QLabel(ConnectWindow);
-        loginLabel->setObjectName(QStringLiteral("loginLabel"));
-        QFont font1;
-        font1.setPointSize(10);
-        loginLabel->setFont(font1);
-
-        gridLayout->addWidget(loginLabel, 0, 0, 1, 1);
-
-        loginLineEdit = new QLineEdit(ConnectWindow);
-        loginLineEdit->setObjectName(QStringLiteral("loginLineEdit"));
-
-        gridLayout->addWidget(loginLineEdit, 0, 1, 1, 2);
+        gridLayout->addWidget(passwordLabel, 2, 0, 1, 1);
 
         connectPushButton = new QPushButton(ConnectWindow);
         connectPushButton->setObjectName(QStringLiteral("connectPushButton"));
 
-        gridLayout->addWidget(connectPushButton, 2, 2, 1, 1);
+        gridLayout->addWidget(connectPushButton, 3, 2, 1, 1);
 
-        passwordLabel = new QLabel(ConnectWindow);
-        passwordLabel->setObjectName(QStringLiteral("passwordLabel"));
-        passwordLabel->setFont(font1);
+        loginLineEdit = new QLineEdit(ConnectWindow);
+        loginLineEdit->setObjectName(QStringLiteral("loginLineEdit"));
 
-        gridLayout->addWidget(passwordLabel, 1, 0, 1, 1);
+        gridLayout->addWidget(loginLineEdit, 1, 1, 1, 2);
 
-        passwordLineEdit = new QLineEdit(ConnectWindow);
-        passwordLineEdit->setObjectName(QStringLiteral("passwordLineEdit"));
+        serverResponseLabel = new QLabel(ConnectWindow);
+        serverResponseLabel->setObjectName(QStringLiteral("serverResponseLabel"));
+        QFont font1;
+        font1.setPointSize(10);
+        font1.setBold(true);
+        font1.setWeight(75);
+        serverResponseLabel->setFont(font1);
 
-        gridLayout->addWidget(passwordLineEdit, 1, 1, 1, 2);
+        gridLayout->addWidget(serverResponseLabel, 3, 0, 1, 1);
+
+        closePushButton = new QPushButton(ConnectWindow);
+        closePushButton->setObjectName(QStringLiteral("closePushButton"));
+
+        gridLayout->addWidget(closePushButton, 3, 1, 1, 1);
+
+        loginLabel = new QLabel(ConnectWindow);
+        loginLabel->setObjectName(QStringLiteral("loginLabel"));
+        loginLabel->setFont(font);
+
+        gridLayout->addWidget(loginLabel, 1, 0, 1, 1);
+
+        label = new QLabel(ConnectWindow);
+        label->setObjectName(QStringLiteral("label"));
+        QFont font2;
+        font2.setFamily(QStringLiteral("MS UI Gothic"));
+        font2.setPointSize(14);
+        font2.setBold(true);
+        font2.setWeight(75);
+        label->setFont(font2);
+        label->setAlignment(Qt::AlignCenter);
+
+        gridLayout->addWidget(label, 0, 0, 1, 3);
 
 
         retranslateUi(ConnectWindow);
@@ -96,11 +109,12 @@ public:
     void retranslateUi(QDialog *ConnectWindow)
     {
         ConnectWindow->setWindowTitle(QApplication::translate("ConnectWindow", "ConnectWindow", 0));
+        passwordLabel->setText(QApplication::translate("ConnectWindow", "Password :", 0));
+        connectPushButton->setText(QApplication::translate("ConnectWindow", "Connect", 0));
         serverResponseLabel->setText(QApplication::translate("ConnectWindow", "Disconnected", 0));
         closePushButton->setText(QApplication::translate("ConnectWindow", "Close", 0));
         loginLabel->setText(QApplication::translate("ConnectWindow", "Login :", 0));
-        connectPushButton->setText(QApplication::translate("ConnectWindow", "Connect", 0));
-        passwordLabel->setText(QApplication::translate("ConnectWindow", "Password :", 0));
+        label->setText(QApplication::translate("ConnectWindow", "Connect", 0));
     } // retranslateUi
 
 };
