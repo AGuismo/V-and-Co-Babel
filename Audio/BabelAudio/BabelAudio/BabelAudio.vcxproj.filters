@@ -33,6 +33,21 @@
     <ClInclude Include="AudioParams.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IAudioCodec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OpAudioCodec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="opus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="opus_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="opus_defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,6 +57,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PAudioBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpAudioCodec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
