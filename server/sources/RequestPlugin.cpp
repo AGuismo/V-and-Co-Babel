@@ -28,15 +28,35 @@ namespace	request
     DynamicAbstract	plugLib;
     plugin::IPlugin<request::ID, PluginManager::request_handler>	*(*plugin_ctor)(void);
     plugin::IPlugin<request::ID, PluginManager::request_handler>	*plugin;
+	plugin::version::minor	min;
+	plugin::version::major	maj;
 
     if (!plugLib.DynamicOpen(path))
       throw plugin::Exception("Unable to open Library(" + std::string(plugLib.error()) + ")");
     plugin_ctor = (plugin::IPlugin<request::ID, PluginManager::request_handler> *(*)(void))(plugLib.DynamicLoadSym("loadPlugin"));
-    if (plugin_ctor == 0)
-      throw plugin::Exception("Unable to find symbol (" + std::string(plugLib.error()) + ")");
+	if (plugin_ctor == 0)
+	{
+		plugLib.DynamicClose();
+		throw plugin::Exception("Unable to find symbol (" + std::string(plugLib.error()) + ")");
+	}
     plugin = plugin_ctor();
-    if (plugin == 0)
-      throw plugin::Exception("Error while creating plugin (" + path + ")");
+	if (plugin == 0)
+	{
+		plugLib.DynamicClose();
+		throw plugin::Exception("Error while creating plugin (" + path + ")");
+	}
+	plugin->getVersion(maj, min);
+	if (maj != plugin::version::MAJOR || min != plugin::version::MINOR)
+	{
+		std::ostringstream	ss;
+
+		plugin->unload();
+		plugLib.DynamicClose();
+		ss << "The Plugin version doesn't match. (" << path << "): "
+			<< "Expected version" << plugin::version::MAJOR << "." << plugin::version::MINOR
+			<< " (Plugin version: " << maj << "." << min;
+		throw plugin::Exception(ss.str());
+	}
     _loadedPlugins[name] = plugLib;
     plugin::Manager<request::ID, PluginManager::request_handler>::addPlugin(name, plugin);
   }

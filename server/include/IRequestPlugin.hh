@@ -7,6 +7,7 @@
 
 class		Server;
 class		ARequest;
+class	Database;
 
 #if defined(WIN32)
 # if defined(PLUGIN_API_EXPORT)
@@ -21,7 +22,7 @@ class		ARequest;
 namespace	request
 {
   class PLUGIN_DLL_EXPORT IRequestPlugin : public plugin::IPlugin<request::ID,
-	  void(*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>
+	  void(*)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *)>
   {
   public:
     virtual ~IRequestPlugin() {};
@@ -30,6 +31,7 @@ namespace	request
     virtual IPlugin	*clone() = 0;
     virtual void	unload() = 0;
 	virtual void	setActions(std::map<request::ID, void(*)(const std::list<IClient::Pointer> &,
+									Database &,
 								  IClient::Pointer,
 								  const ARequest *)> &) = 0;
     virtual void	getVersion(plugin::version::major &,

@@ -31,7 +31,7 @@ Friends	&Friends::operator=(Friends const &src)
   return (*this);
 }
 
-plugin::IPlugin<request::ID, void (*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>	*Friends::clone()
+plugin::IPlugin<request::ID, void(*)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *)>	*Friends::clone()
 {
   return (new Friends(*this));
 }
@@ -47,7 +47,7 @@ void	Friends::unload()
   delete this;
 }
 
-void	Friends::request(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Friends::request(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::friends::client::Request	*origin = dynamic_cast<const request::friends::client::Request *>(req);
 
@@ -56,7 +56,7 @@ void	Friends::request(const std::list<IClient::Pointer> &clients, IClient::Point
   std::cout << "To : " << origin->to << std::endl;
 }
 
-void	Friends::del_friend(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Friends::del_friend(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::friends::client::DelFriend	*origin = dynamic_cast<const request::friends::client::DelFriend *>(req);
 
@@ -65,7 +65,7 @@ void	Friends::del_friend(const std::list<IClient::Pointer> &clients, IClient::Po
   std::cout << "To : " << origin->to << std::endl;
 }
 
-void	Friends::accept(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Friends::accept(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::friends::client::Accept	*origin = dynamic_cast<const request::friends::client::Accept *>(req);
 
@@ -74,7 +74,7 @@ void	Friends::accept(const std::list<IClient::Pointer> &clients, IClient::Pointe
   std::cout << "To : " << origin->to << std::endl;
 }
 
-void	Friends::refuse(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Friends::refuse(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::friends::client::Refuse	*origin = dynamic_cast<const request::friends::client::Refuse *>(req);
 
@@ -83,7 +83,7 @@ void	Friends::refuse(const std::list<IClient::Pointer> &clients, IClient::Pointe
   std::cout << "To : " << origin->to << std::endl;
 }
 
-void	Friends::list(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Friends::list(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::friends::client::List	*origin = dynamic_cast<const request::friends::client::List *>(req);
 
@@ -91,7 +91,7 @@ void	Friends::list(const std::list<IClient::Pointer> &clients, IClient::Pointer 
 
 }
 
-void	Friends::setActions(std::map<request::ID, void (*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)> &map)
+void	Friends::setActions(std::map<request::ID, void(*)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *)> &map)
 {
   map[request::client::friends::REQUEST] = &Friends::request;
   map[request::client::friends::DEL_FRIEND] = &Friends::del_friend;

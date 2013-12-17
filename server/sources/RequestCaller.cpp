@@ -1,10 +1,10 @@
 #include	"RequestCaller.hh"
-#include	"Server.hh"
+#include	"Database.hh"
 
 namespace	request
 {
-  PluginCaller::PluginCaller(Server *serv):
-    _server(serv)
+	PluginCaller::PluginCaller(const std::list<IClient::Pointer> &clients) :
+		_clients(clients)
   {
 
   }
@@ -20,7 +20,7 @@ namespace	request
 
     if (it == _calls.end())
       return (false);
-    it->second(_server->getClients(), client, req);
+    it->second(_clients, Database::getInstance(), client, req);
     return (true);
   }
 }

@@ -7,18 +7,19 @@
 # include	"PluginCaller.hpp"
 
 class		ARequest;
+class		Database;
 
 namespace	request
 {
 
   class PluginCaller : public plugin::Caller<request::ID,
-	  void(*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>
+	  void(*)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *)>
   {
   private:
-	  typedef void(*request_callback)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *);
+	  typedef void(*request_callback)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *);
     typedef std::map<request::ID, request_callback>	callback_map;
   public:
-    PluginCaller(Server *);
+    PluginCaller(const std::list<IClient::Pointer> &);
     virtual ~PluginCaller();
 
     bool		operator()(IClient::Pointer, const ARequest *);
@@ -28,7 +29,7 @@ namespace	request
     PluginCaller& operator=(PluginCaller const&);
 
   private:
-    Server	*_server;
+    const std::list<IClient::Pointer>	&_clients;
   };
 
 }

@@ -9,7 +9,7 @@
 
 Server::Server(boost::asio::io_service &service) :
   _service(service), _acceptor(service), _plugs(new request::PluginManager),
-  _calls(new request::PluginCaller(this))
+  _calls(new request::PluginCaller(this->_clientList))
 {
 
 }

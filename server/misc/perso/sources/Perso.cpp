@@ -31,7 +31,7 @@ Perso	&Perso::operator=(Perso const &src)
   return (*this);
 }
 
-plugin::IPlugin<request::ID, void (*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>	*Perso::clone()
+plugin::IPlugin<request::ID, void (*)(const std::list<IClient::Pointer> &, Database &,IClient::Pointer, const ARequest *)>	*Perso::clone()
 {
   return (new Perso(*this));
 }
@@ -47,7 +47,7 @@ void	Perso::getVersion(plugin::version::major &maj, plugin::version::minor &min)
   min = plugin::version::MINOR;
 }
 
-void	Perso::privacy_mode(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Perso::privacy_mode(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::ModifyPrivacy	*origin = dynamic_cast<const request::perso::client::ModifyPrivacy *>(req);
 
@@ -70,7 +70,7 @@ void	Perso::privacy_mode(const std::list<IClient::Pointer> &clients, IClient::Po
     }
 }
 
-void	Perso::status(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Perso::status(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::StatusClient	*origin = dynamic_cast<const request::perso::client::StatusClient *>(req);
 
@@ -93,14 +93,14 @@ void	Perso::status(const std::list<IClient::Pointer> &clients, IClient::Pointer 
     }
 }
 
-void	Perso::missed_calls(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Perso::missed_calls(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::MissedCallClient	*origin = dynamic_cast<const request::perso::client::MissedCallClient *>(req);
 
   std::cout << "Perso::missed_call()" << std::endl;
 }
 
-void	Perso::get_missed(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Perso::get_missed(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::GetMissedClient	*origin = dynamic_cast<const request::perso::client::GetMissedClient *>(req);
 
@@ -108,7 +108,7 @@ void	Perso::get_missed(const std::list<IClient::Pointer> &clients, IClient::Poin
   std::cout << "IDX ANSWER : " << origin->_idxAnswer << std::endl;
 }
 
-void	Perso::del_missed(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Perso::del_missed(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::DelMissedClient	*origin = dynamic_cast<const request::perso::client::DelMissedClient *>(req);
 
@@ -116,7 +116,7 @@ void	Perso::del_missed(const std::list<IClient::Pointer> &clients, IClient::Poin
   std::cout << "IDX ANSWER : " << origin->_idxAnswer << std::endl;
 }
 
-void	Perso::set_auto_answer(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Perso::set_auto_answer(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::SetAutoAnswerClient	*origin = dynamic_cast<const request::perso::client::SetAutoAnswerClient *>(req);
 
@@ -124,21 +124,21 @@ void	Perso::set_auto_answer(const std::list<IClient::Pointer> &clients, IClient:
   std::cout << "Answer : " << origin->_answer << std::endl;
 }
 
-void	Perso::pong(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Perso::pong(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::Pong	*origin = dynamic_cast<const request::perso::client::Pong *>(req);
 
   std::cout << "Perso::Pong()" << std::endl;
 }
 
-void	Perso::unset_auto_answer(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+void	Perso::unset_auto_answer(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::UnsetAutoAnswer	*origin = dynamic_cast<const request::perso::client::UnsetAutoAnswer *>(req);
 
   std::cout << "Perso::unset_auto_answer()" << std::endl;
 }
 
-void	Perso::setActions(std::map<request::ID, void (*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)> &map)
+void	Perso::setActions(std::map<request::ID, void(*)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *)> &map)
 {
   map[request::client::perso::PRIVACY_MODE] = &Perso::privacy_mode;
   map[request::client::perso::STATUS] = &Perso::status;
