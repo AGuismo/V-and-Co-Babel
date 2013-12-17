@@ -18,7 +18,6 @@ void		ServerTester::send_req(ARequest *req)
 	for (it = bytes.begin(); it != bytes.end(); ++it)
 		datagram.push_back(*it);
     tcpSocket->write(datagram.data(), datagram.size());
-    //_client->writeTCP(bytes);
   }
 
 ServerTester::ServerTester(QWidget *parent) :
@@ -30,11 +29,36 @@ ServerTester::ServerTester(QWidget *parent) :
     tcpSocket = new QTcpSocket(this);
     setWindowTitle(tr("Babel Tester"));
     ui->ButtonSend->setEnabled(false);
+
+	connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(read()));
 }
 
 ServerTester::~ServerTester()
 {
     delete ui;
+}
+
+#include	<QDebug>
+
+void	ServerTester::read()
+{
+	std::vector<Protocol::Byte>	bytes;
+	QByteArray	buff;
+
+    if (tcpSocket->bytesAvailable() != 0)
+		buff += tcpSocket->readAll();
+	bytes.assign(buff.data(), buff.data() + buff.size());
+
+	int				count;
+    ARequest		*req;
+
+	req = Protocol::consume(bytes, count);
+	qDebug() << req->code();
+
+	QString buffer;
+	buffer = QString::number(req->code());
+	
+	ui->ServerBrowser->append(buffer);
 }
 
 void	ServerTester::appel()

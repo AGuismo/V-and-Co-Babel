@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ServerTester_t {
-    QByteArrayData data[27];
-    char stringdata[447];
+    QByteArrayData data[28];
+    char stringdata[452];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -53,9 +53,10 @@ QT_MOC_LITERAL(20, 368, 18),
 QT_MOC_LITERAL(21, 387, 18),
 QT_MOC_LITERAL(22, 406, 10),
 QT_MOC_LITERAL(23, 417, 5),
-QT_MOC_LITERAL(24, 423, 8),
-QT_MOC_LITERAL(25, 432, 9),
-QT_MOC_LITERAL(26, 442, 3)
+QT_MOC_LITERAL(24, 423, 4),
+QT_MOC_LITERAL(25, 428, 8),
+QT_MOC_LITERAL(26, 437, 9),
+QT_MOC_LITERAL(27, 447, 3)
     },
     "ServerTester\0on_ButtonQuit_clicked\0\0"
     "on_ButtonSend_clicked\0on_ButtonConnect_clicked\0"
@@ -68,7 +69,7 @@ QT_MOC_LITERAL(26, 442, 3)
     "on_mButton_clicked\0on_nButton_clicked\0"
     "on_oButton_clicked\0on_pButton_clicked\0"
     "on_qButton_clicked\0connection\0appel\0"
-    "send_req\0ARequest*\0req\0"
+    "read\0send_req\0ARequest*\0req\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -78,7 +79,7 @@ static const uint qt_meta_data_ServerTester[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      23,   14, // methods
+      24,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -86,29 +87,30 @@ static const uint qt_meta_data_ServerTester[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  129,    2, 0x08,
-       3,    0,  130,    2, 0x08,
-       4,    0,  131,    2, 0x08,
-       5,    0,  132,    2, 0x08,
-       6,    0,  133,    2, 0x08,
-       7,    0,  134,    2, 0x08,
-       8,    0,  135,    2, 0x08,
-       9,    0,  136,    2, 0x08,
-      10,    0,  137,    2, 0x08,
-      11,    0,  138,    2, 0x08,
-      12,    0,  139,    2, 0x08,
-      13,    0,  140,    2, 0x08,
-      14,    0,  141,    2, 0x08,
-      15,    0,  142,    2, 0x08,
-      16,    0,  143,    2, 0x08,
-      17,    0,  144,    2, 0x08,
-      18,    0,  145,    2, 0x08,
-      19,    0,  146,    2, 0x08,
-      20,    0,  147,    2, 0x08,
-      21,    0,  148,    2, 0x08,
-      22,    0,  149,    2, 0x08,
-      23,    0,  150,    2, 0x08,
-      24,    1,  151,    2, 0x08,
+       1,    0,  134,    2, 0x08,
+       3,    0,  135,    2, 0x08,
+       4,    0,  136,    2, 0x08,
+       5,    0,  137,    2, 0x08,
+       6,    0,  138,    2, 0x08,
+       7,    0,  139,    2, 0x08,
+       8,    0,  140,    2, 0x08,
+       9,    0,  141,    2, 0x08,
+      10,    0,  142,    2, 0x08,
+      11,    0,  143,    2, 0x08,
+      12,    0,  144,    2, 0x08,
+      13,    0,  145,    2, 0x08,
+      14,    0,  146,    2, 0x08,
+      15,    0,  147,    2, 0x08,
+      16,    0,  148,    2, 0x08,
+      17,    0,  149,    2, 0x08,
+      18,    0,  150,    2, 0x08,
+      19,    0,  151,    2, 0x08,
+      20,    0,  152,    2, 0x08,
+      21,    0,  153,    2, 0x08,
+      22,    0,  154,    2, 0x08,
+      23,    0,  155,    2, 0x08,
+      24,    0,  156,    2, 0x08,
+      25,    1,  157,    2, 0x08,
 
  // slots: parameters
     QMetaType::Void,
@@ -133,7 +135,8 @@ static const uint qt_meta_data_ServerTester[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 25,   26,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 26,   27,
 
        0        // eod
 };
@@ -165,7 +168,8 @@ void ServerTester::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 19: _t->on_qButton_clicked(); break;
         case 20: _t->connection(); break;
         case 21: _t->appel(); break;
-        case 22: _t->send_req((*reinterpret_cast< ARequest*(*)>(_a[1]))); break;
+        case 22: _t->read(); break;
+        case 23: _t->send_req((*reinterpret_cast< ARequest*(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -196,13 +200,13 @@ int ServerTester::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 23)
+        if (_id < 24)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 23;
+        _id -= 24;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 23)
+        if (_id < 24)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 23;
+        _id -= 24;
     }
     return _id;
 }

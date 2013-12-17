@@ -56,6 +56,7 @@ private slots:
 
 	void	connection();
 	void	appel();
+	void	read();
 	void	send_req(ARequest *req);
 
 private:
