@@ -59,6 +59,7 @@ private:
 	boost::asio::io_service	&_service;
 	buffer			_input;
 	buffer			_bufferised;
+	buffer			_output;
 	tcp::socket			_socket;
 	Server			*_server;
 
