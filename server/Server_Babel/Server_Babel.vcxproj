@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\Administrator.hh" />
     <ClInclude Include="..\include\Application.hh" />
     <ClInclude Include="..\include\BabelPlugin.hh" />
     <ClInclude Include="..\include\Client.hh" />
@@ -96,6 +97,7 @@
     <ClInclude Include="..\include\Server.hh" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\sources\Administrator.cpp" />
     <ClCompile Include="..\sources\Application.cpp" />
     <ClCompile Include="..\sources\Client.cpp" />
     <ClCompile Include="..\sources\main.cpp" />

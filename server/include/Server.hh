@@ -13,7 +13,7 @@ namespace boost
   }
 }
 class	ARequest;
-
+class	Database;
 namespace	request
 {
   class	PluginManager;
@@ -45,7 +45,7 @@ public:
   };
 
 public:
-  Server(boost::asio::io_service &service);
+  Server(boost::asio::io_service &service, Database &);
   ~Server();
 
 public:

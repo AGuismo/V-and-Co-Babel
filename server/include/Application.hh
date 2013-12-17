@@ -5,7 +5,9 @@
 # include	<string>
 # include	<boost/asio.hpp>
 # include	"Server.hh"
+# include	"Database.hh"
 # include	"Maintenance.hh"
+# include	"Administrator.hh"
 
 class Application
 {
@@ -41,8 +43,10 @@ private:
 
 private:
   boost::asio::io_service	_service;
-  Server			_server;
-  Maintenance			_maintenance;
+  Server					_server;
+  Database					_database;
+  Administrator				_adm;
+  Maintenance				_maintenance;
 };
 
 

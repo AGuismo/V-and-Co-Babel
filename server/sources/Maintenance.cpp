@@ -2,9 +2,10 @@
 #include	<boost/bind.hpp>
 #include	"Maintenance.hh"
 #include	"Env.hh"
+#include	"Administrator.hh"
 
-Maintenance::Maintenance(boost::asio::io_service &service) :
-  _service(service), _acceptor(service)
+Maintenance::Maintenance(boost::asio::io_service &service, Administrator &adm) :
+_service(service), _acceptor(service), _adm(adm)
 {
 
 }
@@ -35,7 +36,7 @@ void	Maintenance::handle_accept(MaintenanceConnection::Pointer new_connection,
 
 void	Maintenance::start_accept()
 {
-  MaintenanceConnection::Pointer new_connection = MaintenanceConnection::create(_acceptor.get_io_service());
+  MaintenanceConnection::Pointer new_connection = MaintenanceConnection::create(_acceptor.get_io_service(), _adm);
 
   _acceptor.async_accept(new_connection->socket(),
 			 boost::bind(&Maintenance::handle_accept, this, new_connection,

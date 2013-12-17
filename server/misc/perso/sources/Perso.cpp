@@ -54,7 +54,7 @@ void	Perso::privacy_mode(const std::list<IClient::Pointer> &clients, Database &d
 #if defined(DEBUG)
   std::cout << "Set Privacy request" << std::endl;
 #endif
-  if (Database::getInstance().modPrivacy(sender->Username(), origin->_privacy))
+  if (db.modPrivacy(sender->Username(), origin->_privacy))
     {
 #if defined(DEBUG)
       std::cout << "Privacy set" << std::endl;
@@ -77,7 +77,7 @@ void	Perso::status(const std::list<IClient::Pointer> &clients, Database &db, ICl
 #if defined(DEBUG)
   std::cout << "Change status request" << std::endl;
 #endif
-  if (Database::getInstance().setStatus(sender->Username(), origin->_status, origin->_statusDetails))
+  if (db.setStatus(sender->Username(), origin->_status, origin->_statusDetails))
     {
 #if defined(DEBUG)
       std::cout << "Status has been set" << std::endl;

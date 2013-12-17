@@ -12,6 +12,7 @@ namespace boost
     class io_service;
   }
 }
+class	Administrator;
 
 class Maintenance
 {
@@ -34,7 +35,7 @@ public:
   };
 
 public:
-  Maintenance(boost::asio::io_service &service);
+  Maintenance(boost::asio::io_service &service, Administrator &);
   ~Maintenance();
 
 public:
@@ -49,7 +50,8 @@ private:
   Maintenance& operator=(Maintenance const&);
 
 private:
-  boost::asio::io_service		&_service;
+  boost::asio::io_service			&_service;
+  Administrator						&_adm;
   boost::asio::ip::tcp::acceptor	_acceptor;
 };
 

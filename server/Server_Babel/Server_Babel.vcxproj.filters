@@ -57,6 +57,9 @@
     <ClInclude Include="..\include\maintenanceconnection.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Administrator.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\sources\Application.cpp">
@@ -84,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\sources\MaintenanceConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sources\Administrator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

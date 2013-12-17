@@ -59,6 +59,9 @@ public:
   bool	loadFile(const std::string &);
   bool	loadFile();
 
+public:
+	const file_path	rootPath() const;
+
 private:
   Env();
   virtual ~Env();

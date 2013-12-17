@@ -1,8 +1,12 @@
+#define		_SCL_SECURE_NO_WARNINGS
 #include	<boost/bind.hpp>
+#include	<boost/algorithm/string/split.hpp>
+#include	<boost/algorithm/string/classification.hpp>
 #include	"MaintenanceConnection.hh"
+#include	"Administrator.hh"
 
-MaintenanceConnection::MaintenanceConnection(boost::asio::io_service& io_service):
-  _socket(io_service)
+MaintenanceConnection::MaintenanceConnection(boost::asio::io_service& io_service, Administrator &adm) :
+_socket(io_service), _administrator(adm)
 {
 
 }
@@ -17,7 +21,6 @@ void	MaintenanceConnection::handle_write(const boost::system::error_code& error,
       _socket.close();
       return ;
     }
-  read_data();
 }
 
 void	MaintenanceConnection::handle_read(const boost::system::error_code& error,
@@ -29,22 +32,46 @@ void	MaintenanceConnection::handle_read(const boost::system::error_code& error,
       _socket.close();
       return ;
     }
+  _input.insert(_input.end(), _inputdata.begin(), _inputdata.begin() + bytes_transferred);
+  while (handle_request());
   read_data();
+}
+
+bool	MaintenanceConnection::handle_request()
+{
+	buffer::iterator	it = std::find(_input.begin(), _input.end(), '\n');
+	buffer				request;
+	std::vector<buffer>	argv;
+	buffer				resp;
+
+	if (it == _input.end())
+		return (false);
+	request.assign(_input.begin(), it);
+	request.pop_back();
+	_input.erase(_input.begin(), it);
+	boost::split(argv, request, boost::is_any_of(" \t"), boost::token_compress_on);
+	_administrator(argv, resp);
+	write_data(resp);
+	return (true);
 }
 
 void	MaintenanceConnection::read_data()
 {
-  _socket.async_read_some(boost::asio::buffer(_data),
+  _socket.async_read_some(boost::asio::buffer(_inputdata),
 			  boost::bind(&MaintenanceConnection::handle_read, shared_from_this(),
 				      boost::asio::placeholders::error,
 				      boost::asio::placeholders::bytes_transferred));
 }
 
-void	MaintenanceConnection::write_data()
+void	MaintenanceConnection::write_data(const buffer &buff)
 {
-  const std::string	message("Just a message");
+	std::size_t	size;
 
-  boost::asio::async_write(_socket, boost::asio::buffer(message),
+	size = (buff.size() > BUFF_SIZE ? BUFF_SIZE : buff.size());
+	std::copy(buff.begin(),
+			  buff.begin() + size,
+		      _outputdata.begin());
+	boost::asio::async_write(_socket, boost::asio::buffer(_outputdata, size),
 			   boost::bind(&MaintenanceConnection::handle_write, shared_from_this(),
 				       boost::asio::placeholders::error,
 				       boost::asio::placeholders::bytes_transferred));
@@ -52,12 +79,9 @@ void	MaintenanceConnection::write_data()
 
 void	MaintenanceConnection::start()
 {
-  const std::string	message("V and co Babel mainteance interface");
+  const buffer	message("V and co Babel mainteance interface\n");
 
-  boost::asio::async_write(_socket, boost::asio::buffer(message),
-			   boost::bind(&MaintenanceConnection::handle_write, shared_from_this(),
-				       boost::asio::placeholders::error,
-				       boost::asio::placeholders::bytes_transferred));
+  write_data(message);
 }
 
 boost::asio::ip::tcp::socket	&MaintenanceConnection::socket()
@@ -65,7 +89,7 @@ boost::asio::ip::tcp::socket	&MaintenanceConnection::socket()
   return (_socket);
 }
 
-MaintenanceConnection::Pointer	MaintenanceConnection::create(boost::asio::io_service &io_service)
+MaintenanceConnection::Pointer	MaintenanceConnection::create(boost::asio::io_service &io_service, Administrator &adm)
 {
-  return (Pointer(new MaintenanceConnection(io_service)));
+  return (Pointer(new MaintenanceConnection(io_service, adm)));
 }

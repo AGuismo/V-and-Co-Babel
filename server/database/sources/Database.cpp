@@ -6,13 +6,6 @@
 
 Salt::size_type Salt::SALT = 42;
 
-Database	&Database::getInstance()
-{
-  static Database	db;
-
-  return (db);
-}
-
 Database::Database():
    _maxIdClient(0)
 {

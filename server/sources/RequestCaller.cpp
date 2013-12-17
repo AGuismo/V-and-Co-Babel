@@ -3,8 +3,8 @@
 
 namespace	request
 {
-	PluginCaller::PluginCaller(const std::list<IClient::Pointer> &clients) :
-		_clients(clients)
+	PluginCaller::PluginCaller(const std::list<IClient::Pointer> &clients, Database &db) :
+		_clients(clients), _database(db)
   {
 
   }
@@ -20,7 +20,7 @@ namespace	request
 
     if (it == _calls.end())
       return (false);
-    it->second(_clients, Database::getInstance(), client, req);
+    it->second(_clients, _database, client, req);
     return (true);
   }
 }

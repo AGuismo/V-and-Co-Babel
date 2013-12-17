@@ -76,18 +76,25 @@ bool		Env::isPluginSection(const parser::Ini::section &sectionName,
   return (false);
 }
 
-const Env::file_path		Env::resolveFilePath(const Env::file_path &file)
+const Env::file_path	Env::resolveFilePath(const Env::file_path &file)
 {
   std::stringstream		ss;
-  std::string			parentPath(".");
-  std::size_t			pos;
+  std::string			parentPath = rootPath();
 
-  pos = server.confPath.rfind('/');
-  if (pos != std::string::npos)
-	parentPath = server.confPath.substr(0, pos);
   ss << parentPath << "/" << plugin.LibraryPath << "/"
      << file << plugin::LIBRARY_EXTENSION;
   return (ss.str());
+}
+
+const Env::file_path	Env::rootPath() const
+{
+	Env::file_path		parentPath(".");
+	std::size_t			pos;
+
+	pos = server.confPath.rfind('/');
+	if (pos != std::string::npos)
+		parentPath = server.confPath.substr(0, pos);
+	return (parentPath);
 }
 
 bool		Env::loadPlugins(const parser::Ini::section_key_val &fileKeys)

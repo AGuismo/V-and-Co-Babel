@@ -19,7 +19,7 @@ namespace	request
 	  typedef void(*request_callback)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *);
     typedef std::map<request::ID, request_callback>	callback_map;
   public:
-    PluginCaller(const std::list<IClient::Pointer> &);
+    PluginCaller(const std::list<IClient::Pointer> &, Database &);
     virtual ~PluginCaller();
 
     bool		operator()(IClient::Pointer, const ARequest *);
@@ -30,6 +30,7 @@ namespace	request
 
   private:
     const std::list<IClient::Pointer>	&_clients;
+	Database							&_database;
   };
 
 }

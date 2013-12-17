@@ -4,12 +4,13 @@
 #include	"Env.hh"
 
 Application::Application():
-  _server(_service), _maintenance(_service)
+  _server(_service, _database), _maintenance(_service, _adm)
 {
 }
 
 Application::~Application()
 {
+	_database.saveFile(Env::getInstance().rootPath() + Env::getInstance().database.DatabasePath);
 }
 
 void	Application::init(const char *confPath)
@@ -32,6 +33,7 @@ void	Application::init(const char *confPath)
 	      return ;
 	    }
 	}
+	  _database.loadFile(Env::getInstance().rootPath() + Env::getInstance().database.DatabasePath);
       _server.init();
       _maintenance.init();
     }
