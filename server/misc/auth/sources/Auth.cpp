@@ -74,6 +74,8 @@ void	Auth::connect(const std::list<IClient::Pointer> &clients, IClient::Pointer 
 {
   const request::auth::client::ConnectClient	*origin = dynamic_cast<const request::auth::client::ConnectClient *>(req);
 
+  std::cout << "Auth::Connect(): " << (void *)(&Database::getInstance()) << std::endl;
+
   if (sender->Authenticated() == false &&
       Database::getInstance().clientExist(origin->_name, origin->_password))
     {

@@ -69,7 +69,8 @@ void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sen
   std::cout << "Call::call()" << std::endl;
   std::cout << "From : " << origin->_from << std::endl;
   std::cout << "To : " << origin->_to << std::endl;
-  std::cout << "Option : " << origin->_option << std::endl;
+  std::cout << "Option : " << (int)origin->_option << std::endl;
+  std::cout << (void *)(&Database::getInstance()) << std::endl;
 
   if (sender->Authenticated() &&
       sender->status() == request::User::Status::CONNECTED &&

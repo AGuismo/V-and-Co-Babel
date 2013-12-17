@@ -1,4 +1,6 @@
+#if defined(linux)
 #include	<sys/time.h> // Not cross platform
+#endif
 #include	"Bridge.hh"
 
 Bridge::Bridge(int readsize):

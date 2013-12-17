@@ -254,27 +254,22 @@ public:
   static Ptr create(boost::asio::io_service& io_service, client::Ptr clientPtr)
   {
     Ptr new_input(new input(io_service, clientPtr));
-    new_input->read();
-    return (new_input);
+
+	return (new_input);
   }
 
 private:
   explicit input(boost::asio::io_service& io_service, client::Ptr clientPtr) :
-    _input(io_service), _client(clientPtr)
+	  _service(io_service), _client(clientPtr)
   {
-    _input.assign(STDIN_FILENO);
   }
 
+public:
   void read()
   {
-    boost::asio::async_read(_input,
-			    boost::asio::buffer(&_command, sizeof(_command)),
-			    boost::bind(&input::read_handler,
-					shared_from_this(),
-					boost::asio::placeholders::error,
-					boost::asio::placeholders::bytes_transferred));
+	  while (true)
+		  read_handler();
   }
-
 
   void		send_req(ARequest *req)
   {
@@ -286,14 +281,9 @@ private:
     _client->writeTCP(bytes);
   }
 
-  void read_handler(const boost::system::error_code& error, const size_t bytes_transferred)
+  void read_handler()
   {
-    if (error)
-      {
-	std::cerr << "read error: " << boost::system::system_error(error).what() << std::endl;
-	return;
-      }
-
+	std::cin >> _command;
     switch (_command)
       {
       case '\0':
@@ -333,19 +323,20 @@ private:
       default:
 	break;
       }
-    this->read();
   }
 
 private:
-  boost::asio::posix::stream_descriptor _input;
-  char					_command;
-  client::Ptr				_client;
+	char						_command;
+	client::Ptr					_client;
+	boost::asio::io_service		&_service;
 };
 
 
 
 int			main(int ac, char **av)
 {
+	std::string	ip, port_udp, port_tcp;
+#if defined(linux)
   if (ac != 4)
     {
       std::cerr << "USAGE : ./request_serializer IP PORT_TCP PORT_UDP" << std::endl;
@@ -353,16 +344,31 @@ int			main(int ac, char **av)
     }
   std::stringstream	ss;
 
-  g_portTCP = std::atoi(av[2]);
-  g_server_portUDP = std::atoi(av[3]);
+  ip = std::string(av[1]);
+  port_tcp = std::string(av[2]);
+  port_udp = std::string(av[3]);
+#elif defined(WIN32)
+	std::cout << "IP: ";
+	std::cin >> ip;
+	std::cout << "TCP Port: ";
+	std::cin >> port_tcp;
+	std::cout << "UDP Port: ";
+	std::cin >> port_udp;
+#endif
 
-  std::cout << "g_server_portUDP: " << g_server_portUDP << std::endl;
+	g_portTCP = std::atoi(port_tcp.c_str());
+	g_server_portUDP = std::atoi(port_udp.c_str());
 
+	std::cout << "g_server_portUDP: " << g_server_portUDP << std::endl;
 
-  boost::asio::io_service	io_service;
-  client::Ptr			client = client::create(io_service, av[1], av[2], av[3]);
-  input::Ptr			input = input::create(io_service, client->ptr());
+	boost::asio::io_service	io_service;
+	boost::thread		th;
+	client::Ptr			client = client::create(io_service, ip, port_tcp, port_udp);
+	input::Ptr			input = input::create(io_service, client->ptr());
+	th = boost::thread(boost::bind(&input::read, input->shared_from_this()));
 
   io_service.run();
+  th.interrupt();
+  th.join();
   return (0);
 }
