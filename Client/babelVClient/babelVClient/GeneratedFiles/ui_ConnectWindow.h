@@ -90,6 +90,11 @@ public:
 
         label = new QLabel(ConnectWindow);
         label->setObjectName(QStringLiteral("label"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
+        label->setSizePolicy(sizePolicy);
         QFont font2;
         font2.setFamily(QStringLiteral("MS UI Gothic"));
         font2.setPointSize(14);

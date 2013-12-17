@@ -65,15 +65,6 @@
     <ClCompile Include="FriendListWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_FriendListWidgetItem.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_FriendListWidgetItem.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="FriendListWidgetItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Friend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -158,9 +149,6 @@
       <Filter>Resource Files</Filter>
     </CustomBuild>
     <CustomBuild Include="FriendListWidget.h">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="FriendListWidgetItem.h">
       <Filter>Resource Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ConnectWindow.h">

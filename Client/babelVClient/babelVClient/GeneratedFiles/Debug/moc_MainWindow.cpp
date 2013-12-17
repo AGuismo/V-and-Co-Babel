@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[9];
-    char stringdata[170];
+    QByteArrayData data[15];
+    char stringdata[252];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,13 +37,21 @@ QT_MOC_LITERAL(4, 47, 24),
 QT_MOC_LITERAL(5, 72, 15),
 QT_MOC_LITERAL(6, 88, 27),
 QT_MOC_LITERAL(7, 116, 34),
-QT_MOC_LITERAL(8, 151, 17)
+QT_MOC_LITERAL(8, 151, 17),
+QT_MOC_LITERAL(9, 169, 14),
+QT_MOC_LITERAL(10, 184, 15),
+QT_MOC_LITERAL(11, 200, 23),
+QT_MOC_LITERAL(12, 224, 12),
+QT_MOC_LITERAL(13, 237, 9),
+QT_MOC_LITERAL(14, 247, 3)
     },
     "MainWindow\0on_friend_clicked\0\0"
     "QListWidgetItem*\0on_delete_friend_clicked\0"
     "on_send_txt_msg\0on_connect_window_triggered\0"
     "on_create_account_window_triggered\0"
-    "on_connection_try\0"
+    "on_connection_try\0on_exit_action\0"
+    "on_call_clicked\0on_authentification_try\0"
+    "send_request\0ARequest*\0req\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -53,7 +61,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -61,12 +69,16 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   44,    2, 0x0a,
-       4,    0,   47,    2, 0x0a,
-       5,    0,   48,    2, 0x0a,
-       6,    0,   49,    2, 0x0a,
-       7,    0,   50,    2, 0x0a,
-       8,    0,   51,    2, 0x0a,
+       1,    1,   64,    2, 0x0a,
+       4,    0,   67,    2, 0x0a,
+       5,    0,   68,    2, 0x0a,
+       6,    0,   69,    2, 0x0a,
+       7,    0,   70,    2, 0x0a,
+       8,    0,   71,    2, 0x0a,
+       9,    0,   72,    2, 0x0a,
+      10,    0,   73,    2, 0x0a,
+      11,    0,   74,    2, 0x0a,
+      12,    1,   75,    2, 0x0a,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    2,
@@ -75,6 +87,10 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 13,   14,
 
        0        // eod
 };
@@ -90,6 +106,10 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->on_connect_window_triggered(); break;
         case 4: _t->on_create_account_window_triggered(); break;
         case 5: _t->on_connection_try(); break;
+        case 6: _t->on_exit_action(); break;
+        case 7: _t->on_call_clicked(); break;
+        case 8: _t->on_authentification_try(); break;
+        case 9: _t->send_request((*reinterpret_cast< ARequest*(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -120,13 +140,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 10;
     }
     return _id;
 }
