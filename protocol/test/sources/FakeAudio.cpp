@@ -20,12 +20,17 @@ const Bridge::buffer	FakeAudio::randomData() const
   std::size_t		end = std::rand() % 20;
   Bridge::buffer	lst;
 
+  std::cout << "Bridge::inputDispatch() data: " << std::endl;
   for (it = 0; it < end; ++it)
     {
-      char	c;
+      unsigned char	c;
 
       c = std::rand() % 255;
       std::cout << std::setprecision(2) << std::hex << (int)c;
+      if (it != 0 && it % 16 == 0)
+	std::cout << std::endl;
+      else if (it != 0 && it % 4 == 0)
+	std::cout << " ";
       lst.push_back(c);
     }
   std::cout << std::dec << std::endl;
@@ -42,6 +47,16 @@ void	FakeAudio::routine()
       if (!_bridge.emptyFeed())
 	{
 	  _bridge.outputFeed(buff);
+
+	  std::cout << "Bridge::outputFeed() data: " << std::endl;
+	  for (std::size_t it = 0; it < buff.size(); ++it)
+	    {
+	      std::cout << std::setprecision(2) << std::hex << (int)(buff[it]);
+	      if (it != 0 && it % 16 == 0)
+		std::cout << std::endl;
+	      else if (it != 0 && it % 4 == 0)
+		std::cout << " ";
+	    }
 	}
       _bridge.inputDispatch(randomData());
     }

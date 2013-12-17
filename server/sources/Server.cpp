@@ -5,6 +5,7 @@
 #include	"Env.hh"
 #include	"RequestPlugin.hh"
 #include	"RequestCaller.hh"
+#include	"ServerRequest.hh"
 
 Server::Server(boost::asio::io_service &service) :
   _service(service), _acceptor(service), _plugs(new request::PluginManager),
@@ -72,6 +73,7 @@ void	Server::handle_request(IClient::Pointer from, const ARequest *req)
 #if defined(DEBUG)
   std::cout << "Server::handle_request: Call don't exist" << std::endl;
 #endif
+  from->serialize_data(request::server::NotImplemented());
     }
   delete req;
 }

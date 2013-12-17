@@ -70,20 +70,24 @@ public:
 
   void	writeUDP()
   {
-    std::vector<Protocol::Byte>	data;
+    Bridge::buffer	data;
     udp::endpoint receiver_endpoint (boost::asio::ip::address_v4(g_udp_ip_receiver),
 				     g_receiver_portUDP);
 
-    data.assign(40, 0);
-    _udpServerSock.send_to(boost::asio::buffer(data), receiver_endpoint);
-    _t.expires_from_now(boost::posix_time::seconds(5));
-    _t.async_wait(boost::bind(&client::writeUDP,
-			      shared_from_this()));
+    // data.assign(40, 0);
+    _bridge.outputDispatch(data);
+    std::cout << "Bridge output size: " << data.size() << std::endl;
+    _udpServerSock.async_send_to(boost::asio::buffer(data, data.size()),
+				 receiver_endpoint,
+				 boost::bind(&client::write_udp_handler,
+					     shared_from_this(),
+					     boost::asio::placeholders::error,
+					     boost::asio::placeholders::bytes_transferred));
   }
 
   void	readUDP()
   {
-    _udpServerSock.async_receive(boost::asio::buffer(_udp),
+    _udpServerSock.async_receive(boost::asio::buffer(_udpOutput),
 				 boost::bind(&client::read_udp_handler,
 					     shared_from_this(),
 					     boost::asio::placeholders::error,
@@ -94,6 +98,8 @@ public:
   {
     _audio.run();
     _t.expires_from_now(boost::posix_time::seconds(5));
+    _t.async_wait(boost::bind(&client::writeUDP,
+    			      shared_from_this()));
   }
 
 private:
@@ -123,8 +129,8 @@ private:
     _udpServerSock.bind(udp::endpoint(udp::v4(), portVal));
     readUDP();
     // _t.expires_from_now(boost::posix_time::seconds(5));
-    _t.async_wait(boost::bind(&client::writeUDP,
-			      shared_from_this()));
+    // _t.async_wait(boost::bind(&client::writeUDP,
+    // 			      shared_from_this()));
   }
 
   void	accept_call(const ARequest *req)
@@ -193,12 +199,21 @@ private:
 
   void read_udp_handler(const boost::system::error_code& error, const size_t bytes_transferred)
   {
+    std::size_t	pad = 0;
     if (error)
       {
 	std::cerr << "read UDP error: " << boost::system::system_error(error).what() << std::endl;
 	return;
       }
     std::cerr << "read UDP received: " << bytes_transferred << std::endl;
+    for (std::size_t it = 0; it < bytes_transferred; ++it)
+      {
+	std::cout << std::setprecision(2) << std::hex << (int)_udpOutput[it];
+	if (pad != 0 && pad % 16 == 0)
+	  std::cout << std::endl;
+	else if (pad != 0 && pad % 4 == 0)
+	  std::cout << " ";
+      }
     readUDP();
   }
 
@@ -206,11 +221,13 @@ private:
   {
     if (error)
       {
-	std::cerr << "write error: " << boost::system::system_error(error).what() << std::endl;
+	std::cerr << "write UDP error: " << boost::system::system_error(error).what() << std::endl;
 	return;
       }
-    std::cout << "Write send " << bytes_transferred << std::endl;
-    readUDP();
+    std::cout << "Write UDP send: " << bytes_transferred << std::endl;
+    _t.expires_from_now(boost::posix_time::seconds(5));
+    _t.async_wait(boost::bind(&client::writeUDP,
+			      shared_from_this()));
   }
 
 private:
@@ -219,7 +236,8 @@ private:
   udp::socket				_udpClientSock;
   udp::socket				_udpServerSock;
   boost::array<Protocol::Byte, 1024>	_arr;
-  boost::array<Protocol::Byte, 1024>	_udp;
+  Bridge::buffer			_udp;
+  boost::array<Protocol::Byte, 1024>	_udpOutput;
   boost::asio::deadline_timer		_t;
   boost::thread				_audioThread;
   Bridge				_bridge;
