@@ -1,6 +1,7 @@
 #ifndef REQUESTCALLER_H_
 # define REQUESTCALLER_H_
 
+# include	<list>
 # include	"Client.hh"
 # include	"types.hh"
 # include	"PluginCaller.hpp"

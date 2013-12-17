@@ -1,6 +1,7 @@
 #ifndef CALL_H_
 # define CALL_H_
 
+# include	<list>
 # include	"IRequestPlugin.hh"
 
 class Call : public request::IRequestPlugin
