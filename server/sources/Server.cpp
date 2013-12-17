@@ -5,6 +5,7 @@
 #include	"Env.hh"
 #include	"RequestPlugin.hh"
 #include	"RequestCaller.hh"
+#include	"ServerRequest.hh"
 
 Server::Server(boost::asio::io_service &service) :
   _service(service), _acceptor(service), _plugs(new request::PluginManager),
@@ -56,7 +57,7 @@ const Server::client_list	&Server::getClients() const
   return (_clientList);
 }
 
-void	Server::handle_request(Client::Pointer from, const ARequest *req)
+void	Server::handle_request(IClient::Pointer from, const ARequest *req)
 {
 #if defined(DEBUG)
   std::cout << "Server::handle_request: " << req->code() << std::endl;
@@ -72,11 +73,12 @@ void	Server::handle_request(Client::Pointer from, const ARequest *req)
 #if defined(DEBUG)
   std::cout << "Server::handle_request: Call don't exist" << std::endl;
 #endif
+  from->serialize_data(request::server::NotImplemented());
     }
   delete req;
 }
 
-void	Server::handle_accept(Client::Pointer new_connection,
+void	Server::handle_accept(IClient::Pointer new_connection,
 			      const boost::system::error_code& error)
 {
 #if defined(DEBUG)
@@ -87,19 +89,20 @@ void	Server::handle_accept(Client::Pointer new_connection,
   start_accept();
 }
 
-void	Server::handleClientClose(Client::Pointer clientClosed)
+void	Server::handleClientClose(IClient::Pointer clientClosed)
 {
   _clientList.remove(clientClosed);
 }
 
 void Server::start_accept()
 {
-  Client::Pointer	new_connection = Client::create(_acceptor.get_io_service(), this);
+  IClient::Pointer	new_connection = Client::create(_acceptor.get_io_service(), this);
+  Client::Pointer	p = boost::dynamic_pointer_cast<Client>(new_connection);
 
-  _acceptor.async_accept(new_connection->socket(),
-			 boost::bind(&Server::handle_accept, this, new_connection,
+  _acceptor.async_accept(p->socket(),
+			 boost::bind(&Server::handle_accept, this, p,
 				     boost::asio::placeholders::error));
-  _clientList.push_back(new_connection->share());
+  _clientList.push_back(p->share());
 }
 
 

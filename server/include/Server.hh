@@ -23,8 +23,8 @@ namespace	request
 class Server
 {
 public:
-  typedef std::list<Client::Pointer>	client_list;
-  typedef void (*request_handler)(Server *, Client::Pointer, const ARequest *);
+  typedef std::list<IClient::Pointer>	client_list;
+  typedef void (*request_handler)(const client_list &, IClient::Pointer, const ARequest *);
 
 public:
   class Exception
@@ -50,13 +50,13 @@ public:
 
 public:
   void			init();
-  void			handleClientClose(Client::Pointer clientClosed);
-  void			handle_request(Client::Pointer from, const ARequest *);
+  void			handleClientClose(IClient::Pointer clientClosed);
+  void			handle_request(IClient::Pointer from, const ARequest *);
   const client_list	&getClients() const;
 
 private:
   void	start_accept();
-  void	handle_accept(Client::Pointer, const boost::system::error_code &error);
+  void	handle_accept(IClient::Pointer, const boost::system::error_code &error);
 
 private:
   Server(Server const&);

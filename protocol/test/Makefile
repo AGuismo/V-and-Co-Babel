@@ -1,6 +1,8 @@
 NAME	     ?=	requestSerializer
 
 SRCS =	      	main.cpp		\
+		FakeAudio.cpp		\
+		Bridge.cpp
 
 DIR.PROT=	../
 DIR.SER=	../../serializer

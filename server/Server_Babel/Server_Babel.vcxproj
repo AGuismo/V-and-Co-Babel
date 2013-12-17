@@ -58,7 +58,8 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-gd-1_55.lib;libboost_filesystem-vc120-mt-gd-1_55.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
       <OptimizeReferences>false</OptimizeReferences>
-      <ForceSymbolReferences>?serialize_data@Client@@QAE_NABVARequest@@@Z</ForceSymbolReferences>
+      <ForceSymbolReferences>
+      </ForceSymbolReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,10 +83,11 @@
     <ClInclude Include="..\include\Application.hh" />
     <ClInclude Include="..\include\BabelPlugin.hh" />
     <ClInclude Include="..\include\Client.hh" />
-    <ClInclude Include="..\include\Env.hh" />
     <ClInclude Include="..\include\IAuthPlugin.hh" />
     <ClInclude Include="..\include\IPlugin.hh" />
     <ClInclude Include="..\include\IRequestPlugin.hh" />
+    <ClInclude Include="..\include\Maintenance.hh" />
+    <ClInclude Include="..\include\maintenanceconnection.hh" />
     <ClInclude Include="..\include\PluginCaller.hpp" />
     <ClInclude Include="..\include\PluginManager.hh" />
     <ClInclude Include="..\include\PluginManager.hpp" />
@@ -96,13 +98,13 @@
   <ItemGroup>
     <ClCompile Include="..\sources\Application.cpp" />
     <ClCompile Include="..\sources\Client.cpp" />
-    <ClCompile Include="..\sources\Env.cpp" />
     <ClCompile Include="..\sources\main.cpp" />
+    <ClCompile Include="..\sources\Maintenance.cpp" />
+    <ClCompile Include="..\sources\MaintenanceConnection.cpp" />
     <ClCompile Include="..\sources\PluginException.cpp" />
     <ClCompile Include="..\sources\RequestCaller.cpp" />
     <ClCompile Include="..\sources\RequestPlugin.cpp" />
     <ClCompile Include="..\sources\Server.cpp" />
-    <ClCompile Include="..\sources\Win32_symbol_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\IniParser\IniParser\IniParser.vcxproj">
@@ -116,6 +118,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\serializer\serializer\serializer.vcxproj">
       <Project>{75219cf9-86e6-419b-b2e7-31eeb47ac113}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.vcxproj">
+      <Project>{add81711-b5f3-429f-acd6-0a1968464c3d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\database\Database\Database.vcxproj">
       <Project>{d08b4714-51f4-457c-9e5d-36c528f9f78b}</Project>
