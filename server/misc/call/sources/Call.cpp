@@ -72,6 +72,7 @@ void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sen
   std::cout << "Option : " << origin->_option << std::endl;
 
   if (sender->Authenticated() &&
+      sender->status() == request::User::Status::CONNECTED &&
       Database::getInstance().clientExist(origin->_from) &&
       Database::getInstance().clientExist(origin->_to))
     {
@@ -106,6 +107,7 @@ void	Call::accept(const std::list<IClient::Pointer> &clients, IClient::Pointer s
   std::cout << "From : " << origin->_from << std::endl;
   std::cout << "To : " << origin->_to << std::endl;
   if (sender->Authenticated() &&
+      sender->status() == request::User::Status::CONNECTED &&
       Database::getInstance().clientExist(origin->_from) &&
       Database::getInstance().clientExist(origin->_to))
     {
@@ -119,13 +121,14 @@ void	Call::accept(const std::list<IClient::Pointer> &clients, IClient::Pointer s
 #endif
 	  request::call::client::AcceptClient fwd(*origin);
 	  fwd._ip = sender->IP();
-
-	  receiver->serialize_data(fwd);
+	  if (receiver->Authenticated() &&
+	      receiver->status() == request::User::Status::CONNECTED)
+	    receiver->serialize_data(fwd);
+	  else
+	    sender->serialize_data(request::server::Forbidden());
 	  return ;
 	}
-	  else
-		  sender->serialize_data(request::server::Forbidden());
-  }
+    }
   sender->serialize_data(request::server::Forbidden());
 }
 
@@ -138,6 +141,7 @@ void	Call::refuse(const std::list<IClient::Pointer> &clients, IClient::Pointer s
   std::cout << "From : " << origin->_from << std::endl;
   std::cout << "To : " << origin->_to << std::endl;
   if (sender->Authenticated() &&
+      sender->status() == request::User::Status::CONNECTED &&
       Database::getInstance().clientExist(origin->_from) &&
       Database::getInstance().clientExist(origin->_to))
     {

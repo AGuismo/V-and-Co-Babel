@@ -10,8 +10,8 @@ class MaintenanceConnection
   : public boost::enable_shared_from_this<MaintenanceConnection>
 {
 public:
-  typedef boost::shared_ptr<MaintenanceConnection>	Pointer;
-  typedef unsigned char								Byte;
+  typedef boost::shared_ptr<MaintenanceConnection> Pointer;
+  typedef unsigned char	Byte;
 
   static Pointer create(boost::asio::io_service& io_service);
   boost::asio::ip::tcp::socket& socket();
@@ -27,7 +27,7 @@ private:
   void		write_data();
 
   boost::asio::ip::tcp::socket	_socket;
-  boost::array<Byte, 1024>		_data;
+  boost::array<Byte, 1024>	_data;
 };
 
 #endif /* MAINTENANCECONNECTION_H_ */
