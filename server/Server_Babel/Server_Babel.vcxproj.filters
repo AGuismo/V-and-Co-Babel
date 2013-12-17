@@ -18,9 +18,6 @@
     <ClInclude Include="..\include\Application.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Client.hh">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\IAuthPlugin.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -28,9 +25,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\PluginManager.hh">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Server.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\BabelPlugin.hh">
@@ -51,7 +45,16 @@
     <ClInclude Include="..\include\RequestPlugin.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Env.hh">
+    <ClInclude Include="..\include\Server.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Client.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Maintenance.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\maintenanceconnection.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,13 +62,7 @@
     <ClCompile Include="..\sources\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sources\Client.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\sources\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sources\Server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\sources\PluginException.cpp">
@@ -77,10 +74,16 @@
     <ClCompile Include="..\sources\RequestPlugin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sources\Env.cpp">
+    <ClCompile Include="..\sources\Client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sources\Win32_symbol_loader.cpp">
+    <ClCompile Include="..\sources\Server.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sources\Maintenance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sources\MaintenanceConnection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

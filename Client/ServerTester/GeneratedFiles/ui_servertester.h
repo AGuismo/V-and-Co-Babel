@@ -32,24 +32,24 @@ public:
     QWidget *centralWidget;
     QGridLayout *gridLayout_4;
     QGridLayout *gridLayout;
-    QPushButton *pushButton_3;
-    QPushButton *pushButton_12;
-    QPushButton *pushButton_7;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton_11;
-    QPushButton *pushButton_6;
-    QPushButton *pushButton_8;
-    QPushButton *pushButton_4;
-    QPushButton *pushButton_9;
-    QPushButton *pushButton_17;
-    QPushButton *pushButton_14;
-    QPushButton *pushButton_18;
-    QPushButton *pushButton_16;
-    QPushButton *pushButton_5;
-    QPushButton *pushButton_10;
-    QPushButton *pushButton_15;
-    QPushButton *pushButton_13;
-    QPushButton *pushButton;
+    QPushButton *gButton;
+    QPushButton *fButton;
+    QPushButton *eButton;
+    QPushButton *dButton;
+    QPushButton *cButton;
+    QPushButton *bButton;
+    QPushButton *hButton;
+    QPushButton *jButton;
+    QPushButton *kButton;
+    QPushButton *qButton;
+    QPushButton *lButton;
+    QPushButton *rButton;
+    QPushButton *pButton;
+    QPushButton *mButton;
+    QPushButton *nButton;
+    QPushButton *oButton;
+    QPushButton *iButton;
+    QPushButton *aButton;
     QVBoxLayout *verticalLayout;
     QLabel *labelTitre;
     QVBoxLayout *verticalLayout_3;
@@ -57,7 +57,8 @@ public:
     QTextBrowser *ServerBrowser;
     QVBoxLayout *verticalLayout_2;
     QLabel *labelAdress;
-    QLabel *labelPort;
+    QLabel *labelPortTCP;
+    QLabel *labelPortUDP;
     QLabel *labelStatus;
     QGridLayout *gridLayout_2;
     QLabel *labelEditCmd;
@@ -67,17 +68,18 @@ public:
     QFrame *line_5;
     QLabel *connectStatus;
     QLineEdit *lineAdress;
-    QLineEdit *linePort;
+    QLineEdit *linePortTCP;
     QPushButton *ButtonConnect;
     QFrame *line_2;
     QFrame *line_4;
     QFrame *line_3;
+    QLineEdit *linePortUDP;
 
     void setupUi(QMainWindow *ServerTester)
     {
         if (ServerTester->objectName().isEmpty())
             ServerTester->setObjectName(QStringLiteral("ServerTester"));
-        ServerTester->resize(592, 398);
+        ServerTester->resize(592, 427);
         centralWidget = new QWidget(ServerTester);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout_4 = new QGridLayout(centralWidget);
@@ -87,98 +89,116 @@ public:
         gridLayout = new QGridLayout();
         gridLayout->setSpacing(6);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        pushButton_3 = new QPushButton(centralWidget);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        gButton = new QPushButton(centralWidget);
+        gButton->setObjectName(QStringLiteral("gButton"));
+        gButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_3, 2, 0, 1, 1);
+        gridLayout->addWidget(gButton, 2, 0, 1, 1);
 
-        pushButton_12 = new QPushButton(centralWidget);
-        pushButton_12->setObjectName(QStringLiteral("pushButton_12"));
+        fButton = new QPushButton(centralWidget);
+        fButton->setObjectName(QStringLiteral("fButton"));
+        fButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_12, 1, 2, 1, 1);
+        gridLayout->addWidget(fButton, 1, 2, 1, 1);
 
-        pushButton_7 = new QPushButton(centralWidget);
-        pushButton_7->setObjectName(QStringLiteral("pushButton_7"));
+        eButton = new QPushButton(centralWidget);
+        eButton->setObjectName(QStringLiteral("eButton"));
+        eButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_7, 1, 1, 1, 1);
+        gridLayout->addWidget(eButton, 1, 1, 1, 1);
 
-        pushButton_2 = new QPushButton(centralWidget);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        dButton = new QPushButton(centralWidget);
+        dButton->setObjectName(QStringLiteral("dButton"));
+        dButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_2, 1, 0, 1, 1);
+        gridLayout->addWidget(dButton, 1, 0, 1, 1);
 
-        pushButton_11 = new QPushButton(centralWidget);
-        pushButton_11->setObjectName(QStringLiteral("pushButton_11"));
+        cButton = new QPushButton(centralWidget);
+        cButton->setObjectName(QStringLiteral("cButton"));
+        cButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_11, 0, 2, 1, 1);
+        gridLayout->addWidget(cButton, 0, 2, 1, 1);
 
-        pushButton_6 = new QPushButton(centralWidget);
-        pushButton_6->setObjectName(QStringLiteral("pushButton_6"));
+        bButton = new QPushButton(centralWidget);
+        bButton->setObjectName(QStringLiteral("bButton"));
+        bButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_6, 0, 1, 1, 1);
+        gridLayout->addWidget(bButton, 0, 1, 1, 1);
 
-        pushButton_8 = new QPushButton(centralWidget);
-        pushButton_8->setObjectName(QStringLiteral("pushButton_8"));
+        hButton = new QPushButton(centralWidget);
+        hButton->setObjectName(QStringLiteral("hButton"));
+        hButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_8, 2, 1, 1, 1);
+        gridLayout->addWidget(hButton, 2, 1, 1, 1);
 
-        pushButton_4 = new QPushButton(centralWidget);
-        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+        jButton = new QPushButton(centralWidget);
+        jButton->setObjectName(QStringLiteral("jButton"));
+        jButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_4, 3, 0, 1, 1);
+        gridLayout->addWidget(jButton, 3, 0, 1, 1);
 
-        pushButton_9 = new QPushButton(centralWidget);
-        pushButton_9->setObjectName(QStringLiteral("pushButton_9"));
+        kButton = new QPushButton(centralWidget);
+        kButton->setObjectName(QStringLiteral("kButton"));
+        kButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_9, 3, 1, 1, 1);
+        gridLayout->addWidget(kButton, 3, 1, 1, 1);
 
-        pushButton_17 = new QPushButton(centralWidget);
-        pushButton_17->setObjectName(QStringLiteral("pushButton_17"));
+        qButton = new QPushButton(centralWidget);
+        qButton->setObjectName(QStringLiteral("qButton"));
+        qButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_17, 5, 1, 1, 1);
+        gridLayout->addWidget(qButton, 5, 1, 1, 1);
 
-        pushButton_14 = new QPushButton(centralWidget);
-        pushButton_14->setObjectName(QStringLiteral("pushButton_14"));
+        lButton = new QPushButton(centralWidget);
+        lButton->setObjectName(QStringLiteral("lButton"));
+        lButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_14, 3, 2, 1, 1);
+        gridLayout->addWidget(lButton, 3, 2, 1, 1);
 
-        pushButton_18 = new QPushButton(centralWidget);
-        pushButton_18->setObjectName(QStringLiteral("pushButton_18"));
+        rButton = new QPushButton(centralWidget);
+        rButton->setObjectName(QStringLiteral("rButton"));
+        rButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_18, 5, 2, 1, 1);
+        gridLayout->addWidget(rButton, 5, 2, 1, 1);
 
-        pushButton_16 = new QPushButton(centralWidget);
-        pushButton_16->setObjectName(QStringLiteral("pushButton_16"));
+        pButton = new QPushButton(centralWidget);
+        pButton->setObjectName(QStringLiteral("pButton"));
+        pButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_16, 5, 0, 1, 1);
+        gridLayout->addWidget(pButton, 5, 0, 1, 1);
 
-        pushButton_5 = new QPushButton(centralWidget);
-        pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
+        mButton = new QPushButton(centralWidget);
+        mButton->setObjectName(QStringLiteral("mButton"));
+        mButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_5, 4, 0, 1, 1);
+        gridLayout->addWidget(mButton, 4, 0, 1, 1);
 
-        pushButton_10 = new QPushButton(centralWidget);
-        pushButton_10->setObjectName(QStringLiteral("pushButton_10"));
+        nButton = new QPushButton(centralWidget);
+        nButton->setObjectName(QStringLiteral("nButton"));
+        nButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_10, 4, 1, 1, 1);
+        gridLayout->addWidget(nButton, 4, 1, 1, 1);
 
-        pushButton_15 = new QPushButton(centralWidget);
-        pushButton_15->setObjectName(QStringLiteral("pushButton_15"));
+        oButton = new QPushButton(centralWidget);
+        oButton->setObjectName(QStringLiteral("oButton"));
+        oButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_15, 4, 2, 1, 1);
+        gridLayout->addWidget(oButton, 4, 2, 1, 1);
 
-        pushButton_13 = new QPushButton(centralWidget);
-        pushButton_13->setObjectName(QStringLiteral("pushButton_13"));
+        iButton = new QPushButton(centralWidget);
+        iButton->setObjectName(QStringLiteral("iButton"));
+        iButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton_13, 2, 2, 1, 1);
+        gridLayout->addWidget(iButton, 2, 2, 1, 1);
 
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
+        aButton = new QPushButton(centralWidget);
+        aButton->setObjectName(QStringLiteral("aButton"));
+        aButton->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(pushButton, 0, 0, 1, 1);
+        gridLayout->addWidget(aButton, 0, 0, 1, 1);
 
 
-        gridLayout_4->addLayout(gridLayout, 4, 3, 3, 1);
+        gridLayout_4->addLayout(gridLayout, 5, 3, 3, 1);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
@@ -208,7 +228,7 @@ public:
         verticalLayout_3->addWidget(ServerBrowser);
 
 
-        gridLayout_4->addLayout(verticalLayout_3, 6, 0, 3, 2);
+        gridLayout_4->addLayout(verticalLayout_3, 7, 0, 3, 2);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
@@ -218,10 +238,15 @@ public:
 
         verticalLayout_2->addWidget(labelAdress);
 
-        labelPort = new QLabel(centralWidget);
-        labelPort->setObjectName(QStringLiteral("labelPort"));
+        labelPortTCP = new QLabel(centralWidget);
+        labelPortTCP->setObjectName(QStringLiteral("labelPortTCP"));
 
-        verticalLayout_2->addWidget(labelPort);
+        verticalLayout_2->addWidget(labelPortTCP);
+
+        labelPortUDP = new QLabel(centralWidget);
+        labelPortUDP->setObjectName(QStringLiteral("labelPortUDP"));
+
+        verticalLayout_2->addWidget(labelPortUDP);
 
         labelStatus = new QLabel(centralWidget);
         labelStatus->setObjectName(QStringLiteral("labelStatus"));
@@ -229,7 +254,7 @@ public:
         verticalLayout_2->addWidget(labelStatus);
 
 
-        gridLayout_4->addLayout(verticalLayout_2, 1, 0, 3, 1);
+        gridLayout_4->addLayout(verticalLayout_2, 1, 0, 4, 1);
 
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setSpacing(6);
@@ -241,6 +266,7 @@ public:
 
         ButtonSend = new QPushButton(centralWidget);
         ButtonSend->setObjectName(QStringLiteral("ButtonSend"));
+        ButtonSend->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout_2->addWidget(ButtonSend, 1, 1, 1, 1);
 
@@ -254,63 +280,71 @@ public:
 
         ButtonQuit = new QPushButton(centralWidget);
         ButtonQuit->setObjectName(QStringLiteral("ButtonQuit"));
+        ButtonQuit->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout_4->addWidget(ButtonQuit, 8, 3, 1, 1);
+        gridLayout_4->addWidget(ButtonQuit, 9, 3, 1, 1);
 
         line_5 = new QFrame(centralWidget);
         line_5->setObjectName(QStringLiteral("line_5"));
         line_5->setFrameShape(QFrame::HLine);
         line_5->setFrameShadow(QFrame::Sunken);
 
-        gridLayout_4->addWidget(line_5, 5, 0, 1, 2);
+        gridLayout_4->addWidget(line_5, 6, 0, 1, 2);
 
         connectStatus = new QLabel(centralWidget);
         connectStatus->setObjectName(QStringLiteral("connectStatus"));
 
-        gridLayout_4->addWidget(connectStatus, 3, 1, 1, 1);
+        gridLayout_4->addWidget(connectStatus, 4, 1, 1, 1);
 
         lineAdress = new QLineEdit(centralWidget);
         lineAdress->setObjectName(QStringLiteral("lineAdress"));
 
         gridLayout_4->addWidget(lineAdress, 1, 1, 1, 1);
 
-        linePort = new QLineEdit(centralWidget);
-        linePort->setObjectName(QStringLiteral("linePort"));
+        linePortTCP = new QLineEdit(centralWidget);
+        linePortTCP->setObjectName(QStringLiteral("linePortTCP"));
 
-        gridLayout_4->addWidget(linePort, 2, 1, 1, 1);
+        gridLayout_4->addWidget(linePortTCP, 2, 1, 1, 1);
 
         ButtonConnect = new QPushButton(centralWidget);
         ButtonConnect->setObjectName(QStringLiteral("ButtonConnect"));
+        ButtonConnect->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout_4->addWidget(ButtonConnect, 4, 0, 1, 2);
+        gridLayout_4->addWidget(ButtonConnect, 5, 0, 1, 2);
 
         line_2 = new QFrame(centralWidget);
         line_2->setObjectName(QStringLiteral("line_2"));
         line_2->setFrameShape(QFrame::HLine);
         line_2->setFrameShadow(QFrame::Sunken);
 
-        gridLayout_4->addWidget(line_2, 3, 3, 1, 1);
+        gridLayout_4->addWidget(line_2, 4, 3, 1, 1);
 
         line_4 = new QFrame(centralWidget);
         line_4->setObjectName(QStringLiteral("line_4"));
         line_4->setFrameShape(QFrame::VLine);
         line_4->setFrameShadow(QFrame::Sunken);
 
-        gridLayout_4->addWidget(line_4, 0, 2, 9, 1);
+        gridLayout_4->addWidget(line_4, 0, 2, 10, 1);
 
         line_3 = new QFrame(centralWidget);
         line_3->setObjectName(QStringLiteral("line_3"));
         line_3->setFrameShape(QFrame::HLine);
         line_3->setFrameShadow(QFrame::Sunken);
 
-        gridLayout_4->addWidget(line_3, 7, 3, 1, 1);
+        gridLayout_4->addWidget(line_3, 8, 3, 1, 1);
+
+        linePortUDP = new QLineEdit(centralWidget);
+        linePortUDP->setObjectName(QStringLiteral("linePortUDP"));
+
+        gridLayout_4->addWidget(linePortUDP, 3, 1, 1, 1);
 
         ServerTester->setCentralWidget(centralWidget);
 
         retranslateUi(ServerTester);
         QObject::connect(lineAdress, SIGNAL(returnPressed()), ButtonConnect, SLOT(click()));
-        QObject::connect(linePort, SIGNAL(returnPressed()), ButtonConnect, SLOT(click()));
+        QObject::connect(linePortTCP, SIGNAL(returnPressed()), ButtonConnect, SLOT(click()));
         QObject::connect(lineEditCmd, SIGNAL(returnPressed()), ButtonSend, SLOT(click()));
+        QObject::connect(linePortUDP, SIGNAL(returnPressed()), ButtonConnect, SLOT(click()));
 
         QMetaObject::connectSlotsByName(ServerTester);
     } // setupUi
@@ -318,28 +352,29 @@ public:
     void retranslateUi(QMainWindow *ServerTester)
     {
         ServerTester->setWindowTitle(QApplication::translate("ServerTester", "ServerTester", 0));
-        pushButton_3->setText(QApplication::translate("ServerTester", "Status Afk", 0));
-        pushButton_12->setText(QApplication::translate("ServerTester", "Disconnect", 0));
-        pushButton_7->setText(QApplication::translate("ServerTester", "Chat", 0));
-        pushButton_2->setText(QApplication::translate("ServerTester", "Call", 0));
-        pushButton_11->setText(QApplication::translate("ServerTester", "add Friend", 0));
-        pushButton_6->setText(QApplication::translate("ServerTester", "Create Acc", 0));
-        pushButton_8->setText(QApplication::translate("ServerTester", "Status Online", 0));
-        pushButton_4->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_9->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_17->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_14->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_18->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_16->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_5->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_10->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_15->setText(QApplication::translate("ServerTester", "PushButton", 0));
-        pushButton_13->setText(QApplication::translate("ServerTester", "Status Offline", 0));
-        pushButton->setText(QApplication::translate("ServerTester", "Connect", 0));
+        gButton->setText(QApplication::translate("ServerTester", "accept de toto", 0));
+        fButton->setText(QApplication::translate("ServerTester", "appel de tata", 0));
+        eButton->setText(QApplication::translate("ServerTester", "appel de toto", 0));
+        dButton->setText(QApplication::translate("ServerTester", "connection tata", 0));
+        cButton->setText(QApplication::translate("ServerTester", "connection toto", 0));
+        bButton->setText(QApplication::translate("ServerTester", "cr\303\251ation tata", 0));
+        hButton->setText(QApplication::translate("ServerTester", "accept de tata", 0));
+        jButton->setText(QApplication::translate("ServerTester", "denied de tata", 0));
+        kButton->setText(QApplication::translate("ServerTester", "Disconnect le client", 0));
+        qButton->setText(QApplication::translate("ServerTester", "q", 0));
+        lButton->setText(QApplication::translate("ServerTester", "l", 0));
+        rButton->setText(QApplication::translate("ServerTester", "r", 0));
+        pButton->setText(QApplication::translate("ServerTester", "p", 0));
+        mButton->setText(QApplication::translate("ServerTester", "m", 0));
+        nButton->setText(QApplication::translate("ServerTester", "n", 0));
+        oButton->setText(QApplication::translate("ServerTester", "o", 0));
+        iButton->setText(QApplication::translate("ServerTester", "denied de toto", 0));
+        aButton->setText(QApplication::translate("ServerTester", "cr\303\251ation toto", 0));
         labelTitre->setText(QApplication::translate("ServerTester", "BABEL TESTER", 0));
         labelServerBrowser->setText(QApplication::translate("ServerTester", "Server answer browser :", 0));
         labelAdress->setText(QApplication::translate("ServerTester", "Server Adress :", 0));
-        labelPort->setText(QApplication::translate("ServerTester", "Server Port :", 0));
+        labelPortTCP->setText(QApplication::translate("ServerTester", "Server Port (TCP) :", 0));
+        labelPortUDP->setText(QApplication::translate("ServerTester", "Server Port (UDP) :", 0));
         labelStatus->setText(QApplication::translate("ServerTester", "Status :", 0));
         labelEditCmd->setText(QApplication::translate("ServerTester", "Test your own command :", 0));
         ButtonSend->setText(QApplication::translate("ServerTester", "Send", 0));
@@ -347,8 +382,9 @@ public:
         ButtonQuit->setText(QApplication::translate("ServerTester", "Close", 0));
         connectStatus->setText(QApplication::translate("ServerTester", "Disconnected", 0));
         lineAdress->setText(QApplication::translate("ServerTester", "127.0.0.1", 0));
-        linePort->setText(QApplication::translate("ServerTester", "44201", 0));
+        linePortTCP->setText(QApplication::translate("ServerTester", "44201", 0));
         ButtonConnect->setText(QApplication::translate("ServerTester", "Connect !", 0));
+        linePortUDP->setText(QApplication::translate("ServerTester", "44202", 0));
     } // retranslateUi
 
 };

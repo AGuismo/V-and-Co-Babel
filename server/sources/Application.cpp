@@ -1,9 +1,10 @@
 #include	<iostream>
+#include	"Maintenance.hh"
 #include	"Application.hh"
 #include	"Env.hh"
 
 Application::Application():
-  _server(_service)
+  _server(_service), _maintenance(_service)
 {
 }
 
@@ -32,12 +33,19 @@ void	Application::init(const char *confPath)
 	    }
 	}
       _server.init();
+      _maintenance.init();
     }
   catch (const Server::Exception &e)
     {
       std::cerr << "Failed to load due to Server init exception: "
 		<< e.what() << std::endl;
       throw InitExcept("Unable to load Application");
+    }
+  catch (const Maintenance::Exception &e)
+    {
+      std::cerr << "Warning: Failed to load due to Maintenance init exception: "
+		<< e.what() << std::endl
+		<< "The maintenance service will no be available." << std::endl;
     }
   catch (...)
     {

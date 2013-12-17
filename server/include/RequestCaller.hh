@@ -11,16 +11,16 @@ namespace	request
 {
 
   class PluginCaller : public plugin::Caller<request::ID,
-					     void (*)(Server *, Client::Pointer, const ARequest *)>
+	  void(*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>
   {
   private:
-    typedef void (*request_callback)(Server *, Client::Pointer, const ARequest *);
+	  typedef void(*request_callback)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *);
     typedef std::map<request::ID, request_callback>	callback_map;
   public:
     PluginCaller(Server *);
     virtual ~PluginCaller();
 
-    bool		operator()(Client::Pointer, const ARequest *);
+    bool		operator()(IClient::Pointer, const ARequest *);
 
   private:
     PluginCaller(PluginCaller const&);

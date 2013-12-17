@@ -14,6 +14,8 @@
 #include	"AuthRequest.hh"
 #include	"CallRequest.hh"
 #include	"Protocol.hpp"
+#include	"Bridge.hh"
+#include	"FakeAudio.hh"
 
 static unsigned short	g_portTCP;
 static unsigned short	g_server_portUDP;
@@ -22,6 +24,9 @@ static unsigned long	g_udp_ip_receiver;
 
 using boost::asio::ip::tcp;
 using boost::asio::ip::udp;
+
+static std::string g_client = "";
+static std::string g_client_join = "";
 
 class		client : public boost::enable_shared_from_this<client>
 {
@@ -87,14 +92,14 @@ public:
 
   void	startAudio()
   {
-    // _audioThread = boost::thread(&foo);
+    _audio.run();
     _t.expires_from_now(boost::posix_time::seconds(5));
   }
 
 private:
   explicit client(boost::asio::io_service& io_service) :
     _service(io_service), _tcpSock(io_service), _udpClientSock(io_service),_udpServerSock(io_service),
-    _t(io_service)
+    _t(io_service), _audio(_bridge)
   {
   }
 
@@ -217,6 +222,8 @@ private:
   boost::array<Protocol::Byte, 1024>	_udp;
   boost::asio::deadline_timer		_t;
   boost::thread				_audioThread;
+  Bridge				_bridge;
+  FakeAudio				_audio;
 };
 
 
@@ -317,15 +324,20 @@ private:
   client::Ptr				_client;
 };
 
+
+
 int			main(int ac, char **av)
 {
-  std::stringstream	ss;
-
   if (ac != 4)
-    return (0);
+    {
+      std::cerr << "USAGE : ./request_serializer IP PORT_TCP PORT_UDP" << std::endl;
+      return (0);
+    }
+  std::stringstream	ss;
 
   g_portTCP = std::atoi(av[2]);
   g_server_portUDP = std::atoi(av[3]);
+
   std::cout << "g_server_portUDP: " << g_server_portUDP << std::endl;
 
 

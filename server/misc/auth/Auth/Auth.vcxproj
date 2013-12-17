@@ -20,6 +20,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -42,10 +43,12 @@
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
     <TargetExt>.dll</TargetExt>
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>auth</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
     <TargetExt>.dll</TargetExt>
+    <TargetName>auth</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -58,11 +61,18 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-gd-1_55.lib;libboost_filesystem-vc120-mt-gd-1_55.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
-      <ForceFileOutput>UndefinedSymbolOnly</ForceFileOutput>
+      <ForceFileOutput>
+      </ForceFileOutput>
+      <OptimizeReferences>true</OptimizeReferences>
+      <PreventDllBinding>
+      </PreventDllBinding>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)$(Configuration)\$(TargetFileName) $(SolutionDir)\..\lib</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -79,14 +89,32 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-1_55.lib;libboost_filesystem-vc120-mt-1_55.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
-      <ForceFileOutput>UndefinedSymbolOnly</ForceFileOutput>
+      <ForceFileOutput>
+      </ForceFileOutput>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)$(Configuration)\$(TargetFileName) $(SolutionDir)\..\lib</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Auth.hh" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\sources\Auth.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\protocol\Protocol\Protocol.vcxproj">
+      <Project>{d69a5c00-cd7c-4ba7-a23e-4d2bb1d8b76c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\serializer\serializer\serializer.vcxproj">
+      <Project>{75219cf9-86e6-419b-b2e7-31eeb47ac113}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\Core.vcxproj">
+      <Project>{add81711-b5f3-429f-acd6-0a1968464c3d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\database\Database\Database.vcxproj">
+      <Project>{d08b4714-51f4-457c-9e5d-36c528f9f78b}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

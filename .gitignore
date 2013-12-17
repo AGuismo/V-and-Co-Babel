@@ -14,3 +14,8 @@ TAGS
 *.log
 *.exe
 *.ilk
+*.sdf
+*.suo
+*.exp
+*.cache
+*.lib

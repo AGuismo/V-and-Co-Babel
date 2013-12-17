@@ -30,7 +30,7 @@ Auth	&Auth::operator=(Auth const &src)
   return (*this);
 }
 
-plugin::IPlugin<request::ID, void (*)(Server *, Client::Pointer, const ARequest *)>	*Auth::clone()
+plugin::IPlugin<request::ID, void (*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>	*Auth::clone()
 {
   return (new Auth(*this));
 }
@@ -46,9 +46,8 @@ void	Auth::getVersion(plugin::version::major &maj, plugin::version::minor &min) 
   min = plugin::version::MINOR;
 }
 
-void	Auth::new_account(Server *serv, Client::Pointer sender, const ARequest *req)
+void	Auth::new_account(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
-  (void)serv;
   const request::auth::client::NewClient	*origin = dynamic_cast<const request::auth::client::NewClient *>(req);
 
   if (Database::getInstance().newClient(origin->_name, origin->_password))
@@ -56,10 +55,10 @@ void	Auth::new_account(Server *serv, Client::Pointer sender, const ARequest *req
 #if defined(DEBUG)
       std::cout << "Create a new account for : [" << origin->_name << "]" << std::endl;
 #endif
-      sender->InfosClient._isConnect = false;
-      sender->InfosClient._name = origin->_name;
-      sender->InfosClient._privacy = request::User::PUBLIC;
-      sender->InfosClient._status = request::User::Status::DISCONNECTED;
+      sender->Authenticated(false);
+	  sender->Username(origin->_name);
+	  sender->privacy(request::User::PUBLIC);
+	  sender->status(request::User::Status::DISCONNECTED);
       sender->serialize_data(request::server::Ok());
     }
   else
@@ -71,20 +70,19 @@ void	Auth::new_account(Server *serv, Client::Pointer sender, const ARequest *req
     }
 }
 
-void	Auth::connect(Server *serv, Client::Pointer sender, const ARequest *req)
+void	Auth::connect(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
-  (void)serv;
   const request::auth::client::ConnectClient	*origin = dynamic_cast<const request::auth::client::ConnectClient *>(req);
 
-  if (sender->InfosClient._isConnect == false &&
+  if (sender->Authenticated() == false &&
       Database::getInstance().clientExist(origin->_name, origin->_password))
     {
 #if defined(DEBUG)
       std::cout << "Connection on the account : [" << origin->_name << "]" << std::endl;
 #endif
       sender->serialize_data(request::server::Ok());
-      sender->InfosClient._isConnect = true;
-      sender->InfosClient._status = request::User::Status::CONNECTED;
+      sender->Authenticated(true);
+      sender->status(request::User::Status::CONNECTED);
     }
   else
     {
@@ -95,13 +93,12 @@ void	Auth::connect(Server *serv, Client::Pointer sender, const ARequest *req)
     }
 }
 
-void	Auth::modify(Server *serv, Client::Pointer sender, const ARequest *req)
+void	Auth::modify(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
-  (void)serv;
   const request::auth::client::ModifyClient	*origin = dynamic_cast<const request::auth::client::ModifyClient *>(req);
 
   std::cout << "Auth::modify()" << std::endl;
-  if (sender->InfosClient._isConnect == true &&
+  if (sender->Authenticated() == true &&
       Database::getInstance().modClientPass(origin->_name, origin->_oldPassword, origin->_newPassword))
     {
 #if defined(DEBUG)
@@ -118,13 +115,12 @@ void	Auth::modify(Server *serv, Client::Pointer sender, const ARequest *req)
     }
 }
 
-void	Auth::remove(Server *serv, Client::Pointer sender, const ARequest *req)
+void	Auth::remove(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
-  (void)serv;
   const request::auth::client::DelClient	*origin = dynamic_cast<const request::auth::client::DelClient *>(req);
 
   std::cout << "Auth::delete()" << std::endl;
-  if (sender->InfosClient._isConnect == false &&
+  if (sender->Authenticated() == false &&
       Database::getInstance().delClient(origin->_name, origin->_password))
     {
 #if defined(DEBUG)
@@ -142,22 +138,21 @@ void	Auth::remove(Server *serv, Client::Pointer sender, const ARequest *req)
 }
 
 
-void	Auth::disconnect(Server *serv, Client::Pointer sender, const ARequest *req)
+void	Auth::disconnect(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::auth::client::DisconnectClient	*origin = dynamic_cast<const request::auth::client::DisconnectClient *>(req);
 
   std::cout << "Auth::disconnect()" << std::endl;
   (void)origin;
-  (void)serv;
 
-  if (sender->InfosClient._isConnect == true)
+  if (sender->Authenticated() == true)
     {
 #if defined(DEBUG)
       std::cout << "The client has been disconnected" << std::endl;
 #endif
       sender->serialize_data(request::server::Ok());
-      sender->InfosClient._isConnect = false;
-      sender->InfosClient._status = request::User::Status::DISCONNECTED;
+      sender->Authenticated(false);
+      sender->status(request::User::Status::DISCONNECTED);
     }
   else
     {
@@ -167,7 +162,7 @@ void	Auth::disconnect(Server *serv, Client::Pointer sender, const ARequest *req)
     }
 }
 
-void	Auth::setActions(std::map<request::ID, void (*)(Server *, Client::Pointer, const ARequest *)> &map)
+void	Auth::setActions(std::map<request::ID, void(*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)> &map)
 {
   map[request::client::auth::NEW] = &Auth::new_account;
   map[request::client::auth::CONNECT] = &Auth::connect;

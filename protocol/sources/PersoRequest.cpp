@@ -426,6 +426,71 @@ namespace	request
 	return (rhs);
       }
 
+      Pong::Pong():
+	Perso(request::client::perso::PONG)
+      {
+      }
+
+      Pong::Pong(const request::ID &id):
+	Perso(request::client::perso::PONG), _id(id)
+      {
+      }
+
+      Pong::~Pong()
+      {
+      }
+
+      Pong::Pong(const Pong &src) :
+	Perso(request::client::perso::PONG), _id(src._id)
+      {
+      }
+
+      Pong	&Pong::operator=(const Pong &src)
+      {
+	if (this != &src)
+	  {
+	    _id = src._id;
+	  }
+	return (*this);
+      }
+
+      ARequest	*Pong::clone()
+      {
+	return (new Pong());
+      }
+
+      bool	Pong::operator==(const ARequest *req) const
+      {
+	if (ARequest::operator!=(req))
+	  return (false);
+
+	const Pong	*tmp = dynamic_cast<const Pong *>(req);
+	return (tmp->_id == _id);
+      }
+
+      bool	Pong::operator!=(const ARequest *req) const
+      {
+	return (!operator==(req));
+      }
+
+      Protocol		&Pong::serialize(Protocol &rhs) const
+      {
+	Perso::serialize(rhs);
+
+	rhs << _id;
+
+	return (rhs);
+      }
+
+      Protocol	&Pong::unserialize(Protocol &rhs)
+      {
+	Perso::unserialize(rhs);
+
+	rhs >> _id;
+
+	return (rhs);
+      }
+
       UnsetAutoAnswer::UnsetAutoAnswer():
 	Perso(request::client::perso::UNSET_AUTO_ANSWER)
       {
@@ -604,6 +669,71 @@ namespace	request
 	rhs.pop(_from, fromLen);
 
 	rhs >> _since;
+
+	return (rhs);
+      }
+
+      Ping::Ping():
+	Perso(request::server::perso::PING)
+      {
+      }
+
+      Ping::Ping(const request::ID &id):
+	Perso(request::server::perso::PING), _id(id)
+      {
+      }
+
+      Ping::~Ping()
+      {
+      }
+
+      Ping::Ping(const Ping &src) :
+	Perso(request::server::perso::PING), _id(src._id)
+      {
+      }
+
+      Ping	&Ping::operator=(const Ping &src)
+      {
+	if (this != &src)
+	  {
+	    _id = src._id;
+	  }
+	return (*this);
+      }
+
+      ARequest	*Ping::clone()
+      {
+	return (new Ping());
+      }
+
+      bool	Ping::operator==(const ARequest *req) const
+      {
+	if (ARequest::operator!=(req))
+	  return (false);
+
+	const Ping	*tmp = dynamic_cast<const Ping *>(req);
+	return (tmp->_id == _id);
+      }
+
+      bool	Ping::operator!=(const ARequest *req) const
+      {
+	return (!operator==(req));
+      }
+
+      Protocol		&Ping::serialize(Protocol &rhs) const
+      {
+	Perso::serialize(rhs);
+
+	rhs << _id;
+
+	return (rhs);
+      }
+
+      Protocol	&Ping::unserialize(Protocol &rhs)
+      {
+	Perso::unserialize(rhs);
+
+	rhs >> _id;
 
 	return (rhs);
       }

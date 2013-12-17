@@ -21,7 +21,7 @@ class		ARequest;
 namespace	request
 {
   class PLUGIN_DLL_EXPORT IRequestPlugin : public plugin::IPlugin<request::ID,
-						void (*)(Server *, Client::Pointer, const ARequest *)>
+	  void(*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>
   {
   public:
     virtual ~IRequestPlugin() {};
@@ -29,8 +29,8 @@ namespace	request
   public:
     virtual IPlugin	*clone() = 0;
     virtual void	unload() = 0;
-    virtual void	setActions(std::map<request::ID, void (*)(Server *,
-								  Client::Pointer,
+	virtual void	setActions(std::map<request::ID, void(*)(const std::list<IClient::Pointer> &,
+								  IClient::Pointer,
 								  const ARequest *)> &) = 0;
     virtual void	getVersion(plugin::version::major &,
 				   plugin::version::minor &) const = 0;

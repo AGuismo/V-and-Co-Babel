@@ -14,10 +14,10 @@ class	Server;
 namespace	request
 {
   class PluginManager : public plugin::Manager<request::ID,
-					       void (*)(Server *, Client::Pointer, const ARequest *)>
+					       void (*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>
   {
   public:
-    typedef void (*request_handler)(Server *, Client::Pointer, const ARequest *);
+	  typedef void(*request_handler)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *);
     typedef std::map<std::string, DynamicAbstract>	dyn_plugin;
   public:
     PluginManager();

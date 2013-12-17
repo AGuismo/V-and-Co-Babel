@@ -5,6 +5,7 @@
 # include	<string>
 # include	<boost/asio.hpp>
 # include	"Server.hh"
+# include	"Maintenance.hh"
 
 class Application
 {
@@ -41,6 +42,7 @@ private:
 private:
   boost::asio::io_service	_service;
   Server			_server;
+  Maintenance			_maintenance;
 };
 
 

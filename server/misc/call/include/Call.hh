@@ -12,19 +12,19 @@ public:
 public:
   IPlugin	*clone();
   void		unload();
-  void		setActions(std::map<request::ID, void (*)(Server *,
-							  Client::Pointer,
+  void		setActions(std::map<request::ID, void(*)(const std::list<IClient::Pointer> &,
+							  IClient::Pointer,
 							  const ARequest *)> &);
   void		getVersion(plugin::version::major &maj, plugin::version::minor &min) const;
 
 private:
-  static bool	searchClient(Server *serv, const std::string &name, Client::Pointer &);
+	static bool	searchClient(const std::list<IClient::Pointer> &clients, const std::string &name, IClient::Pointer &);
 
 private:
-  static void	call(Server *serv, Client::Pointer sender, const ARequest *req);
-  static void	accept(Server *serv, Client::Pointer sender, const ARequest *req);
-  static void	refuse(Server *serv, Client::Pointer sender, const ARequest *req);
-  static void	hangup(Server *serv, Client::Pointer sender, const ARequest *req);
+	static void	call(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req);
+	static void	accept(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req);
+	static void	refuse(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req);
+	static void	hangup(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req);
 
 public:
   Call(Call const&);

@@ -1,6 +1,7 @@
 #include "MD5.hh"
 #include "Salt.hpp"
 
+
 void			Salt::update(const void * buf, size_type length)
 {
     md5.update(buf, length);
