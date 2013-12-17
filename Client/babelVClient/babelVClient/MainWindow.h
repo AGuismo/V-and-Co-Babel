@@ -36,6 +36,10 @@ public slots:
    void							on_connect_window_triggered();
    void							on_create_account_window_triggered();
    void							on_connection_try();
+   void							on_exit_action();
+   void							on_call_clicked();
+   void							on_authentification_try();
+   void							send_request(ARequest *req);
 
 public:
 	Ui::MainWindowClass			&getUi();

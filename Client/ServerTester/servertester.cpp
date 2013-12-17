@@ -11,8 +11,7 @@ void		ServerTester::send_req(ARequest *req)
     std::vector<Protocol::Byte>	bytes;
 	std::vector<Protocol::Byte>::const_iterator	it;
 
-    std::cout << "Send request code: " << req->code()
-	      << std::endl;
+    std::cout << "Send request code: " << req->code() << std::endl;
     bytes = Protocol::product(*req);
 	QByteArray datagram;
 	for (it = bytes.begin(); it != bytes.end(); ++it)
