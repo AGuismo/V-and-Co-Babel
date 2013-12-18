@@ -26,6 +26,7 @@ void	handle_error(DWORD error, std::string &errorMsg)
 
 bool DynamicAbstract::DynamicOpen(const std::string &path)
 {
+	SetLastError(0);
 	std::cout << std::endl << path.c_str() << std::endl;
 	if ((handle = LoadLibrary(path.c_str())) == NULL)
 	{
@@ -37,6 +38,7 @@ bool DynamicAbstract::DynamicOpen(const std::string &path)
 
 void *DynamicAbstract::DynamicLoadSym(const std::string &symName)
 {
+	SetLastError(0);
 	void	*symbol = GetProcAddress(handle, symName.c_str());
 	DWORD	error;
 
@@ -50,8 +52,12 @@ void *DynamicAbstract::DynamicLoadSym(const std::string &symName)
 
 bool DynamicAbstract::DynamicClose(void)
 {
-  if (FreeLibrary(handle) == 0)
-    return false;
+	SetLastError(0);
+	if (FreeLibrary(handle) == 0)
+	{
+		handle_error(GetLastError(), _error);
+		return false;
+	}
   return true;
 }
 
