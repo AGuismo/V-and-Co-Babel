@@ -32,7 +32,9 @@ void	MaintenanceConnection::handle_read(const boost::system::error_code& error,
       _socket.close();
       return ;
     }
+  std::cout << "MaintenanceConnection::handle_read(): " << _input.size() << std::endl;
   _input.insert(_input.end(), _inputdata.begin(), _inputdata.begin() + bytes_transferred);
+  std::cout << "MaintenanceConnection::handle_read(): " << _input.size() << std::endl;
   while (handle_request());
   read_data();
 }
@@ -82,6 +84,7 @@ void	MaintenanceConnection::start()
   const buffer	message("V and co Babel mainteance interface\n");
 
   write_data(message);
+  read_data();
 }
 
 boost::asio::ip::tcp::socket	&MaintenanceConnection::socket()

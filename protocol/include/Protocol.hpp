@@ -12,7 +12,7 @@
 class Protocol : public Serializer
 {
 public:
-  class ConstructRequest : public std::exception
+  class ConstructRequest : public Serializer::invalid_argument
   {
   public:
     virtual const char	*what() const throw();
@@ -22,9 +22,6 @@ public:
 
   public:
     ConstructRequest& operator=(ConstructRequest const&) throw();
-
-  private:
-    std::string		_what;
   };
 public:
   typedef Serializer::Byte	Byte;

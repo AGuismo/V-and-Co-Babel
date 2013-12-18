@@ -27,7 +27,6 @@ void	handle_error(DWORD error, std::string &errorMsg)
 bool DynamicAbstract::DynamicOpen(const std::string &path)
 {
 	SetLastError(0);
-	std::cout << std::endl << path.c_str() << std::endl;
 	if ((handle = LoadLibrary(path.c_str())) == NULL)
 	{
 		handle_error(GetLastError(), _error);

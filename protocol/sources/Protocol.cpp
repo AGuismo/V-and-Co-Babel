@@ -70,7 +70,7 @@ Protocol::serialized_data	Protocol::product(const ARequest &output)
 }
 
 Protocol::ConstructRequest::ConstructRequest(const std::string &what) throw() :
-  _what(what)
+  Serializer::invalid_argument(what)
 {
 
 }
@@ -81,7 +81,7 @@ Protocol::ConstructRequest::~ConstructRequest() throw()
 }
 
 Protocol::ConstructRequest::ConstructRequest(ConstructRequest const &src) throw() :
-  _what(src._what)
+  Serializer::invalid_argument(src)
 {
 
 }
