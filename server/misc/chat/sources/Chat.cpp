@@ -8,7 +8,8 @@
 #include	"types.hh"
 #include	"Function.hpp"
 
-Chat::Chat()
+Chat::Chat(Database &db, Env &env):
+  _db(db), _env(env)
 {
 
 }
@@ -18,9 +19,9 @@ Chat::~Chat()
 
 }
 
-Chat::Chat(Chat const &src)
+Chat::Chat(Chat const &src):
+  _db(src._db), _env(src._env)
 {
-  (void)src;
 }
 
 Chat	&Chat::operator=(Chat const &src)
@@ -32,7 +33,7 @@ Chat	&Chat::operator=(Chat const &src)
   return (*this);
 }
 
-plugin::IPlugin<request::ID, void (*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>	*Chat::clone()
+plugin::IPlugin<request::ID, plugin::request_handler>	*Chat::clone()
 {
   return (new Chat(*this));
 }
@@ -59,14 +60,13 @@ void	Chat::message(const std::list<IClient::Pointer> &clients, IClient::Pointer 
   std::cout << "Msg : " << origin->msg << std::endl;
 }
 
-
-void	Chat::setActions(std::map<request::ID, void (*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)> &map)
+void	Chat::setActions(std::map<request::ID, plugin::request_handler> &map)
 {
-  map[request::client::chat::MESSAGE] = Function<void (const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)>(&Chat::message, this);
+  map[request::client::chat::MESSAGE] = plugin::request_handler(&Chat::message, this);
 }
 
 
-request::IRequestPlugin	*loadPlugin()
+request::IRequestPlugin	*loadPlugin(Database &db, Env &env)
 {
-  return (new Chat);
+  return (new Chat(db, env));
 }

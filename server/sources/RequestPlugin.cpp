@@ -3,7 +3,8 @@
 
 namespace	request
 {
-  PluginManager::PluginManager()
+  PluginManager::PluginManager(Database &db, Env &env):
+    _db(db), _env(env)
   {
 
   }
@@ -26,39 +27,39 @@ namespace	request
   void			PluginManager::loadPlugin(const std::string &path, const std::string &name)
   {
     DynamicAbstract	plugLib;
-    plugin::IPlugin<request::ID, PluginManager::request_handler>	*(*plugin_ctor)(void);
-    plugin::IPlugin<request::ID, PluginManager::request_handler>	*plugin;
-	plugin::version::minor	min;
-	plugin::version::major	maj;
+    plugin::IPlugin<request::ID, plugin::request_handler>	*(*plugin_ctor)(Database &, Env &);
+    plugin::IPlugin<request::ID, plugin::request_handler>	*plugin;
+    plugin::version::minor	min;
+    plugin::version::major	maj;
 
     if (!plugLib.DynamicOpen(path))
       throw plugin::Exception("Unable to open Library(" + std::string(plugLib.error()) + ")");
-    plugin_ctor = (plugin::IPlugin<request::ID, PluginManager::request_handler> *(*)(void))(plugLib.DynamicLoadSym("loadPlugin"));
-	if (plugin_ctor == 0)
-	{
-		plugLib.DynamicClose();
-		throw plugin::Exception("Unable to find symbol (" + std::string(plugLib.error()) + ")");
-	}
-    plugin = plugin_ctor();
-	if (plugin == 0)
-	{
-		plugLib.DynamicClose();
-		throw plugin::Exception("Error while creating plugin (" + path + ")");
-	}
-	plugin->getVersion(maj, min);
-	if (maj != plugin::version::MAJOR || min != plugin::version::MINOR)
-	{
-		std::ostringstream	ss;
+    plugin_ctor = (plugin::IPlugin<request::ID, plugin::request_handler> *(*)(Database &, Env &))(plugLib.DynamicLoadSym("loadPlugin"));
+    if (plugin_ctor == 0)
+      {
+	plugLib.DynamicClose();
+	throw plugin::Exception("Unable to find symbol (" + std::string(plugLib.error()) + ")");
+      }
+    plugin = plugin_ctor(_db, _env);
+    if (plugin == 0)
+      {
+	plugLib.DynamicClose();
+	throw plugin::Exception("Error while creating plugin (" + path + ")");
+      }
+    plugin->getVersion(maj, min);
+    if (maj != plugin::version::MAJOR || min != plugin::version::MINOR)
+      {
+	std::ostringstream	ss;
 
-		plugin->unload();
-		plugLib.DynamicClose();
-		ss << "The Plugin version doesn't match. (" << path << "): "
-			<< "Expected version " << (int)plugin::version::MAJOR << "." << (int)plugin::version::MINOR
-		   << " (Plugin version: " << (int)maj << "." << (int)min << ")";
-		throw plugin::Exception(ss.str());
-	}
+	plugin->unload();
+	plugLib.DynamicClose();
+	ss << "The Plugin version doesn't match. (" << path << "): "
+	   << "Expected version " << (int)plugin::version::MAJOR << "." << (int)plugin::version::MINOR
+	   << " (Plugin version: " << (int)maj << "." << (int)min << ")";
+	throw plugin::Exception(ss.str());
+      }
     _loadedPlugins[name] = plugLib;
-    plugin::Manager<request::ID, PluginManager::request_handler>::addPlugin(name, plugin);
+    plugin::Manager<request::ID, plugin::request_handler>::addPlugin(name, plugin);
   }
 
   void			PluginManager::unloadPlugin(const std::string &name)

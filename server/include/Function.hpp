@@ -128,7 +128,7 @@ struct	Function<T ()>
   {
     if (&src != this)
       {
-  	*this->_call = *src._call;
+  	this->_call = src._call->clone();
       }
     return (*this);
   }
@@ -263,7 +263,7 @@ struct	Function<void ()>
   {
     if (&src != this)
       {
-  	*_call = *src._call;
+  	_call = src._call->clone();
       }
     return (*this);
   }
@@ -389,23 +389,23 @@ struct	Function<T (P1)>
     delete _call;
   }
 
-  Function(const Function<T ()> &src):
+  Function(const Function<T (P1)> &src):
     _call(src._call == 0 ? 0 : src._call->clone())
   {
   }
 
-  Function<T ()>	&operator=(const Function<T ()> &src)
+  Function<T (P1)>	&operator=(const Function<T (P1)> &src)
   {
     if (&src != this)
       {
-  	*this->_call = *src._call;
+  	this->_call = src._call->clone();
       }
     return (*this);
   }
 
   T		operator()(P1 p1)
   {
-    return ((*this->_call)(p1));
+    return ((this->_call)(p1));
   }
 
   ICallable	*_call;
@@ -524,12 +524,12 @@ struct	Function<void (P1)>
     delete _call;
   }
 
-  Function(const Function<void ()> &src):
+  Function(const Function<void (P1)> &src):
     _call(src._call == 0 ? 0 : src._call->clone())
   {
   }
 
-  Function<void ()>	&operator=(const Function<void ()> &src)
+  Function<void (P1)>	&operator=(const Function<void (P1)> &src)
   {
     if (&src != this)
       {
@@ -540,7 +540,7 @@ struct	Function<void (P1)>
 
   void		operator()(P1 p1)
   {
-    return (*this->_call)(p1);
+    (this->_call)(p1);
   }
 
   ICallable	*_call;
@@ -659,23 +659,23 @@ struct	Function<T (P1, P2)>
     delete _call;
   }
 
-  Function(const Function<T ()> &src):
+  Function(const Function<T (P1, P2)> &src):
     _call(src._call == 0 ? 0 : src._call->clone())
   {
   }
 
-  Function<T ()>	&operator=(const Function<T ()> &src)
+  Function<T (P1, P2)>	&operator=(const Function<T (P1, P2)> &src)
   {
     if (&src != this)
       {
-  	*this->_call = *src._call;
+  	this->_call = src._call->clone();
       }
     return (*this);
   }
 
   T		operator()(P1 p1, P2 p2)
   {
-    return ((*this->_call)(p1, p2));
+    return ((this->_call)(p1, p2));
   }
 
   ICallable	*_call;
@@ -794,12 +794,12 @@ struct	Function<void (P1, P2)>
     delete _call;
   }
 
-  Function(const Function<void ()> &src):
+  Function(const Function<void (P1, P2)> &src):
     _call(src._call == 0 ? 0 : src._call->clone())
   {
   }
 
-  Function<void ()>	&operator=(const Function<void ()> &src)
+  Function<void (P1, P2)>	&operator=(const Function<void (P1, P2)> &src)
   {
     if (&src != this)
       {
@@ -810,7 +810,7 @@ struct	Function<void (P1, P2)>
 
   void		operator()(P1 p1, P2 p2)
   {
-    return (*this->_call)(p1, p2);
+    (this->_call)(p1, p2);
   }
 
   ICallable	*_call;
@@ -929,16 +929,16 @@ struct	Function<T (P1, P2, P3)>
     delete _call;
   }
 
-  Function(const Function<T ()> &src):
+  Function(const Function<T (P1, P2, P3)> &src):
     _call(src._call == 0 ? 0 : src._call->clone())
   {
   }
 
-  Function<T ()>	&operator=(const Function<T ()> &src)
+  Function<T (P1, P2, P3)>	&operator=(const Function<T (P1, P2, P3)> &src)
   {
     if (&src != this)
       {
-  	*this->_call = *src._call;
+  	this->_call = src._call->clone();
       }
     return (*this);
   }
@@ -1018,6 +1018,7 @@ struct	Function<void (P1, P2, P3)>
 
     InternMethodFunc	&operator=(const InternMethodFunc &src)
     {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       if (&src != this)
 	{
 	  _f = src._f;
@@ -1064,23 +1065,23 @@ struct	Function<void (P1, P2, P3)>
     delete _call;
   }
 
-  Function(const Function<void ()> &src):
+  Function(const Function<void (P1, P2, P3)> &src):
     _call(src._call == 0 ? 0 : src._call->clone())
   {
   }
 
-  Function<void ()>	&operator=(const Function<void ()> &src)
+  Function<void (P1, P2, P3)>	&operator=(const Function<void (P1, P2, P3)> &src)
   {
     if (&src != this)
       {
-  	*_call = *src._call;
+  	_call = src._call->clone();
       }
     return (*this);
   }
 
   void		operator()(P1 p1, P2 p2, P3 p3)
   {
-    return (*this->_call)(p1, p2, p3);
+    (*this->_call)(p1, p2, p3);
   }
 
   ICallable	*_call;

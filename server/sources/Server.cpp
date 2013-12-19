@@ -8,8 +8,8 @@
 #include	"ServerRequest.hh"
 
 Server::Server(boost::asio::io_service &service, Database &db) :
-  _service(service), _acceptor(service), _plugs(new request::PluginManager),
-  _calls(new request::PluginCaller(this->_clientList, db))
+  _service(service), _acceptor(service), _plugs(new request::PluginManager(db, Env::getInstance())),
+  _calls(new request::PluginCaller(this->_clientList))
 {
 
 }

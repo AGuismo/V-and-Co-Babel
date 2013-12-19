@@ -11,7 +11,7 @@ namespace	plugin
     typedef unsigned char	major;
 
     static const major		MAJOR = 1;
-    static const minor		MINOR = 2;
+    static const minor		MINOR = 3;
   };
 
   template <typename Key, typename Sign>

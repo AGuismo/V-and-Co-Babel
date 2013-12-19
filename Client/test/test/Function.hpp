@@ -128,7 +128,7 @@ struct	Function<T ()>
   {
     if (&src != this)
       {
-  	*this->_call = *src._call;
+  	this->_call = src._call->clone();
       }
     return (*this);
   }
@@ -263,7 +263,7 @@ struct	Function<void ()>
   {
     if (&src != this)
       {
-  	*_call = *src._call;
+  	_call = src._call->clone();
       }
     return (*this);
   }
@@ -389,23 +389,23 @@ struct	Function<T (P1)>
     delete _call;
   }
 
-  Function(const Function<T ()> &src):
+  Function(const Function<T (P1)> &src):
     _call(src._call == 0 ? 0 : src._call->clone())
   {
   }
 
-  Function<T ()>	&operator=(const Function<T ()> &src)
+  Function<T (P1)>	&operator=(const Function<T (P1)> &src)
   {
     if (&src != this)
       {
-  	*this->_call = *src._call;
+  	this->_call = src._call->clone();
       }
     return (*this);
   }
 
   T		operator()(P1 p1)
   {
-    return ((*this->_call)(p1));
+    return ((this->_call)(p1));
   }
 
   ICallable	*_call;
@@ -524,12 +524,12 @@ struct	Function<void (P1)>
     delete _call;
   }
 
-  Function(const Function<void ()> &src):
+  Function(const Function<void (P1)> &src):
     _call(src._call == 0 ? 0 : src._call->clone())
   {
   }
 
-  Function<void ()>	&operator=(const Function<void ()> &src)
+  Function<void (P1)>	&operator=(const Function<void (P1)> &src)
   {
     if (&src != this)
       {
@@ -540,7 +540,7 @@ struct	Function<void (P1)>
 
   void		operator()(P1 p1)
   {
-    return (*this->_call)(p1);
+    (this->_call)(p1);
   }
 
   ICallable	*_call;
@@ -659,23 +659,23 @@ struct	Function<T (P1, P2)>
     delete _call;
   }
 
-  Function(const Function<T ()> &src):
+  Function(const Function<T (P1, P2)> &src):
     _call(src._call == 0 ? 0 : src._call->clone())
   {
   }
 
-  Function<T ()>	&operator=(const Function<T ()> &src)
+  Function<T (P1, P2)>	&operator=(const Function<T (P1, P2)> &src)
   {
     if (&src != this)
       {
-  	*this->_call = *src._call;
+  	this->_call = src._call->clone();
       }
     return (*this);
   }
 
   T		operator()(P1 p1, P2 p2)
   {
-    return ((*this->_call)(p1, p2));
+    return ((this->_call)(p1, p2));
   }
 
   ICallable	*_call;
@@ -794,12 +794,12 @@ struct	Function<void (P1, P2)>
     delete _call;
   }
 
-  Function(const Function<void ()> &src):
+  Function(const Function<void (P1, P2)> &src):
     _call(src._call == 0 ? 0 : src._call->clone())
   {
   }
 
-  Function<void ()>	&operator=(const Function<void ()> &src)
+  Function<void (P1, P2)>	&operator=(const Function<void (P1, P2)> &src)
   {
     if (&src != this)
       {
@@ -810,11 +810,281 @@ struct	Function<void (P1, P2)>
 
   void		operator()(P1 p1, P2 p2)
   {
-    return (*this->_call)(p1, p2);
+    (this->_call)(p1, p2);
   }
 
   ICallable	*_call;
 };
 
+template <typename T, typename P1, typename P2, typename P3>
+struct	Function<T (P1, P2, P3)>
+{
+  typedef T (*func)(P1, P2, P3);
+  typedef T	result_type;
+
+  struct	ICallable
+  {
+    virtual ~ICallable() {};
+    virtual T		operator()(P1, P2, P3) = 0;
+    virtual ICallable	*clone() = 0;
+  };
+
+  template <typename Func>
+  struct	InternFunc : public ICallable
+  {
+    InternFunc(Func f) :
+      _f(f)
+    {
+
+    }
+
+    InternFunc(const InternFunc &src) :
+      _f(src._f)
+    {
+
+    }
+
+    InternFunc	&operator=(const InternFunc &src)
+    {
+      if (&src != this)
+	{
+	  _f = src._f;
+	}
+      return (*this);
+    }
+
+    virtual ~InternFunc() {};
+    virtual T		operator()(P1 p1, P2 p2, P3 p3)
+    {
+      return (_f(p1, p2, p3));
+    }
+    virtual ICallable	*clone()
+    {
+      return (new InternFunc<Func>(_f));
+    }
+
+    Func	_f;
+  };
+
+  template <typename Func, typename Object>
+  struct	InternMethodFunc : public ICallable
+  {
+    InternMethodFunc(T (Object::*f)(P1, P2, P3), Object *obj) :
+      _f(f), _obj(obj)
+    {
+
+    }
+
+    InternMethodFunc(const InternMethodFunc &src) :
+      _f(src._f), _obj(src._obj)
+    {
+
+    }
+
+    InternMethodFunc	&operator=(const InternMethodFunc &src)
+    {
+      if (&src != this)
+	{
+	  _f = src._f;
+	  _obj = src._obj;
+	}
+      return (*this);
+    }
+
+    virtual ~InternMethodFunc() {};
+    virtual T		operator()(P1 p1, P2 p2, P3 p3)
+    {
+      return ((_obj->*_f)(p1, p2, p3));
+    }
+    virtual ICallable	*clone()
+    {
+      return (new InternMethodFunc<Func, Object>(_f, _obj));
+    }
+
+    T		(Object::*_f)(P1, P2, P3);
+    Object	*_obj;
+  };
+
+  Function():
+    _call(0)
+  {
+  }
+
+  template <typename Any>
+  Function(Any f):
+    _call(0)
+  {
+    _call = new InternFunc<Any>(f);
+  }
+
+  template <typename Any, typename Object>
+  Function(Any f, Object *obj):
+    _call(0)
+  {
+    _call = new InternMethodFunc<Any, Object>(f, obj);
+  }
+
+  ~Function()
+  {
+    delete _call;
+  }
+
+  Function(const Function<T (P1, P2, P3)> &src):
+    _call(src._call == 0 ? 0 : src._call->clone())
+  {
+  }
+
+  Function<T (P1, P2, P3)>	&operator=(const Function<T (P1, P2, P3)> &src)
+  {
+    if (&src != this)
+      {
+  	this->_call = src._call->clone();
+      }
+    return (*this);
+  }
+
+  T		operator()(P1 p1, P2 p2, P3 p3)
+  {
+    return ((*this->_call)(p1, p2, p3));
+  }
+
+  ICallable	*_call;
+};
+
+template <typename P1, typename P2, typename P3>
+struct	Function<void (P1, P2, P3)>
+{
+  typedef void (*func)(P1, P2, P3);
+  typedef void	result_type;
+
+  struct	ICallable
+  {
+    virtual ~ICallable() {};
+    virtual void		operator()(P1, P2, P3) = 0;
+    virtual ICallable	*clone() = 0;
+  };
+
+  template <typename Func>
+  struct	InternFunc : public ICallable
+  {
+    InternFunc(Func f) :
+      _f(f)
+    {
+
+    }
+
+    InternFunc(const InternFunc &src) :
+      _f(src._f)
+    {
+
+    }
+
+    InternFunc	&operator=(const InternFunc &src)
+    {
+      if (&src != this)
+	{
+	  _f = src._f;
+	}
+      return (*this);
+    }
+
+    virtual ~InternFunc() {};
+    virtual void		operator()(P1 p1, P2 p2, P3 p3)
+    {
+      _f(p1, p2, p3);
+    }
+    virtual ICallable	*clone()
+    {
+      return (new InternFunc<Func>(_f));
+    }
+
+    Func	_f;
+  };
+
+  template <typename Func, typename Object>
+  struct	InternMethodFunc : public ICallable
+  {
+    InternMethodFunc(void (Object::*f)(P1, P2, P3), Object *obj) :
+      _f(f), _obj(obj)
+    {
+
+    }
+
+    InternMethodFunc(const InternMethodFunc &src) :
+      _f(src._f), _obj(src._obj)
+    {
+
+    }
+
+    InternMethodFunc	&operator=(const InternMethodFunc &src)
+    {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
+      if (&src != this)
+	{
+	  _f = src._f;
+	  _obj = src._obj;
+	}
+      return (*this);
+    }
+
+    virtual ~InternMethodFunc() {};
+    virtual void		operator()(P1 p1, P2 p2, P3 p3)
+    {
+      (_obj->*_f)(p1, p2, p3);
+    }
+    virtual ICallable	*clone()
+    {
+      return (new InternMethodFunc<Func, Object>(_f, _obj));
+    }
+
+    void		(Object::*_f)(P1, P2, P3);
+    Object	*_obj;
+  };
+
+  Function():
+    _call(0)
+  {
+  }
+
+  template <typename Any>
+  Function(Any f):
+    _call(0)
+  {
+    _call = new InternFunc<Any>(f);
+  }
+
+  template <typename Any, typename Object>
+  Function(Any f, Object *obj):
+    _call(0)
+  {
+    _call = new InternMethodFunc<Any, Object>(f, obj);
+  }
+
+  ~Function()
+  {
+    delete _call;
+  }
+
+  Function(const Function<void (P1, P2, P3)> &src):
+    _call(src._call == 0 ? 0 : src._call->clone())
+  {
+  }
+
+  Function<void (P1, P2, P3)>	&operator=(const Function<void (P1, P2, P3)> &src)
+  {
+    if (&src != this)
+      {
+  	_call = src._call->clone();
+      }
+    return (*this);
+  }
+
+  void		operator()(P1 p1, P2 p2, P3 p3)
+  {
+    (*this->_call)(p1, p2, p3);
+  }
+
+  ICallable	*_call;
+};
 
 #endif /* FUNCTION_H_ */

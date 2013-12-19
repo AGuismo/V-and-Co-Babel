@@ -2,6 +2,7 @@
 # define REQUESTPLUGIN_H_
 
 # include	<map>
+# include	"IRequestPlugin.hh"
 # include	"PluginManager.hpp"
 # include	"types.hh"
 # include	"Client.hh"
@@ -11,18 +12,16 @@ class	ARequest;
 class	IRequestPlugin;
 class	Server;
 class	Database;
+class	Env;
 
 namespace	request
 {
-  class PluginManager : public plugin::Manager<request::ID,
-					       void (*)(const std::list<IClient::Pointer> &,
-									IClient::Pointer, const ARequest *)>
+  class PluginManager : public plugin::Manager<request::ID, plugin::request_handler>
   {
   public:
-	  typedef void(*request_handler)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *);
     typedef std::map<std::string, DynamicAbstract>	dyn_plugin;
   public:
-    PluginManager();
+    PluginManager(Database &, Env &);
     virtual ~PluginManager();
 
   public:
@@ -35,6 +34,8 @@ namespace	request
 
   private:
     dyn_plugin		_loadedPlugins;
+    Database		&_db;
+    Env			&_env;
   };
 }
 

@@ -5,6 +5,7 @@
 # include	"Client.hh"
 # include	"types.hh"
 # include	"PluginCaller.hpp"
+# include	"IRequestPlugin.hh"
 
 class		ARequest;
 class		Database;
@@ -12,14 +13,12 @@ class		Database;
 namespace	request
 {
 
-  class PluginCaller : public plugin::Caller<request::ID,
-	  void(*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>
+  class PluginCaller : public plugin::Caller<request::ID, plugin::request_handler>
   {
   private:
-	  typedef void(*request_callback)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *);
-    typedef std::map<request::ID, request_callback>	callback_map;
+    typedef std::map<request::ID, plugin::request_handler>	callback_map;
   public:
-    PluginCaller(const std::list<IClient::Pointer> &, Database &);
+    PluginCaller(const std::list<IClient::Pointer> &);
     virtual ~PluginCaller();
 
     bool		operator()(IClient::Pointer, const ARequest *);
@@ -30,7 +29,6 @@ namespace	request
 
   private:
     const std::list<IClient::Pointer>	&_clients;
-    Database				&_database;
   };
 
 }
