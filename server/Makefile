@@ -4,6 +4,7 @@ SRCS =	      	main.cpp			\
 		Application.cpp			\
 		Server.cpp			\
 		Client.cpp			\
+		Administrator.cpp		\
 		Maintenance.cpp			\
 		MaintenanceConnection.cpp	\
 		Env.cpp				\

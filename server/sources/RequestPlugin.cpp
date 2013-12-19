@@ -53,8 +53,8 @@ namespace	request
 		plugin->unload();
 		plugLib.DynamicClose();
 		ss << "The Plugin version doesn't match. (" << path << "): "
-			<< "Expected version" << plugin::version::MAJOR << "." << plugin::version::MINOR
-			<< " (Plugin version: " << maj << "." << min;
+			<< "Expected version " << (int)plugin::version::MAJOR << "." << (int)plugin::version::MINOR
+		   << " (Plugin version: " << (int)maj << "." << (int)min << ")";
 		throw plugin::Exception(ss.str());
 	}
     _loadedPlugins[name] = plugLib;

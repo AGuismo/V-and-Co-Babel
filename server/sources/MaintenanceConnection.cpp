@@ -6,7 +6,7 @@
 #include	"Administrator.hh"
 
 MaintenanceConnection::MaintenanceConnection(boost::asio::io_service& io_service, Administrator &adm) :
-_socket(io_service), _administrator(adm)
+  _socket(io_service), _administrator(adm)
 {
 
 }
@@ -41,20 +41,19 @@ void	MaintenanceConnection::handle_read(const boost::system::error_code& error,
 
 bool	MaintenanceConnection::handle_request()
 {
-	buffer::iterator	it = std::find(_input.begin(), _input.end(), '\n');
-	buffer				request;
-	std::vector<buffer>	argv;
-	buffer				resp;
+  buffer::iterator	it = std::find(_input.begin(), _input.end(), '\n');
+  buffer				request;
+  std::vector<buffer>	argv;
+  buffer				resp;
 
-	if (it == _input.end())
-		return (false);
-	request.assign(_input.begin(), it);
-	request.pop_back();
-	_input.erase(_input.begin(), it);
-	boost::split(argv, request, boost::is_any_of(" \t"), boost::token_compress_on);
-	_administrator(argv, resp);
-	write_data(resp);
-	return (true);
+  if (it == _input.end())
+    return (false);
+  request.assign(_input.begin(), it);
+  _input.erase(_input.begin(), it + 1);
+  boost::split(argv, request, boost::is_any_of(" \t"), boost::token_compress_on);
+  _administrator(argv, resp);
+  write_data(resp);
+  return (true);
 }
 
 void	MaintenanceConnection::read_data()
@@ -67,13 +66,13 @@ void	MaintenanceConnection::read_data()
 
 void	MaintenanceConnection::write_data(const buffer &buff)
 {
-	std::size_t	size;
+  std::size_t	size;
 
-	size = (buff.size() > BUFF_SIZE ? BUFF_SIZE : buff.size());
-	std::copy(buff.begin(),
-			  buff.begin() + size,
-		      _outputdata.begin());
-	boost::asio::async_write(_socket, boost::asio::buffer(_outputdata, size),
+  size = (buff.size() > BUFF_SIZE ? BUFF_SIZE : buff.size());
+  std::copy(buff.begin(),
+	    buff.begin() + size,
+	    _outputdata.begin());
+  boost::asio::async_write(_socket, boost::asio::buffer(_outputdata, size),
 			   boost::bind(&MaintenanceConnection::handle_write, shared_from_this(),
 				       boost::asio::placeholders::error,
 				       boost::asio::placeholders::bytes_transferred));
