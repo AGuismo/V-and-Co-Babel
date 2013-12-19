@@ -11,16 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = test
 TEMPLATE = app
 
-SOURCES += main.cpp\
-        application.cpp \
-    network.cpp \
-    graphic.cpp
+SOURCES += main.cpp
 
-HEADERS  += application.hh \
-    network.hh \
-    graphic.hh \
+HEADERS  += \
     IGraphic.hh \
     INetwork.hh \
-    IApplication.hh \
-    ISignaler.hh \
-    IMutex.hh
+    IApplication.hh
