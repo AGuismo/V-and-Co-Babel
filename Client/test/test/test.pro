@@ -14,6 +14,6 @@ TEMPLATE = app
 SOURCES += main.cpp
 
 HEADERS  += \
-    IGraphic.hh \
-    INetwork.hh \
-    IApplication.hh
+    ANetwork.hh \
+    AGraphic.hh \
+    AApplication.hh
