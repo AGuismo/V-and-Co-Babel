@@ -22,11 +22,11 @@ public:
   void		getVersion(plugin::version::major &maj, plugin::version::minor &min) const;
 
 private:
-  static void	request(const std::list<IClient::Pointer> &, Database &,IClient::Pointer sender, const ARequest *req);
-  static void	del_friend(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
-  static void	refuse(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
-  static void	accept(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
-  static void	list(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
+  void	request(const std::list<IClient::Pointer> &, Database &,IClient::Pointer sender, const ARequest *req);
+  void	del_friend(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
+  void	refuse(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
+  void	accept(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
+  void	list(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
 
 public:
   Friends(Friends const&);

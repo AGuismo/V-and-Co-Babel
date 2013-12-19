@@ -28,6 +28,8 @@ public:
   bool		drop();
 
 public:
+  // inclure une fonction "listFriend(const std::strign &from)
+  // inclure une fonction "isFriend(const std::string &from, const std::string to)
   bool		addFriend(const std::string &login,
 			  const ID friendID);
   bool		delFriend(const std::string &login,
