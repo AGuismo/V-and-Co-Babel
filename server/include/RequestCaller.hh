@@ -13,10 +13,10 @@ namespace	request
 {
 
   class PluginCaller : public plugin::Caller<request::ID,
-	  void(*)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *)>
+	  void(*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>
   {
   private:
-	  typedef void(*request_callback)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *);
+	  typedef void(*request_callback)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *);
     typedef std::map<request::ID, request_callback>	callback_map;
   public:
     PluginCaller(const std::list<IClient::Pointer> &, Database &);
@@ -30,7 +30,7 @@ namespace	request
 
   private:
     const std::list<IClient::Pointer>	&_clients;
-	Database							&_database;
+    Database				&_database;
   };
 
 }

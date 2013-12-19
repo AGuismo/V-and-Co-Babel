@@ -15,11 +15,11 @@ class	Database;
 namespace	request
 {
   class PluginManager : public plugin::Manager<request::ID,
-					       void (*)(const std::list<IClient::Pointer> &, Database &,
+					       void (*)(const std::list<IClient::Pointer> &,
 									IClient::Pointer, const ARequest *)>
   {
   public:
-	  typedef void(*request_handler)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *);
+	  typedef void(*request_handler)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *);
     typedef std::map<std::string, DynamicAbstract>	dyn_plugin;
   public:
     PluginManager();

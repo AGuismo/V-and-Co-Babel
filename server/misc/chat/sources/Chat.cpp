@@ -6,6 +6,7 @@
 #include	"ServerRequest.hh"
 #include	"Database.hh"
 #include	"types.hh"
+#include	"Function.hpp"
 
 Chat::Chat()
 {
@@ -31,7 +32,7 @@ Chat	&Chat::operator=(Chat const &src)
   return (*this);
 }
 
-plugin::IPlugin<request::ID, void (*)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *)>	*Chat::clone()
+plugin::IPlugin<request::ID, void (*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>	*Chat::clone()
 {
   return (new Chat(*this));
 }
@@ -47,7 +48,7 @@ void	Chat::getVersion(plugin::version::major &maj, plugin::version::minor &min) 
   min = plugin::version::MINOR;
 }
 
-void	Chat::message(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
+void	Chat::message(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::chat::client::Message	*origin = dynamic_cast<const request::chat::client::Message *>(req);
 
@@ -59,9 +60,9 @@ void	Chat::message(const std::list<IClient::Pointer> &clients, Database &db, ICl
 }
 
 
-void	Chat::setActions(std::map<request::ID, void (*)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *)> &map)
+void	Chat::setActions(std::map<request::ID, void (*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)> &map)
 {
-  map[request::client::chat::MESSAGE] = &Chat::message;
+  map[request::client::chat::MESSAGE] = Function<void (const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)>(&Chat::message, this);
 }
 
 

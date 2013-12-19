@@ -22,7 +22,7 @@ class	Database;
 namespace	request
 {
   class PLUGIN_DLL_EXPORT IRequestPlugin : public plugin::IPlugin<request::ID,
-	  void(*)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *)>
+								  void(*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>
   {
   public:
     virtual ~IRequestPlugin() {};
@@ -30,18 +30,17 @@ namespace	request
   public:
     virtual IPlugin	*clone() = 0;
     virtual void	unload() = 0;
-	virtual void	setActions(std::map<request::ID, void(*)(const std::list<IClient::Pointer> &,
-									Database &,
-								  IClient::Pointer,
-								  const ARequest *)> &) = 0;
-    virtual void	getVersion(plugin::version::major &,
-				   plugin::version::minor &) const = 0;
-  };
+    virtual void	setActions(std::map<request::ID, void(*)(const std::list<IClient::Pointer> &,
+								 IClient::Pointer,
+								 const ARequest *)> &) = 0;
+  virtual void	getVersion(plugin::version::major &,
+			   plugin::version::minor &) const = 0;
+};
 } // !request
 
 extern	"C"
 {
-  PLUGIN_DLL_EXPORT request::IRequestPlugin	*loadPlugin(void);
+  PLUGIN_DLL_EXPORT request::IRequestPlugin	*loadPlugin(Database &);
 }
 
 #endif /* IREQUESTPLUGIN_H_ */

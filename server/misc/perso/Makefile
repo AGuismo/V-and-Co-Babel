@@ -8,12 +8,14 @@ PROT.DIR=	../../../protocol/
 SERIALIZER.DIR=	../../../serializer/
 DATABASE.DIR=	../../database
 INSTALL.DIR=	../lib
+INIPARSER.DIR=	../../../IniParser
 
 DEPS.INC=
 DEPS.LNK=
 
 MOD.INC=	-I$(SERVER.DIR)/include -I$(API.DIR) -I$(PROT.DIR)/include -I$(SERIALIZER.DIR)/include
 MOD.INC+=	-I$(DATABASE.DIR)/include
+MOD.INC+=	-I$(INIPARSER.DIR)/include
 MOD.LNK=
 
 F.C	     +=	-W -Wall -fPIC

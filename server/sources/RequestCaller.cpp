@@ -20,7 +20,7 @@ namespace	request
 
     if (it == _calls.end())
       return (false);
-    it->second(_clients, _database, client, req);
+    it->second(_clients, client, req);
     return (true);
   }
 }

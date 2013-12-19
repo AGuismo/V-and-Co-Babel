@@ -157,3 +157,13 @@ void	Client::async_write(const IClient::buffer &buff)
 				       boost::asio::placeholders::error,
 				       boost::asio::placeholders::bytes_transferred));
 }
+
+void	Client::updateAutoAnswer(const request::Stream &stream)
+{
+  InfosClient._autoAnswer += stream;
+}
+
+void	Client::cleanAutoAnswer()
+{
+  InfosClient._autoAnswer.clear();
+}

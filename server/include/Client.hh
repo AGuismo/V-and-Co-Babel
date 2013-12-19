@@ -14,62 +14,68 @@ class	Server;
 class Client : public IClient
 {
 public:
-	static const int					DEFAULT_SIZE = 1024;
-	typedef boost::shared_ptr<Client>	Pointer;
+  static const int					DEFAULT_SIZE = 1024;
+  typedef boost::shared_ptr<Client>	Pointer;
 
 private:
-	Client(boost::asio::io_service &service, Server *);
+  Client(boost::asio::io_service &service, Server *);
 
 public:
-	static IClient::Pointer create(boost::asio::io_service& io_service, Server *);
-	virtual		~Client();
-	void		async_read();
+  static IClient::Pointer create(boost::asio::io_service& io_service, Server *);
+  virtual		~Client();
+  void		async_read();
 
 private:
-	bool		unserialize_data(IClient::buffer &buff);
-	void		handle_request(const ARequest *req);
-	void		handle_write(const boost::system::error_code& error,
-							std::size_t bytes_transferred);
-	void		handle_read(const boost::system::error_code& error,
-							std::size_t bytes_transferred);
+  bool		unserialize_data(IClient::buffer &buff);
+  void		handle_request(const ARequest *req);
+  void		handle_write(const boost::system::error_code& error,
+			     std::size_t bytes_transferred);
+  void		handle_read(const boost::system::error_code& error,
+			    std::size_t bytes_transferred);
 
 public:
-	bool		serialize_data(const ARequest &req);
-	void		start();
-	void		async_write(const IClient::buffer &);
+  bool				serialize_data(const ARequest &req);
+  void				start();
+  void				async_write(const IClient::buffer &);
 
-	const request::Username	&Username() const { return (InfosClient._name); };
-	void					Username(const request::Username &uname) { InfosClient._name = uname; };
-	bool					Authenticated() const { return (InfosClient._isConnect); };
-	void					Authenticated(bool auth) { InfosClient._isConnect = auth; };
-	request::Privacy		privacy() const { return (InfosClient._privacy); };
-	void					privacy(request::Privacy privacy) { InfosClient._privacy = privacy; };
-	request::Status			status() const { return (InfosClient._status); };
-	void					status(request::Status status) { InfosClient._status = status; };
-	request::IP				IP() const { return (_socket.remote_endpoint().address().to_v4().to_ulong()); };
+  const request::Username	&Username() const { return (InfosClient._name); };
+  void				Username(const request::Username &uname) { InfosClient._name = uname; };
+  bool				Authenticated() const { return (InfosClient._isConnect); };
+  void				Authenticated(bool auth) { InfosClient._isConnect = auth; };
+  request::Privacy		privacy() const { return (InfosClient._privacy); };
+  void				privacy(request::Privacy privacy) { InfosClient._privacy = privacy; };
+  request::Status		status() const { return (InfosClient._status); };
+  void				status(request::Status status) { InfosClient._status = status; };
+  request::IP			IP() const { return (_socket.remote_endpoint().address().to_v4().to_ulong()); };
+  const request::Stream		&AutoAnswer() const { return (InfosClient._autoAnswer);};
+  void				updateAutoAnswer(const request::Stream &);
+  void				cleanAutoAnswer();
+  Serializer			&serializeAnswer() { return (_serializeAnswer);};
 
-	tcp::socket	&socket();
-	IClient::Pointer	share();
+  tcp::socket	&socket();
+  IClient::Pointer	share();
 
 private:
-	Client(Client const&);
-	Client& operator=(Client const&);
+  Client(Client const&);
+  Client& operator=(Client const&);
 
 private:
-	boost::asio::io_service	&_service;
-	buffer			_input;
-	buffer			_bufferised;
-	buffer			_output;
-	tcp::socket			_socket;
-	Server			*_server;
+  boost::asio::io_service	&_service;
+  buffer			_input;
+  buffer			_bufferised;
+  buffer			_output;
+  tcp::socket			_socket;
+  Server			*_server;
+  Serializer			_serializeAnswer;
 
 public:
-	struct
-	{
-		bool			_isConnect;
-		std::string			_name;
-		request::Privacy		_privacy;
-		request::Status		_status;
-	}				InfosClient;
+  struct
+  {
+    bool			_isConnect;
+    std::string	       		_name;
+    request::Privacy		_privacy;
+    request::Status		_status;
+    request::Stream		_autoAnswer;
+  }				InfosClient;
 };
 #endif /* CLIENT_H_ */

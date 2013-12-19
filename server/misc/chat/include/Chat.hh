@@ -16,14 +16,13 @@ public:
   IPlugin	*clone();
   void		unload();
   void		setActions(std::map<request::ID, void (*)(const std::list<IClient::Pointer> &,
-								Database &,
 								IClient::Pointer,
 								const ARequest *)> &);
   void		getVersion(plugin::version::major &maj, plugin::version::minor &min) const;
 
 private:
-  static void	message(const std::list<IClient::Pointer> &, Database &,
-			IClient::Pointer sender, const ARequest *req);
+  void	message(const std::list<IClient::Pointer> &,
+		IClient::Pointer sender, const ARequest *req);
 
 public:
   Chat(Chat const&);

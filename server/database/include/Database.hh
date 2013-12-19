@@ -19,6 +19,8 @@ class Database : public IDatabase
 public:
   Database();
   virtual ~Database();
+  Database(Database const&);
+  Database& operator=(Database const&);
 
 public:
   bool		loadFile(const std::string path);
@@ -35,7 +37,7 @@ public:
 			  const request::Rights right_level = request::User::USER,
 			  const request::Privacy privacy = request::User::PRIVATE,
 			  const request::Status status = request::User::Status::DISCONNECTED,
-			  const std::string &statusDetail = std::string(),	
+			  const std::string &statusDetail = std::string(),
 			  bool trunc = false);
   bool		delClient(const std::string &login,
 			  const request::PasswordType &password);
@@ -61,9 +63,6 @@ public:
   template <typename Request>
   bool		delRequest(const request::Username &login, const Request &req);
 
-private:
-  Database(Database const&);
-  Database& operator=(Database const&);
 
 public:
   Serializer &	save(Serializer &);

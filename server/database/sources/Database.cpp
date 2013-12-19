@@ -16,6 +16,17 @@ Database::~Database()
 
 }
 
+Database::Database(const Database &src):
+  _maxIdClient(src._maxIdClient), _clients(src._clients)
+{
+}
+
+Database	&Database::operator=(const Database &src)
+{
+  _maxIdClient = src._maxIdClient;
+  _clients = src._clients;
+  return (*this);
+}
 bool			Database::drop()
 {
   boost::mutex::scoped_lock(_lock);
