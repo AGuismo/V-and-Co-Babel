@@ -16,4 +16,5 @@ SOURCES += main.cpp
 HEADERS  += \
     ANetwork.hh \
     AGraphic.hh \
-    AApplication.hh
+    AApplication.hh \
+    Function.hpp
