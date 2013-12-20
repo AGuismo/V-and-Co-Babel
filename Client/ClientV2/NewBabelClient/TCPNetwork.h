@@ -7,9 +7,9 @@
 
 class TCPNetwork: public QObject, public ANetwork
 {
+  Q_OBJECT
 public:
   TCPNetwork();
-  ~TCPNetwork();
 
 public:
   void  init();
@@ -18,7 +18,7 @@ public:
 public:
   void  tryConnect(unsigned short port, const std::string &ipAddress);
 
-private slots:
+public slots:
   void  onRead();
 
 private:

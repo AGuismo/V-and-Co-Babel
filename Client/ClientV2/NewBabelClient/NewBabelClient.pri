@@ -12,10 +12,10 @@ HEADERS += ./Graphic.h  \
         ./AApplication.hh   \
         ./ANetwork.hh       \
         ./Function.hpp \
-    TCPNetwork.hh \
     Application.hh \
     IApplication.hh \
-    ConnectWindow.h
+    ConnectWindow.h \
+    TCPNetwork.h
 SOURCES += ./Graphic.cpp \
     ./main.cpp \
     ./AGraphic.cpp \

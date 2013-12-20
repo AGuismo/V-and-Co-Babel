@@ -1,12 +1,7 @@
-#include  "TCPNetwork.hh"
+#include  "TCPNetwork.h"
 #include  <QtNetwork>
 
 TCPNetwork::TCPNetwork()
-{
-
-}
-
-TCPNetwork::~TCPNetwork()
 {
 
 }

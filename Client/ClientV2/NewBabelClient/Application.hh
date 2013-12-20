@@ -3,7 +3,7 @@
 
 # include "IApplication.hh"
 # include "Graphic.h"
-# include "TCPNetwork.hh"
+# include "TCPNetwork.h"
 
 class Application : public IApplication
 {
@@ -13,6 +13,7 @@ public:
 
 private:
   void  triggerTryConnect(const std::string &ip, unsigned short int port);
+  void  triggerAvailableData(const std::string);
 
 public:
   void  init();
