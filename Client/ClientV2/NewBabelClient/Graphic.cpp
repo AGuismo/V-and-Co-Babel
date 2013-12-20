@@ -11,6 +11,16 @@ void					Graphic::init()
 	connect(&_connectWindow, SIGNAL(connect_try(const std::string &, unsigned short int)), this, SLOT(on_try_connect(const std::string &, unsigned short int)));
 }
 
+void					Graphic::on_connection_error(int errorFlag)
+{
+		qDebug() << "CONNECTION error : " << errorFlag;
+}
+
+void					Graphic::on_connection_success()
+{
+	qDebug() << "CONNECTION SUCCESS";
+}
+
 void					Graphic::run()
 {
   show();
