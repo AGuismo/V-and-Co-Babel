@@ -11,9 +11,15 @@ HEADERS += ./Graphic.h  \
             ./AGraphic.hh   \
         ./AApplication.hh   \
         ./ANetwork.hh       \
-        ./Function.hpp
+        ./Function.hpp \
+    TCPNetwork.hh \
+    Application.hh \
+    IApplication.hh
 SOURCES += ./Graphic.cpp \
     ./main.cpp \
-    ./AGraphic.cpp
+    ./AGraphic.cpp \
+    ANetwork.cpp \
+    TCPNetwork.cpp \
+    Application.cpp
 FORMS += ./Graphic.ui
 RESOURCES += Graphic.qrc

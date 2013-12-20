@@ -13,3 +13,5 @@ UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 include(NewBabelClient.pri)
 
+SOURCES +=
+

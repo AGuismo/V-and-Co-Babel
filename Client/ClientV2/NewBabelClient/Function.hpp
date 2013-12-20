@@ -405,7 +405,7 @@ struct	Function<T (P1)>
 
   T		operator()(P1 p1)
   {
-    return ((this->_call)(p1));
+    return ((*this->_call)(p1));
   }
 
   ICallable	*_call;
@@ -540,7 +540,7 @@ struct	Function<void (P1)>
 
   void		operator()(P1 p1)
   {
-    (this->_call)(p1);
+    (*this->_call)(p1);
   }
 
   ICallable	*_call;
@@ -675,7 +675,7 @@ struct	Function<T (P1, P2)>
 
   T		operator()(P1 p1, P2 p2)
   {
-    return ((this->_call)(p1, p2));
+    return ((*this->_call)(p1, p2));
   }
 
   ICallable	*_call;
@@ -810,7 +810,7 @@ struct	Function<void (P1, P2)>
 
   void		operator()(P1 p1, P2 p2)
   {
-    (this->_call)(p1, p2);
+    (*this->_call)(p1, p2);
   }
 
   ICallable	*_call;

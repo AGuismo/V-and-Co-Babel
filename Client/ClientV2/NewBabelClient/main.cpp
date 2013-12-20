@@ -1,10 +1,11 @@
-#include "Graphic.h"
+#include "Application.hh"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
-	Graphic w;
-	w.show();
-	return a.exec();
+  Application app(argc, argv);
+
+  app.init();
+  app.run();
+  app.stop();
 }

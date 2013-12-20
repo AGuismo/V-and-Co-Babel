@@ -7,26 +7,27 @@
 class ANetwork
 {
 protected:
-	Function<void ()>		_onConnectHandler();
-	Function<void (int)>	_onErrorHandler();
+	Function<void ()>		_onConnectHandler;
+	Function<void (int)>		_onErrorHandler;
 
 public:
-	virtual void			setOnConnectHandler(Function<void ()>) = 0;	
-	virtual void			setErrorHandler(Function<void (int)>) = 0;
+	virtual void			setOnConnectHandler(Function<void ()>);
+	virtual void			setErrorHandler(Function<void (int)>);
 
 public:
-	void					tryConnect(unsigned short port, std::string &ipAddress);
+	virtual void			tryConnect(unsigned short port, const std::string &ipAddress) = 0;
 
 public:
 	virtual void			init() = 0;
 	virtual void			run() = 0;
 
 public:
-	virtual					~ANetwork() {}
+	ANetwork();
+	virtual				~ANetwork();
 
 private:
 	ANetwork(const ANetwork &);
-	ANetwork				&operator=(const ANetwork &);
+	ANetwork			&operator=(const ANetwork &);
 };
 
 #endif // INETWORK_HH
