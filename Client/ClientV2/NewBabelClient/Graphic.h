@@ -22,6 +22,10 @@ public slots:
 	void			on_try_connect(const std::string &ipAddress, unsigned short int port);
 
 public:
+	void			on_connection_error(int);
+	void			on_connection_success();
+
+public:
 	void	init();
 	void	run();
 
