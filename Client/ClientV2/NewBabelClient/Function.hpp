@@ -533,7 +533,7 @@ struct	Function<void (P1)>
   {
     if (&src != this)
       {
-  	*_call = *src._call;
+        _call = src._call->clone();
       }
     return (*this);
   }
@@ -803,7 +803,7 @@ struct	Function<void (P1, P2)>
   {
     if (&src != this)
       {
-  	*_call = *src._call;
+        _call = src._call->clone();
       }
     return (*this);
   }

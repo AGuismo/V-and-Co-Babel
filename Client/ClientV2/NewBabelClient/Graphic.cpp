@@ -24,6 +24,7 @@ void					Graphic::on_connect_window_triggered()
 void					Graphic::on_try_connect(const std::string &ipAddress, unsigned short int port)
 {
 	qDebug() << "LA GROS CON " << ipAddress.c_str() << port;
+	_tryConnectHandler(port, ipAddress);
 }
 
 Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this)
