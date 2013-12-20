@@ -16,6 +16,10 @@ private:
   void  triggerTryConnect(const std::string &ip, unsigned short int port);
   void  triggerAvailableData(const std::string);
 
+private:
+  void  bufferise(const std::string &);
+  bool  handle_request();
+
 public:
   void  init();
   void  run();

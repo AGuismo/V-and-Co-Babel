@@ -39,13 +39,18 @@ void  Application::triggerTryConnect(const std::string &ip, unsigned short port)
   _tcpNetwork.tryConnect(port, ip);
 }
 
-void  Application::triggerAvailableData(const std::string data)
+void  Application::bufferise(const std::string &data)
+{
+  qDebug() << "Data Received: " << data.size();
+  _buffer.insert(_buffer.end(), data.c_str(), data.c_str() + data.size());
+
+}
+
+bool  Application::handle_request()
 {
   ARequest *req;
   int      consumed;
 
-  _buffer.insert(_buffer.end(), data.c_str(), data.c_str() + data.size());
-  qDebug() << "Data Received: " << data.size();
   try
   {
     req = Protocol::consume(_buffer, consumed);
@@ -53,8 +58,15 @@ void  Application::triggerAvailableData(const std::string data)
   catch (const Serializer::invalid_argument &e)
   {
     qDebug() << e.what();
-    return ;
+    return (false);
   }
   _buffer.erase(_buffer.begin(), _buffer.begin() + consumed);
   qDebug() << req->code();
+  return (true);
+}
+
+void  Application::triggerAvailableData(const std::string data)
+{
+  bufferise(data);
+  while (_buffer.size() && handle_request());
 }
