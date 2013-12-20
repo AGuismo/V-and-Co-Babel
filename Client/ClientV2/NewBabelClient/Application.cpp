@@ -41,5 +41,20 @@ void  Application::triggerTryConnect(const std::string &ip, unsigned short port)
 
 void  Application::triggerAvailableData(const std::string data)
 {
+  ARequest *req;
+  int      consumed;
+
+  _buffer.insert(_buffer.end(), data.c_str(), data.c_str() + data.size());
   qDebug() << "Data Received: " << data.size();
+  try
+  {
+    req = Protocol::consume(_buffer, consumed);
+  }
+  catch (const Serializer::invalid_argument &e)
+  {
+    qDebug() << e.what();
+    return ;
+  }
+  _buffer.erase(_buffer.begin(), _buffer.begin() + consumed);
+  qDebug() << req->code();
 }

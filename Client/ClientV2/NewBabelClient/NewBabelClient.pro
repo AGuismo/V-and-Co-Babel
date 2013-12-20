@@ -6,6 +6,9 @@ DEFINES += QT_MULTIMEDIA_LIB QT_MULTIMEDIAWIDGETS_LIB QT_NETWORK_LIB QT_WEBKITWI
 INCLUDEPATH += ./GeneratedFiles \
     . \
     ./GeneratedFiles/Debug \
+    ../../../serializer/include \
+    ../../../protocol/API       \
+    ../../../protocol/include   \
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/debug
 OBJECTS_DIR += debug

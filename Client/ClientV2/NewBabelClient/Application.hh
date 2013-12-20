@@ -4,6 +4,7 @@
 # include "IApplication.hh"
 # include "Graphic.h"
 # include "TCPNetwork.h"
+# include "Protocol.hpp"
 
 class Application : public IApplication
 {
@@ -25,6 +26,7 @@ private:
   QApplication  _app;
   Graphic       _graphic;
   TCPNetwork    _tcpNetwork;
+  Protocol::serialized_data _buffer;
 };
 
 #endif // APPLICATION_HH

@@ -15,14 +15,42 @@ HEADERS += ./Graphic.h  \
     Application.hh \
     IApplication.hh \
     ConnectWindow.h \
-    TCPNetwork.h
+    TCPNetwork.h \
+    ../../../protocol/API/types.hh \
+    ../../../protocol/API/RequestCode.hh \
+    ../../../protocol/API/ITransformers.hh \
+    ../../../serializer/include/Serializer.hpp \
+    ../../../serializer/include/Salt.hpp \
+    ../../../serializer/include/MD5.hh \
+    ../../../protocol/include/ServerRequest.hh \
+    ../../../protocol/include/RequestInfo.hpp \
+    ../../../protocol/include/RequestFactory.hh \
+    ../../../protocol/include/Protocol.hpp \
+    ../../../protocol/include/PersoRequest.hh \
+    ../../../protocol/include/FriendRequest.hh \
+    ../../../protocol/include/ChatRequest.hh \
+    ../../../protocol/include/CallRequest.hh \
+    ../../../protocol/include/AuthRequest.hh \
+    ../../../protocol/include/ARequest.hh
 SOURCES += ./Graphic.cpp \
     ./main.cpp \
     ./AGraphic.cpp \
     ANetwork.cpp \
     TCPNetwork.cpp \
     Application.cpp \
-    ConnectWindow.cpp
+    ConnectWindow.cpp \
+    ../../../serializer/sources/Serializer.cpp \
+    ../../../serializer/sources/Salt.cpp \
+    ../../../serializer/sources/MD5.cpp \
+    ../../../protocol/sources/ServerRequest.cpp \
+    ../../../protocol/sources/RequestFactory.cpp \
+    ../../../protocol/sources/Protocol.cpp \
+    ../../../protocol/sources/PersoRequest.cpp \
+    ../../../protocol/sources/FriendRequest.cpp \
+    ../../../protocol/sources/ChatRequest.cpp \
+    ../../../protocol/sources/CallRequest.cpp \
+    ../../../protocol/sources/AuthRequest.cpp \
+    ../../../protocol/sources/ARequest.cpp
 FORMS += ./Graphic.ui \
     ConnectWindow.ui
 RESOURCES += Graphic.qrc
