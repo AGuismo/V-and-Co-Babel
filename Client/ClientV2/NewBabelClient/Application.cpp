@@ -41,5 +41,5 @@ void  Application::triggerTryConnect(const std::string &ip, unsigned short port)
 
 void  Application::triggerAvailableData(const std::string data)
 {
-  std::cout << "Data Received: " << data.size() << std::endl;
+  qDebug() << "Data Received: " << data.size();
 }

@@ -1,5 +1,8 @@
-#include "Application.hh"
-#include <QtWidgets/QApplication>
+#include		"Application.hh"
+#include		<QtWidgets/QApplication>
+#include		"Salt.hpp"
+
+Salt::size_type	Salt::SALT = 42;
 
 int main(int argc, char *argv[])
 {

@@ -33,6 +33,12 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Source Files\Protocol">
+      <UniqueIdentifier>{48fb613f-228e-4891-9abd-87518032f75c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Serializer">
+      <UniqueIdentifier>{751a2805-9ebf-41be-8109-a624b9e59209}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,6 +77,48 @@
     <ClCompile Include="TCPNetwork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_TCPNetwork.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_TCPNetwork.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\protocol\sources\ARequest.cpp">
+      <Filter>Source Files\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\protocol\sources\AuthRequest.cpp">
+      <Filter>Source Files\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\protocol\sources\CallRequest.cpp">
+      <Filter>Source Files\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\protocol\sources\ChatRequest.cpp">
+      <Filter>Source Files\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\protocol\sources\FriendRequest.cpp">
+      <Filter>Source Files\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\protocol\sources\PersoRequest.cpp">
+      <Filter>Source Files\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\protocol\sources\Protocol.cpp">
+      <Filter>Source Files\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\protocol\sources\RequestFactory.cpp">
+      <Filter>Source Files\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\protocol\sources\ServerRequest.cpp">
+      <Filter>Source Files\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\serializer\sources\MD5.cpp">
+      <Filter>Source Files\Serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\serializer\sources\Salt.cpp">
+      <Filter>Source Files\Serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\serializer\sources\Serializer.cpp">
+      <Filter>Source Files\Serializer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Graphic.h">
@@ -87,6 +135,9 @@
     </CustomBuild>
     <CustomBuild Include="ConnectWindow.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="TCPNetwork.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -111,9 +162,6 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Application.hh">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="TCPNetwork.hh">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
