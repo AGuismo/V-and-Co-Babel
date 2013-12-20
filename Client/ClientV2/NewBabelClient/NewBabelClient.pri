@@ -14,12 +14,15 @@ HEADERS += ./Graphic.h  \
         ./Function.hpp \
     TCPNetwork.hh \
     Application.hh \
-    IApplication.hh
+    IApplication.hh \
+    ConnectWindow.h
 SOURCES += ./Graphic.cpp \
     ./main.cpp \
     ./AGraphic.cpp \
     ANetwork.cpp \
     TCPNetwork.cpp \
-    Application.cpp
-FORMS += ./Graphic.ui
+    Application.cpp \
+    ConnectWindow.cpp
+FORMS += ./Graphic.ui \
+    ConnectWindow.ui
 RESOURCES += Graphic.qrc
