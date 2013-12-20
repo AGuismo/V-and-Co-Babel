@@ -7,8 +7,13 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./Graphic.h
+HEADERS += ./Graphic.h  \
+            ./AGraphic.hh   \
+        ./AApplication.hh   \
+        ./ANetwork.hh       \
+        ./Function.hpp
 SOURCES += ./Graphic.cpp \
-    ./main.cpp
+    ./main.cpp \
+    ./AGraphic.cpp
 FORMS += ./Graphic.ui
 RESOURCES += Graphic.qrc
