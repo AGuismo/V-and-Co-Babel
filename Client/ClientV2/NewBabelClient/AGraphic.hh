@@ -7,10 +7,10 @@
 class AGraphic
 {
 protected:
-	Function<void (unsigned short, std::string &)>	_tryConnectHandler();
+	Function<void (unsigned short, std::string)>	_tryConnectHandler;
 
 public:
-	virtual void									setTryConnectHandler(Function<void (unsigned short, std::string)>) = 0;
+	virtual void									setTryConnectHandler(Function<void (unsigned short, std::string)>);
 
 public:
 	virtual void									init() = 0;
