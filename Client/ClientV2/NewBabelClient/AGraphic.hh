@@ -1,8 +1,8 @@
 #ifndef AGRAPHIC_HH
 #define AGRAPHIC_HH
 
-
 # include		<iostream>
+# include		"Function.hpp"
 
 class AGraphic
 {
@@ -17,6 +17,7 @@ public:
 	virtual void									run() = 0;
 
 public:
+	AGraphic() {}
 	virtual											~AGraphic() {}
 
 private:

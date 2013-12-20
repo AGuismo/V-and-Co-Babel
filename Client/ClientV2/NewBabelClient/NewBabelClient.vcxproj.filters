@@ -50,6 +50,9 @@
     <ClCompile Include="GeneratedFiles\qrc_Graphic.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="AGraphic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Graphic.h">
@@ -65,6 +68,9 @@
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_Graphic.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

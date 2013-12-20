@@ -1,10 +1,11 @@
 #ifndef GRAPHIC_H
 #define GRAPHIC_H
 
-#include <QtWidgets/QMainWindow>
-#include "ui_Graphic.h"
+#include		<QtWidgets/QMainWindow>
+#include		"ui_Graphic.h"
+#include		"AGraphic.hh"
 
-class Graphic : public QMainWindow
+class Graphic : public QMainWindow//, public AGraphic
 {
 	Q_OBJECT
 

@@ -2,6 +2,7 @@
 # define ANETWORK_HH
 
 # include		<iostream>
+# include		"Function.hpp"
 
 class ANetwork
 {

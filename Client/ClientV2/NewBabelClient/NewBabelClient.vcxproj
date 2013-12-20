@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AGraphic.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_Graphic.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -116,6 +117,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Function.hpp" />
     <ClInclude Include="GeneratedFiles\ui_Graphic.h" />
   </ItemGroup>
   <ItemGroup>
