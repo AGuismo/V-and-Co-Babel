@@ -1,5 +1,5 @@
 #include  "TCPNetwork.hh"
-#include  <QDebug>
+#include  <QtNetwork>
 
 TCPNetwork::TCPNetwork()
 {
@@ -13,7 +13,7 @@ TCPNetwork::~TCPNetwork()
 
 void  TCPNetwork::init()
 {
-
+  QObject::connect(&_sock, SIGNAL(readyRead()), this, SLOT(onRead()));
 }
 
 void  TCPNetwork::run()
@@ -29,4 +29,11 @@ void  TCPNetwork::tryConnect(unsigned short port, const std::string &ipAddress)
     _onConnectHandler();
   else
     _onErrorHandler((int)_sock.error());
+}
+
+void  TCPNetwork::onRead()
+{
+  QByteArray  bytes = _sock.readAll();
+
+  _onAvailableData(std::string(bytes.data(), bytes.size()));
 }

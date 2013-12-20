@@ -7,12 +7,14 @@
 class ANetwork
 {
 protected:
-	Function<void ()>		_onConnectHandler;
-	Function<void (int)>		_onErrorHandler;
+	Function<void ()>			_onConnectHandler;
+	Function<void (int)>			_onErrorHandler;
+	Function<void (const std::string)>	_onAvailableData;
 
 public:
 	virtual void			setOnConnectHandler(Function<void ()>);
 	virtual void			setErrorHandler(Function<void (int)>);
+	virtual void			setAvailableData(Function<void (const std::string)>);
 
 public:
 	virtual void			tryConnect(unsigned short port, const std::string &ipAddress) = 0;
