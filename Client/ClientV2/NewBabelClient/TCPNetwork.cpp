@@ -16,6 +16,22 @@ void  TCPNetwork::run()
 
 }
 
+void	TCPNetwork::translateError()
+{
+  switch (_sock.error())
+    {
+    case QAbstractSocket::ConnectionRefusedError:
+      _onErrorHandler(ANetwork::ECONNREFUSED);
+      break;
+    case QAbstractSocket::SocketTimeoutError:
+      _onErrorHandler(ANetwork::ETIMEDOUT);
+      break;
+    default:
+      _onErrorHandler(ANetwork::EUNKNOWN);
+      break;
+    }
+}
+
 void  TCPNetwork::tryConnect(unsigned short port, const std::string &ipAddress)
 {
   qDebug() << ipAddress.c_str() << ":" << port;
@@ -23,7 +39,7 @@ void  TCPNetwork::tryConnect(unsigned short port, const std::string &ipAddress)
   if (_sock.waitForConnected(300))
     _onConnectHandler();
   else
-    _onErrorHandler((int)_sock.error());
+    translateError();
 }
 
 void  TCPNetwork::onRead()

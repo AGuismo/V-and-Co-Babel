@@ -6,30 +6,40 @@
 
 class ANetwork
 {
+public:
+  enum	SocketState
+    {
+      CONNECTED = 0,
+      ECONNREFUSED = 1,
+      ETIMEDOUT = 2,
+      EHANDSHAKE = 3,
+      EUNKNOWN = 4
+    };
+
 protected:
-	Function<void ()>			_onConnectHandler;
-	Function<void (int)>			_onErrorHandler;
-	Function<void (const std::string)>	_onAvailableData;
+  Function<void ()>				_onConnectHandler;
+  Function<void (enum ANetwork::SocketState)>	_onErrorHandler;
+  Function<void (const std::string)>		_onAvailableData;
 
 public:
-	virtual void			setOnConnectHandler(Function<void ()>);
-	virtual void			setErrorHandler(Function<void (int)>);
-	virtual void			setAvailableData(Function<void (const std::string)>);
+  virtual void			setOnConnectHandler(Function<void ()>);
+  virtual void			setErrorHandler(Function<void (enum ANetwork::SocketState)>);
+  virtual void			setAvailableData(Function<void (const std::string)>);
 
 public:
-	virtual void			tryConnect(unsigned short port, const std::string &ipAddress) = 0;
+  virtual void			tryConnect(unsigned short port, const std::string &ipAddress) = 0;
 
 public:
-	virtual void			init() = 0;
-	virtual void			run() = 0;
+  virtual void			init() = 0;
+  virtual void			run() = 0;
 
 public:
-	ANetwork();
-	virtual				~ANetwork();
+  ANetwork();
+  virtual				~ANetwork();
 
 private:
-	ANetwork(const ANetwork &);
-	ANetwork			&operator=(const ANetwork &);
+  ANetwork(const ANetwork &);
+  ANetwork			&operator=(const ANetwork &);
 };
 
 #endif // INETWORK_HH

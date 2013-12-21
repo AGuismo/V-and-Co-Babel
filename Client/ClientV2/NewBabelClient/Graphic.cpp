@@ -11,9 +11,9 @@ void					Graphic::init()
 	connect(&_connectWindow, SIGNAL(connect_try(const std::string &, unsigned short int)), this, SLOT(on_try_connect(const std::string &, unsigned short int)));
 }
 
-void					Graphic::on_connection_error(int errorFlag)
+void					Graphic::on_connection_error(enum ANetwork::SocketState state)
 {
-		qDebug() << "CONNECTION error : " << errorFlag;
+  qDebug() << "CONNECTION error : " << (int)state;
 }
 
 void					Graphic::on_connection_success()

@@ -16,7 +16,7 @@ void  Application::init()
 
   _tcpNetwork.init();
   _graphic.init();
-  _tcpNetwork.setErrorHandler(Function<void (int)>(&Graphic::on_connection_error, &_graphic));
+  _tcpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Graphic::on_connection_error, &_graphic));
   _tcpNetwork.setOnConnectHandler(Function<void ()>(&Graphic::on_connection_success, &_graphic));
   _tcpNetwork.setAvailableData(Function<void (const std::string)>(&Application::triggerAvailableData, this));
   _graphic.setTryConnectHandler(Function<void (unsigned short, const std::string &)>(&TCPNetwork::tryConnect, &_tcpNetwork));

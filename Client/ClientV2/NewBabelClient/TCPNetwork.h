@@ -22,6 +22,9 @@ public slots:
   void  onRead();
 
 private:
+  void	translateError();
+
+private:
   TCPNetwork &operator=(const TCPNetwork &);
   TCPNetwork(const TCPNetwork &);
 
