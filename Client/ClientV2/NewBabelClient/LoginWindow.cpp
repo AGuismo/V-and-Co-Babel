@@ -20,7 +20,7 @@ void				LoginWindow::on_login_button_clicked()
 	emit(login_try(ui.loginLineEdit->text().toStdString(), ui.passwordLineEdit->text().toStdString()));
 }
 
-void				LoginWindow::displayLoginResponse(QString &response)
+void				LoginWindow::displayLoginResponse(const QString &response)
 {
 	ui.serverResponseLabel->setText(response);
 }

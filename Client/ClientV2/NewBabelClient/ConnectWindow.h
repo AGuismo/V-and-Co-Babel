@@ -12,7 +12,7 @@ private:
 	Ui::ConnectWindow			ui;
 
 public:
-	void						displayConnectResponse(QString &response);
+	void						displayConnectResponse(const QString &response);
 
 public:
 	ConnectWindow(QWidget *parent = 0);

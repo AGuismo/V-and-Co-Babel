@@ -2,6 +2,7 @@
 # define ANETWORK_HH
 
 # include		<iostream>
+# include               <vector>
 # include		"Function.hpp"
 
 class ANetwork
@@ -16,6 +17,8 @@ public:
       ERRUNKNOWN = 4
     };
 
+  typedef std::vector<unsigned char>  ByteArray;
+
 protected:
   Function<void ()>				_onConnectHandler;
   Function<void (enum ANetwork::SocketState)>	_onErrorHandler;
@@ -28,6 +31,8 @@ public:
 
 public:
   virtual void			tryConnect(unsigned short port, const std::string &ipAddress) = 0;
+  virtual void                  sendData(const ByteArray &) = 0;
+  virtual void                  closeConnection() = 0;
 
 public:
   virtual void			init() = 0;

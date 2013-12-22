@@ -31,7 +31,8 @@ HEADERS += ./Graphic.h  \
     ../../../protocol/include/ChatRequest.hh \
     ../../../protocol/include/CallRequest.hh \
     ../../../protocol/include/AuthRequest.hh \
-    ../../../protocol/include/ARequest.hh
+    ../../../protocol/include/ARequest.hh \
+    LoginWindow.h
 SOURCES += ./Graphic.cpp \
     ./main.cpp \
     ./AGraphic.cpp \
@@ -50,7 +51,9 @@ SOURCES += ./Graphic.cpp \
     ../../../protocol/sources/ChatRequest.cpp \
     ../../../protocol/sources/CallRequest.cpp \
     ../../../protocol/sources/AuthRequest.cpp \
-    ../../../protocol/sources/ARequest.cpp
+    ../../../protocol/sources/ARequest.cpp \
+    LoginWindow.cpp
 FORMS += ./Graphic.ui \
-    ConnectWindow.ui
+    ConnectWindow.ui \
+    LoginWindow.ui
 RESOURCES += Graphic.qrc

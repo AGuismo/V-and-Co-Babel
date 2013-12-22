@@ -26,40 +26,40 @@ class Ui_LoginWindow
 {
 public:
     QGridLayout *gridLayout;
-    QLabel *label;
-    QLabel *label_2;
+    QLabel *loginLabel;
+    QLabel *passwordLabel;
     QLineEdit *loginLineEdit;
     QLineEdit *passwordLineEdit;
     QLabel *serverResponseLabel;
     QPushButton *closePushButton;
     QPushButton *loginPushButton;
-    QLabel *label_4;
+    QLabel *loginTitleLabel;
 
     void setupUi(QDialog *LoginWindow)
     {
         if (LoginWindow->objectName().isEmpty())
             LoginWindow->setObjectName(QStringLiteral("LoginWindow"));
-        LoginWindow->resize(235, 118);
+        LoginWindow->resize(239, 118);
         gridLayout = new QGridLayout(LoginWindow);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        label = new QLabel(LoginWindow);
-        label->setObjectName(QStringLiteral("label"));
+        loginLabel = new QLabel(LoginWindow);
+        loginLabel->setObjectName(QStringLiteral("loginLabel"));
         QFont font;
         font.setPointSize(10);
-        label->setFont(font);
+        loginLabel->setFont(font);
 
-        gridLayout->addWidget(label, 1, 0, 1, 1);
+        gridLayout->addWidget(loginLabel, 1, 0, 1, 1);
 
-        label_2 = new QLabel(LoginWindow);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        passwordLabel = new QLabel(LoginWindow);
+        passwordLabel->setObjectName(QStringLiteral("passwordLabel"));
         QFont font1;
         font1.setFamily(QStringLiteral("MS UI Gothic"));
         font1.setPointSize(10);
-        label_2->setFont(font1);
+        passwordLabel->setFont(font1);
 
-        gridLayout->addWidget(label_2, 2, 0, 1, 1);
+        gridLayout->addWidget(passwordLabel, 2, 0, 1, 1);
 
         loginLineEdit = new QLineEdit(LoginWindow);
         loginLineEdit->setObjectName(QStringLiteral("loginLineEdit"));
@@ -92,17 +92,17 @@ public:
 
         gridLayout->addWidget(loginPushButton, 3, 2, 1, 1);
 
-        label_4 = new QLabel(LoginWindow);
-        label_4->setObjectName(QStringLiteral("label_4"));
+        loginTitleLabel = new QLabel(LoginWindow);
+        loginTitleLabel->setObjectName(QStringLiteral("loginTitleLabel"));
         QFont font3;
         font3.setFamily(QStringLiteral("MS UI Gothic"));
         font3.setPointSize(14);
         font3.setBold(true);
         font3.setWeight(75);
-        label_4->setFont(font3);
-        label_4->setAlignment(Qt::AlignCenter);
+        loginTitleLabel->setFont(font3);
+        loginTitleLabel->setAlignment(Qt::AlignCenter);
 
-        gridLayout->addWidget(label_4, 0, 0, 1, 3);
+        gridLayout->addWidget(loginTitleLabel, 0, 0, 1, 3);
 
 
         retranslateUi(LoginWindow);
@@ -113,12 +113,12 @@ public:
     void retranslateUi(QDialog *LoginWindow)
     {
         LoginWindow->setWindowTitle(QApplication::translate("LoginWindow", "LoginWindow", 0));
-        label->setText(QApplication::translate("LoginWindow", "Login :", 0));
-        label_2->setText(QApplication::translate("LoginWindow", "Password :", 0));
+        loginLabel->setText(QApplication::translate("LoginWindow", "Login :", 0));
+        passwordLabel->setText(QApplication::translate("LoginWindow", "Password :", 0));
         serverResponseLabel->setText(QString());
         closePushButton->setText(QApplication::translate("LoginWindow", "Close", 0));
         loginPushButton->setText(QApplication::translate("LoginWindow", "Log in", 0));
-        label_4->setText(QApplication::translate("LoginWindow", "Login", 0));
+        loginTitleLabel->setText(QApplication::translate("LoginWindow", "Login", 0));
     } // retranslateUi
 
 };

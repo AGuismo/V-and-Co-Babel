@@ -12,20 +12,20 @@ void					Graphic::init()
 	// Connection try triggered
 	connect(&_connectWindow, SIGNAL(connect_try(const std::string &, unsigned short int)), this, SLOT(on_try_connect(const std::string &, unsigned short int)));
 	// Login try triggered
-	connect(&_loginWindow, SIGNAL(login_try(const std::string &, std::string &)), this, SLOT(on_try_login(const std::string &, std::string &)));
+	connect(&_loginWindow, SIGNAL(login_try(const std::string &, const std::string &)), this, SLOT(on_try_login(const std::string &, const std::string &)));
 }
 
 void					Graphic::on_connection_error(enum ANetwork::SocketState state)
 {
   switch (state)
   {
-	case 1:
+        case ANetwork::ERRCONNREFUSED:
 		_connectWindow.displayConnectResponse(QString("Connection refused"));
 		break;
-	case 2:
+	case ANetwork::ERRTIMEDOUT:
 		_connectWindow.displayConnectResponse(QString("Connection timed out"));
 		break;
-	case 3:
+	case ANetwork::ERRHANDSHAKE:
 		_connectWindow.displayConnectResponse(QString("Handshake error"));
 		break;
 	default:
@@ -39,6 +39,19 @@ void					Graphic::on_connection_success()
 {
   _connectWindow.displayConnectResponse(QString("Connected"));
   ui.actionLogin->setEnabled(true);
+  ui.actionConnect->setEnabled(false);
+}
+
+void					Graphic::on_login_success()
+{
+  _loginWindow.displayLoginResponse(QString("Logged in"));
+  ui.actionLog_out->setEnabled(true);
+  ui.actionLogin->setEnabled(false);
+}
+
+void                                    Graphic::on_login_error(const std::string &error)
+{
+  _loginWindow.displayLoginResponse(QString(error.c_str()));
 }
 
 void					Graphic::run()
@@ -61,10 +74,10 @@ void					Graphic::on_try_connect(const std::string &ipAddress, unsigned short in
 	_tryConnectHandler(port, ipAddress);
 }
 
-void					Graphic::on_try_login(const std::string &login, std::string &password)
+void					Graphic::on_try_login(const std::string &login, const std::string &password)
 {
 	qDebug() << login.c_str() << password.c_str();
-	//HANDLER HERE
+	_tryAuthentificationHandler(login, password);
 }
 
 Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this)

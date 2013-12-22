@@ -13,7 +13,7 @@ protected:
   Function<void (unsigned short, const std::string &)>				_tryConnectHandler;
 
   // Authentification
-  Function<void (const request::Username &, const request::PasswordType &)>	_authenticationHandler;
+  Function<void (const request::Username &, const request::PasswordType &)>	_tryAuthentificationHandler;
 
   // Personal changes
 
@@ -30,7 +30,7 @@ public:
   virtual void		setTryConnectHandler(Function<void (unsigned short, const std::string &)>);
 
   // Authentification
-  //virtual void		setAuthentication(Function<void (const request::Username &, const request::PasswordType &)>);
+  virtual void		setTryAuthentificationHandler(Function<void (const request::Username &, const request::PasswordType &)>);
 
   // Personal changes
 
