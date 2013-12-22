@@ -1,5 +1,5 @@
 #include		"Application.hh"
-#include		<QtWidgets/QApplication>
+#include		<QApplication>
 #include		"Salt.hpp"
 
 Salt::size_type	Salt::SALT = 42;

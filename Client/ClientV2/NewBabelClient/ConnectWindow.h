@@ -12,6 +12,9 @@ private:
 	Ui::ConnectWindow			ui;
 
 public:
+	void						displayConnectResponse(QString &response);
+
+public:
 	ConnectWindow(QWidget *parent = 0);
 	~ConnectWindow() {}
 

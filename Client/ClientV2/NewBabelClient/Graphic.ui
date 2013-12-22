@@ -381,6 +381,7 @@
     </property>
     <addaction name="actionConnect"/>
     <addaction name="actionLogin"/>
+    <addaction name="actionLog_out"/>
    </widget>
    <widget class="QMenu" name="menuManage_account">
     <property name="title">
@@ -419,6 +420,9 @@
    </property>
   </action>
   <action name="actionCreate_account">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Create account</string>
    </property>
@@ -428,7 +432,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Login</string>
+    <string>Log in</string>
    </property>
   </action>
   <action name="actionExit">
@@ -482,6 +486,14 @@
    </property>
    <property name="text">
     <string>Delete friend</string>
+   </property>
+  </action>
+  <action name="actionLog_out">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Log out</string>
    </property>
   </action>
  </widget>

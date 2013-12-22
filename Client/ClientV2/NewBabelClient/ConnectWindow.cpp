@@ -19,3 +19,8 @@ void					ConnectWindow::on_connect_button_clicked()
 {
 	emit(connect_try(ui.ipLineEdit->text().toStdString(), ui.portTcpLineEdit->text().toInt()));
 }
+
+void					ConnectWindow::displayConnectResponse(QString &response)
+{
+	ui.serverResponseLabel->setText(response);
+}
