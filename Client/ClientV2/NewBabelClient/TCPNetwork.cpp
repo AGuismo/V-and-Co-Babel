@@ -21,13 +21,13 @@ void	TCPNetwork::translateError()
   switch (_sock.error())
     {
     case QAbstractSocket::ConnectionRefusedError:
-      _onErrorHandler(ANetwork::ECONNREFUSED);
+      _onErrorHandler(ANetwork::ERRCONNREFUSED);
       break;
     case QAbstractSocket::SocketTimeoutError:
-      _onErrorHandler(ANetwork::ETIMEDOUT);
+      _onErrorHandler(ANetwork::ERRTIMEDOUT);
       break;
     default:
-      _onErrorHandler(ANetwork::EUNKNOWN);
+      _onErrorHandler(ANetwork::ERRUNKNOWN);
       break;
     }
 }

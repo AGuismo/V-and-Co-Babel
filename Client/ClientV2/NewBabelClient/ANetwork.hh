@@ -10,10 +10,10 @@ public:
   enum	SocketState
     {
       CONNECTED = 0,
-      ECONNREFUSED = 1,
-      ETIMEDOUT = 2,
-      EHANDSHAKE = 3,
-      EUNKNOWN = 4
+      ERRCONNREFUSED = 1,
+      ERRTIMEDOUT = 2,
+      ERRHANDSHAKE = 3,
+      ERRUNKNOWN = 4
     };
 
 protected:
