@@ -90,7 +90,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">types.hh File Reference</div>  </div>
 </div><!--header-->
@@ -114,11 +115,11 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrequest_1_1options.html">request::options</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">options list  <a href="structrequest_1_1options.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrequest_1_1User.html">request::User</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structrequest_1_1User.html" title="User Class info.">User</a> Class info.  <a href="structrequest_1_1User.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrequest_1_1audio.html">request::audio</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">audio informations  <a href="structrequest_1_1audio.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrequest_1_1User_1_1Status.html">request::User::Status</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structrequest_1_1User.html" title="User Class info.">User</a> <a class="el" href="structrequest_1_1User_1_1Status.html" title="User Status Class info.">Status</a> Class info.  <a href="structrequest_1_1User_1_1Status.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrequest_1_1Status.html">request::Status</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">User <a class="el" href="structrequest_1_1Status.html" title="User Status Class info.">Status</a> Class info.  <a href="structrequest_1_1Status.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -137,7 +138,7 @@ Macros</h2></td></tr>
 <tr class="separator:aee1abda129d2bc5e70d82b0f71b8ad39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d85a7d469dadb1ec1b91ca651bb9f48"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="types_8hh.html#a9d85a7d469dadb1ec1b91ca651bb9f48">SET_MAJOR</a>(version, major)&#160;&#160;&#160;((version &amp;= 0xFF) += (major &lt;&lt; 8))</td></tr>
 <tr class="separator:a9d85a7d469dadb1ec1b91ca651bb9f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a396eac2d8e254b7d0c19607dde393e30"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="types_8hh.html#a396eac2d8e254b7d0c19607dde393e30">SET_VERSION</a>(major, minor)&#160;&#160;&#160;(major &lt;&lt; 8 + minor)</td></tr>
+<tr class="memitem:a396eac2d8e254b7d0c19607dde393e30"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="types_8hh.html#a396eac2d8e254b7d0c19607dde393e30">SET_VERSION</a>(major, minor)&#160;&#160;&#160;((major &lt;&lt; 8) + minor)</td></tr>
 <tr class="separator:a396eac2d8e254b7d0c19607dde393e30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37ba22bc96164393c81e6d38e5466924"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="types_8hh.html#a37ba22bc96164393c81e6d38e5466924">SET_OPTION</a>(option, type)&#160;&#160;&#160;(option |= type)</td></tr>
 <tr class="separator:a37ba22bc96164393c81e6d38e5466924"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,6 +146,16 @@ Macros</h2></td></tr>
 <tr class="separator:acb9ebbf401c7770d6f88af40949e107c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad860e61752b8cd8f012d360767f21506"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="types_8hh.html#ad860e61752b8cd8f012d360767f21506">GET_OPTION</a>(option, type)&#160;&#160;&#160;(option &amp; type)</td></tr>
 <tr class="separator:ad860e61752b8cd8f012d360767f21506"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89905d2e74aec72616fcdba976c3972d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="types_8hh.html#a89905d2e74aec72616fcdba976c3972d">GET_STREAM_VER</a>(data)&#160;&#160;&#160;(data &amp; 0x3)</td></tr>
+<tr class="separator:a89905d2e74aec72616fcdba976c3972d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a722466e610dc0a06fbef8b5639b3b0f1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="types_8hh.html#a722466e610dc0a06fbef8b5639b3b0f1">SET_STREAM_VER</a>(data, version)&#160;&#160;&#160;((data &amp;= ~0x3) += version)</td></tr>
+<tr class="separator:a722466e610dc0a06fbef8b5639b3b0f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5184c6035d40e07a3937c1f85126d50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="types_8hh.html#ab5184c6035d40e07a3937c1f85126d50">SET_STREAM_TYPE</a>(data, type)&#160;&#160;&#160;(data |= (type &lt;&lt; 2))</td></tr>
+<tr class="separator:ab5184c6035d40e07a3937c1f85126d50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0a02485484ef230dacff2d00cf77f56"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="types_8hh.html#ab0a02485484ef230dacff2d00cf77f56">UNSET_STREAM_TYPE</a>(data, type)&#160;&#160;&#160;(data &amp;= (~(type &lt;&lt; 2)))</td></tr>
+<tr class="separator:ab0a02485484ef230dacff2d00cf77f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e51d446c874e38a9180afbd029051eb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="types_8hh.html#a0e51d446c874e38a9180afbd029051eb">STREAM_TYPE_ISSET</a>(data, type)&#160;&#160;&#160;(((data &gt;&gt; 2) &amp; type) == type)</td></tr>
+<tr class="separator:a0e51d446c874e38a9180afbd029051eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -194,6 +205,8 @@ Typedefs</h2></td></tr>
 <tr class="separator:ae2a5baaf4d49873899374a39bb9415ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1271e0bd7064fd15f984cb98fb64669d"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="types_8hh.html#a56131728a2eedafea116a91f4c2fe995">Ruint8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest.html#a1271e0bd7064fd15f984cb98fb64669d">request::StatusDetailLen</a></td></tr>
 <tr class="separator:a1271e0bd7064fd15f984cb98fb64669d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62ceb54bfbc7291f2dbcc2b0e9225b9a"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="types_8hh.html#a56131728a2eedafea116a91f4c2fe995">Ruint8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest.html#a62ceb54bfbc7291f2dbcc2b0e9225b9a">request::NbCalls</a></td></tr>
+<tr class="separator:a62ceb54bfbc7291f2dbcc2b0e9225b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73d388e45f303511b916ffbbbc30767e"><td class="memItemLeft" align="right" valign="top">typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest.html#a73d388e45f303511b916ffbbbc30767e">request::StatusDetail</a></td></tr>
 <tr class="separator:a73d388e45f303511b916ffbbbc30767e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57687beb6dfc9672e32d32fbc5d0bb27"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="types_8hh.html#aa55dd6446a7f4ad124d9a95efef94e40">Ruint16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest.html#a57687beb6dfc9672e32d32fbc5d0bb27">request::Port</a></td></tr>
@@ -232,6 +245,18 @@ Typedefs</h2></td></tr>
 <tr class="separator:a033192da88166426bda12c021d4560f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9075a49865544b8228e3f79c490209e"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="types_8hh.html#a56131728a2eedafea116a91f4c2fe995">Ruint8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest.html#aa9075a49865544b8228e3f79c490209e">request::PingPongID</a></td></tr>
 <tr class="separator:aa9075a49865544b8228e3f79c490209e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:acef32b4db896e090a3453cf8c652f2c2"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structrequest_1_1audio.html">request::audio</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest.html#acef32b4db896e090a3453cf8c652f2c2">request::PRIVATE</a> = 0</td></tr>
+<tr class="memdesc:acef32b4db896e090a3453cf8c652f2c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">User Class info.  <a href="#acef32b4db896e090a3453cf8c652f2c2">More...</a><br/></td></tr>
+<tr class="separator:acef32b4db896e090a3453cf8c652f2c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b0fddc334d8c608d2759a3ef52ee040"><td class="memItemLeft" align="right" valign="top">static const Privacy&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest.html#a3b0fddc334d8c608d2759a3ef52ee040">request::PUBLIC</a> = 1</td></tr>
+<tr class="separator:a3b0fddc334d8c608d2759a3ef52ee040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5c3cd55eeb59f278461bf8a1ed305e2"><td class="memItemLeft" align="right" valign="top">static const Rights&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest.html#ac5c3cd55eeb59f278461bf8a1ed305e2">request::ROOT</a> = 0</td></tr>
+<tr class="separator:ac5c3cd55eeb59f278461bf8a1ed305e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a121936766b0f66e5d29d9b7407d91b20"><td class="memItemLeft" align="right" valign="top">static const Rights&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerequest.html#a121936766b0f66e5d29d9b7407d91b20">request::USER</a> = 1</td></tr>
+<tr class="separator:a121936766b0f66e5d29d9b7407d91b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Define Cross-Platform Types and typedef's. </p>
@@ -294,6 +319,23 @@ Typedefs</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Get an option describe in options struct </p>
+
+</div>
+</div>
+<a class="anchor" id="a89905d2e74aec72616fcdba976c3972d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GET_STREAM_VER</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">data</td><td>)</td>
+          <td>&#160;&#160;&#160;(data &amp; 0x3)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the stream version </p>
 
 </div>
 </div>
@@ -378,6 +420,60 @@ Typedefs</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ab5184c6035d40e07a3937c1f85126d50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SET_STREAM_TYPE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">data, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(data |= (type &lt;&lt; 2))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set types of the stream </p>
+
+</div>
+</div>
+<a class="anchor" id="a722466e610dc0a06fbef8b5639b3b0f1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SET_STREAM_VER</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">data, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">version&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;((data &amp;= ~0x3) += version)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the stream version </p>
+
+</div>
+</div>
 <a class="anchor" id="a396eac2d8e254b7d0c19607dde393e30"></a>
 <div class="memitem">
 <div class="memproto">
@@ -397,11 +493,38 @@ Typedefs</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(major &lt;&lt; 8 + minor)</td>
+          <td></td><td>&#160;&#160;&#160;((major &lt;&lt; 8) + minor)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Set the version </p>
+
+</div>
+</div>
+<a class="anchor" id="a0e51d446c874e38a9180afbd029051eb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define STREAM_TYPE_ISSET</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">data, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(((data &gt;&gt; 2) &amp; type) == type)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test if a type is currently set </p>
 
 </div>
 </div>
@@ -429,6 +552,33 @@ Typedefs</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Unset an option describe in options struct </p>
+
+</div>
+</div>
+<a class="anchor" id="ab0a02485484ef230dacff2d00cf77f56"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UNSET_STREAM_TYPE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">data, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(data &amp;= (~(type &lt;&lt; 2)))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unset stream types referenced in type </p>
 
 </div>
 </div>

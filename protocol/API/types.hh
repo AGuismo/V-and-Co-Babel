@@ -60,6 +60,12 @@ typedef double			Rdouble;	/**< Double floating point precision */
 # define	UNSET_OPTION(option, type)	(option &= ~type)			/**< Unset an option describe in options struct */
 # define	GET_OPTION(option, type)	(option & type)				/**< Get an option describe in options struct */
 
+# define	GET_STREAM_VER(data)		(data & 0x3)				/**< Get the stream version */
+# define	SET_STREAM_VER(data, version)	((data &= ~0x3) += version)		/**< Set the stream version */
+# define	SET_STREAM_TYPE(data, type)	(data |= (type << 2))			/**< Set types of the stream */
+# define	UNSET_STREAM_TYPE(data, type)	(data &= (~(type << 2)))		/**< Unset stream types referenced in type */
+# define	STREAM_TYPE_ISSET(data, type)	(((data >> 2) & type) == type)		/**< Test if a type is currently set */
+
 /** \brief request Namespace */
 namespace	request
 {
@@ -75,6 +81,7 @@ namespace	request
   typedef std::string	Message;		/**< Message type */
   typedef Ruint8	Status;			/**< Status type */
   typedef Ruint8	StatusDetailLen;	/**< Status detail Len type */
+  typedef Ruint8	NbCalls;		/**< Nb msg missed type */
   typedef std::string	StatusDetail;		/**< Status detail type */
   typedef Ruint16	Port;			/**< Port type */
   typedef Ruint32	IP;			/**< IP type */
@@ -93,7 +100,6 @@ namespace	request
   typedef Ruint16	Version;		/**< Version type */
   typedef Ruint8	Major;			/**< Major Version type */
   typedef Ruint8	Minor;			/**< Minor Version type */
-  typedef Ruint16	StreamLen;		/**< StreamLen type */
   typedef Ruint8	PingPongID;		/**< Ping-Pong id code */
   typedef Ruint32	IP;			/**< IP type */
   typedef Ruint16	Port;			/**< Port type */
@@ -117,6 +123,12 @@ namespace	request
     static const Options	AUDIO = 1;		/**< Audio Mode */
     static const Options	VIDEO = 2;		/**< Video Mode */
     static const Options	CONF = 4;		/**< Conf Mode */
+  };
+
+  /** \brief audio informations */
+  struct	audio
+  {
+    static const Major		VERSION = 1;		/**< Current audio protocol version */
   };
 
   /** \brief User Class info */
