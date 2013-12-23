@@ -39,7 +39,7 @@ public:
     {
         if (LoginWindow->objectName().isEmpty())
             LoginWindow->setObjectName(QStringLiteral("LoginWindow"));
-        LoginWindow->resize(239, 118);
+        LoginWindow->resize(298, 138);
         gridLayout = new QGridLayout(LoginWindow);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -63,11 +63,13 @@ public:
 
         loginLineEdit = new QLineEdit(LoginWindow);
         loginLineEdit->setObjectName(QStringLiteral("loginLineEdit"));
+        loginLineEdit->setMaxLength(256);
 
         gridLayout->addWidget(loginLineEdit, 1, 1, 1, 2);
 
         passwordLineEdit = new QLineEdit(LoginWindow);
         passwordLineEdit->setObjectName(QStringLiteral("passwordLineEdit"));
+        passwordLineEdit->setMaxLength(256);
 
         gridLayout->addWidget(passwordLineEdit, 2, 1, 1, 2);
 
@@ -104,6 +106,9 @@ public:
 
         gridLayout->addWidget(loginTitleLabel, 0, 0, 1, 3);
 
+        QWidget::setTabOrder(loginLineEdit, passwordLineEdit);
+        QWidget::setTabOrder(passwordLineEdit, loginPushButton);
+        QWidget::setTabOrder(loginPushButton, closePushButton);
 
         retranslateUi(LoginWindow);
 

@@ -39,13 +39,14 @@ public:
     {
         if (ConnectWindow->objectName().isEmpty())
             ConnectWindow->setObjectName(QStringLiteral("ConnectWindow"));
-        ConnectWindow->resize(267, 118);
+        ConnectWindow->resize(338, 138);
         gridLayout = new QGridLayout(ConnectWindow);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         portTcpLineEdit = new QLineEdit(ConnectWindow);
         portTcpLineEdit->setObjectName(QStringLiteral("portTcpLineEdit"));
+        portTcpLineEdit->setMaxLength(5);
 
         gridLayout->addWidget(portTcpLineEdit, 2, 1, 1, 2);
 
@@ -64,6 +65,7 @@ public:
 
         ipLineEdit = new QLineEdit(ConnectWindow);
         ipLineEdit->setObjectName(QStringLiteral("ipLineEdit"));
+        ipLineEdit->setMaxLength(15);
 
         gridLayout->addWidget(ipLineEdit, 1, 1, 1, 2);
 
@@ -105,6 +107,9 @@ public:
 
         gridLayout->addWidget(label, 0, 0, 1, 3);
 
+        QWidget::setTabOrder(ipLineEdit, portTcpLineEdit);
+        QWidget::setTabOrder(portTcpLineEdit, connectPushButton);
+        QWidget::setTabOrder(connectPushButton, closePushButton);
 
         retranslateUi(ConnectWindow);
 
@@ -114,10 +119,10 @@ public:
     void retranslateUi(QDialog *ConnectWindow)
     {
         ConnectWindow->setWindowTitle(QApplication::translate("ConnectWindow", "ConnectWindow", 0));
-        portTcpLineEdit->setText(QApplication::translate("ConnectWindow", "44201", 0));
+        portTcpLineEdit->setText(QApplication::translate("ConnectWindow", "40202", 0));
         passwordLabel->setText(QApplication::translate("ConnectWindow", "TCP Port :", 0));
         connectPushButton->setText(QApplication::translate("ConnectWindow", "Connect", 0));
-        ipLineEdit->setText(QApplication::translate("ConnectWindow", "10.23.99.149", 0));
+        ipLineEdit->setText(QApplication::translate("ConnectWindow", "127.0.0.1", 0));
         serverResponseLabel->setText(QApplication::translate("ConnectWindow", "Disconnected", 0));
         closePushButton->setText(QApplication::translate("ConnectWindow", "Close", 0));
         loginLabel->setText(QApplication::translate("ConnectWindow", "Ip Address :", 0));
