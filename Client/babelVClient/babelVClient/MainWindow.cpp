@@ -3,6 +3,8 @@
 #include		"Env.h"
 
 #include		<QDebug>
+#include		<QPixmap>
+#include		<QFrame>
 
 MainWindow::MainWindow(QWidget *parent)	: QMainWindow(parent), _connectWindow(this)
 {
@@ -23,6 +25,14 @@ MainWindow::MainWindow(QWidget *parent)	: QMainWindow(parent), _connectWindow(th
 	connect(ui.actionConnect, SIGNAL(triggered()), this, SLOT(on_connect_window_triggered()));
 	// Create account Window
 	connect(ui.actionCreate_account, SIGNAL(triggered()), this, SLOT(on_create_account_window_triggered()));
+
+	ui.centralWidget->layout()->setContentsMargins(0,0,0,0);
+ 
+	ui.frame->setStyleSheet("QFrame {border-image: url(./Img/13454_daft_punk.jpg);}");
+
+    QPixmap *pixmap_img = new QPixmap("./Img/Guyman-Helmet-Smiley-icon2.png");
+    ui.label_img->setPixmap(*pixmap_img);
+	ui.label_img_2->setPixmap(*pixmap_img);
 }
 
 void						MainWindow::send_request(ARequest *req)

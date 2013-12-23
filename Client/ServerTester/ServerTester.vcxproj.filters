@@ -45,12 +45,15 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Source Files\Protocol">
+      <UniqueIdentifier>{e3660020-c49c-4811-9cac-bf355648e207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Serializer">
+      <UniqueIdentifier>{effe92fe-a19d-45cc-9b42-f81d09d4ce5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="servertester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_servertester.cpp">
@@ -60,39 +63,42 @@
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="..\..\protocol\sources\ARequest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Protocol</Filter>
     </ClCompile>
     <ClCompile Include="..\..\protocol\sources\AuthRequest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Protocol</Filter>
     </ClCompile>
     <ClCompile Include="..\..\protocol\sources\CallRequest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Protocol</Filter>
     </ClCompile>
     <ClCompile Include="..\..\protocol\sources\ChatRequest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Protocol</Filter>
     </ClCompile>
     <ClCompile Include="..\..\protocol\sources\FriendRequest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Protocol</Filter>
     </ClCompile>
     <ClCompile Include="..\..\protocol\sources\PersoRequest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Protocol</Filter>
     </ClCompile>
     <ClCompile Include="..\..\protocol\sources\Protocol.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Protocol</Filter>
     </ClCompile>
     <ClCompile Include="..\..\protocol\sources\RequestFactory.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Protocol</Filter>
     </ClCompile>
     <ClCompile Include="..\..\protocol\sources\ServerRequest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Protocol</Filter>
     </ClCompile>
     <ClCompile Include="..\..\serializer\sources\MD5.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\serializer\sources\Salt.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\serializer\sources\Serializer.cpp">
+      <Filter>Source Files\Serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="servertester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
