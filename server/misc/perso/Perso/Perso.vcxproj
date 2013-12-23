@@ -39,12 +39,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\;$(ProjectDir)\..\..\..\..\IniParser\include</IncludePath>
     <TargetName>perso</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\;$(ProjectDir)\..\..\..\..\IniParser\include</IncludePath>
     <TargetName>perso</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>

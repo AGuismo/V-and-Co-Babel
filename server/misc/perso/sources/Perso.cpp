@@ -7,10 +7,12 @@
 #include	"PersoRequest.hh"
 #include	"ServerRequest.hh"
 #include	"types.hh"
+#include	"Database.hh"
+#include	"Env.hh"
 
 
-Perso::Perso(Database &db):
-  _db(db)
+Perso::Perso(Database &db, Env &env):
+_db(db), _env(env)
 {
 
 }
@@ -21,7 +23,7 @@ Perso::~Perso()
 }
 
 Perso::Perso(Perso const &src):
-  _db(src._db)
+_db(src._db), _env(src._env)
 {
 }
 
@@ -34,7 +36,7 @@ Perso	&Perso::operator=(Perso const &src)
   return (*this);
 }
 
-plugin::IPlugin<request::ID, void (*)(const std::list<IClient::Pointer> &, IClient::Pointer, const ARequest *)>	*Perso::clone()
+plugin::IPlugin<request::ID, plugin::request_handler>	*Perso::clone()
 {
   return (new Perso(*this));
 }
@@ -129,7 +131,7 @@ bool	Perso::createAnswerFile(IClient::Pointer sender)
     return false;
 
   sender->serializeAnswer() << sender->AutoAnswer().size();
-  sender->serializeAnswer() << sender->AutoAnswer();
+  sender->serializeAnswer().push(sender->AutoAnswer(), sender->AutoAnswer().size());
   file << sender->serializeAnswer().data();
   file.close();
   return true;
@@ -177,7 +179,7 @@ void	Perso::unset_auto_answer(const std::list<IClient::Pointer> &clients, IClien
 {
   const request::perso::client::UnsetAutoAnswer	*origin = dynamic_cast<const request::perso::client::UnsetAutoAnswer *>(req);
 
-  if ((remove("/misc/auto_answer/" + sender->Username() + ".rep").c_str()) != 0)
+  if ((remove(std::string("/misc/auto_answer/" + sender->Username() + ".rep").c_str())) != 0)
     {
 #if defined(DEBUG)
       std::cout << "Can't remove the file" << std::endl;
@@ -193,19 +195,19 @@ void	Perso::unset_auto_answer(const std::list<IClient::Pointer> &clients, IClien
     }
 }
 
-void	Perso::setActions(std::map<request::ID, void(*)(const std::list<IClient::Pointer> & IClient::Pointer, const ARequest *)> &map)
+void	Perso::setActions(std::map<request::ID, plugin::request_handler> &map)
 {
-  map[request::client::perso::PRIVACY_MODE] = &Perso::privacy_mode;
-  map[request::client::perso::STATUS] = &Perso::status;
-  map[request::client::perso::MISSED_CALLS] = &Perso::missed_calls;
-  map[request::client::perso::GET_MISSED] = &Perso::get_missed;
-  map[request::client::perso::DEL_MISSED] = &Perso::del_missed;
-  map[request::client::perso::SET_AUTO_ANSWER] = &Perso::set_auto_answer;
-  map[request::client::perso::PONG] = &Perso::pong;
-  map[request::client::perso::UNSET_AUTO_ANSWER] = &Perso::unset_auto_answer;
+  map[request::client::perso::PRIVACY_MODE] = plugin::request_handler(&Perso::privacy_mode, this);
+  map[request::client::perso::STATUS] = plugin::request_handler(&Perso::status, this);
+  map[request::client::perso::MISSED_CALLS] = plugin::request_handler(&Perso::missed_calls, this);
+  map[request::client::perso::GET_MISSED] = plugin::request_handler(&Perso::get_missed, this);
+  map[request::client::perso::DEL_MISSED] = plugin::request_handler(&Perso::del_missed, this);
+  map[request::client::perso::SET_AUTO_ANSWER] = plugin::request_handler(&Perso::set_auto_answer, this);
+  map[request::client::perso::PONG] = plugin::request_handler(&Perso::pong, this);
+  map[request::client::perso::UNSET_AUTO_ANSWER] = plugin::request_handler(&Perso::unset_auto_answer, this);
 }
 
-request::IRequestPlugin	*loadPlugin(Database &db)
+request::IRequestPlugin	*loadPlugin(Database &db, Env &env)
 {
-  return (new Perso(db));
+  return (new Perso(db, env));
 }

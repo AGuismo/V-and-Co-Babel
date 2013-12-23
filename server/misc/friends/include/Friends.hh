@@ -9,28 +9,32 @@ class	Database;
 class Friends : public request::IRequestPlugin
 {
 public:
-  Friends();
+  Friends(Database &, Env &);
   virtual ~Friends();
 
 public:
   IPlugin	*clone();
   void		unload();
-  void		setActions(std::map<request::ID, void (*)(const std::list<IClient::Pointer> &,
-								Database &,
-								IClient::Pointer,
-							  const ARequest *)> &);
+  void		setActions(std::map<request::ID, plugin::request_handler> &);
   void		getVersion(plugin::version::major &maj, plugin::version::minor &min) const;
 
 private:
-  void	request(const std::list<IClient::Pointer> &, Database &,IClient::Pointer sender, const ARequest *req);
-  void	del_friend(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
-  void	refuse(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
-  void	accept(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
-  void	list(const std::list<IClient::Pointer> &, Database &, IClient::Pointer sender, const ARequest *req);
+	static bool	searchClient(const std::list<IClient::Pointer> &clients, const std::string &name, IClient::Pointer &);
+
+private:
+  void	request(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	del_friend(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	refuse(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	accept(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	list(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
 
 public:
   Friends(Friends const&);
   Friends& operator=(Friends const&);
+
+private:
+	Database	&_db;
+	Env			&_env;
 };
 
 #endif /* FRIENDS_H_ */

@@ -160,7 +160,8 @@ void	Auth::disconnect(const std::list<IClient::Pointer> &clients, IClient::Point
 #if defined(DEBUG)
       std::cout << "Can't disconnect the client" << std::endl;
 #endif
-    }
+	  sender->serialize_data(request::server::Forbidden());
+  }
 }
 
 void	Auth::setActions(std::map<request::ID, plugin::request_handler> &map)

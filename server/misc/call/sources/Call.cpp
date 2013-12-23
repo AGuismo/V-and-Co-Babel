@@ -8,7 +8,8 @@
 #include	"types.hh"
 #include	"Server.hh"
 
-Call::Call()
+Call::Call(Database &db, Env &env) :
+_db(db), _env(env)
 {
 
 }
@@ -18,7 +19,8 @@ Call::~Call()
 
 }
 
-Call::Call(Call const &src)
+Call::Call(Call const &src):
+	_db(src._db), _env(src._env)
 {
   (void)src;
 }
@@ -32,11 +34,10 @@ Call	&Call::operator=(Call const &src)
   return (*this);
 }
 
-plugin::IPlugin<request::ID, void(*)(const std::list<IClient::Pointer> &, Database &, IClient::Pointer, const ARequest *)>	*Call::clone()
+plugin::IPlugin<request::ID, plugin::request_handler>	*Call::clone()
 {
-  return (new Call(*this));
+	return (new Call(*this));
 }
-
 void	Call::unload()
 {
   delete this;
@@ -61,7 +62,7 @@ bool	Call::searchClient(const std::list<IClient::Pointer> &clients, const std::s
   return (false);
 }
 
-void	Call::call(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
+void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::call::client::CallClient	*origin = dynamic_cast<const request::call::client::CallClient *>(req);
   IClient::Pointer				receiver;
@@ -70,12 +71,11 @@ void	Call::call(const std::list<IClient::Pointer> &clients, Database &db, IClien
   std::cout << "From : " << origin->_from << std::endl;
   std::cout << "To : " << origin->_to << std::endl;
   std::cout << "Option : " << (int)origin->_option << std::endl;
-  std::cout << (void *)(&db) << std::endl;
 
   if (sender->Authenticated() &&
       sender->status() == request::User::Status::CONNECTED &&
-      db.clientExist(origin->_from) &&
-      db.clientExist(origin->_to))
+      _db.clientExist(origin->_from) &&
+      _db.clientExist(origin->_to))
     {
 #if defined(DEBUG)
       std::cout << "Receive a call request from [" << origin->_from << "] to [" << origin->_to << "]" << std::endl;
@@ -99,7 +99,7 @@ void	Call::call(const std::list<IClient::Pointer> &clients, Database &db, IClien
   sender->serialize_data(request::server::Forbidden());
 }
 
-void	Call::accept(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
+void	Call::accept(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::call::client::AcceptClient	*origin = dynamic_cast<const request::call::client::AcceptClient *>(req);
   IClient::Pointer				receiver;
@@ -109,8 +109,8 @@ void	Call::accept(const std::list<IClient::Pointer> &clients, Database &db, ICli
   std::cout << "To : " << origin->_to << std::endl;
   if (sender->Authenticated() &&
       sender->status() == request::User::Status::CONNECTED &&
-      db.clientExist(origin->_from) &&
-      db.clientExist(origin->_to))
+      _db.clientExist(origin->_from) &&
+      _db.clientExist(origin->_to))
     {
 #if defined(DEBUG)
       std::cout << "Receive an accept request from [" << origin->_from << "] to [" << origin->_to << "]" << std::endl;
@@ -133,7 +133,7 @@ void	Call::accept(const std::list<IClient::Pointer> &clients, Database &db, ICli
   sender->serialize_data(request::server::Forbidden());
 }
 
-void	Call::refuse(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
+void	Call::refuse(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::call::client::RefuseClient	*origin = dynamic_cast<const request::call::client::RefuseClient *>(req);
   IClient::Pointer				receiver;
@@ -143,8 +143,8 @@ void	Call::refuse(const std::list<IClient::Pointer> &clients, Database &db, ICli
   std::cout << "To : " << origin->_to << std::endl;
   if (sender->Authenticated() &&
       sender->status() == request::User::Status::CONNECTED &&
-      db.clientExist(origin->_from) &&
-      db.clientExist(origin->_to))
+      _db.clientExist(origin->_from) &&
+      _db.clientExist(origin->_to))
     {
 #if defined(DEBUG)
       std::cout << "Receive a refuse request from [" << origin->_from << "] to [" << origin->_to << "]" << std::endl;
@@ -164,7 +164,7 @@ void	Call::refuse(const std::list<IClient::Pointer> &clients, Database &db, ICli
     }
 }
 
-void	Call::hangup(const std::list<IClient::Pointer> &clients, Database &db, IClient::Pointer sender, const ARequest *req)
+void	Call::hangup(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::call::client::HangupClient	*origin = dynamic_cast<const request::call::client::HangupClient *>(req);
 
@@ -174,16 +174,16 @@ void	Call::hangup(const std::list<IClient::Pointer> &clients, Database &db, ICli
 }
 
 
-void	Call::setActions(std::map<request::ID, void(*)(const std::list<IClient::Pointer> &, Database &db, IClient::Pointer, const ARequest *)> &map)
+void	Call::setActions(std::map<request::ID, plugin::request_handler> &map)
 {
-  map[request::client::call::CALL] = &Call::call;
-  map[request::client::call::ACCEPT] = &Call::accept;
-  map[request::client::call::REFUSE] = &Call::refuse;
-  map[request::client::call::HANG_UP] = &Call::hangup;
+  map[request::client::call::CALL] = plugin::request_handler(&Call::call, this);
+  map[request::client::call::ACCEPT] = plugin::request_handler(&Call::accept, this);
+  map[request::client::call::REFUSE] = plugin::request_handler(&Call::refuse, this);
+  map[request::client::call::HANG_UP] = plugin::request_handler(&Call::hangup, this);
 }
 
 
-request::IRequestPlugin	*loadPlugin()
+request::IRequestPlugin	*loadPlugin(Database &db, Env &env)
 {
-  return (new Call);
+  return (new Call(db, env));
 }

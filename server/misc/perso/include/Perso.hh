@@ -9,34 +9,33 @@
 class Perso : public request::IRequestPlugin
 {
 public:
-  Perso(Database &db);
+  Perso(Database &db, Env &env);
   virtual ~Perso();
 
 public:
   IPlugin	*clone();
   void		unload();
-  void		setActions(std::map<request::ID, void(*)(const std::list<IClient::Pointer> &,
-							 IClient::Pointer,
-							 const ARequest *)> &);
+  void		setActions(std::map<request::ID, plugin::request_handler> &);
 void		getVersion(plugin::version::major &maj, plugin::version::minor &min) const;
 
 private:
-  static void	privacy_mode(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
-  static void	status(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
-  static void	missed_calls(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
-  static void	get_missed(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
-  static void	del_missed(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
-  static void	set_auto_answer(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
-  static void	pong(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
-  static void	unset_auto_answer(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
-  static bool	createAnswerFile(IClient::Pointer sender);
+  void	privacy_mode(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	status(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	missed_calls(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	get_missed(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	del_missed(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	set_auto_answer(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	pong(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	unset_auto_answer(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  bool	createAnswerFile(IClient::Pointer sender);
 
 private:
   Perso(Perso const&);
   Perso& operator=(Perso const&);
 
 private:
-  Database &_db;
+  Database	&_db;
+  Env		&_env;
 };
 
 #endif /* PERSO_H_ */
