@@ -3,11 +3,18 @@
 
 #include					"Env.h" //à virer
 #include					<qdebug.h>
+#include					<QPixmap>
+#include					<QSize>
 
 void						FriendList::insertFriend(QString &friendName, QString &friendMsgPerso, size_t status)
 {
 	_friendList.insert(friendName, new Friend(friendName, friendMsgPerso, status));
-	MainWindow::getInstance().getUi().friendListW->addFriendItem(QIcon("./Img/Online.png"), friendName, friendMsgPerso); //à modifier
+	//MainWindow::getInstance().getUi().friendListW->addFriendItem(QIcon("./Img/Online.png"), friendName, friendMsgPerso); //à modifier
+
+	QIcon	img(QPixmap("./Img/Guyman-Helmet-Smiley-icon2.png"));
+	//img.setIconSize(QSize(32, 39));
+
+	MainWindow::getInstance().getUi().friendListW->addFriendItem(img, friendName, friendMsgPerso);
 }
 
 Friend						*FriendList::getFriend(QString &friendName)
@@ -50,7 +57,6 @@ bool								FriendList::insertCurrentTxtMsg(QString &friendName, QString &msg)
 	}
 	return false;
 }
-
 
 bool								FriendList::removeFriend(QString &friendName)
 {

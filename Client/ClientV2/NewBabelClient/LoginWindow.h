@@ -12,7 +12,7 @@ private:
 	Ui::LoginWindow ui;
 
 public:
-	void						displayLoginResponse(QString &response);
+	void						displayLoginResponse(const QString &response);
 
 public:
 	LoginWindow(QWidget *parent = 0);
@@ -23,7 +23,7 @@ public slots:
    void							on_login_button_clicked();
 
 signals:
-    void						login_try(const std::string &login, std::string &password);
+    void						login_try(const std::string &login, const std::string &password);
 
 
 };

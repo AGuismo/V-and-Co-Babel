@@ -32,11 +32,21 @@ void	TCPNetwork::translateError()
     }
 }
 
+void  TCPNetwork::closeConnection()
+{
+  _sock.close();
+}
+
+void  TCPNetwork::sendData(const ANetwork::ByteArray &data)
+{
+  _sock.write(QByteArray(reinterpret_cast<const char *>(data.data()), data.size()));
+}
+
 void  TCPNetwork::tryConnect(unsigned short port, const std::string &ipAddress)
 {
   qDebug() << ipAddress.c_str() << ":" << port;
   _sock.connectToHost(QString(ipAddress.c_str()), port);
-  if (_sock.waitForConnected(3000))
+  if (_sock.waitForConnected(1000))
     _onConnectHandler();
   else
     translateError();
@@ -46,5 +56,5 @@ void  TCPNetwork::onRead()
 {
   QByteArray  bytes = _sock.readAll();
 
-  _onAvailableData(std::string(bytes.data(), bytes.size()));
+  _onAvailableData(ANetwork::ByteArray(bytes.data(), bytes.data() + bytes.size()));
 }

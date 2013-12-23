@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include <QHostAddress>
+
+#include				<map>
 
 #include	"types.hh"
 #include	"RequestCode.hh"
@@ -22,6 +25,10 @@ QT_END_NAMESPACE
 namespace Ui {
 class ServerTester;
 }
+
+typedef void (*f_ptr)(ARequest *req);
+//typedef	std::map<int, void (*)(ARequest *req)>	RequestMap;
+typedef	std::map<int, f_ptr>	RequestMap;
 
 class ServerTester : public QMainWindow
 {
@@ -58,12 +65,18 @@ private slots:
 	void	appel();
 	void	read();
 	void	send_req(ARequest *req);
+	void	RequestParser(std::vector<Protocol::Byte>	bytes);
+	void	init_map();
 
 private:
     Ui::ServerTester	*ui;
     QUdpSocket          *udpSocket;
     QTcpSocket          *tcpSocket;
+	QHostAddress		addr;
     QByteArray          buff;
+	QString				buffer;
+
+	RequestMap				m;
 
 	int					udpSocket_int;
 };

@@ -17,8 +17,10 @@ public:
 
 public:
   void  tryConnect(unsigned short port, const std::string &ipAddress);
+  void  sendData(const ANetwork::ByteArray &);
+  void  closeConnection();
 
-public slots:
+private slots:
   void  onRead();
 
 private:

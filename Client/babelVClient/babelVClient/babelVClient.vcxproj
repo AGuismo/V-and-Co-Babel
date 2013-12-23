@@ -38,6 +38,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>C:\Users\sauvia_c\Documents\GitHub\V-and-Co-Babel\serializer\include;C:\Users\sauvia_c\Documents\GitHub\V-and-Co-Babel\protocol\include;C:\Users\sauvia_c\Documents\GitHub\V-and-Co-Babel\protocol\API;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>

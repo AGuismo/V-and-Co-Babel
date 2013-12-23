@@ -25,11 +25,13 @@ public slots:
 
 public slots:
 	void			on_try_connect(const std::string &ipAddress, unsigned short int port);
-	void			on_try_login(const std::string &login, std::string &password);
+	void			on_try_login(const std::string &login, const std::string &password);
 
 public:
 	void			on_connection_error(enum ANetwork::SocketState);
 	void			on_connection_success();
+	void			on_login_success();
+	void			on_login_error(const std::string &error);
 
 public:
 	void	init();
