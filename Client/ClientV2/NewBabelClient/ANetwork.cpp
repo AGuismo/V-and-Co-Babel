@@ -1,3 +1,4 @@
+#include  <string>
 #include  "ANetwork.hh"
 
 ANetwork::ANetwork()
@@ -20,7 +21,7 @@ void  ANetwork::setOnConnectHandler(Function<void ()> handler)
   _onConnectHandler = handler;
 }
 
-void  ANetwork::setAvailableData(Function<void (const std::string)> handler)
+void  ANetwork::setAvailableData(Function<void (const ByteArray)> handler)
 {
   _onAvailableData = handler;
 }

@@ -9,7 +9,6 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 HEADERS += ./Graphic.h  \
             ./AGraphic.hh   \
-        ./AApplication.hh   \
         ./ANetwork.hh       \
         ./Function.hpp \
     Application.hh \
@@ -32,7 +31,8 @@ HEADERS += ./Graphic.h  \
     ../../../protocol/include/CallRequest.hh \
     ../../../protocol/include/AuthRequest.hh \
     ../../../protocol/include/ARequest.hh \
-    LoginWindow.h
+    LoginWindow.h \
+    UDPNetwork.h
 SOURCES += ./Graphic.cpp \
     ./main.cpp \
     ./AGraphic.cpp \
@@ -52,7 +52,8 @@ SOURCES += ./Graphic.cpp \
     ../../../protocol/sources/CallRequest.cpp \
     ../../../protocol/sources/AuthRequest.cpp \
     ../../../protocol/sources/ARequest.cpp \
-    LoginWindow.cpp
+    LoginWindow.cpp \
+    UDPNetwork.cpp
 FORMS += ./Graphic.ui \
     ConnectWindow.ui \
     LoginWindow.ui

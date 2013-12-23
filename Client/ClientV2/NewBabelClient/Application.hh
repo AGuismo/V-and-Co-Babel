@@ -4,6 +4,7 @@
 # include "IApplication.hh"
 # include "Graphic.h"
 # include "TCPNetwork.h"
+# include "UDPNetwork.h"
 # include "Protocol.hpp"
 # include <stack>
 
@@ -20,10 +21,11 @@ public:
 private:
   void  triggerTryConnect(const std::string &ip, unsigned short int port);
   void  triggerTryLogin(const request::Username &, const request::PasswordType &);
-  void  triggerAvailableData(const std::string);
+  void  triggerAvailableData(const ANetwork::ByteArray);
+  void  triggerUdpError(enum ANetwork::SocketState);
 
 private:
-  void  bufferise(const std::string &);
+  void  bufferise(const ANetwork::ByteArray &);
   bool  handle_request();
   void  send_request(const ARequest &);
 
@@ -41,6 +43,7 @@ private:
   QApplication  _app;
   Graphic       _graphic;
   TCPNetwork    _tcpNetwork;
+  UDPNetwork    _udpNetwork;
   Protocol::serialized_data _buffer;
   stack_response_handler    _waitedResponses;
 };

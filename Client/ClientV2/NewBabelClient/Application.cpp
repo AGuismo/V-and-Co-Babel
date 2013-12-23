@@ -20,7 +20,8 @@ void  Application::init()
   _graphic.init();
   _tcpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Graphic::on_connection_error, &_graphic));
   _tcpNetwork.setOnConnectHandler(Function<void ()>(&Graphic::on_connection_success, &_graphic));
-  _tcpNetwork.setAvailableData(Function<void (const std::string)>(&Application::triggerAvailableData, this));
+  _tcpNetwork.setAvailableData(Function<void (const ANetwork::ByteArray)>(&Application::triggerAvailableData, this));
+  _udpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Application::triggerUdpError, this));
   _graphic.setTryConnectHandler(Function<void (unsigned short, const std::string &)>(&TCPNetwork::tryConnect, &_tcpNetwork));
   _graphic.setTryAuthentificationHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryLogin, this));
 }
@@ -33,6 +34,11 @@ void  Application::run()
 }
 
 void  Application::stop()
+{
+
+}
+
+void  Application::triggerUdpError(ANetwork::SocketState st)
 {
 
 }
@@ -72,10 +78,10 @@ void  Application::triggerTryLogin(const request::Username &login, const request
   _waitedResponses.push(response_handler(&Application::login_response, this));
 }
 
-void  Application::bufferise(const std::string &data)
+void  Application::bufferise(const ANetwork::ByteArray &data)
 {
   qDebug() << "Data Received: " << data.size();
-  _buffer.insert(_buffer.end(), data.c_str(), data.c_str() + data.size());
+  _buffer.insert(_buffer.end(), data.begin(), data.end());
 
 }
 
@@ -111,7 +117,7 @@ bool  Application::handle_request()
   return (true);
 }
 
-void  Application::triggerAvailableData(const std::string data)
+void  Application::triggerAvailableData(const ANetwork::ByteArray data)
 {
   bufferise(data);
   while (_buffer.size() && handle_request());

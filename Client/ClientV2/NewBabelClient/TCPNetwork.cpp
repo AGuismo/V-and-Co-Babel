@@ -56,5 +56,5 @@ void  TCPNetwork::onRead()
 {
   QByteArray  bytes = _sock.readAll();
 
-  _onAvailableData(std::string(bytes.data(), bytes.size()));
+  _onAvailableData(ANetwork::ByteArray(bytes.data(), bytes.data() + bytes.size()));
 }

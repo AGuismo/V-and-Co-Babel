@@ -20,7 +20,7 @@ public:
   void  sendData(const ANetwork::ByteArray &);
   void  closeConnection();
 
-public slots:
+private slots:
   void  onRead();
 
 private:

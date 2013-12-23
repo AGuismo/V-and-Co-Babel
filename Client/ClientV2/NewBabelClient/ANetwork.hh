@@ -22,12 +22,12 @@ public:
 protected:
   Function<void ()>				_onConnectHandler;
   Function<void (enum ANetwork::SocketState)>	_onErrorHandler;
-  Function<void (const std::string)>		_onAvailableData;
+  Function<void (const ByteArray)>		_onAvailableData;
 
 public:
   virtual void			setOnConnectHandler(Function<void ()>);
   virtual void			setErrorHandler(Function<void (enum ANetwork::SocketState)>);
-  virtual void			setAvailableData(Function<void (const std::string)>);
+  virtual void			setAvailableData(Function<void (const ByteArray)>);
 
 public:
   virtual void			tryConnect(unsigned short port, const std::string &ipAddress) = 0;
