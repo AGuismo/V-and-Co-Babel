@@ -15,6 +15,8 @@ class Client : public IClient
 {
 public:
   static const int					DEFAULT_SIZE = 1024;
+  static const int					PONG_REFRESH = 20;
+  static const int					PONG_DELAY = 5;
   typedef boost::shared_ptr<Client>	Pointer;
 
 private:
@@ -32,6 +34,11 @@ private:
 			     std::size_t bytes_transferred);
   void		handle_read(const boost::system::error_code& error,
 			    std::size_t bytes_transferred);
+
+private:
+	void	start_ping(const boost::system::error_code &);
+	void	handle_timeout_pong(const boost::system::error_code &);
+	void	reset_pong();
 
 public:
   bool				serialize_data(const ARequest &req);
@@ -67,6 +74,8 @@ private:
   tcp::socket			_socket;
   Server			*_server;
   Serializer			_serializeAnswer;
+  boost::asio::deadline_timer	_pongTimer;
+  request::ID					_currentPong;
 
 public:
   struct
