@@ -15,7 +15,6 @@ Application::~Application()
 
 void  Application::init()
 {
-
   _tcpNetwork.init();
   _graphic.init();
   _tcpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Graphic::on_connection_error, &_graphic));
@@ -24,6 +23,8 @@ void  Application::init()
   _udpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Application::triggerUdpError, this));
   _graphic.setTryConnectHandler(Function<void (unsigned short, const std::string &)>(&TCPNetwork::tryConnect, &_tcpNetwork));
   _graphic.setTryAuthentificationHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryLogin, this));
+   _graphic.setTryCreateAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryCreateAccount, this));
+   _graphic.setDesAuthentificationHandler(Function<void ()>(&Application::triggerDesAuthentification, this));
 }
 
 void  Application::run()
@@ -49,6 +50,12 @@ void  Application::triggerTryConnect(const std::string &ip, unsigned short port)
   _waitedResponses.push(response_handler(&Application::connection_response, this));
 }
 
+void  Application::triggerDesAuthentification()
+{
+	_tcpNetwork.sendData(Protocol::product(request::auth::client::DisconnectClient()));
+	_waitedResponses.push(response_handler(&Application::desauthentification_response, this));
+}
+
 void  Application::connection_response(const ARequest &req)
 {
   if (req.code() == request::server::auth::HANDSHAKE)
@@ -72,10 +79,38 @@ void  Application::login_response(const ARequest &req)
   _graphic.on_login_error("Login Error");
 }
 
+void  Application::create_account_response(const ARequest &req)
+{
+  if (req.code() == request::server::OK)
+    {
+      _graphic.on_create_account_success();
+      return ;
+    }
+  _graphic.on_create_account_error("Creation Error");
+}
+
+void  Application::desauthentification_response(const ARequest &req)
+{
+	if (req.code() == request::server::OK)
+    {
+      _graphic.on_desauthentification_success();
+	  qDebug() << "oh mon keke il a deco, le batard ! (des-response ok)";
+      return ;
+    }
+    _graphic.on_desauthentification_error();
+	qDebug() << "oh mon keke il a deco, le batard ! (des-response not ok)";
+}
+
 void  Application::triggerTryLogin(const request::Username &login, const request::PasswordType &password)
 {
   send_request(request::auth::client::ConnectClient(login, md5(password)));
   _waitedResponses.push(response_handler(&Application::login_response, this));
+}
+
+void  Application::triggerTryCreateAccount(const request::Username &login, const request::PasswordType &password)
+{
+	send_request(request::auth::client::NewClient(login, md5(password), false));
+	_waitedResponses.push(response_handler(&Application::create_account_response, this));
 }
 
 void  Application::bufferise(const ANetwork::ByteArray &data)

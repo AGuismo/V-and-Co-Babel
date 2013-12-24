@@ -24,3 +24,8 @@ void				LoginWindow::displayLoginResponse(const QString &response)
 {
 	ui.serverResponseLabel->setText(response);
 }
+
+void				LoginWindow::clearServerResponse()
+{
+	ui.serverResponseLabel->clear();
+}

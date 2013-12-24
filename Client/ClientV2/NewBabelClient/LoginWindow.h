@@ -13,6 +13,7 @@ private:
 
 public:
 	void						displayLoginResponse(const QString &response);
+	void						clearServerResponse();
 
 public:
 	LoginWindow(QWidget *parent = 0);

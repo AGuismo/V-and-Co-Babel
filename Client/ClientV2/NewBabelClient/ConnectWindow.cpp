@@ -10,6 +10,11 @@ ConnectWindow::ConnectWindow(QWidget *parent)
 	connect(ui.connectPushButton, SIGNAL(clicked()), this, SLOT(on_connect_button_clicked()));
 }
 
+void					ConnectWindow::clearServerResponse()
+{
+	ui.serverResponseLabel->clear();
+}
+
 void					ConnectWindow::on_close_button_clicked()
 {
 	close();

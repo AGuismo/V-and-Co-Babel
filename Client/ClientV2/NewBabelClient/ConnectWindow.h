@@ -13,6 +13,7 @@ private:
 
 public:
 	void						displayConnectResponse(const QString &response);
+	void						clearServerResponse();
 
 public:
 	ConnectWindow(QWidget *parent = 0);

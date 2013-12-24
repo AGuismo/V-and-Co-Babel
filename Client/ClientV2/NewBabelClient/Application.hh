@@ -23,6 +23,8 @@ private:
   void  triggerTryLogin(const request::Username &, const request::PasswordType &);
   void  triggerAvailableData(const ANetwork::ByteArray);
   void  triggerUdpError(enum ANetwork::SocketState);
+  void	triggerDesAuthentification();
+  void	triggerTryCreateAccount(const request::Username &, const request::PasswordType &);
 
 private:
   void  bufferise(const ANetwork::ByteArray &);
@@ -31,7 +33,9 @@ private:
 
 private:
   void  connection_response(const ARequest &);
+  void  desauthentification_response(const ARequest &);
   void  login_response(const ARequest &);
+  void  create_account_response(const ARequest &);
 
 public:
   void  init();

@@ -15,15 +15,22 @@ protected:
   // Authentification
   Function<void (const request::Username &, const request::PasswordType &)>	_tryAuthentificationHandler;
 
+  // Des-Authentification
+  Function<void ()>												_desAuthentificationHandler;
+
+  // Create account
+  Function<void (const request::Username &, const request::PasswordType &)> 	_tryCreateAccountHandler;
+
   // Personal changes
 
   // Friend
-  Function<void (const std::string &, bool)>					_friendRequestResponseHandler;
+  Function<void (const std::string &, bool)>				_friendRequestResponseHandler;
   Function<void (const std::string &)>						_askForFriendHandler;
 
   // Calls
-  Function<void (bool)>								_callResponseHandler;
-  Function<void ()>								_hangupHandler;
+  Function<void (bool)>										_callResponseHandler;
+  Function<void ()>											_hangupHandler;
+
 
 public:
   // Connection
@@ -31,6 +38,12 @@ public:
 
   // Authentification
   virtual void		setTryAuthentificationHandler(Function<void (const request::Username &, const request::PasswordType &)>);
+
+  // Dès-authentification
+  virtual void		setDesAuthentificationHandler(Function<void ()>);
+
+  // Create account
+  virtual void		setTryCreateAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>);
 
   // Personal changes
 

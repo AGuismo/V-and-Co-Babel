@@ -10,3 +10,13 @@ void		AGraphic::setTryAuthentificationHandler(Function<void (const request::User
 {
   _tryAuthentificationHandler = handle;
 }
+
+void		AGraphic::setTryCreateAccountHandler(Function<void (const request::Username &, const request::PasswordType &)> handle)
+{
+  _tryCreateAccountHandler = handle;
+}
+
+void		AGraphic::setDesAuthentificationHandler(Function<void ()> handle)
+{
+	_desAuthentificationHandler = handle;
+}
