@@ -8,53 +8,58 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 
 HEADERS += ./Graphic.h  \
-            ./AGraphic.hh   \
-        ./ANetwork.hh       \
-        ./Function.hpp \
-    Application.hh \
-    IApplication.hh \
-    ConnectWindow.h \
-    TCPNetwork.h \
-    ../../../protocol/API/types.hh \
-    ../../../protocol/API/RequestCode.hh \
-    ../../../protocol/API/ITransformers.hh \
-    ../../../serializer/include/Serializer.hpp \
-    ../../../serializer/include/Salt.hpp \
-    ../../../serializer/include/MD5.hh \
-    ../../../protocol/include/ServerRequest.hh \
-    ../../../protocol/include/RequestInfo.hpp \
-    ../../../protocol/include/RequestFactory.hh \
-    ../../../protocol/include/Protocol.hpp \
-    ../../../protocol/include/PersoRequest.hh \
-    ../../../protocol/include/FriendRequest.hh \
-    ../../../protocol/include/ChatRequest.hh \
-    ../../../protocol/include/CallRequest.hh \
-    ../../../protocol/include/AuthRequest.hh \
-    ../../../protocol/include/ARequest.hh \
-    LoginWindow.h \
-    UDPNetwork.h
+./AGraphic.hh   \
+./ANetwork.hh       \
+./Function.hpp \
+Application.hh \
+IApplication.hh \
+ConnectWindow.h \
+TCPNetwork.h \
+CreateAccountWindow.h \
+../../../protocol/API/types.hh \
+../../../protocol/API/RequestCode.hh \
+../../../protocol/API/ITransformers.hh \
+../../../serializer/include/Serializer.hpp \
+../../../serializer/include/Salt.hpp \
+../../../serializer/include/MD5.hh \
+../../../protocol/include/ServerRequest.hh \
+../../../protocol/include/RequestInfo.hpp \
+../../../protocol/include/RequestFactory.hh \
+../../../protocol/include/Protocol.hpp \
+../../../protocol/include/PersoRequest.hh \
+../../../protocol/include/FriendRequest.hh \
+../../../protocol/include/ChatRequest.hh \
+../../../protocol/include/CallRequest.hh \
+../../../protocol/include/AuthRequest.hh \
+../../../protocol/include/ARequest.hh \
+LoginWindow.h \
+UDPNetwork.h
 SOURCES += ./Graphic.cpp \
-    ./main.cpp \
-    ./AGraphic.cpp \
-    ANetwork.cpp \
-    TCPNetwork.cpp \
-    Application.cpp \
-    ConnectWindow.cpp \
-    ../../../serializer/sources/Serializer.cpp \
-    ../../../serializer/sources/Salt.cpp \
-    ../../../serializer/sources/MD5.cpp \
-    ../../../protocol/sources/ServerRequest.cpp \
-    ../../../protocol/sources/RequestFactory.cpp \
-    ../../../protocol/sources/Protocol.cpp \
-    ../../../protocol/sources/PersoRequest.cpp \
-    ../../../protocol/sources/FriendRequest.cpp \
-    ../../../protocol/sources/ChatRequest.cpp \
-    ../../../protocol/sources/CallRequest.cpp \
-    ../../../protocol/sources/AuthRequest.cpp \
-    ../../../protocol/sources/ARequest.cpp \
-    LoginWindow.cpp \
-    UDPNetwork.cpp
+./main.cpp \
+./AGraphic.cpp \
+ANetwork.cpp \
+TCPNetwork.cpp \
+Application.cpp \
+ConnectWindow.cpp \
+CreateAccountWindow.cpp \
+../../../serializer/sources/Serializer.cpp \
+../../../serializer/sources/Salt.cpp \
+../../../serializer/sources/MD5.cpp \
+../../../protocol/sources/ServerRequest.cpp \
+../../../protocol/sources/RequestFactory.cpp \
+../../../protocol/sources/Protocol.cpp \
+../../../protocol/sources/PersoRequest.cpp \
+../../../protocol/sources/FriendRequest.cpp \
+../../../protocol/sources/ChatRequest.cpp \
+../../../protocol/sources/CallRequest.cpp \
+../../../protocol/sources/AuthRequest.cpp \
+../../../protocol/sources/ARequest.cpp \
+LoginWindow.cpp \
+UDPNetwork.cpp
 FORMS += ./Graphic.ui \
-    ConnectWindow.ui \
-    LoginWindow.ui
+ConnectWindow.ui \
+LoginWindow.ui	\
+CreateAccountWindow.ui	\
+
+
 RESOURCES += Graphic.qrc

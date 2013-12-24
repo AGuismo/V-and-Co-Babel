@@ -65,15 +65,15 @@ void	Server::handle_request(IClient::Pointer from, const ARequest *req)
   if ((*_calls)(from, req))
     {
 #if defined(DEBUG)
-  std::cout << "Server::handle_request: Call complete" << std::endl;
+      std::cout << "Server::handle_request: Call complete" << std::endl;
 #endif
     }
   else
     {
 #if defined(DEBUG)
-  std::cout << "Server::handle_request: Call don't exist" << std::endl;
+      std::cout << "Server::handle_request: Call don't exist" << std::endl;
 #endif
-  from->serialize_data(request::server::NotImplemented());
+      from->serialize_data(request::server::NotImplemented());
     }
   delete req;
 }

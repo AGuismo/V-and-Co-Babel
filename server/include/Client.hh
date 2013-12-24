@@ -14,31 +14,34 @@ class	Server;
 class Client : public IClient
 {
 public:
-  static const int					DEFAULT_SIZE = 1024;
-  static const int					PONG_REFRESH = 20;
-  static const int					PONG_DELAY = 5;
+  static const int			DEFAULT_SIZE = 1024;
+  static const int			PONG_REFRESH = 20;
+  static const int			PONG_DELAY = 5;
   typedef boost::shared_ptr<Client>	Pointer;
 
 private:
   Client(boost::asio::io_service &service, Server *);
 
 public:
-  static IClient::Pointer create(boost::asio::io_service& io_service, Server *);
-  virtual		~Client();
-  void		async_read();
+  static IClient::Pointer	create(boost::asio::io_service& io_service, Server *);
+  virtual			~Client();
+  void				async_read();
 
 private:
-  bool		unserialize_data(IClient::buffer &buff);
-  void		handle_request(const ARequest *req);
-  void		handle_write(const boost::system::error_code& error,
-			     std::size_t bytes_transferred);
-  void		handle_read(const boost::system::error_code& error,
-			    std::size_t bytes_transferred);
+  bool				unserialize_data(IClient::buffer &buff);
+  void				handle_request(const ARequest *req);
+  void				handle_write(const boost::system::error_code& error,
+					     std::size_t bytes_transferred);
+  void				handle_read(const boost::system::error_code& error,
+					    std::size_t bytes_transferred);
 
 private:
-	void	start_ping(const boost::system::error_code &);
-	void	handle_timeout_pong(const boost::system::error_code &);
-	void	reset_pong();
+  void				start_ping(const boost::system::error_code &);
+  void				handle_timeout_pong(const boost::system::error_code &);
+
+public:
+  void				reset_pong();
+  void				close();
 
 public:
   bool				serialize_data(const ARequest &req);
@@ -58,13 +61,15 @@ public:
   void				updateAutoAnswer(const request::Stream &);
   void				cleanAutoAnswer();
   Serializer			&serializeAnswer() { return (_serializeAnswer);};
+  request::PingPongID		pong() const { return (_currentPong); }
+  void				pong(request::PingPongID id) { _currentPong = id; }
 
-  tcp::socket	&socket();
-  IClient::Pointer	share();
+  tcp::socket			&socket();
+  IClient::Pointer		share();
 
 private:
   Client(Client const&);
-  Client& operator=(Client const&);
+  Client&			operator=(Client const&);
 
 private:
   boost::asio::io_service	&_service;
@@ -75,7 +80,7 @@ private:
   Server			*_server;
   Serializer			_serializeAnswer;
   boost::asio::deadline_timer	_pongTimer;
-  request::ID					_currentPong;
+  request::PingPongID		_currentPong;
 
 public:
   struct

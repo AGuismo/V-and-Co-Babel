@@ -9,8 +9,8 @@
 #include	"PersoRequest.hh"
 
 Client::Client(boost::asio::io_service &service, Server *server) :
-_service(service), _input(DEFAULT_SIZE), _socket(service), _server(server),
-_pongTimer(service), _currentPong(0)
+  _service(service), _input(DEFAULT_SIZE), _socket(service), _server(server),
+  _pongTimer(service), _currentPong(0)
 {
   InfosClient._isConnect = false;
   InfosClient._name = "";
@@ -32,35 +32,48 @@ IClient::Pointer Client::create(boost::asio::io_service& io_service, Server *ser
 
 void		Client::start_ping(const boost::system::error_code &e)
 {
-	if (!e)
-	{
-		serialize_data(request::perso::server::Ping(++_currentPong));
-		_pongTimer.expires_from_now(boost::posix_time::seconds(Client::PONG_DELAY));
-		_pongTimer.async_wait(boost::bind(&Client::handle_timeout_pong, boost::dynamic_pointer_cast<Client>(shared_from_this()), boost::asio::placeholders::error));
-	}
+  if (!e)
+    {
+#if defined(DEBUG)
+      std::cout << "Client " << this << ": Ping N." << _currentPong + 1 << std::endl;
+#endif
+      serialize_data(request::perso::server::Ping(++_currentPong));
+      _pongTimer.expires_from_now(boost::posix_time::seconds(Client::PONG_DELAY));
+      _pongTimer.async_wait(boost::bind(&Client::handle_timeout_pong, boost::dynamic_pointer_cast<Client>(shared_from_this()), boost::asio::placeholders::error));
+    }
 }
 
 void		Client::handle_timeout_pong(const boost::system::error_code &e)
 {
-	if (!e)
-	{
-		//	_service.post(boost::bind(&Server::handleClientClose,
-		//		_server,
-		//		share()));
-		std::cout << "Client " << this << ": Pong Timeout" << std::endl;
-	}
+  if (!e)
+    {
+#if defined(DEBUG)
+      std::cout << "Client " << this << ": Pong Timeout" << std::endl;
+#endif
+      close();
+    }
 }
 
 void		Client::reset_pong()
 {
-	_pongTimer.expires_from_now(boost::posix_time::seconds(Client::PONG_REFRESH));
-	_pongTimer.async_wait(boost::bind(&Client::start_ping, boost::dynamic_pointer_cast<Client>(shared_from_this()), boost::asio::placeholders::error));
+#if defined(DEBUG)
+  std::cout << "Client " << this << ": Reset pong" << std::endl;
+#endif
+  _pongTimer.expires_from_now(boost::posix_time::seconds(Client::PONG_REFRESH));
+  _pongTimer.async_wait(boost::bind(&Client::start_ping, boost::dynamic_pointer_cast<Client>(shared_from_this()), boost::asio::placeholders::error));
+}
+
+void		Client::close()
+{
+  _pongTimer.cancel();
+  _service.post(boost::bind(&Server::handleClientClose, _server, share()));
+  _socket.cancel();
 }
 
 void		Client::handle_write(const boost::system::error_code &error,
 				     std::size_t bytes_transferred)
 {
-	std::cout << "Client::handle_write" << std::endl;
+  std::cout << "Client::handle_write" << std::endl;
   if (!error)
     {
 #if defined(DEBUG)
@@ -74,10 +87,7 @@ void		Client::handle_write(const boost::system::error_code &error,
       std::cerr << "Error when writing data" << std::endl;
 #endif
       (void)bytes_transferred;
-	  _pongTimer.cancel();
-      _service.post(boost::bind(&Server::handleClientClose,
-				_server,
-				share()));
+      close();
     }
 }
 
@@ -88,7 +98,7 @@ void		Client::handle_read(const boost::system::error_code& error,
 
   if (!error)
     {
-	  reset_pong();
+      reset_pong();
 #if defined(DEBUG)
       std::cout << "Received: " << bytes_transferred << " octets." << std::endl;
       for (std::size_t it = 0; it < bytes_transferred; ++it)
@@ -119,10 +129,7 @@ void		Client::handle_read(const boost::system::error_code& error,
       std::cerr << "Error when reading data" << std::endl;
 #endif
       (void)bytes_transferred;
-	  _pongTimer.cancel();
-	  _service.post(boost::bind(&Server::handleClientClose,
-				_server,
-				share()));
+      close();
     }
 }
 
@@ -158,9 +165,9 @@ bool		Client::unserialize_data(buffer &buff)
 
 void		Client::start()
 {
-	_pongTimer.expires_from_now(boost::posix_time::seconds(Client::PONG_REFRESH));
-	_pongTimer.async_wait(boost::bind(&Client::start_ping, boost::dynamic_pointer_cast<Client>(shared_from_this()), boost::asio::placeholders::error));
-	serialize_data(request::auth::server::Handshake(SET_VERSION(request::version::MAJOR,
+  _pongTimer.expires_from_now(boost::posix_time::seconds(Client::PONG_REFRESH));
+  _pongTimer.async_wait(boost::bind(&Client::start_ping, boost::dynamic_pointer_cast<Client>(shared_from_this()), boost::asio::placeholders::error));
+  serialize_data(request::auth::server::Handshake(SET_VERSION(request::version::MAJOR,
 							      request::version::MINOR)));
   async_read();
 }
@@ -183,9 +190,9 @@ bool	Client::serialize_data(const ARequest &req)
 
 void	Client::async_write(const IClient::buffer &buff)
 {
-	_output = buff;
-	std::cout << _output.size() << std::endl;
-	boost::asio::async_write(_socket, boost::asio::buffer(_output),
+  _output = buff;
+  std::cout << _output.size() << std::endl;
+  boost::asio::async_write(_socket, boost::asio::buffer(_output),
 			   boost::bind(&Client::handle_write, boost::dynamic_pointer_cast<Client>(shared_from_this()),
 				       boost::asio::placeholders::error,
 				       boost::asio::placeholders::bytes_transferred));

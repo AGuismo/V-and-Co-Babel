@@ -13,6 +13,7 @@
 #include	"RequestCode.hh"
 #include	"AuthRequest.hh"
 #include	"CallRequest.hh"
+#include	"PersoRequest.hh"
 #include	"Protocol.hpp"
 #include	"Bridge.hh"
 #include	"FakeAudio.hh"
@@ -182,6 +183,9 @@ private:
 		  << "Major: " << GET_MAJOR(dynamic_cast<const request::auth::server::Handshake *>(req)->version) << std::endl
 		  << "Minor: " << GET_MINOR(dynamic_cast<const request::auth::server::Handshake *>(req)->version) << std::endl;
 	break;
+      case request::server::perso::PING:
+	std::cout << "Ping N." << dynamic_cast<const request::perso::server::Ping *>(req)->_id << std::endl;
+	send_req(request::perso::client::Pong(dynamic_cast<const request::perso::server::Ping *>(req)->_id));
       }
     readTCP();
   }
@@ -228,6 +232,16 @@ private:
     _t.expires_from_now(boost::posix_time::seconds(5));
     _t.async_wait(boost::bind(&client::writeUDP,
 			      shared_from_this()));
+  }
+
+  void		send_req(const ARequest &req)
+  {
+    std::vector<Protocol::Byte>	bytes;
+
+    std::cout << "Send request code: " << req.code()
+	      << std::endl;
+    bytes = Protocol::product(req);
+    writeTCP(bytes);
   }
 
 private:

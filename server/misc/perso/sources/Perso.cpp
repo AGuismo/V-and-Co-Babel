@@ -173,6 +173,10 @@ void	Perso::pong(const std::list<IClient::Pointer> &clients, IClient::Pointer se
   const request::perso::client::Pong	*origin = dynamic_cast<const request::perso::client::Pong *>(req);
 
   std::cout << "Perso::Pong()" << std::endl;
+  if (sender->pong() != origin->_id)
+    sender->close();
+  else
+    sender->reset_pong();
 }
 
 void	Perso::unset_auto_answer(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)

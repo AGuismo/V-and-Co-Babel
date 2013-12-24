@@ -10,12 +10,14 @@ public:
   typedef Protocol::serialized_data			buffer;
 
 public:
-  virtual	~IClient() {};
+  virtual				~IClient() {};
 
 public:
-  virtual bool	serialize_data(const ARequest &) = 0;
-  virtual void	start() = 0;
-  virtual void	async_write(const buffer &) = 0;
+  virtual bool				serialize_data(const ARequest &) = 0;
+  virtual void				start() = 0;
+  virtual void				async_write(const buffer &) = 0;
+  virtual void				reset_pong() = 0;
+  virtual void				close() = 0;
 
 public:
   virtual const request::Username	&Username() const = 0;
@@ -31,4 +33,6 @@ public:
   virtual void				updateAutoAnswer(const request::Stream &) = 0;
   virtual void				cleanAutoAnswer() = 0;
   virtual Serializer			&serializeAnswer() = 0;
+  virtual request::PingPongID		pong() const = 0;
+  virtual void				pong(request::PingPongID) = 0;
 };

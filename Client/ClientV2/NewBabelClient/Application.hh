@@ -11,8 +11,10 @@
 class Application : public IApplication
 {
 public:
-  typedef Function<void (const ARequest &)>  response_handler;
-  typedef std::stack<response_handler>  stack_response_handler;
+  typedef Function<void (const ARequest &)>		response_handler;
+  typedef Function<void (const ARequest &)>		callback_handler;
+  typedef std::stack<response_handler>			stack_response_handler;
+  typedef std::map<request::ID, callback_handler>	request_callback;
 
 public:
   Application(int ac, char *av[]);
@@ -37,19 +39,23 @@ private:
   void  login_response(const ARequest &);
   void  create_account_response(const ARequest &);
 
+private:
+  void	ping_handler(const ARequest &);
+
 public:
   void  init();
   void  run();
   void  stop();
 
 private:
-  int           _ac;
-  QApplication  _app;
-  Graphic       _graphic;
-  TCPNetwork    _tcpNetwork;
-  UDPNetwork    _udpNetwork;
-  Protocol::serialized_data _buffer;
-  stack_response_handler    _waitedResponses;
+  int				_ac;
+  QApplication			_app;
+  Graphic			_graphic;
+  TCPNetwork			_tcpNetwork;
+  UDPNetwork			_udpNetwork;
+  Protocol::serialized_data	_buffer;
+  stack_response_handler	_waitedResponses;
+  request_callback		_requestActions;
 };
 
 #endif // APPLICATION_HH
