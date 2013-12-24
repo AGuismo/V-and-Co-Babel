@@ -30,7 +30,7 @@ public:
   virtual void			setAvailableData(Function<void (const ByteArray)>);
 
 public:
-  virtual void			tryConnect(unsigned short port, const std::string &ipAddress) = 0;
+  virtual void					tryConnect(unsigned short port, const std::string &ipAddress) = 0;
   virtual void                  sendData(const ByteArray &) = 0;
   virtual void                  closeConnection() = 0;
 
