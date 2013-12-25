@@ -6,8 +6,7 @@
 
 Salt::size_type Salt::SALT = 42;
 
-Database::Database():
-   _maxIdClient(0)
+Database::Database()
 {
 }
 
@@ -16,21 +15,9 @@ Database::~Database()
 
 }
 
-Database::Database(const Database &src):
-  _maxIdClient(src._maxIdClient), _clients(src._clients)
-{
-}
-
-Database	&Database::operator=(const Database &src)
-{
-  _maxIdClient = src._maxIdClient;
-  _clients = src._clients;
-  return (*this);
-}
 bool			Database::drop()
 {
   boost::mutex::scoped_lock(_lock);
-  _maxIdClient = 0;
   _clients.clear();
   return (true);
 }
@@ -38,7 +25,7 @@ bool			Database::drop()
 bool			Database::loadFile(const std::string path)
 {
   std::fstream		stream;
-  Serializer		bak;
+  Protocol		bak;
 
   stream.open(path.c_str(), std::ios_base::in);
   if (!stream.is_open())
@@ -60,7 +47,7 @@ bool			Database::loadFile(const std::string path)
 bool		Database::saveFile(const std::string path)
 {
   std::ofstream	stream(path.c_str());
-  Serializer	bak;
+  Protocol	bak;
 
   if (stream.bad())
     return (false);
@@ -82,41 +69,40 @@ Serializer &	Database::save(Serializer &backup)
 {
   boost::mutex::scoped_lock(_lock);
   Ruint16	clientSize = _clients.size();
-  Protocol	p(backup);
+  Protocol	&p = dynamic_cast<Protocol &>(backup);
 
-  p << _maxIdClient;
   p << clientSize;
-  for (client_list::iterator it = _clients.begin(); it != _clients.end(); ++it)
+  for (clients::iterator it = _clients.begin(); it != _clients.end(); ++it)
     {
-      request::StatusDetailLen	statusLen = it->statusDetail.size();
+      Client			*c = it->second;
+      request::StatusDetailLen	statusLen = c->statusDetail.size();
       Ruint16			len;
       request::UsernameLen	userLen;
 
-      p << it->id;
-      userLen = it->login.size();
+      userLen = c->login.size();
       p << userLen;
-      p.push(it->login, userLen);
-      p.push(it->password, request::Crypt::PASS_SIZE);
-      p << it->rights;
-      p << it->privacy;
-      p << it->status;
+      p.push(c->login, userLen);
+      p.push(c->password, request::Crypt::PASS_SIZE);
+      p << c->rights;
+      p << c->privacy;
+      p << c->status;
       p << statusLen;
-      p.push(it->statusDetail, statusLen);
-      len = it->friendList.size();
+      p.push(c->statusDetail, statusLen);
+      len = c->friendList.size();
       p << len;
-      for (list_friend::iterator itFr = it->friendList.begin(); itFr != it->friendList.end(); ++itFr)
+      for (list_friend::iterator itFr = c->friendList.begin(); itFr != c->friendList.end(); ++itFr)
 	{
-	  ID	id = *itFr;
+	  request::UsernameLen	UsernameLen = itFr->size();
 
-	  p << id;
+	  p << UsernameLen;
+	  p.push(*itFr, UsernameLen);
 	}
-      len = it->waitRequest.size();
+      len = c->waitRequest.size();
       p << len;
-      for (list_request::iterator itReq = it->waitRequest.begin();
-      	   itReq != it->waitRequest.end(); ++itReq)
+      for (list_request::iterator itReq = c->waitRequest.begin();
+      	   itReq != c->waitRequest.end(); ++itReq)
       	(*itReq)->serialize(p);
     }
-  backup = p;
   return (backup);
 }
 
@@ -124,33 +110,33 @@ Serializer &	Database::load(Serializer &backup)
 {
   boost::mutex::scoped_lock(_lock);
   Ruint16		nbClients;
-  Protocol		p(backup);
+  Protocol		&p = dynamic_cast<Protocol &>(backup);
 
-  p >> _maxIdClient;
   p >> nbClients;
-  for (client_list::size_type it = 0; it < nbClients; ++it)
+  for (clients::size_type it = 0; it < nbClients; ++it)
     {
-      Client		c;
+      Client		*c = new Client;
       request::UsernameLen	userLen;
       request::StatusDetailLen	statLen;
       Ruint16		len;
 
-      p >> c.id;
       p >> userLen;
-      p.pop(c.login, userLen);
-      p.pop(c.password, request::Crypt::PASS_SIZE);
-      p >> c.rights;
-      p >> c.privacy;
-      p >> c.status;
+      p.pop(c->login, userLen);
+      p.pop(c->password, request::Crypt::PASS_SIZE);
+      p >> c->rights;
+      p >> c->privacy;
+      p >> c->status;
       p >> statLen;
-      p.pop(c.statusDetail, statLen);
+      p.pop(c->statusDetail, statLen);
       p >> len;
       for (Ruint16 i = 0; i < len; ++i)
 	{
-	  ID	id;
+	  request::UsernameLen	UsernameLen;
+	  std::string		Friend;
 
-	  p >> id;
-	  c.friendList.push_back(id);
+	  p >> UsernameLen;
+	  p.pop(Friend, UsernameLen);
+	  c->friendList.push_back(Friend);
 	}
       p >> len;
       for (Ruint16 i = 0; i != len; ++i)
@@ -168,11 +154,10 @@ Serializer &	Database::load(Serializer &backup)
       	    {
       	      throw Serializer::invalid_argument("Database Load error");
       	    }
-      	  c.waitRequest.push_back(req);
+      	  c->waitRequest.push_back(req);
       	}
-      _clients.push_back(c);
+      _clients[c->login] = c;
     }
-  backup = p;
   return (backup);
 }
 
@@ -185,58 +170,73 @@ bool		Database::newClient(const std::string &login,
 				    bool trunc)
 {
   boost::mutex::scoped_lock(_lock);
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
-  Client		newC;
+  clients::iterator it = _clients.find(login);
+  Client		*newC = new Client;
 
   if (it != _clients.end() && !trunc)
     return (false);
-  newC.id = _maxIdClient++;
-  newC.login = login;
-  newC.password = password;
-  newC.rights = right_level;
-  newC.privacy = privacy;
-  newC.status = status;
-  newC.statusDetail = statusDetail;
+  newC->login = login;
+  newC->password = password;
+  newC->rights = right_level;
+  newC->privacy = privacy;
+  newC->status = status;
+  newC->statusDetail = statusDetail;
   if (trunc && it != _clients.end())
     {
-      *it = newC;
+      _clients[login] = newC;
       return (true);
     }
-  _clients.push_back(newC);
+  _clients[login] = newC;
   return (true);
 }
 
 bool		Database::addFriend(const std::string &login,
-				    const ID friendID)
+				    const std::string &FriendLogin)
 {
   boost::mutex::scoped_lock(_lock);
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::FriendID(friendID, login));
-  if (it == _clients.end())
+  clients::iterator	it;
+
+  if ((it = _clients.find(login)) == _clients.end() || _clients.find(FriendLogin) == _clients.end())
     return (false);
-  it->friendList.push_back(friendID);
+  for (list_friend::iterator itFr = it->second->friendList.begin();
+       itFr != it->second->friendList.end(); ++itFr)
+    {
+      if (*itFr == FriendLogin)
+	return (false);
+    }
+  it->second->friendList.push_back(FriendLogin);
   return (true);
 }
 
 bool		Database::delFriend(const std::string &login,
-				    const ID friendID)
+				    const std::string &FriendLogin)
 {
   boost::mutex::scoped_lock(_lock);
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::FriendID(friendID, login));
-  if (it == _clients.end())
+  clients::iterator	it;
+
+  if ((it = _clients.find(login)) == _clients.end())
     return (false);
-  it->friendList.remove(friendID);
-  return (true);
+  for (list_friend::iterator itFr = it->second->friendList.begin();
+       itFr != it->second->friendList.end(); ++itFr)
+    {
+      if (*itFr == FriendLogin)
+	{
+	  it->second->friendList.erase(itFr);
+	  return (true);
+	}
+    }
+  return (false);
 }
 
 bool		Database::delClient(const std::string &login,
 				    const request::PasswordType &password)
 {
   boost::mutex::scoped_lock(_lock);
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
+  clients::iterator it = _clients.find(login);
 
   if (it == _clients.end())
     return (false);
-  if (it->password != password)
+  if (it->second->password != password)
     return (false);
   _clients.erase(it);
   return (true);
@@ -247,13 +247,13 @@ bool		Database::setStatus(const std::string &login,
 				    const std::string &message)
 {
   boost::mutex::scoped_lock(_lock);
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
+  clients::iterator it = _clients.find(login);
 
   if (it == _clients.end())
     return (false);
-  it->status = status;
+  it->second->status = status;
   if (message.size() != 0)
-    it->statusDetail = message;
+    it->second->statusDetail = message;
   return (true);
 }
 
@@ -262,54 +262,56 @@ bool		Database::modClientPass(const std::string &login,
 					const request::PasswordType &newpassword)
 {
   boost::mutex::scoped_lock(_lock);
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
+  clients::iterator it = _clients.find(login);
 
   if (it == _clients.end())
     return (false);
-  if (it->password != oldpassword)
+  if (it->second->password != oldpassword)
     return (false);
-  it->password = newpassword;
+  it->second->password = newpassword;
   return (true);
 }
 
 bool		Database::getClient(const std::string &login, Client &client)
 {
   boost::mutex::scoped_lock(_lock);
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
+  clients::iterator it = _clients.find(login);
 
   if (it == _clients.end())
     return (false);
-  client = *it;
+  client = *(it->second);
   return (true);
 }
 
 bool		Database::modPrivacy(const std::string &login, const request::Privacy privacy)
 {
   boost::mutex::scoped_lock(_lock);
-  client_list::iterator it = std::find_if(_clients.begin(), _clients.end(), predicate::Login(login));
+  clients::iterator it = _clients.find(login);
 
   if (it == _clients.end())
     return (false);
-  it->privacy = privacy;
+  it->second->privacy = privacy;
   return (true);
 }
 
 bool		Database::clientExist(const std::string &login)
 {
-  return (std::find_if(_clients.begin(), _clients.end(), predicate::Login(login)) != _clients.end());
+  return (_clients.find(login) != _clients.end());
 }
 
 bool		Database::clientExist(const std::string &login,
 				      const request::PasswordType &password)
 {
-  return (std::find_if(_clients.begin(), _clients.end(),
-		       predicate::LoginPass(login, password)) != _clients.end());
+  clients::iterator	it = _clients.find(login);
+
+  return (it != _clients.end() && it->second->password == password);
 }
 
 bool		Database::clientExist(const std::string &login,
 				      const request::PasswordType &password,
 				      const request::Rights rights)
 {
-  return (std::find_if(_clients.begin(), _clients.end(),
-		       predicate::LoginPassRights(login, password, rights)) != _clients.end());
+  clients::iterator	it = _clients.find(login);
+
+  return (it != _clients.end() && it->second->password == password && it->second->rights == rights);
 }

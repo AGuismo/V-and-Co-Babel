@@ -4,103 +4,19 @@
 #include	"Database.hh"
 #include	"FriendRequest.hh"
 #include	"MD5.hh"
+#include	"UnitTest.hh"
 
 const char	*red = "\033[22;31m";
 const char	*green = "\033[22;32m";
 const char	*reset = "\033[0m";
 
-bool	empty()
+bool	unitTest(bool (*func)(Database &))
 {
-  const char	*filename = "./misc/empty.db";
-  std::ofstream	ofs(filename, std::ifstream::trunc);
+  Database	db;
 
-  Database::getInstance().drop();
-  if (!ofs.is_open())
-    throw std::runtime_error(std::string("can't open ") + filename);
-  ofs.close();
-  if (Database::getInstance().loadFile(filename))
-    return (false);
-  return (true);
-}
-
-bool	single_user()
-{
-  const char	*filename = "./misc/single_user.db";
-  std::ofstream	ofs(filename, std::ifstream::trunc);
-
-  Database::getInstance().drop();
-  if (!ofs.is_open())
-    throw std::runtime_error(std::string("can't open ") + filename);
-  ofs.close();
-  if (!Database::getInstance().newClient("toto", md5("poil")))
-    return (false);
-  if (!Database::getInstance().saveFile(filename))
-    return (false);
-  if (!Database::getInstance().loadFile(filename))
-    return (false);
-  if (!Database::getInstance().clientExist("toto", md5("poil")))
-    return (false);
-  return (true);
-}
-
-bool	multiple_users()
-{
-  const char	*filename = "./misc/multiple_users.db";
-  std::ofstream	ofs(filename, std::ifstream::trunc);
-
-  Database::getInstance().drop();
-  if (!ofs.is_open())
-    throw std::runtime_error(std::string("can't open ") + filename);
-  ofs.close();
-  if (!Database::getInstance().newClient("toto", md5("poil")))
-    return (false);
-  if (!Database::getInstance().newClient("tata", md5("pwet")))
-    return (false);
-  if (!Database::getInstance().saveFile(filename))
-    return (false);
-  if (!Database::getInstance().loadFile(filename))
-    return (false);
-  if (!Database::getInstance().clientExist("toto", md5("poil")))
-    return (false);
-  if (!Database::getInstance().clientExist("tata", md5("pwet")))
-    return (false);
-  return (true);
-}
-
-bool	request_test1()
-{
-  const char	*filename = "./misc/request_test1.db";
-  request::friends::client::Request	req("toto", "tata");
-  std::ofstream	ofs(filename, std::ifstream::trunc);
-
-  Database::getInstance().drop();
-  if (!ofs.is_open())
-    throw std::runtime_error(std::string("can't open ") + filename);
-  ofs.close();
-  if (!Database::getInstance().newClient("toto", md5("poil")))
-    return (false);
-  if (!Database::getInstance().newClient("tata", md5("pwet")))
-    return (false);
-  if (!Database::getInstance().addRequest("toto", req))
-    return (false);
-  if (!Database::getInstance().saveFile(filename))
-    return (false);
-  if (!Database::getInstance().loadFile(filename))
-    return (false);
-  if (!Database::getInstance().clientExist("toto", md5("poil")))
-    return (false);
-  if (!Database::getInstance().clientExist("tata", md5("pwet")))
-    return (false);
-  if (!Database::getInstance().delRequest("toto", req))
-    return (false);
-  return (true);
-}
-
-bool	unitTest(bool (*func)())
-{
   try
     {
-      if (!func())
+      if (!func(db))
 	return (false);
     }
   catch (const std::runtime_error &e)

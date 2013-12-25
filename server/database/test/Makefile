@@ -1,6 +1,10 @@
 NAME	     ?=	database_unit_test
 
 SRCS =	      	main.cpp		\
+		empty.cpp		\
+		multipleUsers.cpp	\
+		requestTest1.cpp	\
+		singleUser.cpp		\
 
 DIR.API=	../../../protocol/API
 DIR.DB=		../
