@@ -9,7 +9,7 @@ var searchData=
   ['set_5fstream_5fver',['SET_STREAM_VER',['../types_8hh.html#a722466e610dc0a06fbef8b5639b3b0f1',1,'types.hh']]],
   ['set_5fversion',['SET_VERSION',['../types_8hh.html#a396eac2d8e254b7d0c19607dde393e30',1,'types.hh']]],
   ['sincewhen',['SinceWhen',['../namespacerequest.html#a81585e2d8aa8cce5e4f2bccca680b157',1,'request']]],
-  ['status',['Status',['../structrequest_1_1Status.html',1,'request']]],
+  ['status',['Status',['../structrequest_1_1User_1_1Status.html',1,'request::User']]],
   ['status',['STATUS',['../namespacerequest_1_1client_1_1perso.html#a1ab917f3e12cb91fea6d6fab85091104',1,'request::client::perso::STATUS()'],['../namespacerequest.html#ae2a5baaf4d49873899374a39bb9415ad',1,'request::Status()']]],
   ['statusdetail',['StatusDetail',['../namespacerequest.html#a73d388e45f303511b916ffbbbc30767e',1,'request']]],
   ['statusdetaillen',['StatusDetailLen',['../namespacerequest.html#a1271e0bd7064fd15f984cb98fb64669d',1,'request']]],

@@ -75,7 +75,8 @@ namespace request
       static const ID DEL_MISSED =		204; /**< Delete missed call */
       static const ID SET_AUTO_ANSWER =		205; /**< Set an auto answer message */
       static const ID PONG =			206; /**< Respond to a Ping */
-      static const ID UNSET_AUTO_ANSWER =	207; /**< Delete your auto answer message */
+      static const ID LET_MESSAGE =		207; /**< Let a message to another client */
+      static const ID UNSET_AUTO_ANSWER =	208; /**< Delete your auto answer message */
     }
 
     /** \brief Client Friend codes */

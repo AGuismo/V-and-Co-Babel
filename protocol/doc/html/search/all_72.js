@@ -22,7 +22,7 @@ var searchData=
   ['rint32',['Rint32',['../types_8hh.html#af6e6c2e759d62ec2a86d3f4784918aed',1,'types.hh']]],
   ['rint64',['Rint64',['../types_8hh.html#a8b244df354e5cf9dc37f275298e8e3f8',1,'types.hh']]],
   ['rint8',['Rint8',['../types_8hh.html#a7c407450785aa5e4943790a7bfddfac1',1,'types.hh']]],
-  ['root',['ROOT',['../namespacerequest.html#ac5c3cd55eeb59f278461bf8a1ed305e2',1,'request']]],
+  ['root',['ROOT',['../structrequest_1_1User.html#a4e9b6e220b7aa03c4487c87145ca77fc',1,'request::User']]],
   ['ruint16',['Ruint16',['../types_8hh.html#aa55dd6446a7f4ad124d9a95efef94e40',1,'types.hh']]],
   ['ruint32',['Ruint32',['../types_8hh.html#a36ea0ac782fb2322144869a240f7f387',1,'types.hh']]],
   ['ruint64',['Ruint64',['../types_8hh.html#a7e344f3a3b82793519b3d712b209481e',1,'types.hh']]],
