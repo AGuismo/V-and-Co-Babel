@@ -9,7 +9,7 @@
 #include	"Server.hh"
 
 Friends::Friends(Database &db, Env &env):
-_db(db), _env(env)
+  _db(db), _env(env)
 {
 
 }
@@ -20,7 +20,7 @@ Friends::~Friends()
 }
 
 Friends::Friends(Friends const &src):
-_db(src._db), _env(src._env)
+  _db(src._db), _env(src._env)
 {
   (void)src;
 }
@@ -52,15 +52,15 @@ void	Friends::unload()
 
 bool	Friends::searchClient(const std::list<IClient::Pointer> &clients, const std::string &name, IClient::Pointer &client)
 {
-	for (Server::client_list::const_iterator it = clients.begin(); it != clients.end(); ++it)
+  for (Server::client_list::const_iterator it = clients.begin(); it != clients.end(); ++it)
+    {
+      if ((*it)->Username() == name)
 	{
-		if ((*it)->Username() == name)
-		{
-			client = *it;
-			return (true);
-		}
+	  client = *it;
+	  return (true);
 	}
-	return (false);
+    }
+  return (false);
 }
 
 void	Friends::request(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
@@ -70,26 +70,28 @@ void	Friends::request(const std::list<IClient::Pointer> &clients, IClient::Point
 
 
   if (sender->Authenticated() &&
-      // tester si le sender à déjà le receiver en ami
-      sender->status() == request::User::Status::CONNECTED &&
-      _db.clientExist(origin->to) &&
-      _db.clientExist(origin->from))
+      sender->Username() == origin->from &&
+      !_db.bothFriend(origin->to, origin->from))
     {
 #if defined(DEBUG)
       std::cout << "Receive a friend request from [" << origin->from << "] to [" << origin->to << "]" << std::endl;
 #endif
+      if (!_db.addRequest(origin->from, *origin) || !_db.addRequest(origin->to, *origin))
+	{
+	  _db.delRequest(origin->from, *origin);
+	  sender->serialize_data(request::server::Forbidden());
+	  return ;
+	}
       if (searchClient(clients, origin->to, receiver))
 	{
 #if defined(DEBUG)
 	  std::cout << "Friend request send ..." << std::endl;
 #endif
-	  if (receiver->Authenticated() &&
-	      receiver->status() == request::User::Status::CONNECTED)
+	  if (receiver->Authenticated())
 	    receiver->serialize_data(*origin);
-	  else
-	    sender->serialize_data(request::server::Forbidden());
-	  return ;
 	}
+      sender->serialize_data(request::server::Ok());
+      return ;
     }
   sender->serialize_data(request::server::Forbidden());
 }
@@ -99,16 +101,24 @@ void	Friends::del_friend(const std::list<IClient::Pointer> &clients, IClient::Po
   const request::friends::client::DelFriend	*origin = dynamic_cast<const request::friends::client::DelFriend *>(req);
 
   if (sender->Authenticated() &&
-      // tester si le sender à déjà le receiver en ami
-      sender->status() == request::User::Status::CONNECTED &&
-      _db.clientExist(origin->to) &&
-      _db.clientExist(origin->from))
-      //&& inclure _db.delFriend(origin->from, [Comment avoir le FriendID])
+      sender->Username() == origin->from &&
+      !_db.isFriend(origin->from, origin->to))
     {
+      if (_db.delFriend(origin->from, origin->to))
+	{
+	  sender->serialize_data(request::server::Ok());
+	  if (_db.isFriend(origin->to, origin->from))
+	    {
+	      IClient::Pointer		receiver;
+
+	      _db.delFriend(origin->to, origin->from);
+	      if (searchClient(clients, origin->to, receiver))
+		receiver->serialize_data(request::friends::server::Update(request::User::Status::DELETED, std::string(), origin->from));
+	    }
+	}
 #if defined(DEBUG)
       std::cout << "Receive a delete friend request from [" << origin->from << "] to [" << origin->to << "]" << std::endl;
 #endif
-  sender->serialize_data(request::server::Ok());
     }
   sender->serialize_data(request::server::Forbidden());
 }
@@ -116,25 +126,28 @@ void	Friends::del_friend(const std::list<IClient::Pointer> &clients, IClient::Po
 void	Friends::accept(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::friends::client::Accept	*origin = dynamic_cast<const request::friends::client::Accept *>(req);
-  IClient::Pointer				receiver;
 
   if (sender->Authenticated() &&
-      // tester si le sender à déjà le receiver en ami
-      sender->status() == request::User::Status::CONNECTED &&
-      _db.clientExist(origin->to) &&
-      _db.clientExist(origin->from))
-      //&& inclure _db.delFriend(origin->from, [Comment avoir le FriendID])
+      sender->Username() == origin->from &&
+      _db.isRequestExist(origin->from, request::friends::client::Request(origin->from, origin->to)) &&
+      _db.isRequestExist(origin->to, request::friends::client::Request(origin->from, origin->to)))
     {
-      if (searchClient(clients, origin->to, receiver))
+      IClient::Pointer				receiver;
+
+      if (_db.addFriend(origin->from, origin->to) && _db.addFriend(origin->to, origin->from))
 	{
+	  if (searchClient(clients, origin->to, receiver) && receiver->Authenticated())
+	    {
 #if defined(DEBUG)
-	  std::cout << "accept request send ..." << std::endl;
+	      std::cout << origin->from << " accept request from " << origin->to << std::endl;
 #endif
-	  if (receiver->Authenticated() &&
-	      receiver->status() == request::User::Status::CONNECTED)
-	    receiver->serialize_data(*origin);
+	      receiver->serialize_data(*origin);
+	    }
 	  else
-	    sender->serialize_data(request::server::Forbidden());
+	    _db.addRequest(origin->to, *origin);
+	  _db.delRequest(origin->from, request::friends::client::Request(origin->from, origin->to));
+	  _db.delRequest(origin->to, request::friends::client::Request(origin->from, origin->to));
+	  sender->serialize_data(request::server::Ok());
 	  return ;
 	}
     }
@@ -147,39 +160,70 @@ void	Friends::refuse(const std::list<IClient::Pointer> &clients, IClient::Pointe
   IClient::Pointer				receiver;
 
   if (sender->Authenticated() &&
-      // tester si le sender à déjà le receiver en ami
-      sender->status() == request::User::Status::CONNECTED &&
-      _db.clientExist(origin->to) &&
-      _db.clientExist(origin->from))
-      //&& inclure _db.delFriend(origin->from, [Comment avoir le FriendID])
+      sender->Username() == origin->from &&
+      _db.isRequestExist(origin->from, request::friends::client::Request(origin->from, origin->to)) &&
+      _db.isRequestExist(origin->to, request::friends::client::Request(origin->from, origin->to)))
     {
-      if (searchClient(clients, origin->to, receiver))
+      IClient::Pointer				receiver;
+
+      if (searchClient(clients, origin->to, receiver) && receiver->Authenticated())
 	{
 #if defined(DEBUG)
-	  std::cout << "refuse request send ..." << std::endl;
+	  std::cout << origin->from << " refuse request from " << origin->to << std::endl;
 #endif
-	  if (receiver->Authenticated() &&
-	      receiver->status() == request::User::Status::CONNECTED)
-	    receiver->serialize_data(*origin);
-	  else
-	    sender->serialize_data(request::server::Forbidden());
-	  return ;
+	  receiver->serialize_data(*origin);
 	}
+      else
+	_db.addRequest(origin->to, *origin);
+      _db.delRequest(origin->from, request::friends::client::Request(origin->from, origin->to));
+      _db.delRequest(origin->to, request::friends::client::Request(origin->from, origin->to));
+      sender->serialize_data(request::server::Ok());
+      return ;
     }
   sender->serialize_data(request::server::Forbidden());
 }
 
+void	Friends::sendFriendStatus(IClient::Pointer &sender,
+				  const std::list<IClient::Pointer> &clients,
+				  const std::string &username)
+{
+  IClient::Pointer	receiver;
+
+  if (searchClient(clients, username, receiver))
+    sender->serialize_data(request::friends::server::Update(receiver->status(),
+							    receiver->statusDetail(),
+							    username));
+  else
+    sender->serialize_data(request::friends::server::Update(request::User::Status::DISCONNECTED,
+							    std::string(),
+							    username));
+}
+
 void	Friends::list(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
-  const request::friends::client::List	*origin = dynamic_cast<const request::friends::client::List *>(req);
+  Database::list_friend		friends;
 
+  (void)req;
+#if defined(DEBUG)
   std::cout << "Friends::List()" << std::endl;
+#endif
   if (sender->Authenticated() &&
-      sender->status() == request::User::Status::CONNECTED &&
-      _db.clientExist(sender->Username()))
-      //&& inclure _db.listFriend(origin->to)
+      _db.clientExist(sender->Username()) &&
+      _db.listFriend(sender->Username(), friends))
     {
-      //envoyer la list des amis
+      sender->serialize_data(request::server::Ok());
+      for (Database::list_friend::const_iterator it = friends.begin(); it != friends.end(); ++it)
+	{
+	  if (!_db.clientExist(*it))
+	    {
+	      _db.delFriend(sender->Username(), *it);
+	      sender->serialize_data(request::friends::server::Update(request::User::Status::DELETED,
+								      std::string(),
+								      *it));
+	    }
+	  else
+	    sendFriendStatus(sender, clients, *it);
+	}
     }
   else
     sender->serialize_data(request::server::Forbidden());

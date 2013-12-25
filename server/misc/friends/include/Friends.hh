@@ -19,7 +19,10 @@ public:
   void		getVersion(plugin::version::major &maj, plugin::version::minor &min) const;
 
 private:
-	static bool	searchClient(const std::list<IClient::Pointer> &clients, const std::string &name, IClient::Pointer &);
+  bool		searchClient(const std::list<IClient::Pointer> &clients,
+			     const std::string &name, IClient::Pointer &);
+  void		sendFriendStatus(IClient::Pointer &sender, const std::list<IClient::Pointer> &clients,
+				 const std::string &username);
 
 private:
   void	request(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
@@ -33,8 +36,8 @@ public:
   Friends& operator=(Friends const&);
 
 private:
-	Database	&_db;
-	Env			&_env;
+  Database	&_db;
+  Env		&_env;
 };
 
 #endif /* FRIENDS_H_ */

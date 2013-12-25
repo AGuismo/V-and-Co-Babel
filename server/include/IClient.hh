@@ -29,6 +29,8 @@ public:
   virtual void				privacy(request::Privacy) = 0;
   virtual request::Status		status() const = 0;
   virtual void				status(request::Status) = 0;
+  virtual request::StatusDetail		statusDetail() const = 0;
+  virtual void				statusDetail(request::StatusDetail &) = 0;
   virtual request::IP			IP() const = 0;
   virtual const request::Stream		&AutoAnswer() const = 0;
   virtual void				updateAutoAnswer(const request::Stream &) = 0;

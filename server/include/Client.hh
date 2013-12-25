@@ -52,21 +52,38 @@ public:
   void				start();
   void				async_write(const IClient::buffer &);
 
-  const request::Username	&Username() const { return (InfosClient._name); };
-  void				Username(const request::Username &uname) { InfosClient._name = uname; };
-  bool				Authenticated() const { return (InfosClient._isConnect); };
-  void				Authenticated(bool auth) { InfosClient._isConnect = auth; };
-  request::Privacy		privacy() const { return (InfosClient._privacy); };
-  void				privacy(request::Privacy privacy) { InfosClient._privacy = privacy; };
-  request::Status		status() const { return (InfosClient._status); };
-  void				status(request::Status status) { InfosClient._status = status; };
-  request::IP			IP() const { return (_socket.remote_endpoint().address().to_v4().to_ulong()); };
-  const request::Stream		&AutoAnswer() const { return (InfosClient._autoAnswer);};
+  const request::Username	&Username() const
+  { return (InfosClient._name); };
+  void				Username(const request::Username &uname)
+  { InfosClient._name = uname; };
+  bool				Authenticated() const
+  { return (InfosClient._isConnect); };
+  void				Authenticated(bool auth)
+  { InfosClient._isConnect = auth; };
+  request::Privacy		privacy() const
+  { return (InfosClient._privacy); };
+  void				privacy(request::Privacy privacy)
+  { InfosClient._privacy = privacy; };
+  request::Status		status() const
+  { return (InfosClient._status); };
+  void				status(request::Status status)
+  { InfosClient._status = status; };
+  request::StatusDetail		statusDetail() const
+  { return (InfosClient._statusDetail); };
+  void				statusDetail(request::StatusDetail &detail)
+  { InfosClient._statusDetail = detail; };
+  request::IP			IP() const
+  { return (_socket.remote_endpoint().address().to_v4().to_ulong()); };
+  const request::Stream		&AutoAnswer() const
+  { return (InfosClient._autoAnswer);};
   void				updateAutoAnswer(const request::Stream &);
   void				cleanAutoAnswer();
-  Serializer			&serializeAnswer() { return (_serializeAnswer);};
-  request::PingPongID		pong() const { return (_currentPong); }
-  void				pong(request::PingPongID id) { _currentPong = id; }
+  Serializer			&serializeAnswer()
+  { return (_serializeAnswer);};
+  request::PingPongID		pong() const
+  { return (_currentPong); }
+  void				pong(request::PingPongID id)
+  { _currentPong = id; }
 
   tcp::socket			&socket();
   IClient::Pointer		share();
@@ -94,6 +111,7 @@ public:
     std::string	       		_name;
     request::Privacy		_privacy;
     request::Status		_status;
+    request::StatusDetail	_statusDetail;
     request::Stream		_autoAnswer;
   }				InfosClient;
 };

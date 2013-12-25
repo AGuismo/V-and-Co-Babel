@@ -83,6 +83,8 @@ public:
   bool		addRequest(const request::Username &login, const Request &req);
   template <typename Request>
   bool		delRequest(const request::Username &login, const Request &req);
+  template <typename Request>
+  bool		isRequestExist(const request::Username &login, const Request &req);
 
 
 private:
@@ -128,6 +130,22 @@ bool		Database::delRequest(const request::Username &login, const Request &req)
 	itClient->second->waitRequest.erase(itReq);
 	return (true);
       }
+  return (false);
+}
+
+
+template <typename Request>
+bool		Database::isRequestExist(const request::Username &login, const Request &req)
+{
+  boost::mutex::scoped_lock(_lock);
+  clients::iterator	itClient = _clients.find(login);
+
+  if (itClient == _clients.end())
+    return (false);
+  for (list_request::iterator itReq = itClient->second->waitRequest.begin();
+       itReq != itClient->second->waitRequest.end(); ++itReq)
+    if (req.operator==(*itReq))
+      return (true);
   return (false);
 }
 
