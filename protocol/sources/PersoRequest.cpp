@@ -53,6 +53,7 @@ namespace	request
       const char *DelMissedClient::DEL_MISSED = "Del Missed client request";
       const char *SetAutoAnswerClient::SET_AUTO_ANSWER = "Set AutoAnswer Client request";
       const char *UnsetAutoAnswer::UNSET_AUTO_ANSWER="Unset AutoAnswer Client request";
+      const char *LetMessage::LET_MESSAGE="Let a message to another client";
 
       ModifyPrivacy::ModifyPrivacy():
 	Perso(request::client::perso::PRIVACY_MODE)
@@ -516,6 +517,88 @@ namespace	request
 	Perso::unserialize(rhs);
 	return (rhs);
       }
+
+      LetMessage::LetMessage():
+	Perso(request::client::perso::LET_MESSAGE)
+      {
+      }
+
+      LetMessage::LetMessage(const request::Username &to,
+			     const request::Stream &stream):
+	Perso(request::client::perso::LET_MESSAGE), _to(to), _stream(stream)
+      {
+      }
+
+      LetMessage::~LetMessage()
+      {
+      }
+
+      LetMessage::LetMessage(const LetMessage &src) :
+	Perso(request::client::perso::LET_MESSAGE), _to(src._to), _stream(src._stream)
+      {
+      }
+
+      LetMessage	&LetMessage::operator=(const LetMessage &src)
+      {
+	if (this != &src)
+	  {
+	    _to = src._to;
+	    _stream = src._stream;
+	  }
+	return (*this);
+      }
+
+      ARequest	*LetMessage::clone() const
+      {
+	return (new LetMessage(*this));
+      }
+
+      bool	LetMessage::operator==(const ARequest *req) const
+      {
+	if (ARequest::operator!=(req))
+	  return (false);
+
+	const LetMessage	*tmp = dynamic_cast<const LetMessage *>(req);
+	return (tmp->_to == _to && tmp->_stream == _stream);
+      }
+
+      bool	LetMessage::operator!=(const ARequest *req) const
+      {
+	return (!operator==(req));
+      }
+
+      Protocol		&LetMessage::serialize(Protocol &rhs) const
+      {
+	Perso::serialize(rhs);
+	request::UsernameLen		toLen;
+	request::StreamLen	streamLen;
+
+	toLen = _to.size();
+	rhs << toLen;
+	rhs.push(_to, toLen);
+
+	streamLen = _stream.size();
+	rhs << streamLen;
+	rhs.push(_stream, streamLen);
+
+	return (rhs);
+      }
+
+      Protocol	&LetMessage::unserialize(Protocol &rhs)
+      {
+	Perso::unserialize(rhs);
+	request::UsernameLen	toLen;
+	request::StreamLen	streamLen;
+
+	rhs >> toLen;
+	rhs.pop(_to, toLen);
+
+	rhs >> streamLen;
+	rhs.pop(_stream, streamLen);
+
+	return (rhs);
+      }
+
     } // !client
 
     namespace server
@@ -818,7 +901,6 @@ namespace	request
 
 	return (rhs);
       }
-
 
     } // !server
 

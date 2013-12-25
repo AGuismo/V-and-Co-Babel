@@ -167,6 +167,10 @@ void	Perso::set_auto_answer(const std::list<IClient::Pointer> &clients, IClient:
     }
 }
 
+void	Perso::let_message(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
+{
+}
+
 void	Perso::pong(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::Pong	*origin = dynamic_cast<const request::perso::client::Pong *>(req);
@@ -182,7 +186,7 @@ void	Perso::unset_auto_answer(const std::list<IClient::Pointer> &clients, IClien
 {
   const request::perso::client::UnsetAutoAnswer	*origin = dynamic_cast<const request::perso::client::UnsetAutoAnswer *>(req);
 
-  if ((remove(std::string("/misc/auto_answer/" + sender->Username() + ".rep").c_str())) != 0)
+  if ((remove(std::string("/misc/auto_answer/" + sender->Username() + ".rep").c_str())) != 0) // To change
     {
 #if defined(DEBUG)
       std::cout << "Can't remove the file" << std::endl;
@@ -207,6 +211,7 @@ void	Perso::setActions(std::map<request::ID, plugin::request_handler> &map)
   map[request::client::perso::DEL_MISSED] = plugin::request_handler(&Perso::del_missed, this);
   map[request::client::perso::SET_AUTO_ANSWER] = plugin::request_handler(&Perso::set_auto_answer, this);
   map[request::client::perso::PONG] = plugin::request_handler(&Perso::pong, this);
+  map[request::client::perso::LET_MESSAGE] = plugin::request_handler(&Perso::let_message, this);
   map[request::client::perso::UNSET_AUTO_ANSWER] = plugin::request_handler(&Perso::unset_auto_answer, this);
 }
 

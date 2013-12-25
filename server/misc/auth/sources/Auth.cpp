@@ -3,6 +3,7 @@
 #include	"types.hh"
 #include	"RequestCode.hh"
 #include	"AuthRequest.hh"
+#include	"FriendRequest.hh"
 #include	"ServerRequest.hh"
 #include	"Database.hh"
 
@@ -82,6 +83,7 @@ void	Auth::connect(const std::list<IClient::Pointer> &clients, IClient::Pointer 
       std::cout << "Connection on the account : [" << origin->_name << "]" << std::endl;
 #endif
       sender->serialize_data(request::server::Ok());
+      sender->addRequest(request::friends::client::List());
       sender->Authenticated(true);
       sender->status(request::User::Status::CONNECTED);
     }

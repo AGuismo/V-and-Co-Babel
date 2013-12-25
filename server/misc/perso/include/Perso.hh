@@ -25,6 +25,7 @@ private:
   void	get_missed(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
   void	del_missed(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
   void	set_auto_answer(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+  void	let_message(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
   void	pong(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
   void	unset_auto_answer(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
   bool	createAnswerFile(IClient::Pointer sender);

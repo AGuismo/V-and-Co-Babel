@@ -172,6 +172,28 @@ namespace	request
 	Protocol			&unserialize(Protocol &);
       };
 
+      struct	LetMessage : public Perso
+      {
+	static const char	*LET_MESSAGE;
+
+	LetMessage();
+	LetMessage(const request::Username &to,
+		   const request::Stream &stream);
+	~LetMessage();
+	LetMessage(const LetMessage &);
+	LetMessage	&operator=(const LetMessage &);
+
+	ARequest			*clone() const;
+	Protocol			&serialize(Protocol &) const;
+	Protocol			&unserialize(Protocol &);
+
+	bool			operator==(const ARequest *req) const;
+	bool			operator!=(const ARequest *req) const;
+
+	request::Username	_to;
+	request::Stream		_stream;
+      };
+
     } // !client
 
     namespace	server
