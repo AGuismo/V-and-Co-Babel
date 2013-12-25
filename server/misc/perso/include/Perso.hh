@@ -5,6 +5,7 @@
 # include	"IRequestPlugin.hh"
 # include	"Database.hh"
 # include	"Env.hh"
+# include	"PersoRequest.hh"
 
 class Perso : public request::IRequestPlugin
 {
@@ -29,6 +30,10 @@ private:
   void	pong(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
   void	unset_auto_answer(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
   bool	createAnswerFile(IClient::Pointer sender);
+  void	sendChangeStatusFriends(const IClient::Pointer &sender,
+				const Database::list_friend &friends,
+				const request::perso::client::StatusClient *,
+				const std::list<IClient::Pointer> &clients);
 
 private:
   Perso(Perso const&);

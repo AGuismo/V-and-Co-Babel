@@ -5,7 +5,7 @@
 #include	"Administrator.hh"
 
 Maintenance::Maintenance(boost::asio::io_service &service, Administrator &adm) :
-_service(service), _acceptor(service), _adm(adm)
+  _service(service), _acceptor(service), _adm(adm)
 {
 
 }

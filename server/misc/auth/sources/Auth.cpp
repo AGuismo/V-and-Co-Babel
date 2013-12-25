@@ -58,9 +58,9 @@ void	Auth::new_account(const std::list<IClient::Pointer> &clients, IClient::Poin
       std::cout << "Create a new account for : [" << origin->_name << "]" << std::endl;
 #endif
       sender->Authenticated(false);
-	  sender->Username(origin->_name);
-	  sender->privacy(request::User::PUBLIC);
-	  sender->status(request::User::Status::DISCONNECTED);
+      sender->Username(origin->_name);
+      sender->privacy(request::User::PUBLIC);
+      sender->status(request::User::Status::DISCONNECTED);
       sender->serialize_data(request::server::Ok());
     }
   else
@@ -72,6 +72,24 @@ void	Auth::new_account(const std::list<IClient::Pointer> &clients, IClient::Poin
     }
 }
 
+void	Auth::sendStatusFriends(const IClient::Pointer &sender,
+				const Database::list_friend &friends,
+				const std::list<IClient::Pointer> &clients,
+				const request::Status st) const
+{
+  for (std::list<IClient::Pointer>::const_iterator itClient = clients.begin();
+       itClient != clients.end(); ++itClient)
+    {
+      for (Database::list_friend::const_iterator it = friends.begin();
+	   it != friends.end(); ++it)
+	{
+	  if ((*itClient)->Authenticated() && (*itClient)->Username() == *it)
+	    (*itClient)->serialize_data(request::friends::server::Update(st, std::string(),
+									 sender->Username()));
+	}
+    }
+}
+
 void	Auth::connect(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::auth::client::ConnectClient	*origin = dynamic_cast<const request::auth::client::ConnectClient *>(req);
@@ -79,6 +97,7 @@ void	Auth::connect(const std::list<IClient::Pointer> &clients, IClient::Pointer 
   if (sender->Authenticated() == false &&
       _db.clientExist(origin->_name, origin->_password))
     {
+      Database::list_friend	friends;
 #if defined(DEBUG)
       std::cout << "Connection on the account : [" << origin->_name << "]" << std::endl;
 #endif
@@ -86,6 +105,8 @@ void	Auth::connect(const std::list<IClient::Pointer> &clients, IClient::Pointer 
       sender->addRequest(request::friends::client::List());
       sender->Authenticated(true);
       sender->status(request::User::Status::CONNECTED);
+      if (_db.listFriend(sender->Username(), friends))
+	sendStatusFriends(sender, friends, clients, request::User::Status::CONNECTED);
     }
   else
     {
@@ -150,20 +171,24 @@ void	Auth::disconnect(const std::list<IClient::Pointer> &clients, IClient::Point
 
   if (sender->Authenticated() == true)
     {
+      Database::list_friend	friends;
+
 #if defined(DEBUG)
       std::cout << "The client has been disconnected" << std::endl;
 #endif
       sender->serialize_data(request::server::Ok());
       sender->Authenticated(false);
       sender->status(request::User::Status::DISCONNECTED);
+      if (_db.listFriend(sender->Username(), friends))
+	sendStatusFriends(sender, friends, clients, request::User::Status::DISCONNECTED);
     }
   else
     {
 #if defined(DEBUG)
       std::cout << "Can't disconnect the client" << std::endl;
 #endif
-	  sender->serialize_data(request::server::Forbidden());
-  }
+      sender->serialize_data(request::server::Forbidden());
+    }
 }
 
 void	Auth::setActions(std::map<request::ID, plugin::request_handler> &map)

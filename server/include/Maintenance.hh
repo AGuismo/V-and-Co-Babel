@@ -50,9 +50,9 @@ private:
   Maintenance& operator=(Maintenance const&);
 
 private:
-  boost::asio::io_service			&_service;
-  Administrator						&_adm;
+  boost::asio::io_service		&_service;
   boost::asio::ip::tcp::acceptor	_acceptor;
+  Administrator				&_adm;
 };
 
 

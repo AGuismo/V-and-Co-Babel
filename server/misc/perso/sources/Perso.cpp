@@ -5,6 +5,7 @@
 #include	"IRequestPlugin.hh"
 #include	"RequestCode.hh"
 #include	"PersoRequest.hh"
+#include	"FriendRequest.hh"
 #include	"ServerRequest.hh"
 #include	"types.hh"
 #include	"Database.hh"
@@ -25,14 +26,6 @@ Perso::~Perso()
 Perso::Perso(Perso const &src):
 _db(src._db), _env(src._env)
 {
-}
-
-Perso	&Perso::operator=(Perso const &src)
-{
-  if (this != &src)
-    {
-    }
-  return (*this);
 }
 
 plugin::IPlugin<request::ID, plugin::request_handler>	*Perso::clone()
@@ -74,6 +67,25 @@ void	Perso::privacy_mode(const std::list<IClient::Pointer> &clients, IClient::Po
     }
 }
 
+void	Perso::sendChangeStatusFriends(const IClient::Pointer &sender,
+				       const Database::list_friend &friends,
+				       const request::perso::client::StatusClient *origin,
+				       const std::list<IClient::Pointer> &clients)
+{
+  for (std::list<IClient::Pointer>::const_iterator itClient = clients.begin();
+       itClient != clients.end(); ++itClient)
+    {
+      for (Database::list_friend::const_iterator it = friends.begin();
+	   it != friends.end(); ++it)
+	{
+	  if ((*itClient)->Authenticated() && (*itClient)->Username() == *it)
+	    (*itClient)->serialize_data(request::friends::server::Update(origin->_status,
+									 origin->_statusDetails,
+									 sender->Username()));
+	}
+    }
+}
+
 void	Perso::status(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::StatusClient	*origin = dynamic_cast<const request::perso::client::StatusClient *>(req);
@@ -86,6 +98,10 @@ void	Perso::status(const std::list<IClient::Pointer> &clients, IClient::Pointer 
 #if defined(DEBUG)
       std::cout << "Status has been set" << std::endl;
 #endif
+      Database::list_friend	friends;
+
+      if (_db.listFriend(sender->Username(), friends))
+	sendChangeStatusFriends(sender, friends, origin, clients);
       sender->serialize_data(request::server::Ok());
     }
   else

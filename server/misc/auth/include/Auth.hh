@@ -3,6 +3,7 @@
 
 # include	<list>
 # include	"IRequestPlugin.hh"
+# include	"Database.hh"
 
 #if defined(WIN32)
 # if defined(PLUGIN_API_EXPORT)
@@ -12,7 +13,6 @@
 # define CALL_PLUGIN_DLL_EXPORT
 #endif
 
-class	Database;
 class	Env;
 
 class CALL_PLUGIN_DLL_EXPORT Auth : public request::IRequestPlugin
@@ -33,6 +33,12 @@ class CALL_PLUGIN_DLL_EXPORT Auth : public request::IRequestPlugin
   void	remove(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
   void	connect(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
   void	disconnect(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
+
+ private:
+  void	sendStatusFriends(const IClient::Pointer &sender,
+			  const Database::list_friend &friends,
+			  const std::list<IClient::Pointer> &clients,
+			  const request::Status) const;
 
  public:
   Auth(Auth const&);
