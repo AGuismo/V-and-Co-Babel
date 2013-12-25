@@ -16,7 +16,7 @@ void							FriendList::insertFriend(std::string &friendName, std::string &friend
 	newFriend.name = friendName;
 	newFriend.personalMsg = friendPersonalMsg;
 	newFriend.status = friendStatus;
-	_friendList.insert(friendName, newFriend);
+	_friendList[friendName] = newFriend;
 }
 
 bool							FriendList::removeFriend(std::string &friendName)
@@ -64,7 +64,7 @@ bool							FriendList::insertOutcomingMsg(std::string &friendName, std::string &
 	{
 		newMsg.header = _userName += " [a timestamp to code]: "; // need work here
 		newMsg.content = msg;
-		tmpFriend->conversation.insert(newMsg);
+		tmpFriend->conversation.push_back(newMsg);
 		return true;
 	}
 	return false;
@@ -79,7 +79,7 @@ bool							FriendList::insertIncomingMsg(std::string &friendName, std::string &h
 	{
 		newMsg.header = header; // need work here probably
 		newMsg.content = msg;
-		tmpFriend->conversation.insert(newMsg);
+		tmpFriend->conversation.push_back(newMsg);
 		return true;
 	}
 	return false;

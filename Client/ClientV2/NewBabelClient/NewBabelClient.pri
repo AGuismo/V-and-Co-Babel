@@ -16,6 +16,7 @@ IApplication.hh \
 ConnectWindow.h \
 TCPNetwork.h \
 CreateAccountWindow.h \
+FriendList.hh \
 ../../../protocol/API/types.hh \
 ../../../protocol/API/RequestCode.hh \
 ../../../protocol/API/ITransformers.hh \
@@ -41,6 +42,7 @@ ANetwork.cpp \
 TCPNetwork.cpp \
 Application.cpp \
 ConnectWindow.cpp \
+FriendList.cpp \
 CreateAccountWindow.cpp \
 ../../../serializer/sources/Serializer.cpp \
 ../../../serializer/sources/Salt.cpp \

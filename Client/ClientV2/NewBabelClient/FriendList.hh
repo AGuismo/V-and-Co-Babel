@@ -19,6 +19,18 @@ struct Message
 {
 	std::string		header;
 	std::string		content;
+
+  Message() {}
+  Message(const Message &src): header(src.header), content(src.content) {}
+  Message	&operator=(const Message &src)
+  {
+    if (this != &src)
+      {
+	header = src.header;
+	content = src.content;
+      }
+    return (*this);
+  }
 };
 
 typedef	std::list<Message>	convers_type;
