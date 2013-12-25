@@ -146,6 +146,9 @@
     <ClCompile Include="GeneratedFiles\Release\moc_CreateAccountWindow.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="FriendList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Graphic.h">
@@ -210,6 +213,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Application.hh">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="FriendList.hh">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

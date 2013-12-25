@@ -61,8 +61,6 @@ public:
     QLabel *label_4;
     QGridLayout *gridLayout_6;
     QLabel *friendListLabel;
-    QLabel *notificationListLabel;
-    QListWidget *notificationListWidget;
     QListWidget *friendListW;
     QVBoxLayout *verticalLayout_2;
     QGridLayout *gridLayout_3;
@@ -209,23 +207,6 @@ public:
         friendListLabel->setFont(font2);
 
         gridLayout_6->addWidget(friendListLabel, 0, 0, 1, 1);
-
-        notificationListLabel = new QLabel(layoutWidget);
-        notificationListLabel->setObjectName(QStringLiteral("notificationListLabel"));
-        notificationListLabel->setEnabled(false);
-        QFont font3;
-        font3.setFamily(QStringLiteral("MS UI Gothic"));
-        font3.setPointSize(20);
-        notificationListLabel->setFont(font3);
-
-        gridLayout_6->addWidget(notificationListLabel, 0, 2, 1, 1);
-
-        notificationListWidget = new QListWidget(layoutWidget);
-        notificationListWidget->setObjectName(QStringLiteral("notificationListWidget"));
-        notificationListWidget->setEnabled(false);
-        notificationListWidget->setMaximumSize(QSize(200, 16777215));
-
-        gridLayout_6->addWidget(notificationListWidget, 1, 2, 1, 1);
 
         friendListW = new QListWidget(layoutWidget);
         friendListW->setObjectName(QStringLiteral("friendListW"));
@@ -448,7 +429,6 @@ public:
         label_3->setText(QApplication::translate("GraphicClass", "User", 0));
         label_4->setText(QApplication::translate("GraphicClass", "Icon", 0));
         friendListLabel->setText(QApplication::translate("GraphicClass", "Friends", 0));
-        notificationListLabel->setText(QApplication::translate("GraphicClass", "Notifications", 0));
         pushButton->setText(QApplication::translate("GraphicClass", "Call", 0));
         pushButton_2->setText(QApplication::translate("GraphicClass", "Add", 0));
         deleteSelectedFriendPushButton->setText(QApplication::translate("GraphicClass", "Delete", 0));
