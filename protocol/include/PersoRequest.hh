@@ -19,7 +19,7 @@ namespace	request
     public:
       virtual Protocol		&serialize(Protocol &) const;
       virtual Protocol		&unserialize(Protocol &);
-      virtual ARequest		*clone() = 0;
+      virtual ARequest		*clone() const = 0;
     };
 
     namespace	client
@@ -34,7 +34,7 @@ namespace	request
 	ModifyPrivacy(const ModifyPrivacy &);
 	ModifyPrivacy	&operator=(const ModifyPrivacy &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -55,7 +55,7 @@ namespace	request
 	StatusClient(const StatusClient &);
 	StatusClient	&operator=(const StatusClient &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -73,7 +73,7 @@ namespace	request
 	MissedCallClient();
 	~MissedCallClient();
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -89,7 +89,7 @@ namespace	request
 	GetMissedClient(const GetMissedClient &);
 	GetMissedClient	&operator=(const GetMissedClient &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -109,7 +109,7 @@ namespace	request
 	DelMissedClient(const DelMissedClient &);
 	DelMissedClient	&operator=(const DelMissedClient &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -129,7 +129,7 @@ namespace	request
 	SetAutoAnswerClient(const SetAutoAnswerClient &);
 	SetAutoAnswerClient	&operator=(const SetAutoAnswerClient &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -149,7 +149,7 @@ namespace	request
 	Pong(const Pong &);
 	Pong	&operator=(const Pong &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -167,7 +167,7 @@ namespace	request
 	UnsetAutoAnswer();
 	~UnsetAutoAnswer();
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
       };
@@ -186,7 +186,7 @@ namespace	request
 	MissedCallServer(const MissedCallServer &);
 	MissedCallServer	&operator=(const MissedCallServer &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -208,7 +208,7 @@ namespace	request
 	GetMissedServer(const GetMissedServer &);
 	GetMissedServer	&operator=(const GetMissedServer &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -231,7 +231,7 @@ namespace	request
 	AutoAnswerServer(const AutoAnswerServer &);
 	AutoAnswerServer	&operator=(const AutoAnswerServer &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -252,7 +252,7 @@ namespace	request
 	Ping(const Ping &);
 	Ping	&operator=(const Ping &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 

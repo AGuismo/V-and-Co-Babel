@@ -81,9 +81,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*ModifyPrivacy::clone()
+      ARequest	*ModifyPrivacy::clone() const
       {
-	return (new ModifyPrivacy());
+	return (new ModifyPrivacy(*this));
       }
 
       bool	ModifyPrivacy::operator==(const ARequest *req) const
@@ -147,9 +147,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*StatusClient::clone()
+      ARequest	*StatusClient::clone() const
       {
-	return (new StatusClient());
+	return (new StatusClient(*this));
       }
 
       bool	StatusClient::operator==(const ARequest *req) const
@@ -206,9 +206,9 @@ namespace	request
       {
       }
 
-      ARequest	*MissedCallClient::clone()
+      ARequest	*MissedCallClient::clone() const
       {
-	return (new MissedCallClient());
+	return (new MissedCallClient(*this));
       }
 
       Protocol		&MissedCallClient::serialize(Protocol &rhs) const
@@ -251,9 +251,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*GetMissedClient::clone()
+      ARequest	*GetMissedClient::clone() const
       {
-	return (new GetMissedClient());
+	return (new GetMissedClient(*this));
       }
 
       bool	GetMissedClient::operator==(const ARequest *req) const
@@ -316,9 +316,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*DelMissedClient::clone()
+      ARequest	*DelMissedClient::clone() const
       {
-	return (new DelMissedClient());
+	return (new DelMissedClient(*this));
       }
 
       bool	DelMissedClient::operator==(const ARequest *req) const
@@ -381,9 +381,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*SetAutoAnswerClient::clone()
+      ARequest	*SetAutoAnswerClient::clone() const
       {
-	return (new SetAutoAnswerClient());
+	return (new SetAutoAnswerClient(*this));
       }
 
       bool	SetAutoAnswerClient::operator==(const ARequest *req) const
@@ -454,9 +454,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*Pong::clone()
+      ARequest	*Pong::clone() const
       {
-	return (new Pong());
+	return (new Pong(*this));
       }
 
       bool	Pong::operator==(const ARequest *req) const
@@ -500,9 +500,9 @@ namespace	request
       {
       }
 
-      ARequest	*UnsetAutoAnswer::clone()
+      ARequest	*UnsetAutoAnswer::clone() const
       {
-	return (new UnsetAutoAnswer());
+	return (new UnsetAutoAnswer(*this));
       }
 
       Protocol		&UnsetAutoAnswer::serialize(Protocol &rhs) const
@@ -552,9 +552,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*MissedCallServer::clone()
+      ARequest	*MissedCallServer::clone() const
       {
-	return (new MissedCallServer());
+	return (new MissedCallServer(*this));
       }
 
       bool	MissedCallServer::operator==(const ARequest *req) const
@@ -621,9 +621,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*GetMissedServer::clone()
+      ARequest	*GetMissedServer::clone() const
       {
-	return (new GetMissedServer());
+	return (new GetMissedServer(*this));
       }
 
       bool	GetMissedServer::operator==(const ARequest *req) const
@@ -701,9 +701,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*Ping::clone()
+      ARequest	*Ping::clone() const
       {
-	return (new Ping());
+	return (new Ping(*this));
       }
 
       bool	Ping::operator==(const ARequest *req) const
@@ -768,9 +768,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*AutoAnswerServer::clone()
+      ARequest	*AutoAnswerServer::clone() const
       {
-	return (new AutoAnswerServer());
+	return (new AutoAnswerServer(*this));
       }
 
       bool	AutoAnswerServer::operator==(const ARequest *req) const

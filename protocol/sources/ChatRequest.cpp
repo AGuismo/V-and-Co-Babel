@@ -80,9 +80,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*Message::clone()
+      ARequest	*Message::clone() const
       {
-	return (new Message());
+	return (new Message(*this));
       }
 
       bool	Message::operator==(const ARequest *req) const

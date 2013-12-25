@@ -79,7 +79,7 @@ void		Client::handle_write(const boost::system::error_code &error,
 #if defined(DEBUG)
       std::cout << "Send: " << bytes_transferred << " octets" << std::endl;
 #endif
-      async_read();
+      // async_read();
     }
   else
     {
@@ -121,7 +121,8 @@ void		Client::handle_read(const boost::system::error_code& error,
 	_bufferised.clear();
       else
 	_bufferised = data;
-      async_read();
+      while (execRequest());
+      // async_read();
     }
   else
     {
@@ -155,6 +156,18 @@ bool		Client::unserialize_data(buffer &buff)
       return (false);
     }
   buff.erase(buff.begin(), buff.begin() + extracted);
+  _waitedRequest.push_back(req);
+  return (true);
+}
+
+bool		Client::execRequest()
+{
+  ARequest	*req;
+
+  if (_waitedRequest.empty())
+    return (false);
+  req = _waitedRequest.front();
+  _waitedRequest.pop_front();
   _service.post(boost::bind(&Server::handle_request,
 			    _server,
 			    shared_from_this(),
@@ -162,6 +175,10 @@ bool		Client::unserialize_data(buffer &buff)
   return (true);
 }
 
+void		Client::addRequest(const ARequest &req)
+{
+  _waitedRequest.push_back(req.clone());
+}
 
 void		Client::start()
 {

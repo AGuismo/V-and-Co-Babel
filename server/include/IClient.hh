@@ -18,6 +18,7 @@ public:
   virtual void				async_write(const buffer &) = 0;
   virtual void				reset_pong() = 0;
   virtual void				close() = 0;
+  virtual void				addRequest(const ARequest &) = 0;
 
 public:
   virtual const request::Username	&Username() const = 0;

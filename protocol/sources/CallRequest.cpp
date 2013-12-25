@@ -86,9 +86,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*CallClient::clone()
+      ARequest	*CallClient::clone() const
       {
-	return (new CallClient());
+	return (new CallClient(*this));
       }
 
       bool	CallClient::operator==(const ARequest *req) const
@@ -186,9 +186,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*AcceptClient::clone()
+      ARequest	*AcceptClient::clone() const
       {
-	return (new AcceptClient());
+	return (new AcceptClient(*this));
       }
 
       bool	AcceptClient::operator==(const ARequest *req) const
@@ -276,9 +276,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*RefuseClient::clone()
+      ARequest	*RefuseClient::clone() const
       {
-	return (new RefuseClient());
+	return (new RefuseClient(*this));
       }
 
       bool	RefuseClient::operator==(const ARequest *req) const
@@ -358,9 +358,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*HangupClient::clone()
+      ARequest	*HangupClient::clone() const
       {
-	return (new HangupClient());
+	return (new HangupClient(*this));
       }
 
       bool	HangupClient::operator==(const ARequest *req) const

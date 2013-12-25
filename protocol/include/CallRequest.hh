@@ -19,7 +19,7 @@ namespace	request
     public:
       virtual Protocol		&serialize(Protocol &) const;
       virtual Protocol		&unserialize(Protocol &);
-      virtual ARequest		*clone() = 0;
+      virtual ARequest		*clone() const = 0;
     };
 
     namespace	client
@@ -38,7 +38,7 @@ namespace	request
 	CallClient(const CallClient &);
 	CallClient	&operator=(const CallClient &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -65,7 +65,7 @@ namespace	request
 	AcceptClient(const AcceptClient &);
 	AcceptClient	&operator=(const AcceptClient &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -89,7 +89,7 @@ namespace	request
 	RefuseClient(const RefuseClient &);
 	RefuseClient	&operator=(const RefuseClient &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
@@ -111,7 +111,7 @@ namespace	request
 	HangupClient(const HangupClient &);
 	HangupClient	&operator=(const HangupClient &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 

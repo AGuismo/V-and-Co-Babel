@@ -80,9 +80,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*NewClient::clone()
+      ARequest	*NewClient::clone() const
       {
-	return (new NewClient());
+	return (new NewClient(*this));
       }
 
       bool	NewClient::operator==(const ARequest *req) const
@@ -161,9 +161,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*DelClient::clone()
+      ARequest	*DelClient::clone() const
       {
-	return (new DelClient());
+	return (new DelClient(*this));
       }
 
       bool	DelClient::operator==(const ARequest *req) const
@@ -241,9 +241,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*ModifyClient::clone()
+      ARequest	*ModifyClient::clone() const
       {
-	return (new ModifyClient());
+	return (new ModifyClient(*this));
       }
 
       bool	ModifyClient::operator==(const ARequest *req) const
@@ -320,9 +320,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*ConnectClient::clone()
+      ARequest	*ConnectClient::clone() const
       {
-	return (new ConnectClient());
+	return (new ConnectClient(*this));
       }
 
       bool	ConnectClient::operator==(const ARequest *req) const
@@ -389,9 +389,9 @@ namespace	request
 	return (*this);
       }
 
-      ARequest	*DisconnectClient::clone()
+      ARequest	*DisconnectClient::clone() const
       {
-	return (new DisconnectClient());
+	return (new DisconnectClient(*this));
       }
 
       Protocol		&DisconnectClient::serialize(Protocol &rhs) const
@@ -438,9 +438,9 @@ namespace	request
       {
       }
 
-      ARequest	*Handshake::clone()
+      ARequest	*Handshake::clone() const
       {
-	return (new Handshake());
+	return (new Handshake(*this));
       }
 
       Protocol		&Handshake::serialize(Protocol &rhs) const

@@ -5,6 +5,7 @@
 # include	<boost/bind.hpp>
 # include	<boost/shared_ptr.hpp>
 # include	<vector>
+# include	<list>
 # include	"Protocol.hpp"
 # include	"IClient.hh"
 
@@ -18,6 +19,7 @@ public:
   static const int			PONG_REFRESH = 20;
   static const int			PONG_DELAY = 5;
   typedef boost::shared_ptr<Client>	Pointer;
+  typedef std::list<ARequest *>		request_list;
 
 private:
   Client(boost::asio::io_service &service, Server *);
@@ -34,6 +36,8 @@ private:
 					     std::size_t bytes_transferred);
   void				handle_read(const boost::system::error_code& error,
 					    std::size_t bytes_transferred);
+  bool				execRequest();
+  void				addRequest(const ARequest &);
 
 private:
   void				start_ping(const boost::system::error_code &);
@@ -81,6 +85,7 @@ private:
   Serializer			_serializeAnswer;
   boost::asio::deadline_timer	_pongTimer;
   request::PingPongID		_currentPong;
+  request_list			_waitedRequest;
 
 public:
   struct

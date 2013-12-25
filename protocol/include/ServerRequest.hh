@@ -21,7 +21,7 @@ namespace	request
   public:
     Protocol			&serialize(Protocol &) const;
     Protocol			&unserialize(Protocol &);
-    virtual ARequest		*clone() = 0;
+    virtual ARequest		*clone() const = 0;
 
   };
 
@@ -32,7 +32,7 @@ namespace	request
       static const char	*OK;
 
       Ok(): Server(server::OK) {}
-      ARequest	*clone() { return (new Ok()); }
+      ARequest	*clone() const { return (new Ok(*this)); }
     };
 
     struct BadRequest : public Server
@@ -40,7 +40,7 @@ namespace	request
       static const char	*BAD_REQ;
 
       BadRequest(): Server(server::BAD_REQ) {}
-      ARequest	*clone() { return (new BadRequest()); }
+      ARequest	*clone() const { return (new BadRequest(*this)); }
     };
 
     struct Forbidden : public Server
@@ -48,7 +48,7 @@ namespace	request
       static const char	*FORBIDDEN;
 
       Forbidden(): Server(server::FORBIDDEN) {}
-      ARequest	*clone() { return (new Forbidden()); }
+      ARequest	*clone() const { return (new Forbidden(*this)); }
     };
 
     struct NotImplemented : public Server
@@ -56,7 +56,7 @@ namespace	request
       static const char	*NOT_IMPLEMENTED;
 
       NotImplemented(): Server(server::NOT_IMPLEMENTED) {}
-      ARequest	*clone() { return (new NotImplemented()); }
+      ARequest	*clone() const { return (new NotImplemented(*this)); }
     };
 
     struct NoContent : public Server
@@ -64,7 +64,7 @@ namespace	request
       static const char	*NO_CONTENT;
 
       NoContent(): Server(server::NO_CONTENT) {}
-      ARequest	*clone() { return (new NoContent()); }
+      ARequest	*clone() const { return (new NoContent(*this)); }
     };
 
     struct PartialContent : public Server
@@ -72,7 +72,7 @@ namespace	request
       static const char	*PARTIAL_CONTENT;
 
       PartialContent(): Server(server::PARTIAL_CONTENT) {}
-      ARequest	*clone() { return (new PartialContent()); }
+      ARequest	*clone() const { return (new PartialContent(*this)); }
     };
 
     struct NoSlots : public Server
@@ -80,7 +80,7 @@ namespace	request
       static const char	*NO_SLOTS;
 
       NoSlots(): Server(server::NO_SLOTS) {}
-      ARequest	*clone() { return (new NoSlots()); }
+      ARequest	*clone() const { return (new NoSlots(*this)); }
     };
   }
 }

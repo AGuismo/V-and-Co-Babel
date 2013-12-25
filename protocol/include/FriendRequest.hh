@@ -22,7 +22,7 @@ namespace	request
     public:
       virtual Protocol		&serialize(Protocol &) const;
       virtual Protocol		&unserialize(Protocol &);
-      virtual ARequest		*clone() = 0;
+      virtual ARequest		*clone() const = 0;
     };
 
     namespace	client
@@ -37,7 +37,7 @@ namespace	request
 	Request(const Request &);
 	Request	&operator=(const Request &);
 
-	ARequest	*clone();
+	ARequest	*clone() const;
 	Protocol	&serialize(Protocol &) const;
 	Protocol	&unserialize(Protocol &);
 
@@ -58,7 +58,7 @@ namespace	request
 	DelFriend(const DelFriend &);
 	DelFriend	&operator=(const DelFriend &);
 
-	ARequest	*clone();
+	ARequest	*clone() const;
 	Protocol	&serialize(Protocol &) const;
 	Protocol	&unserialize(Protocol &);
 
@@ -79,7 +79,7 @@ namespace	request
 	Accept(const Accept &);
 	Accept			&operator=(const Accept &);
 
-	ARequest		*clone();
+	ARequest		*clone() const;
 	Protocol		&serialize(Protocol &) const;
 	Protocol		&unserialize(Protocol &);
 
@@ -100,7 +100,7 @@ namespace	request
 	Refuse(const Refuse &);
 	Refuse			&operator=(const Refuse &);
 
-	ARequest		*clone();
+	ARequest		*clone() const;
 	Protocol		&serialize(Protocol &) const;
 	Protocol		&unserialize(Protocol &);
 
@@ -120,7 +120,7 @@ namespace	request
 	List(const List &);
 	List			&operator=(const List &);
 
-	ARequest		*clone();
+	ARequest		*clone() const;
       };
 
     } // !client
@@ -137,7 +137,7 @@ namespace	request
 	Update(const Update &);
 	Update	&operator=(const Update &);
 
-	ARequest		*clone();
+	ARequest		*clone() const;
 	Protocol		&serialize(Protocol &) const;
 	Protocol		&unserialize(Protocol &);
 

@@ -19,7 +19,7 @@ namespace	request
     public:
       virtual Protocol		&serialize(Protocol &) const;
       virtual Protocol		&unserialize(Protocol &);
-      virtual ARequest		*clone() = 0;
+      virtual ARequest		*clone() const = 0;
     };
 
     namespace	client
@@ -35,7 +35,7 @@ namespace	request
 	Message(const Message &);
 	Message	&operator=(const Message &);
 
-	ARequest			*clone();
+	ARequest			*clone() const;
 	Protocol			&serialize(Protocol &) const;
 	Protocol			&unserialize(Protocol &);
 
