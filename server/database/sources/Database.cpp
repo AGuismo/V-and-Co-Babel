@@ -228,6 +228,39 @@ bool		Database::delFriend(const std::string &login,
   return (false);
 }
 
+bool		Database::isFriend(const std::string &login,
+				   const std::string &FriendLogin) const
+{
+  clients::const_iterator	it = _clients.find(login);
+
+  if (it == _clients.end())
+    return (false);
+  for (list_friend::const_iterator itFr = it->second->friendList.begin();
+       itFr != it->second->friendList.end(); ++itFr)
+    {
+      if (*itFr == FriendLogin)
+	return (true);
+    }
+  return (false);
+}
+
+bool		Database::bothFriend(const std::string &login1,
+				     const std::string &login2) const
+{
+  return (isFriend(login1, login2) && isFriend(login2, login1));
+}
+
+bool		Database::listFriend(const std::string &login,
+				     list_friend &friends) const
+{
+  clients::const_iterator	it = _clients.find(login);
+
+  if (it == _clients.end())
+    return (false);
+  friends = it->second->friendList;
+  return (true);
+}
+
 bool		Database::delClient(const std::string &login,
 				    const request::PasswordType &password)
 {
@@ -272,10 +305,10 @@ bool		Database::modClientPass(const std::string &login,
   return (true);
 }
 
-bool		Database::getClient(const std::string &login, Client &client)
+bool		Database::getClient(const std::string &login, Client &client) const
 {
   boost::mutex::scoped_lock(_lock);
-  clients::iterator it = _clients.find(login);
+  clients::const_iterator it = _clients.find(login);
 
   if (it == _clients.end())
     return (false);
@@ -294,24 +327,24 @@ bool		Database::modPrivacy(const std::string &login, const request::Privacy priv
   return (true);
 }
 
-bool		Database::clientExist(const std::string &login)
+bool		Database::clientExist(const std::string &login) const
 {
   return (_clients.find(login) != _clients.end());
 }
 
 bool		Database::clientExist(const std::string &login,
-				      const request::PasswordType &password)
+				      const request::PasswordType &password) const
 {
-  clients::iterator	it = _clients.find(login);
+  clients::const_iterator	it = _clients.find(login);
 
   return (it != _clients.end() && it->second->password == password);
 }
 
 bool		Database::clientExist(const std::string &login,
 				      const request::PasswordType &password,
-				      const request::Rights rights)
+				      const request::Rights rights) const
 {
-  clients::iterator	it = _clients.find(login);
+  clients::const_iterator	it = _clients.find(login);
 
   return (it != _clients.end() && it->second->password == password && it->second->rights == rights);
 }

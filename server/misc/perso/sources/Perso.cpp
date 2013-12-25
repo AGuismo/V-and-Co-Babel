@@ -31,7 +31,6 @@ Perso	&Perso::operator=(Perso const &src)
 {
   if (this != &src)
     {
-      _db = src._db;
     }
   return (*this);
 }

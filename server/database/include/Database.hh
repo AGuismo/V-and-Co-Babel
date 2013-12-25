@@ -44,12 +44,15 @@ public:
   bool		drop();
 
 public:
-  // inclure une fonction "listFriend(const std::strign &from)
-  // inclure une fonction "isFriend(const std::string &from, const std::string to)
   bool		addFriend(const std::string &login,
 			  const std::string &FriendLogin);
   bool		delFriend(const std::string &login,
 			  const std::string &FriendLogin);
+  bool		isFriend(const std::string &login,
+			 const std::string &FriendLogin) const;
+  bool		bothFriend(const std::string &login1,
+			   const std::string &login2) const;
+  bool		listFriend(const std::string &login, list_friend &) const;
   bool		newClient(const std::string &login,
 			  const request::PasswordType &password,
 			  const request::Rights right_level = request::User::USER,
@@ -67,12 +70,12 @@ public:
   bool		setStatus(const std::string &login,
 			  const request::Status &status,
 			  const std::string &message);
-  bool		clientExist(const std::string &login);
+  bool		clientExist(const std::string &login) const;
   bool		clientExist(const std::string &login,
-			    const request::PasswordType &password);
+			    const request::PasswordType &password) const;
   bool		clientExist(const std::string &login,
 			    const request::PasswordType &password,
-			    const request::Rights rights);
+			    const request::Rights rights) const;
   bool		setClientStatus(const std::string &login,
 				const std::string &message,
 				const request::Status status);
@@ -87,7 +90,7 @@ private:
   Serializer &	load(Serializer &);
 
 public:
-  bool		getClient(const std::string &login, Client &);
+  bool		getClient(const std::string &login, Client &) const;
 
 private:
   clients			_clients;
