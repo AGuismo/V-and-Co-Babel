@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ConnectWindow</class>
- <widget class="QDialog" name="ConnectWindow">
+ <class>DeleteAccountWindow</class>
+ <widget class="QDialog" name="DeleteAccountWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>338</width>
+    <width>298</width>
     <height>138</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ConnectWindow</string>
+   <string>LoginWindow</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="1" colspan="2">
-    <widget class="QLineEdit" name="portTcpLineEdit">
-     <property name="text">
-      <string>40202</string>
+   <item row="1" column="0">
+    <widget class="QLabel" name="loginLabel">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
-     <property name="maxLength">
-      <number>5</number>
+     <property name="text">
+      <string>Login :</string>
      </property>
     </widget>
    </item>
@@ -28,28 +30,38 @@
     <widget class="QLabel" name="passwordLabel">
      <property name="font">
       <font>
+       <family>MS UI Gothic</family>
        <pointsize>10</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>TCP Port :</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QPushButton" name="connectPushButton">
-     <property name="text">
-      <string>Connect</string>
+      <string>Password :</string>
      </property>
     </widget>
    </item>
    <item row="1" column="1" colspan="2">
-    <widget class="QLineEdit" name="ipLineEdit">
+    <widget class="QLineEdit" name="loginLineEdit">
      <property name="text">
-      <string>10.16.253.250</string>
+      <string>toto</string>
      </property>
      <property name="maxLength">
-      <number>15</number>
+      <number>256</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QLineEdit" name="passwordLineEdit">
+     <property name="inputMask">
+      <string/>
+     </property>
+     <property name="text">
+      <string>poil</string>
+     </property>
+     <property name="maxLength">
+      <number>256</number>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
      </property>
     </widget>
    </item>
@@ -57,13 +69,14 @@
     <widget class="QLabel" name="serverResponseLabel">
      <property name="font">
       <font>
+       <family>MS UI Gothic</family>
        <pointsize>10</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
      <property name="text">
-      <string>Disconnected</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -74,26 +87,15 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="loginLabel">
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="deletePushButton">
      <property name="text">
-      <string>Ip Address :</string>
+      <string>Delete</string>
      </property>
     </widget>
    </item>
    <item row="0" column="0" colspan="3">
-    <widget class="QLabel" name="label">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+    <widget class="QLabel" name="loginTitleLabel">
      <property name="font">
       <font>
        <family>MS UI Gothic</family>
@@ -103,7 +105,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Connect</string>
+      <string>Delete account</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -114,9 +116,9 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>ipLineEdit</tabstop>
-  <tabstop>portTcpLineEdit</tabstop>
-  <tabstop>connectPushButton</tabstop>
+  <tabstop>loginLineEdit</tabstop>
+  <tabstop>passwordLineEdit</tabstop>
+  <tabstop>deletePushButton</tabstop>
   <tabstop>closePushButton</tabstop>
  </tabstops>
  <resources/>

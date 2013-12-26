@@ -120,9 +120,6 @@
                <widget class="FriendListWidget" name="listWidget"/>
               </item>
              </layout>
-             <zorder>friendListW</zorder>
-             <zorder>friendListW</zorder>
-             <zorder>listWidget</zorder>
             </widget>
             <widget class="QWidget" name="Nothing">
              <attribute name="title">
@@ -368,7 +365,7 @@
      <string>Manage account</string>
     </property>
     <addaction name="actionCreateAccount"/>
-    <addaction name="actionDelete_account"/>
+    <addaction name="actionDeleteAccount"/>
    </widget>
    <widget class="QMenu" name="menuVoicemail">
     <property name="title">
@@ -444,7 +441,7 @@
     <string>Call</string>
    </property>
   </action>
-  <action name="actionDelete_account">
+  <action name="actionDeleteAccount">
    <property name="enabled">
     <bool>false</bool>
    </property>

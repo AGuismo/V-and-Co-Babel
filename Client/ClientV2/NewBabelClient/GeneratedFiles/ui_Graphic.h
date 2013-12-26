@@ -20,7 +20,6 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
-#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -32,6 +31,7 @@
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "FriendListWidget.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -45,7 +45,7 @@ public:
     QAction *actionSet_voicemail;
     QAction *actionUnset_voicemail;
     QAction *actionCall;
-    QAction *actionDelete_account;
+    QAction *actionDeleteAccount;
     QAction *actionAdd_friend;
     QAction *actionDelete_friend;
     QAction *actionLogout;
@@ -64,7 +64,7 @@ public:
     QTabWidget *FriendTabWidget;
     QWidget *Friends;
     QGridLayout *gridLayout_9;
-    QListWidget *listWidget;
+    FriendListWidget *listWidget;
     QWidget *Nothing;
     QVBoxLayout *verticalLayout_2;
     QGridLayout *gridLayout_3;
@@ -123,9 +123,9 @@ public:
         actionCall = new QAction(GraphicClass);
         actionCall->setObjectName(QStringLiteral("actionCall"));
         actionCall->setEnabled(false);
-        actionDelete_account = new QAction(GraphicClass);
-        actionDelete_account->setObjectName(QStringLiteral("actionDelete_account"));
-        actionDelete_account->setEnabled(false);
+        actionDeleteAccount = new QAction(GraphicClass);
+        actionDeleteAccount->setObjectName(QStringLiteral("actionDeleteAccount"));
+        actionDeleteAccount->setEnabled(false);
         actionAdd_friend = new QAction(GraphicClass);
         actionAdd_friend->setObjectName(QStringLiteral("actionAdd_friend"));
         actionAdd_friend->setEnabled(false);
@@ -211,13 +211,12 @@ public:
         gridLayout_9->setSpacing(6);
         gridLayout_9->setContentsMargins(11, 11, 11, 11);
         gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
-        listWidget = new QListWidget(Friends);
+        listWidget = new FriendListWidget(Friends);
         listWidget->setObjectName(QStringLiteral("listWidget"));
 
         gridLayout_9->addWidget(listWidget, 0, 0, 1, 2);
 
         FriendTabWidget->addTab(Friends, QString());
-        listWidget->raise();
         Nothing = new QWidget();
         Nothing->setObjectName(QStringLiteral("Nothing"));
         FriendTabWidget->addTab(Nothing, QString());
@@ -245,13 +244,13 @@ public:
 
         pushButton = new QPushButton(layoutWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setEnabled(false);
+        pushButton->setEnabled(true);
 
         gridLayout_3->addWidget(pushButton, 1, 1, 1, 1);
 
         pushButton_2 = new QPushButton(layoutWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setEnabled(false);
+        pushButton_2->setEnabled(true);
 
         gridLayout_3->addWidget(pushButton_2, 1, 2, 1, 1);
 
@@ -411,7 +410,7 @@ public:
         menuConnection->addAction(actionLogin);
         menuConnection->addAction(actionLogout);
         menuManage_account->addAction(actionCreateAccount);
-        menuManage_account->addAction(actionDelete_account);
+        menuManage_account->addAction(actionDeleteAccount);
         menuVoicemail->addAction(actionSet_voicemail);
         menuVoicemail->addAction(actionUnset_voicemail);
         menuFriends_list->addAction(actionAdd_friend);
@@ -435,7 +434,7 @@ public:
         actionSet_voicemail->setText(QApplication::translate("GraphicClass", "Set voicemail", 0));
         actionUnset_voicemail->setText(QApplication::translate("GraphicClass", "Unset voicemail", 0));
         actionCall->setText(QApplication::translate("GraphicClass", "Call", 0));
-        actionDelete_account->setText(QApplication::translate("GraphicClass", "Delete account", 0));
+        actionDeleteAccount->setText(QApplication::translate("GraphicClass", "Delete account", 0));
         actionAdd_friend->setText(QApplication::translate("GraphicClass", "Add friend", 0));
         actionDelete_friend->setText(QApplication::translate("GraphicClass", "Delete friend", 0));
         actionLogout->setText(QApplication::translate("GraphicClass", "Log out", 0));

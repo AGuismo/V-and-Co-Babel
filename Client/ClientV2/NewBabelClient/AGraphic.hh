@@ -21,6 +21,9 @@ protected:
   // Create account
   Function<void (const request::Username &, const request::PasswordType &)> 	_tryCreateAccountHandler;
 
+  // Delete account
+  Function<void (const request::Username &, const request::PasswordType &)> 	_tryDeleteAccountHandler;
+
   // Personal changes
 
   // Friend
@@ -44,6 +47,9 @@ public:
 
   // Create account
   virtual void		setTryCreateAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>);
+
+  // Delete account
+  virtual void		setTryDeleteAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>);
 
   // Personal changes
 

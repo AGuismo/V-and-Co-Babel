@@ -10,9 +10,6 @@ class FriendListWidget : public QListWidget
 public:
 	FriendListWidget(QWidget *parent);
 	~FriendListWidget();
-
-private:
-	
 };
 
 #endif // FRIENDLISTWIDGET_H

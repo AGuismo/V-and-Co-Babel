@@ -26,6 +26,9 @@ void  Application::init()
   _graphic.setTryConnectHandler(Function<void (unsigned short, const std::string &)>(&TCPNetwork::tryConnect, &_tcpNetwork));
   _graphic.setTryAuthentificationHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryLogin, this));
   _graphic.setTryCreateAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryCreateAccount, this));
+
+  _graphic.setTryDeleteAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryDeleteAccount, this));
+
   _graphic.setDesAuthentificationHandler(Function<void ()>(&Application::triggerDesAuthentification, this));
 }
 
@@ -91,6 +94,16 @@ void  Application::create_account_response(const ARequest &req)
   _graphic.on_create_account_error("Creation Error");
 }
 
+void  Application::delete_account_response(const ARequest &req)
+{
+  if (req.code() == request::server::OK)
+    {
+      _graphic.on_delete_account_success();
+      return ;
+    }
+  _graphic.on_delete_account_error("Deletion Error");
+}
+
 void  Application::desauthentification_response(const ARequest &req)
 {
   if (req.code() == request::server::OK)
@@ -113,6 +126,12 @@ void  Application::triggerTryCreateAccount(const request::Username &login, const
 {
   send_request(request::auth::client::NewClient(login, md5(password), false));
   _waitedResponses.push(response_handler(&Application::create_account_response, this));
+}
+
+void  Application::triggerTryDeleteAccount(const request::Username &login, const request::PasswordType &password)
+{
+  send_request(request::auth::client::DelClient(login, md5(password)));
+  _waitedResponses.push(response_handler(&Application::delete_account_response, this));
 }
 
 void  Application::bufferise(const ANetwork::ByteArray &data)
