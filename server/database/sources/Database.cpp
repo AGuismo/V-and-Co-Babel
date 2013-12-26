@@ -49,7 +49,10 @@ bool		Database::saveFile(const std::string path)
   std::ofstream	stream(path.c_str());
   Protocol	bak;
 
-  if (stream.bad())
+#if defined(DEBUG)
+  std::cout << "Database::saveFile(): Try Save db in " << path << std::endl;
+#endif
+  if (!stream.is_open())
     return (false);
   try
     {
@@ -62,6 +65,9 @@ bool		Database::saveFile(const std::string path)
 		<< "Error detail: " << e.what() << std::endl;
       return (false);
     }
+#if defined(DEBUG)
+  std::cout << "Database::saveFile(): Save success db in " << path << std::endl;
+#endif
   return (true);
 }
 

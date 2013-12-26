@@ -64,7 +64,7 @@ bool		Env::loadFile()
   set(database.DatabasePath, "database", "PATH", ini.output());
   set(plugin.LibraryPath, "plugin", "PATH", ini.output());
   set(database.AutosaveDB, "database", "AUTOSAVE_DB", ini.output(),
-      60, std::numeric_limits<long>::max(), database::AUTOSAVE_DB);
+      1, std::numeric_limits<long>::max(), database::AUTOSAVE_DB);
   return (loadPlugins(ini.output()));
 }
 

@@ -84,7 +84,7 @@ const std::string	Application::dropDB()
 
 const::std::string	Application::saveDB()
 {
-  if (_database.saveFile(Env::getInstance().rootPath() + Env::getInstance().database.DatabasePath))
+  if (_database.saveFile(Env::getInstance().rootPath() + "/" + Env::getInstance().database.DatabasePath))
     return ("Database Successfully saved.");
   return ("An error Occured when saving Database.");
 }
