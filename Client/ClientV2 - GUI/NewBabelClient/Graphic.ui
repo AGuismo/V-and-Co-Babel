@@ -6,15 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>628</width>
-    <height>389</height>
+    <width>942</width>
+    <height>637</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {border-image: url(./Img/530035-1920x1080.jpg);}
+</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_4">
+   <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
@@ -23,15 +27,15 @@
       <property name="childrenCollapsible">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="layoutWidget">
-       <layout class="QGridLayout" name="gridLayout_5">
+      <widget class="QWidget" name="layoutWidget_13">
+       <layout class="QGridLayout" name="gridLayout_37">
         <item row="0" column="0">
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="gridLayout_38">
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
           <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="label_20">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -39,15 +43,58 @@
              <font>
               <family>MS PGothic</family>
               <pointsize>10</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>User Personal Message................</string>
             </property>
            </widget>
           </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="comboBox_8">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer_25">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_22">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>Icon</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
-           <widget class="QLabel" name="label_3">
+           <widget class="QLabel" name="label_21">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -60,93 +107,51 @@
             <property name="font">
              <font>
               <pointsize>14</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>User</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <spacer name="horizontalSpacer">
+         </layout>
+        </item>
+        <item row="0" column="1" rowspan="4">
+         <widget class="Line" name="line_27">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <layout class="QGridLayout" name="gridLayout_41">
+          <item row="0" column="0" colspan="5">
+           <widget class="Line" name="line_26">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <spacer name="horizontalSpacer_27">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>35</width>
+              <height>25</height>
              </size>
             </property>
            </spacer>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="comboBox_2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label_4">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>14</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Icon</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="2" column="0">
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="0">
-           <widget class="QTabWidget" name="FriendTabWidget">
-            <property name="currentIndex">
-             <number>0</number>
-            </property>
-            <widget class="QWidget" name="Friends">
-             <attribute name="title">
-              <string>Friends</string>
-             </attribute>
-             <layout class="QGridLayout" name="gridLayout_9">
-              <item row="0" column="0" colspan="2">
-               <widget class="FriendListWidget" name="listWidget"/>
-              </item>
-             </layout>
-             <zorder>friendListW</zorder>
-             <zorder>friendListW</zorder>
-             <zorder>listWidget</zorder>
-            </widget>
-            <widget class="QWidget" name="Nothing">
-             <attribute name="title">
-              <string>Nothing</string>
-             </attribute>
-            </widget>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="3" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout_2"/>
-        </item>
-        <item row="1" column="0">
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="2" column="0" colspan="5">
-           <widget class="Line" name="line_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="pushButton_13">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -156,7 +161,7 @@
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="pushButton_14">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -166,7 +171,7 @@
            </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QPushButton" name="deleteSelectedFriendPushButton">
+           <widget class="QPushButton" name="deleteSelectedFriendPushButton_7">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -176,33 +181,20 @@
            </widget>
           </item>
           <item row="1" column="4">
-           <spacer name="horizontalSpacer_5">
+           <spacer name="horizontalSpacer_26">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>36</width>
+              <height>25</height>
              </size>
             </property>
            </spacer>
           </item>
-          <item row="1" column="0">
-           <spacer name="horizontalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="0" colspan="5">
-           <widget class="Line" name="line_3">
+          <item row="2" column="0" colspan="5">
+           <widget class="Line" name="line_25">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -210,30 +202,99 @@
           </item>
          </layout>
         </item>
-        <item row="0" column="1" rowspan="4">
-         <widget class="Line" name="line">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
+        <item row="2" column="0">
+         <layout class="QGridLayout" name="gridLayout_39">
+          <item row="0" column="0">
+           <widget class="QTabWidget" name="FriendTabWidget_7">
+            <property name="styleSheet">
+             <string notr="true">background-color: qlineargradient(spread:reflect, x1:0, y1:1, x2:0, y2:0.534, stop:0.0847458 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));</string>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="Friends_7">
+             <attribute name="title">
+              <string>Friends</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_40">
+              <item row="0" column="0" colspan="2">
+               <widget class="FriendListWidget" name="listWidget_7">
+                <property name="styleSheet">
+                 <string notr="true">background-image: url(./Img/530035-1920x1080.jpg);</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="Nothing_7">
+             <attribute name="title">
+              <string>Nothing</string>
+             </attribute>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout_20"/>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+      <widget class="QWidget" name="layoutWidget_14">
+       <layout class="QVBoxLayout" name="verticalLayout_21">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <layout class="QVBoxLayout" name="verticalLayout_22">
           <item>
-           <layout class="QGridLayout" name="gridLayout">
+           <layout class="QGridLayout" name="gridLayout_42">
+            <item row="2" column="0" colspan="3">
+             <widget class="Line" name="line_28">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
             <item row="1" column="1">
-             <widget class="QPushButton" name="activeFriendCallPushButton">
+             <widget class="QPushButton" name="activeFriendCallPushButton_7">
               <property name="text">
                <string>Call</string>
               </property>
              </widget>
             </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="selectedFriendIconStatusLabel_7">
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Icon</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="selectedFriendPersonalMsgLabel_7">
+              <property name="font">
+               <font>
+                <family>MS PGothic</family>
+                <pointsize>10</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Selected Friend Personal Message</string>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0">
-             <widget class="QLabel" name="selectedFriendNameLabel">
+             <widget class="QLabel" name="selectedFriendNameLabel_7">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -246,86 +307,69 @@
               <property name="font">
                <font>
                 <pointsize>14</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
                </font>
+              </property>
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
               </property>
               <property name="autoFillBackground">
                <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
               </property>
               <property name="text">
                <string>Selected Friend</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="selectedFriendPersonalMsgLabel">
-              <property name="font">
-               <font>
-                <family>MS PGothic</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Selected Friend Personal Message</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="selectedFriendIconStatusLabel">
-              <property name="font">
-               <font>
-                <pointsize>14</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Icon</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="2">
-             <spacer name="horizontalSpacer_2">
+             <spacer name="horizontalSpacer_28">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
-                <height>20</height>
+                <width>34</width>
+                <height>25</height>
                </size>
               </property>
              </spacer>
-            </item>
-            <item row="2" column="0" colspan="3">
-             <widget class="Line" name="line_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
             </item>
            </layout>
           </item>
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
           <item>
-           <widget class="QTextBrowser" name="friendMsgBox">
+           <widget class="QTextBrowser" name="friendMsgBox_7">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>2</horstretch>
               <verstretch>3</verstretch>
              </sizepolicy>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgba(255, 255, 255, 218);</string>
+            </property>
            </widget>
           </item>
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
           <item>
-           <widget class="QLineEdit" name="sendBoxTextEdit"/>
+           <widget class="QLineEdit" name="sendBoxTextEdit_7">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgba(255, 255, 255, 255);</string>
+            </property>
+           </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="sendBoxPushButton">
+           <widget class="QPushButton" name="sendBoxPushButton_7">
             <property name="text">
              <string>Send</string>
             </property>
@@ -344,8 +388,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>628</width>
-     <height>21</height>
+     <width>942</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuVBabel">
@@ -482,11 +526,12 @@
   <customwidget>
    <class>FriendListWidget</class>
    <extends>QListWidget</extends>
-   <header>FriendListWidget.h</header>
+   <header location="global">friendlistwidget.h</header>
+   <slots>
+    <slot>slot1(QListWidgetItem*)</slot>
+   </slots>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="MainWindow.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

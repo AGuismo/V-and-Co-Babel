@@ -139,6 +139,8 @@ void					Graphic::on_try_create(const std::string &login, const std::string &pas
 Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this)
 {
 	ui.setupUi(this);
+
+	//ui.listWidget_7->setStyleSheet("border-image : url(./Img/friend_chat.png);");
 }
 
 Graphic::~Graphic()
