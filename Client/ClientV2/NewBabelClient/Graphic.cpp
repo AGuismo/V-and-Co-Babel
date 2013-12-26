@@ -15,6 +15,8 @@ void					Graphic::init()
 	connect(ui.actionCreateAccount, SIGNAL(triggered()), this, SLOT(on_create_account_window_triggered()));
 	// Delete Account Window Triggered
 	connect(ui.actionDeleteAccount, SIGNAL(triggered()), this, SLOT(on_delete_account_window_triggered()));
+	// Account Management Window Triggered
+	connect(ui.actionAccountOptions, SIGNAL(triggered()), this, SLOT(on_account_management_window_triggered()));
 	// Connection try triggered
 	connect(&_connectWindow, SIGNAL(connect_try(const std::string &, unsigned short int)), this, SLOT(on_try_connect(const std::string &, unsigned short int)));
 	// Login try triggered
@@ -60,6 +62,7 @@ void					Graphic::on_login_success()
   _loginWindow.displayLoginResponse(QString("Logged in"));
   ui.actionLogout->setEnabled(true);
   ui.actionLogin->setEnabled(false);
+  ui.actionAccountOptions->setEnabled(true);
   ui.actionDeleteAccount->setEnabled(false);
   ui.actionCreateAccount->setEnabled(false);
   _loginWindow.setEnabled(false);
@@ -139,6 +142,7 @@ void					Graphic::on_logout_window_triggered()
 	_desAuthentificationHandler();
 	ui.actionDeleteAccount->setEnabled(true);
 	ui.actionCreateAccount->setEnabled(true);
+	ui.actionAccountOptions->setEnabled(false);
 	ui.actionLogin->setEnabled(true);
 }
 
@@ -147,6 +151,13 @@ void					Graphic::on_login_window_triggered()
 	_loginWindow.show();
 	_loginWindow.setEnabled(true);
 	_loginWindow.clearServerResponse();
+}
+
+void					Graphic::on_account_management_window_triggered()
+{
+	_accountManagementWindow.show();
+	_accountManagementWindow.setEnabled(true);
+	_accountManagementWindow.clearServerResponse();
 }
 
 void					Graphic::on_try_connect(const std::string &ipAddress, unsigned short int port)
@@ -172,7 +183,7 @@ void					Graphic::on_try_delete(const std::string &login, const std::string &pas
 	_tryDeleteAccountHandler(login, password);
 }
 
-Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this), _deleteAccountWindow(this)
+Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this), _deleteAccountWindow(this), _accountManagementWindow(this)
 {
 	ui.setupUi(this);
 }

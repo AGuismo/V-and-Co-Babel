@@ -366,6 +366,7 @@
     </property>
     <addaction name="actionCreateAccount"/>
     <addaction name="actionDeleteAccount"/>
+    <addaction name="actionAccountOptions"/>
    </widget>
    <widget class="QMenu" name="menuVoicemail">
     <property name="title">
@@ -471,6 +472,14 @@
    </property>
    <property name="text">
     <string>Log out</string>
+   </property>
+  </action>
+  <action name="actionAccountOptions">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Account options</string>
    </property>
   </action>
  </widget>

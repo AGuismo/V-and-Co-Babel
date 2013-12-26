@@ -8,6 +8,7 @@
 #include		"CreateAccountWindow.h"
 #include		"LoginWindow.h"
 #include		"DeleteAccountWindow.h"
+#include		"AccountManagementWindow.h"
 
 class Graphic : public QMainWindow, public AGraphic
 {
@@ -18,7 +19,7 @@ private:
 	LoginWindow				_loginWindow;
 	CreateAccountWindow		_createAccountWindow;
 	DeleteAccountWindow		_deleteAccountWindow;
-
+	AccountManagementWindow	_accountManagementWindow;
 public:
 	Graphic(QWidget *parent = 0);
 	~Graphic();
@@ -29,6 +30,7 @@ public slots:
 	void			on_logout_window_triggered();
 	void			on_create_account_window_triggered();
 	void			on_delete_account_window_triggered();
+	void			on_account_management_window_triggered();
 
 public slots:
 	void			on_try_connect(const std::string &ipAddress, unsigned short int port);

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Graphic_t {
-    QByteArrayData data[17];
-    char stringdata[278];
+    QByteArrayData data[18];
+    char stringdata[317];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,22 +36,24 @@ QT_MOC_LITERAL(3, 37, 25),
 QT_MOC_LITERAL(4, 63, 26),
 QT_MOC_LITERAL(5, 90, 34),
 QT_MOC_LITERAL(6, 125, 34),
-QT_MOC_LITERAL(7, 160, 14),
-QT_MOC_LITERAL(8, 175, 11),
-QT_MOC_LITERAL(9, 187, 9),
-QT_MOC_LITERAL(10, 197, 18),
-QT_MOC_LITERAL(11, 216, 4),
-QT_MOC_LITERAL(12, 221, 12),
-QT_MOC_LITERAL(13, 234, 5),
-QT_MOC_LITERAL(14, 240, 8),
-QT_MOC_LITERAL(15, 249, 13),
-QT_MOC_LITERAL(16, 263, 13)
+QT_MOC_LITERAL(7, 160, 38),
+QT_MOC_LITERAL(8, 199, 14),
+QT_MOC_LITERAL(9, 214, 11),
+QT_MOC_LITERAL(10, 226, 9),
+QT_MOC_LITERAL(11, 236, 18),
+QT_MOC_LITERAL(12, 255, 4),
+QT_MOC_LITERAL(13, 260, 12),
+QT_MOC_LITERAL(14, 273, 5),
+QT_MOC_LITERAL(15, 279, 8),
+QT_MOC_LITERAL(16, 288, 13),
+QT_MOC_LITERAL(17, 302, 13)
     },
     "Graphic\0on_connect_window_triggered\0"
     "\0on_login_window_triggered\0"
     "on_logout_window_triggered\0"
     "on_create_account_window_triggered\0"
     "on_delete_account_window_triggered\0"
+    "on_account_management_window_triggered\0"
     "on_try_connect\0std::string\0ipAddress\0"
     "unsigned short int\0port\0on_try_login\0"
     "login\0password\0on_try_create\0on_try_delete\0"
@@ -64,7 +66,7 @@ static const uint qt_meta_data_Graphic[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -72,15 +74,16 @@ static const uint qt_meta_data_Graphic[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   59,    2, 0x0a,
-       3,    0,   60,    2, 0x0a,
-       4,    0,   61,    2, 0x0a,
-       5,    0,   62,    2, 0x0a,
-       6,    0,   63,    2, 0x0a,
-       7,    2,   64,    2, 0x0a,
-      12,    2,   69,    2, 0x0a,
-      15,    2,   74,    2, 0x0a,
-      16,    2,   79,    2, 0x0a,
+       1,    0,   64,    2, 0x0a,
+       3,    0,   65,    2, 0x0a,
+       4,    0,   66,    2, 0x0a,
+       5,    0,   67,    2, 0x0a,
+       6,    0,   68,    2, 0x0a,
+       7,    0,   69,    2, 0x0a,
+       8,    2,   70,    2, 0x0a,
+      13,    2,   75,    2, 0x0a,
+      16,    2,   80,    2, 0x0a,
+      17,    2,   85,    2, 0x0a,
 
  // slots: parameters
     QMetaType::Void,
@@ -88,10 +91,11 @@ static const uint qt_meta_data_Graphic[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 8, 0x80000000 | 10,    9,   11,
-    QMetaType::Void, 0x80000000 | 8, 0x80000000 | 8,   13,   14,
-    QMetaType::Void, 0x80000000 | 8, 0x80000000 | 8,   13,   14,
-    QMetaType::Void, 0x80000000 | 8, 0x80000000 | 8,   13,   14,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 9, 0x80000000 | 11,   10,   12,
+    QMetaType::Void, 0x80000000 | 9, 0x80000000 | 9,   14,   15,
+    QMetaType::Void, 0x80000000 | 9, 0x80000000 | 9,   14,   15,
+    QMetaType::Void, 0x80000000 | 9, 0x80000000 | 9,   14,   15,
 
        0        // eod
 };
@@ -106,10 +110,11 @@ void Graphic::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 2: _t->on_logout_window_triggered(); break;
         case 3: _t->on_create_account_window_triggered(); break;
         case 4: _t->on_delete_account_window_triggered(); break;
-        case 5: _t->on_try_connect((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< unsigned short int(*)>(_a[2]))); break;
-        case 6: _t->on_try_login((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
-        case 7: _t->on_try_create((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
-        case 8: _t->on_try_delete((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
+        case 5: _t->on_account_management_window_triggered(); break;
+        case 6: _t->on_try_connect((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< unsigned short int(*)>(_a[2]))); break;
+        case 7: _t->on_try_login((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
+        case 8: _t->on_try_create((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
+        case 9: _t->on_try_delete((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -142,13 +147,13 @@ int Graphic::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        _id -= 10;
     }
     return _id;
 }
