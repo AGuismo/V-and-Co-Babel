@@ -4,7 +4,7 @@
 #include	"Env.hh"
 
 Application::Application():
-  _server(_service, _database), _maintenance(_service, _adm)
+  _autosaveDB(_service), _server(_service, _database), _maintenance(_service, _adm)
 {
 }
 
@@ -36,7 +36,7 @@ void	Application::init(const char *confPath)
 	      return ;
 	    }
 	}
-      _database.loadFile(Env::getInstance().rootPath() + Env::getInstance().database.DatabasePath);
+      _database.loadFile(Env::getInstance().databaseFilePath());
       _server.init();
       _maintenance.init();
     }
@@ -69,6 +69,21 @@ void	Application::shutdown()
   _service.stop();
 }
 
+void			Application::autosaveDB(const boost::system::error_code &e)
+{
+  if (!e)
+    {
+#if defined(DEBUG)
+      std::cout << "Application::autosaveDB(): " << saveDB() << std::endl;
+#else
+      saveDB();
+#endif
+      _autosaveDB.expires_from_now(boost::posix_time::minutes(Env::getInstance().database.AutosaveDB));
+      _autosaveDB.async_wait(boost::bind(&Application::autosaveDB, this,
+					 boost::asio::placeholders::error));
+    }
+}
+
 const std::string	Application::shutdownServer()
 {
   shutdown();
@@ -84,8 +99,13 @@ const std::string	Application::dropDB()
 
 const::std::string	Application::saveDB()
 {
-  if (_database.saveFile(Env::getInstance().rootPath() + "/" + Env::getInstance().database.DatabasePath))
-    return ("Database Successfully saved.");
+  if (_database.saveFile(Env::getInstance().databaseFilePath()))
+    {
+      _autosaveDB.expires_from_now(boost::posix_time::minutes(Env::getInstance().database.AutosaveDB));
+      _autosaveDB.async_wait(boost::bind(&Application::autosaveDB, this,
+					 boost::asio::placeholders::error));
+      return ("Database Successfully saved.");
+    }
   return ("An error Occured when saving Database.");
 }
 

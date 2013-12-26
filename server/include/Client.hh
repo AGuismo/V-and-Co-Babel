@@ -16,8 +16,6 @@ class Client : public IClient
 {
 public:
   static const int			DEFAULT_SIZE = 1024;
-  static const int			PONG_REFRESH = 20;
-  static const int			PONG_DELAY = 5;
   typedef boost::shared_ptr<Client>	Pointer;
   typedef std::list<ARequest *>		request_list;
 

@@ -7,6 +7,7 @@
 #include	"Server.hh"
 #include	"AuthRequest.hh"
 #include	"PersoRequest.hh"
+#include	"Env.hh"
 
 Client::Client(boost::asio::io_service &service, Server *server) :
   _service(service), _input(DEFAULT_SIZE), _socket(service), _server(server),
@@ -38,7 +39,7 @@ void		Client::start_ping(const boost::system::error_code &e)
       std::cout << "Client " << this << ": Ping N." << _currentPong + 1 << std::endl;
 #endif
       serialize_data(request::perso::server::Ping(++_currentPong));
-      _pongTimer.expires_from_now(boost::posix_time::seconds(Client::PONG_DELAY));
+      _pongTimer.expires_from_now(boost::posix_time::seconds(Env::getInstance().client.pongDelay));
       _pongTimer.async_wait(boost::bind(&Client::handle_timeout_pong, boost::dynamic_pointer_cast<Client>(shared_from_this()), boost::asio::placeholders::error));
     }
 }
@@ -50,6 +51,7 @@ void		Client::handle_timeout_pong(const boost::system::error_code &e)
 #if defined(DEBUG)
       std::cout << "Client " << this << ": Pong Timeout" << std::endl;
 #endif
+      _socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
       close();
     }
 }
@@ -59,7 +61,7 @@ void		Client::reset_pong()
 #if defined(DEBUG)
   std::cout << "Client " << this << ": Reset pong" << std::endl;
 #endif
-  _pongTimer.expires_from_now(boost::posix_time::seconds(Client::PONG_REFRESH));
+  _pongTimer.expires_from_now(boost::posix_time::seconds(Env::getInstance().client.pongRefresh));
   _pongTimer.async_wait(boost::bind(&Client::start_ping, boost::dynamic_pointer_cast<Client>(shared_from_this()), boost::asio::placeholders::error));
 }
 
@@ -67,7 +69,6 @@ void		Client::close()
 {
   _pongTimer.cancel();
   _service.post(boost::bind(&Server::handleClientClose, _server, share()));
-  _socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
   _socket.cancel();
 }
 
@@ -182,7 +183,7 @@ void		Client::addRequest(const ARequest &req)
 
 void		Client::start()
 {
-  _pongTimer.expires_from_now(boost::posix_time::seconds(Client::PONG_REFRESH));
+  _pongTimer.expires_from_now(boost::posix_time::seconds(Env::getInstance().client.pongRefresh));
   _pongTimer.async_wait(boost::bind(&Client::start_ping, boost::dynamic_pointer_cast<Client>(shared_from_this()), boost::asio::placeholders::error));
   serialize_data(request::auth::server::Handshake(SET_VERSION(request::version::MAJOR,
 							      request::version::MINOR)));

@@ -41,6 +41,7 @@ private:
   const std::string	shutdownServer();
   const std::string	dropDB();
   const std::string	saveDB();
+  void			autosaveDB(const boost::system::error_code &e);
 
 private:
   Application(Application const&);
@@ -48,10 +49,11 @@ private:
 
 private:
   boost::asio::io_service	_service;
-  Server					_server;
-  Database					_database;
-  Administrator				_adm;
-  Maintenance				_maintenance;
+  boost::asio::deadline_timer	_autosaveDB;
+  Server			_server;
+  Database			_database;
+  Administrator			_adm;
+  Maintenance			_maintenance;
 };
 
 

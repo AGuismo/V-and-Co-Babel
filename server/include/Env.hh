@@ -13,6 +13,8 @@ public:
   typedef std::string		file_path;
   typedef std::string		file_extension;
   typedef long			minute;
+  typedef long			second;
+  typedef unsigned short	port;
 
   struct	PluginDetail
   {
@@ -27,20 +29,39 @@ public:
 
   struct				server
   {
-    static const unsigned short int	CLIENT_PORT	   =	44201;
-    static const unsigned short int	MAINTENANCE_PORT   =	44202;
+    static const port			CLIENT_PORT;
+    static const port			MIN_CLIENT_PORT;
+    static const port			MAX_CLIENT_PORT;
+    static const port			MAINTENANCE_PORT;
+    static const port			MIN_MAINTENANCE_PORT;
+    static const port			MAX_MAINTENANCE_PORT;
 
     static const file_path		CONF_PATH;
 
-    unsigned short int			ClientPort;
-    unsigned short int			MaintenancePort;
+    port				ClientPort;
+    port				MaintenancePort;
     file_path				confPath;
   }					server;
+
+  struct				client
+  {
+    static const second			PONG_REFRESH;
+    static const second			MIN_PONG_REFRESH;
+    static const second			MAX_PONG_REFRESH;
+    static const second			PONG_DELAY;
+    static const second			MIN_PONG_DELAY;
+    static const second			MAX_PONG_DELAY;
+
+    second				pongDelay;
+    second				pongRefresh;
+  }					client;
 
   struct				database
   {
     static const file_path		DB_PATH;
-    static const minute			AUTOSAVE_DB	=	60;
+    static const minute			AUTOSAVE_DB;
+    static const minute			MIN_AUTOSAVE_DB;
+    static const minute			MAX_AUTOSAVE_DB;
 
     file_path				DatabasePath;
     minute				AutosaveDB;
@@ -63,7 +84,8 @@ public:
   bool	loadFile();
 
 public:
-	const file_path	rootPath() const;
+  const file_path	rootPath() const;
+  const file_path	databaseFilePath() const;
 
 private:
   Env();
