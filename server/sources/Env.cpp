@@ -1,4 +1,5 @@
 #include	<sstream>
+#include	<limits>
 #include	<boost/filesystem.hpp>
 #include	"IniParser.hh"
 #include	"Env.hh"
@@ -21,6 +22,7 @@ Env::Env()
   server.MaintenancePort = server::MAINTENANCE_PORT;
   server.confPath = server::CONF_PATH;
   database.DatabasePath = database::DB_PATH;
+  database.AutosaveDB = database::AUTOSAVE_DB;
   plugin.LibraryPath = plugin::LIBRARY_PATH;
 }
 
@@ -55,10 +57,14 @@ bool		Env::loadFile()
 		<< e.what() << std::endl;
       return (false);
     }
-  set(server.ClientPort, "server", "CLIENT_PORT", ini.output());
-  set(server.MaintenancePort, "server", "MAINTENANCE_PORT", ini.output());
+  set(server.ClientPort, "server", "CLIENT_PORT", ini.output(),
+      (unsigned short)1025, std::numeric_limits<unsigned short>::max(), server::CLIENT_PORT);
+  set(server.MaintenancePort, "server", "MAINTENANCE_PORT", ini.output(),
+      (unsigned short)1025, std::numeric_limits<unsigned short>::max(), server::MAINTENANCE_PORT);
   set(database.DatabasePath, "database", "PATH", ini.output());
   set(plugin.LibraryPath, "plugin", "PATH", ini.output());
+  set(database.AutosaveDB, "database", "AUTOSAVE_DB", ini.output(),
+      60, std::numeric_limits<long>::max(), database::AUTOSAVE_DB);
   return (loadPlugins(ini.output()));
 }
 
@@ -141,6 +147,39 @@ void			Env::set(T &value, const std::string &section,
       ss << fileKeys.find(section)->second.find(key)->second;
       ss >> value;
     }
+}
+
+template <typename T>
+void			Env::set(T &value, const std::string &section,
+				 const std::string &key, const parser::Ini::section_key_val &fileKeys,
+				 T min, T max, T defaultValue)
+{
+  std::stringstream	ss;
+
+  if (fileKeys.find(section) != fileKeys.end() &&
+      fileKeys.find(section)->second.find(key) != fileKeys.find(section)->second.end())
+    {
+      ss << fileKeys.find(section)->second.find(key)->second;
+      ss >> value;
+    }
+  if (value < min || value > max)
+    value = defaultValue;
+}
+
+void			Env::set(long &value, const std::string &section,
+				 const std::string &key, const parser::Ini::section_key_val &fileKeys,
+				 long min, long max, long defaultVal)
+{
+  std::stringstream	ss;
+
+  if (fileKeys.find(section) != fileKeys.end() &&
+      fileKeys.find(section)->second.find(key) != fileKeys.find(section)->second.end())
+    {
+      ss << fileKeys.find(section)->second.find(key)->second;
+      ss >> value;
+    }
+  if (value < min || value > max)
+    value = defaultVal;
 }
 
 Env::PluginDetail::PluginDetail(const plugin_name &name, const plugin_path path, bool used):

@@ -38,6 +38,11 @@ public:
   void	shutdown();
 
 private:
+  const std::string	shutdownServer();
+  const std::string	dropDB();
+  const std::string	saveDB();
+
+private:
   Application(Application const&);
   Application& operator=(Application const&);
 

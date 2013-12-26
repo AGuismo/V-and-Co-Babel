@@ -10,11 +10,14 @@ Application::Application():
 
 Application::~Application()
 {
-	_database.saveFile(Env::getInstance().rootPath() + Env::getInstance().database.DatabasePath);
+  _database.saveFile(Env::getInstance().rootPath() + Env::getInstance().database.DatabasePath);
 }
 
 void	Application::init(const char *confPath)
 {
+  _adm.registerShutdownServer(Function<const std::string ()>(&Application::shutdownServer, this));
+  _adm.registerDropDB(Function<const std::string ()>(&Application::dropDB, this));
+  _adm.registerSaveDB(Function<const std::string ()>(&Application::saveDB, this));
   try
     {
       if (confPath == 0)
@@ -33,7 +36,7 @@ void	Application::init(const char *confPath)
 	      return ;
 	    }
 	}
-	  _database.loadFile(Env::getInstance().rootPath() + Env::getInstance().database.DatabasePath);
+      _database.loadFile(Env::getInstance().rootPath() + Env::getInstance().database.DatabasePath);
       _server.init();
       _maintenance.init();
     }
@@ -63,8 +66,28 @@ void	Application::run()
 
 void	Application::shutdown()
 {
+  _service.stop();
 }
 
+const std::string	Application::shutdownServer()
+{
+  shutdown();
+  return ("Shutdown the server NOW !");
+}
+
+const std::string	Application::dropDB()
+{
+  if (_database.drop())
+    return ("Database Successfully dropped.");
+  return ("An error Occured when dropping Database.");
+}
+
+const::std::string	Application::saveDB()
+{
+  if (_database.saveFile(Env::getInstance().rootPath() + Env::getInstance().database.DatabasePath))
+    return ("Database Successfully saved.");
+  return ("An error Occured when saving Database.");
+}
 
 ///////////////////////
 //  Exception Class  //

@@ -1018,7 +1018,6 @@ struct	Function<void (P1, P2, P3)>
 
     InternMethodFunc	&operator=(const InternMethodFunc &src)
     {
-      std::cout << __PRETTY_FUNCTION__ << std::endl;
       if (&src != this)
 	{
 	  _f = src._f;

@@ -17,11 +17,18 @@ Maintenance::~Maintenance()
 
 void	Maintenance::init()
 {
-  _acceptor.open(boost::asio::ip::tcp::v4());
-  _acceptor.bind(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"),
-						Env::getInstance().server.MaintenancePort));
-  _acceptor.listen();
-  start_accept();
+  try
+    {
+      _acceptor.open(boost::asio::ip::tcp::v4());
+      _acceptor.bind(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"),
+						    Env::getInstance().server.MaintenancePort));
+      _acceptor.listen();
+      start_accept();
+    }
+  catch (const boost::system::system_error &e)
+    {
+      throw Exception(e.what());
+    }
 }
 
 void	Maintenance::handle_accept(MaintenanceConnection::Pointer new_connection,

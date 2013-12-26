@@ -12,6 +12,7 @@ public:
   typedef std::string		plugin_path;
   typedef std::string		file_path;
   typedef std::string		file_extension;
+  typedef long			minute;
 
   struct	PluginDetail
   {
@@ -39,8 +40,10 @@ public:
   struct				database
   {
     static const file_path		DB_PATH;
+    static const minute			AUTOSAVE_DB	=	60;
 
     file_path				DatabasePath;
+    minute				AutosaveDB;
   }					database;
 
   struct				plugin
@@ -73,6 +76,13 @@ private:
   template <typename T>
   void			set(T &, const parser::Ini::section &,
 			    const parser::Ini::key &, const parser::Ini::section_key_val &);
+  void			set(long &, const parser::Ini::section &,
+			    const parser::Ini::key &, const parser::Ini::section_key_val &,
+			    long min = 0, long max = 0, long defaultVal = 0);
+  template <typename T>
+  void			set(T &, const parser::Ini::section &,
+			    const parser::Ini::key &, const parser::Ini::section_key_val &,
+			    T min, T max, T defaultVal);
   bool			isPluginSection(const parser::Ini::section &, const parser::Ini::key_val &);
   const file_path	resolveFilePath(const file_path &);
 };

@@ -142,12 +142,14 @@ void	Friends::accept(const std::list<IClient::Pointer> &clients, IClient::Pointe
 	      std::cout << origin->from << " accept request from " << origin->to << std::endl;
 #endif
 	      receiver->serialize_data(*origin);
+	      sendFriendStatus(receiver, clients, origin->to);
 	    }
 	  else
 	    _db.addRequest(origin->to, *origin);
 	  _db.delRequest(origin->from, request::friends::client::Request(origin->from, origin->to));
 	  _db.delRequest(origin->to, request::friends::client::Request(origin->from, origin->to));
 	  sender->serialize_data(request::server::Ok());
+	  sendFriendStatus(sender, clients, origin->from);
 	  return ;
 	}
     }

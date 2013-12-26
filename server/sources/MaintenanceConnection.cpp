@@ -8,7 +8,13 @@
 MaintenanceConnection::MaintenanceConnection(boost::asio::io_service& io_service, Administrator &adm) :
   _socket(io_service), _administrator(adm)
 {
+}
 
+MaintenanceConnection::~MaintenanceConnection()
+{
+#if defined(DEBUG)
+  std::cout << "MaintenanceClient " << this << " Disconnected" << std::endl;
+#endif
 }
 
 void	MaintenanceConnection::handle_write(const boost::system::error_code& error,
@@ -17,10 +23,12 @@ void	MaintenanceConnection::handle_write(const boost::system::error_code& error,
   (void)bytes_transferred;
   if (error)
     {
-      _socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
-      _socket.close();
+#if defined(DEBUG)
+      std::cout << "MaintenanceClient " << this << " Disconnected" << std::endl;
+#endif
       return ;
     }
+  read_data();
 }
 
 void	MaintenanceConnection::handle_read(const boost::system::error_code& error,
@@ -28,15 +36,14 @@ void	MaintenanceConnection::handle_read(const boost::system::error_code& error,
 {
   if (error)
     {
-      _socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
       _socket.close();
+#if defined(DEBUG)
+      std::cout << "MaintenanceClient " << this << " Disconnected" << std::endl;
+#endif
       return ;
     }
-  std::cout << "MaintenanceConnection::handle_read(): " << _input.size() << std::endl;
   _input.insert(_input.end(), _inputdata.begin(), _inputdata.begin() + bytes_transferred);
-  std::cout << "MaintenanceConnection::handle_read(): " << _input.size() << std::endl;
   while (handle_request());
-  read_data();
 }
 
 bool	MaintenanceConnection::handle_request()
@@ -82,6 +89,9 @@ void	MaintenanceConnection::start()
 {
   const buffer	message("V and co Babel mainteance interface\n");
 
+#if defined(DEBUG)
+  std::cout << "MaintenanceClient " << this << " Connected" << std::endl;
+#endif
   write_data(message);
   read_data();
 }

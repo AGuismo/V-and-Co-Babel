@@ -67,6 +67,7 @@ void		Client::close()
 {
   _pongTimer.cancel();
   _service.post(boost::bind(&Server::handleClientClose, _server, share()));
+  _socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
   _socket.cancel();
 }
 
@@ -79,7 +80,7 @@ void		Client::handle_write(const boost::system::error_code &error,
 #if defined(DEBUG)
       std::cout << "Send: " << bytes_transferred << " octets" << std::endl;
 #endif
-      // async_read();
+      async_read();
     }
   else
     {
@@ -122,7 +123,6 @@ void		Client::handle_read(const boost::system::error_code& error,
       else
 	_bufferised = data;
       while (execRequest());
-      // async_read();
     }
   else
     {

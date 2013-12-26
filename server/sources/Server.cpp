@@ -39,17 +39,22 @@ void	Server::init()
 	}
 
       _calls->loadPlugins(*_plugs);
+      _acceptor.open(boost::asio::ip::tcp::v4());
+      _acceptor.bind(boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(),
+						    Env::getInstance().server.ClientPort));
+      _acceptor.listen();
+      start_accept();
     }
   catch (const plugin::Exception &e)
     {
       std::cerr << "Server::init() failed to load: " << e.what() << std::endl;
       throw Server::Exception("Failed to load plugins");
     }
-  _acceptor.open(boost::asio::ip::tcp::v4());
-  _acceptor.bind(boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(),
-						Env::getInstance().server.ClientPort));
-  _acceptor.listen();
-  start_accept();
+  catch (const boost::system::system_error &e)
+    {
+      std::cerr << "Server::init() failed to load: " << e.what() << std::endl;
+      throw Server::Exception("Failed to start server");
+    }
 }
 
 const Server::client_list	&Server::getClients() const
