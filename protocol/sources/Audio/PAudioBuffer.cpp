@@ -8,6 +8,8 @@ void			PAudioBuffer::sendToNetwork()
 	int				toReach;
 	int				i;
 	unsigned char	*compressed;
+	unsigned int	encodedSize;
+	Bridge::buffer	buff;
 
 	myFile << fRdIndex << " - " << fWrIndex << std::endl;
 	while (ABS(fRdIndex - fWrIndex) >= FRAME_PACKET_SIZE)
@@ -26,9 +28,13 @@ void			PAudioBuffer::sendToNetwork()
 			if (fWrIndex >= fIndexMax)
 				fWrIndex = 0;
 		}
-		myFile << _frameBuff[0] << "<->" << _frameBuff[1] << std::endl;
-		compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE);
-		myFile << "Data : " << compressed << std::endl;;
+		//myFile << _frameBuff[0] << "<->" << _frameBuff[1] << std::endl;
+		encodedSize = 0;
+		compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE, encodedSize);
+		buff.assign(compressed, compressed + encodedSize);
+		std::cout << "Sending packet" << std::endl;
+		_bridge.inputDispatch(buff);
+		//myFile << "Data : " << compressed << std::endl;;
 	}
 }
 
@@ -116,8 +122,8 @@ int				PAudioBuffer::playCallBack(const void *inputBuff, void *outputBuff,
 
 // Constructors & Destructors
 
-PAudioBuffer::PAudioBuffer(IAudioCodec *codec) : 
-fRdIndex(0), fWrIndex(0), fIndexMax(CBUFF_SIZE), content(NULL), _frameBuff(NULL), _codec(codec)
+PAudioBuffer::PAudioBuffer(IAudioCodec *codec, Bridge &bridge) : 
+fRdIndex(0), fWrIndex(0), fIndexMax(CBUFF_SIZE), content(NULL), _frameBuff(NULL), _codec(codec), _bridge(bridge)
 {
 	myFile.open("Audio.wav");
 	content = new (SAMPLE[CBUFF_SIZE]);

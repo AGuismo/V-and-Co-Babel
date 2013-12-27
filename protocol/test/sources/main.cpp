@@ -17,6 +17,7 @@
 #include	"Protocol.hpp"
 #include	"Bridge.hh"
 #include	"PAudioStream.hh"
+#include	"FakeAudio.hh"
 
 static unsigned short	g_portTCP;
 static unsigned short	g_server_portUDP;
@@ -77,9 +78,9 @@ public:
 				     g_receiver_portUDP);
 
     // data.assign(40, 0);
-    _bridge.outputDispatch(data);
-    std::cout << "Bridge output size: " << data.size() << std::endl;
-    _udpServerSock.async_send_to(boost::asio::buffer(data, data.size()),
+    _bridge.outputDispatch(_udpWrite);
+	std::cout << "Bridge output size [" << std::hex << g_udp_ip_receiver << std::dec << "][" << g_receiver_portUDP << "] : " << _udpWrite.size() << std::endl;
+    _udpServerSock.async_send_to(boost::asio::buffer(_udpWrite, _udpWrite.size()),
 				 receiver_endpoint,
 				 boost::bind(&client::write_udp_handler,
 					     shared_from_this(),
@@ -96,11 +97,17 @@ public:
 					     boost::asio::placeholders::bytes_transferred));
   }
 
+  void	runAudio()
+  {
+	  _audio->run();
+  }
+
   void	startAudio()
   {
 	  if (_audio->init())
-		  _audio->record();
-    _t.expires_from_now(boost::posix_time::seconds(5));
+		  _audioThread = boost::thread(boost::bind(&client::runAudio, this));
+//	  _audio->run();
+    _t.expires_from_now(boost::posix_time::milliseconds(40));
     _t.async_wait(boost::bind(&client::writeUDP,
     			      shared_from_this()));
   }
@@ -110,7 +117,7 @@ private:
     _service(io_service), _tcpSock(io_service), _udpClientSock(io_service),_udpServerSock(io_service),
     _t(io_service)
   {
-	  _audio = new PAudioStream();
+	  _audio = new PAudioStream(_bridge);
   }
 
   void	connect(const std::string &ip, const std::string &port)
@@ -232,7 +239,7 @@ private:
 	return;
       }
     std::cout << "Write UDP send: " << bytes_transferred << std::endl;
-    _t.expires_from_now(boost::posix_time::seconds(5));
+    _t.expires_from_now(boost::posix_time::milliseconds(40));
     _t.async_wait(boost::bind(&client::writeUDP,
 			      shared_from_this()));
   }
@@ -248,6 +255,7 @@ private:
   }
 
 private:
+	Bridge::buffer				_udpWrite;
 	std::vector<Protocol::Byte>	_tcpWrite;
   boost::asio::io_service		&_service;
   tcp::socket				_tcpSock;

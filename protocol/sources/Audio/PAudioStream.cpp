@@ -43,9 +43,10 @@ bool			PAudioStream::init()
 	return (_codec.init() && initInput() && initOutput());
 }
 
-void			PAudioStream::record()
+void			PAudioStream::run()
 {
 	PaError		error = paNoError;
+	Bridge::buffer	buff;
 
 	error = Pa_OpenStream(&_stream, &_inputParam, NULL, SAMPLE_RATE,
 		FRAMES_PER_BUFFER, paClipOff, PAudioBuffer::recordCallBack, _input);
@@ -56,6 +57,22 @@ void			PAudioStream::record()
 	std::cout << "RECORDING, SPEAK INTO THE MICROPHONE PLEASE" << std::endl;
 	while ((error = Pa_IsStreamActive(_stream)) == 1)
 	{
+		if (!(_bridge.emptyFeed()))
+		{
+			_bridge.outputFeed(buff);
+			std::cout << "Received : [";
+			for (std::size_t it = 0; ((it < buff.size()) && (it < 40)); ++it)
+				std::cout << buff[it];
+			std::cout << "]" << std::endl;
+		}
+	}
+	if (error < 0)
+		return;
+	if (Pa_CloseStream(_stream) != paNoError)
+		return;
+	/*
+	while ((error = Pa_IsStreamActive(_stream)) == 1)
+	{
 		Pa_Sleep(1000);
 		std::cout << "Index = " << _input->fWrIndex << std::endl;
 	}
@@ -63,8 +80,10 @@ void			PAudioStream::record()
 		return ;
 	if (Pa_CloseStream(_stream) != paNoError)
 		return ;
+	*/
 }
 
+/*
 void			PAudioStream::play()
 {
 	PaError		error = paNoError;
@@ -72,30 +91,31 @@ void			PAudioStream::play()
 	error = Pa_OpenStream(&_stream, NULL, &_outputParam, SAMPLE_RATE,
 		FRAMES_PER_BUFFER, paClipOff, PAudioBuffer::playCallBack, _output);
 	if (error != paNoError)
-		return ;
+		return;
 	_output->fRdIndex = 0;
 	std::cout << "PLAYING BACK RECORDED DATA" << std::endl;
 	if (_stream)
 	{
 		if (Pa_StartStream(_stream) != paNoError)
-			return ;
+			return;
 		std::cout << "Waiting for playback to end..." << std::endl;
 		while ((error = Pa_IsStreamActive(_stream)) == 1)
 			Pa_Sleep(100);
 		if (error < 0)
-			return ;
+			return;
 		if (Pa_CloseStream(_stream) != paNoError)
-			return ;
+			return;
 		std::cout << "Playback ended." << std::endl;
 	}
 }
+*/
 
 // Constructor/Destructor
 
-PAudioStream::PAudioStream()
+PAudioStream::PAudioStream(Bridge &bridge) : _bridge(bridge)
 {
-	_input = new PAudioBuffer(&_codec);
-	_output = new PAudioBuffer(&_codec);
+	_input = new PAudioBuffer(&_codec, bridge);
+	_output = new PAudioBuffer(&_codec, bridge);
 }
 
 PAudioStream::~PAudioStream()

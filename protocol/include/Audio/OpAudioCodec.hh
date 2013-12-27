@@ -15,7 +15,7 @@ private:
 
 public:
 	virtual bool			init();
-	virtual unsigned char	*encode(SAMPLE *frame, unsigned int frameSize);
+	virtual unsigned char	*encode(SAMPLE *frame, unsigned int frameSize, unsigned int &encodedSize);
 	virtual SAMPLE			*decode(const unsigned char *frame, unsigned int frameSize);
 
 public:

@@ -2,12 +2,13 @@
 
 // Codec
 
-unsigned char	*OpAudioCodec::encode(SAMPLE *frame, unsigned int frameSize)
+unsigned char	*OpAudioCodec::encode(SAMPLE *frame, unsigned int frameSize, unsigned int &encodedSize)
 {
 	unsigned char	*compressed;
 
 	compressed = new(unsigned char[_encodedSize]);
 	opus_encode_float(_encoder, frame, frameSize, compressed, _encodedSize);
+	encodedSize = _encodedSize;
 	return (compressed);
 }
 

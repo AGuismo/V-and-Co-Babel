@@ -2,6 +2,7 @@
 # define		 PAUDIOBUFFER_h
 
 # include		"AudioParams.hh"
+# include		"Bridge.hh"
 # include		"IAudioCodec.hh"
 # include		"portaudio.h"
 # include		"pa_asio.h"
@@ -21,6 +22,7 @@ public:
 	int			fWrIndex;
 	int			fIndexMax;
 	SAMPLE		*content;
+	Bridge		&_bridge;
 
 public:
 	void		sendToNetwork();
@@ -34,7 +36,7 @@ public:
 				PaStreamCallbackFlags statusFlags, void *userData);
 
 public:
-	PAudioBuffer(IAudioCodec *codec);
+	PAudioBuffer(IAudioCodec *codec, Bridge &bridge);
 	~PAudioBuffer();
 };
 

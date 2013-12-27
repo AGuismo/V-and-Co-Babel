@@ -3,6 +3,7 @@
 
 # include				<string>
 # include				<vector>
+# include				"Bridge.hh"
 # include				"IAudioStream.hh"
 # include				"PAudioBuffer.hh"
 # include				"OpAudioCodec.hh"
@@ -20,14 +21,14 @@ private:
 protected:
 	bool				initInput();
 	bool				initOutput();
+	Bridge				&_bridge;
 
 public:
 	virtual bool		init();
-	virtual void		record();
-	virtual void		play();
+	virtual void		run();
 
 public:
-	PAudioStream();
+	PAudioStream(Bridge &bridge);
 	~PAudioStream();
 };
 
