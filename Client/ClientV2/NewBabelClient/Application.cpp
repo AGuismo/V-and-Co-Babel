@@ -3,6 +3,7 @@
 #include	"AuthRequest.hh"
 #include	"PersoRequest.hh"
 #include	"Protocol.hpp"
+#include	"Env.hh"
 
 Application::Application(int ac, char *av[]):
   _ac(ac), _app(_ac, av)
@@ -25,7 +26,12 @@ void  Application::init()
   _udpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Application::triggerUdpError, this));
   _graphic.setTryConnectHandler(Function<void (unsigned short, const std::string &)>(&TCPNetwork::tryConnect, &_tcpNetwork));
   _graphic.setTryAuthentificationHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryLogin, this));
+
   _graphic.setTryCreateAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryCreateAccount, this));
+
+    _graphic.setTryChangeAccountPasswordHandler(Function<void (const request::PasswordType &, const request::PasswordType &)>(&Application::triggerTryChangeAccountPassword, this));
+
+	_graphic.setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)>(&Application::triggerTryChangeAccountPrivacy, this));
 
   _graphic.setTryDeleteAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryDeleteAccount, this));
 
@@ -53,6 +59,19 @@ void  Application::triggerTryConnect(const std::string &ip, unsigned short port)
 {
   _tcpNetwork.tryConnect(port, ip);
   _waitedResponses.push(response_handler(&Application::connection_response, this));
+}
+
+
+void	Application::triggerTryChangeAccountPassword(const request::PasswordType &currentPassword, const request::PasswordType &newPassword)
+{
+	send_request(request::auth::client::ModifyClient(Env::getInstance().userInfo.loginTry, md5(currentPassword), md5(newPassword)));
+	_waitedResponses.push(response_handler(&Application::change_account_password_response, this));
+}
+
+ void	Application::triggerTryChangeAccountPrivacy(const request::Privacy &newPrivacy)
+{
+	send_request(request::perso::client::ModifyPrivacy(newPrivacy));
+	_waitedResponses.push(response_handler(&Application::change_account_privacy_response, this));
 }
 
 void  Application::triggerDesAuthentification()
@@ -93,6 +112,31 @@ void  Application::create_account_response(const ARequest &req)
     }
   _graphic.on_create_account_error("Creation Error");
 }
+
+
+void  Application::change_account_password_response(const ARequest &req)
+{
+	qDebug() << "return change : " << req.code();
+  if (req.code() == request::server::OK)
+    {
+      _graphic.on_change_account_password_success();
+      return ;
+    }
+  _graphic.on_change_account_password_error("Error, password unchanged");
+}
+
+
+void  Application::change_account_privacy_response(const ARequest &req)
+{
+  if (req.code() == request::server::OK)
+    {
+      _graphic.on_change_account_privacy_success();
+      return ;
+    }
+  _graphic.on_change_account_privacy_error("Error, privacy settings unchanged");
+}
+
+
 
 void  Application::delete_account_response(const ARequest &req)
 {

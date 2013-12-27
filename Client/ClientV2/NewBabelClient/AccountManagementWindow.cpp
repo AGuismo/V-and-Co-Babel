@@ -27,9 +27,9 @@ void					AccountManagementWindow::on_change_password_button_clicked()
 void					AccountManagementWindow::on_change_privacy_button_clicked()
 {
 	if (ui.publicRadioButton->isChecked())
-		emit(change_privacy_try(true));
-	else
 		emit(change_privacy_try(false));
+	else
+		emit(change_privacy_try(true));
 }
 
 void					AccountManagementWindow::displayAccountManagementResponse(const QString &response)

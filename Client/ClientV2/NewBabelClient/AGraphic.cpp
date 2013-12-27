@@ -21,6 +21,17 @@ void		AGraphic::setTryCreateAccountHandler(Function<void (const request::Usernam
   _tryCreateAccountHandler = handle;
 }
 
+void		AGraphic::setTryChangeAccountPasswordHandler(Function<void (const request::PasswordType &, const request::PasswordType &)> handle)
+{
+	_tryChangePasswordHandler = handle;
+}
+
+void		AGraphic::setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)> handle)
+{
+	_tryChangePrivacyHandler = handle;
+}
+
+
 void		AGraphic::setDesAuthentificationHandler(Function<void ()> handle)
 {
 	_desAuthentificationHandler = handle;

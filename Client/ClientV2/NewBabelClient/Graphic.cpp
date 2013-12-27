@@ -1,6 +1,7 @@
-#include "Graphic.h"
-#include	<QTimer>
-#include	<QDebug>
+#include				"Graphic.h"
+#include				"Env.hh"
+#include				<QTimer>
+#include				<QDebug>
 
 
 void					Graphic::init()
@@ -19,6 +20,10 @@ void					Graphic::init()
 	connect(ui.actionAccountOptions, SIGNAL(triggered()), this, SLOT(on_account_management_window_triggered()));
 	// Connection try triggered
 	connect(&_connectWindow, SIGNAL(connect_try(const std::string &, unsigned short int)), this, SLOT(on_try_connect(const std::string &, unsigned short int)));
+	// Change password try triggered
+	connect(&_accountManagementWindow, SIGNAL(change_password_try(const std::string &, const std::string &)), this, SLOT(on_try_change_password(const std::string &, const std::string &)));
+	// Change privacy try triggered
+	connect(&_accountManagementWindow, SIGNAL(change_privacy_try(bool)), this, SLOT(on_try_change_privacy(bool)));
 	// Login try triggered
 	connect(&_loginWindow, SIGNAL(login_try(const std::string &, const std::string &)), this, SLOT(on_try_login(const std::string &, const std::string &)));
 	// Create account try triggered
@@ -49,36 +54,25 @@ void					Graphic::on_connection_error(enum ANetwork::SocketState state)
 void					Graphic::on_connection_success()
 {
   _connectWindow.displayConnectResponse(QString("Connected"));
-  ui.actionLogin->setEnabled(true);
-  ui.actionCreateAccount->setEnabled(true);
-  ui.actionConnect->setEnabled(false);
-  ui.actionDeleteAccount->setEnabled(true);
-  _connectWindow.setEnabled(false);
+  connected();
   QTimer::singleShot(800, &_connectWindow, SLOT(on_close_button_clicked()));
 }
 
 void					Graphic::on_login_success()
 {
   _loginWindow.displayLoginResponse(QString("Logged in"));
-  ui.actionLogout->setEnabled(true);
-  ui.actionLogin->setEnabled(false);
-  ui.actionAccountOptions->setEnabled(true);
-  ui.actionDeleteAccount->setEnabled(false);
-  ui.actionCreateAccount->setEnabled(false);
-  _loginWindow.setEnabled(false);
+  loggedIn();
+  Env::getInstance().userInfo.login = Env::getInstance().userInfo.loginTry;
   QTimer::singleShot(800, &_loginWindow, SLOT(on_close_button_clicked()));
 }
 
 void					Graphic::on_desauthentification_success()
 {
-  ui.actionLogout->setEnabled(false);
-  ui.actionLogin->setEnabled(true);
+  loggedIn();
 }
 
 void					Graphic::on_desauthentification_error()
 {
-  ui.actionLogout->setEnabled(true);
-  ui.actionLogin->setEnabled(false);
 }
 
 void					Graphic::on_login_error(const std::string &error)
@@ -98,6 +92,31 @@ void					Graphic::on_create_account_success()
   QTimer::singleShot(800, &_createAccountWindow, SLOT(on_close_button_clicked()));
 }
 
+void					Graphic::on_change_account_privacy_error(const std::string &error)
+{
+  _accountManagementWindow.displayAccountManagementResponse(QString(error.c_str()));
+}
+
+void					Graphic::on_change_account_privacy_success()
+{
+  _accountManagementWindow.displayAccountManagementResponse(QString("Privacy mode changed"));
+  _accountManagementWindow.setEnabled(false);
+  QTimer::singleShot(800, &_accountManagementWindow, SLOT(on_close_button_clicked()));
+}
+
+void					Graphic::on_change_account_password_error(const std::string &error)
+{
+  _accountManagementWindow.displayAccountManagementResponse(QString(error.c_str()));
+}
+
+void					Graphic::on_change_account_password_success()
+{
+  _accountManagementWindow.displayAccountManagementResponse(QString("Password changed"));
+  _accountManagementWindow.setEnabled(false);
+  QTimer::singleShot(800, &_accountManagementWindow, SLOT(on_close_button_clicked()));
+}
+
+
 void					Graphic::on_delete_account_error(const std::string &error)
 {
   _deleteAccountWindow.displayDeleteAccountResponse(QString(error.c_str()));
@@ -109,7 +128,6 @@ void					Graphic::on_delete_account_success()
   _deleteAccountWindow.setEnabled(false);
   QTimer::singleShot(800, &_deleteAccountWindow, SLOT(on_close_button_clicked()));
 }
-
 
 void					Graphic::run()
 {
@@ -140,10 +158,7 @@ void					Graphic::on_delete_account_window_triggered()
 void					Graphic::on_logout_window_triggered()
 {
 	_desAuthentificationHandler();
-	ui.actionDeleteAccount->setEnabled(true);
-	ui.actionCreateAccount->setEnabled(true);
-	ui.actionAccountOptions->setEnabled(false);
-	ui.actionLogin->setEnabled(true);
+	loggedOut();
 }
 
 void					Graphic::on_login_window_triggered()
@@ -167,20 +182,63 @@ void					Graphic::on_try_connect(const std::string &ipAddress, unsigned short in
 
 void					Graphic::on_try_login(const std::string &login, const std::string &password)
 {
-	qDebug() << login.c_str() << password.c_str();
+	 Env::getInstance().userInfo.loginTry = login;
 	_tryAuthentificationHandler(login, password);
 }
 
 void					Graphic::on_try_create(const std::string &login, const std::string &password)
 {
-	qDebug() << "creation" << login.c_str() << password.c_str();
 	_tryCreateAccountHandler(login, password);
 }
 
 void					Graphic::on_try_delete(const std::string &login, const std::string &password)
 {
-	qDebug() << "creation" << login.c_str() << password.c_str();
 	_tryDeleteAccountHandler(login, password);
+}
+
+void					Graphic::on_try_change_password(const std::string &currentPassword, const std::string &newPassword)
+{
+	_tryChangePasswordHandler(currentPassword, newPassword);
+}
+
+void					Graphic::on_try_change_privacy(bool newPrivacy)
+{
+	_tryChangePrivacyHandler(newPrivacy);
+}
+
+
+void					Graphic::disconnected()
+{
+	ui.actionConnect->setEnabled(true);
+	// everything else disabled
+}
+
+void					Graphic::connected()
+{
+  ui.actionLogin->setEnabled(true);
+  ui.actionCreateAccount->setEnabled(true);
+  ui.actionConnect->setEnabled(false);
+  ui.actionDeleteAccount->setEnabled(true);
+  _connectWindow.setEnabled(false);
+}
+
+void					Graphic::loggedIn()
+{
+	ui.actionLogout->setEnabled(true);
+	ui.actionLogin->setEnabled(false);
+	ui.actionAccountOptions->setEnabled(true);
+	ui.actionDeleteAccount->setEnabled(false);
+	ui.actionCreateAccount->setEnabled(false);
+	_loginWindow.setEnabled(false);
+}
+
+void					Graphic::loggedOut()
+{
+	ui.actionDeleteAccount->setEnabled(true);
+	ui.actionCreateAccount->setEnabled(true);
+	ui.actionAccountOptions->setEnabled(false);
+	ui.actionLogin->setEnabled(true);
+	ui.actionLogout->setEnabled(false);
 }
 
 Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this), _deleteAccountWindow(this), _accountManagementWindow(this)

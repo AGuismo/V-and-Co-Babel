@@ -25,6 +25,9 @@ protected:
   Function<void (const request::Username &, const request::PasswordType &)> 	_tryDeleteAccountHandler;
 
   // Personal changes
+  Function<void (const request::PasswordType &, const request::PasswordType &)>	_tryChangePasswordHandler;
+  Function<void (const request::Privacy &)>										_tryChangePrivacyHandler;
+
 
   // Friend
   Function<void (const std::string &, bool)>				_friendRequestResponseHandler;
@@ -52,6 +55,9 @@ public:
   virtual void		setTryDeleteAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>);
 
   // Personal changes
+  virtual void		setTryChangeAccountPasswordHandler(Function<void (const request::PasswordType &, const request::PasswordType &)>);
+  virtual void		setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)>);
+
 
   // Friend
   //virtual void		setFriendRequestResponse(Function<void (const std::string &, bool)>); // To do
