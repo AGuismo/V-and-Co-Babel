@@ -10,7 +10,7 @@
 #include	"types.hh"
 #include	"Database.hh"
 #include	"Env.hh"
-
+#include	"Server.hh"
 
 Perso::Perso(Database &db, Env &env):
 _db(db), _env(env)
@@ -51,11 +51,12 @@ void	Perso::privacy_mode(const std::list<IClient::Pointer> &clients, IClient::Po
 #if defined(DEBUG)
   std::cout << "Set Privacy request" << std::endl;
 #endif
-  if (_db.modPrivacy(sender->Username(), origin->_privacy))
+  if (sender->privacy() != origin->_privacy && _db.modPrivacy(sender->Username(), origin->_privacy))
     {
 #if defined(DEBUG)
       std::cout << "Privacy set" << std::endl;
 #endif
+      sender->privacy(origin->_privacy);
       sender->serialize_data(request::server::Ok());
     }
   else
@@ -145,12 +146,37 @@ bool	Perso::createAnswerFile(IClient::Pointer sender)
   if (file.bad())
     return false;
 
-  sender->serializeAnswer() << sender->AutoAnswer().size();
+  sender->serializeAnswer() << (request::StreamLen)sender->AutoAnswer().size();
   sender->serializeAnswer().push(sender->AutoAnswer(), sender->AutoAnswer().size());
   file << sender->serializeAnswer().data();
   file.close();
   return true;
 }
+
+bool	Perso::createVoiceMessageFile(IClient::Pointer sender, IClient::Pointer receiver, const std::string &date)
+{
+  std::ofstream	file;
+
+  file.open(std::string("./misc/voice_message/" + md5(sender->Username() + date) + _env.auto_answer.voiceMessageExtension).c_str(),
+	    std::ios::trunc);
+  if (file.bad())
+    return false;
+
+
+  sender->serializeAnswer() << (request::UsernameLen)sender->Username().size();
+  sender->serializeAnswer().push(sender->Username(), sender->Username().size());
+
+  sender->serializeAnswer() << (request::UsernameLen)receiver->Username().size();
+  sender->serializeAnswer().push(receiver->Username(), receiver->Username().size());
+
+  sender->serializeAnswer() << date;
+  sender->serializeAnswer() << (request::StreamLen)sender->AutoAnswer().size();
+  sender->serializeAnswer().push(sender->AutoAnswer(), sender->AutoAnswer().size());
+  file << sender->serializeAnswer().data();
+  file.close();
+  return true;
+}
+
 
 void	Perso::set_auto_answer(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
@@ -183,11 +209,69 @@ void	Perso::set_auto_answer(const std::list<IClient::Pointer> &clients, IClient:
     }
 }
 
+bool	Perso::searchClient(const std::list<IClient::Pointer> &clients, const std::string &name, IClient::Pointer &client)
+{
+  for (Server::client_list::const_iterator it = clients.begin(); it != clients.end(); ++it)
+    {
+      if ((*it)->Username() == name)
+	{
+	  client = *it;
+	  return (true);
+	}
+    }
+  return (false);
+}
+
 void	Perso::let_message(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
+  const request::perso::client::LetMessage	*origin = dynamic_cast<const request::perso::client::LetMessage *>(req);
+  IClient::Pointer				receiver;
 
+  if (sender->Authenticated() &&
+      sender->status() == request::User::Status::CONNECTED &&
+      _db.clientExist(origin->_from) &&
+      _db.clientExist(origin->_to))
+    {
+#if defined(DEBUG)
+      std::cout << "Receive a voice message request from [" << origin->_from << "] to [" << origin->_to << "]" << std::endl;
+#endif
+      if (origin->_stream.size() != 0)
+	{
+#if defined(DEBUG)
+	  std::cout << "Receive : [" << origin->_stream.size() << "] " << std::endl;
+#endif
+	  sender->updateAutoAnswer(origin->_stream);
+	}
+      else
+	{
+#if defined(DEBUG)
+	  std::cout << "File is full" << std::endl;
+#endif
+	  if (searchClient(clients, origin->_to, receiver))
+	    {
+#if defined(DEBUG)
+	      std::cout << "message create ..." << std::endl;
+#endif
+	      std::stringstream	date;
+	      std::string	strDate;
 
-
+	      date << origin->_time;
+	      date >> strDate;
+	      if (createVoiceMessageFile(sender, receiver, strDate))
+		{
+#if defined(DEBUG)
+		  std::cout << "File Message was successfuly created !" << std::endl;
+#endif
+		}
+	      else
+		{
+#if defined(DEBUG)
+		  std::cout << "Failed since the file creation" << std::endl;
+#endif
+		}
+	    }
+	}
+    }
 }
 
 void	Perso::pong(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)

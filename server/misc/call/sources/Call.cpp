@@ -90,7 +90,7 @@ void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sen
 
 	  if (receiver->Authenticated() &&
 	      receiver->status() == request::User::Status::CONNECTED)
-	  receiver->serialize_data(fwd);
+	    receiver->serialize_data(fwd);
 	  else
 	    sender->serialize_data(request::server::Forbidden());
 	  return ;

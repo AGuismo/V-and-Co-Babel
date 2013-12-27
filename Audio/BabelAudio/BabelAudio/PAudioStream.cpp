@@ -6,7 +6,7 @@
 
 bool			PAudioStream::initInput()
 {
-	if (_input.content == NULL)
+	if (_input->content == NULL)
 		return (false);
 	if (Pa_Initialize() != paNoError)
 		return (false);
@@ -24,7 +24,7 @@ bool			PAudioStream::initInput()
 
 bool			PAudioStream::initOutput()
 {
-	if (_output.content == NULL)
+	if (_output->content == NULL)
 		return (false);
 	if ((_outputParam.device = Pa_GetDefaultOutputDevice()) == paNoDevice)
 	{
@@ -40,7 +40,7 @@ bool			PAudioStream::initOutput()
 
 bool			PAudioStream::init()
 {
-	return (initInput() && initOutput());
+	return (_codec.init() && initInput() && initOutput());
 }
 
 void			PAudioStream::record()
@@ -48,7 +48,7 @@ void			PAudioStream::record()
 	PaError		error = paNoError;
 
 	error = Pa_OpenStream(&_stream, &_inputParam, NULL, SAMPLE_RATE,
-		FRAMES_PER_BUFFER, paClipOff, PAudioBuffer::recordCallBack, &_input);
+		FRAMES_PER_BUFFER, paClipOff, PAudioBuffer::recordCallBack, _input);
 	if (error != paNoError)
 		return ;
 	if (Pa_StartStream(_stream) != paNoError)
@@ -57,7 +57,7 @@ void			PAudioStream::record()
 	while ((error = Pa_IsStreamActive(_stream)) == 1)
 	{
 		Pa_Sleep(1000);
-		std::cout << "Index = " << _input.fRdIndex << std::endl;
+		std::cout << "Index = " << _input->fWrIndex << std::endl;
 	}
 	if (error < 0)
 		return ;
@@ -70,10 +70,10 @@ void			PAudioStream::play()
 	PaError		error = paNoError;
 
 	error = Pa_OpenStream(&_stream, NULL, &_outputParam, SAMPLE_RATE,
-		FRAMES_PER_BUFFER, paClipOff, PAudioBuffer::playCallBack, &_output);
+		FRAMES_PER_BUFFER, paClipOff, PAudioBuffer::playCallBack, _output);
 	if (error != paNoError)
 		return ;
-	_output.fRdIndex = 0;
+	_output->fRdIndex = 0;
 	std::cout << "PLAYING BACK RECORDED DATA" << std::endl;
 	if (_stream)
 	{
@@ -94,6 +94,8 @@ void			PAudioStream::play()
 
 PAudioStream::PAudioStream()
 {
+	_input = new PAudioBuffer(&_codec);
+	_output = new PAudioBuffer(&_codec);
 }
 
 PAudioStream::~PAudioStream()

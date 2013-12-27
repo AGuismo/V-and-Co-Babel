@@ -1,4 +1,5 @@
 #include						"FriendList.hh"
+#include						"Env.hh"
 
 Friend							*FriendList::getFriend(std::string &friendName)
 {
@@ -62,7 +63,7 @@ bool							FriendList::insertOutcomingMsg(std::string &friendName, std::string &
 
 	if ((tmpFriend = getFriend(friendName)) != NULL)
 	{
-		newMsg.header = _userName += " [a timestamp to code]: "; // need work here
+		newMsg.header = " [a timestamp to code]: "; // need work here ++ ENV HERE
 		newMsg.content = msg;
 		tmpFriend->conversation.push_back(newMsg);
 		return true;
@@ -103,14 +104,8 @@ msg_type						*FriendList::getFriendCurrentTypingMsg(std::string &friendName)
 	return NULL;
 }
 
-void							FriendList::setUserName(std::string &userName)
+FriendList::FriendList()
 {
-	_userName = userName;
-}
-
-FriendList::FriendList(std::string &userName)
-{
-	_userName = userName;
 }
 
 FriendList::~FriendList()

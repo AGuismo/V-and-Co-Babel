@@ -15,14 +15,14 @@ class Graphic : public QMainWindow, public AGraphic
 	Q_OBJECT
 
 private:
+	Ui::GraphicClass		ui;
+
+private:
 	ConnectWindow			_connectWindow;
 	LoginWindow				_loginWindow;
 	CreateAccountWindow		_createAccountWindow;
 	DeleteAccountWindow		_deleteAccountWindow;
 	AccountManagementWindow	_accountManagementWindow;
-public:
-	Graphic(QWidget *parent = 0);
-	~Graphic();
 
 public slots:
 	void			on_connect_window_triggered();
@@ -37,6 +37,9 @@ public slots:
 	void			on_try_login(const std::string &login, const std::string &password);
 	void			on_try_create(const std::string &login, const std::string &password);
 	void			on_try_delete(const std::string &login, const std::string &password);
+	void			on_try_change_password(const std::string &currentPassword, const std::string &newPassword);
+	void			on_try_change_privacy(bool newPrivacy);
+
 
 public:
 	void			on_connection_error(enum ANetwork::SocketState);
@@ -49,14 +52,24 @@ public:
 	void			on_create_account_error(const std::string &error);
 	void			on_delete_account_success();
 	void			on_delete_account_error(const std::string &error);
-
-
-public:
-	void	init();
-	void	run();
+	void			on_change_account_privacy_success();
+	void			on_change_account_privacy_error(const std::string &error);
+	void			on_change_account_password_success();
+	void			on_change_account_password_error(const std::string &error);
 
 private:
-	Ui::GraphicClass ui;
+	void			connected();
+	void			disconnected();
+	void			loggedIn();
+	void			loggedOut();
+
+public:
+	void			init();
+	void			run();
+
+public:
+	Graphic(QWidget *parent = 0);
+	~Graphic();
 };
 
 #endif // GRAPHIC_H

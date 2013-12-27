@@ -29,6 +29,9 @@ private:
   void	triggerTryCreateAccount(const request::Username &, const request::PasswordType &);
   void	triggerTryDeleteAccount(const request::Username &, const request::PasswordType &);
 
+  void	triggerTryChangeAccountPassword(const request::PasswordType &, const request::PasswordType &);
+  void	triggerTryChangeAccountPrivacy(const request::Privacy &);
+
 private:
   void  bufferise(const ANetwork::ByteArray &);
   bool  handle_request();
@@ -40,6 +43,9 @@ private:
   void  login_response(const ARequest &);
   void  create_account_response(const ARequest &);
   void  delete_account_response(const ARequest &);
+  void  change_account_password_response(const ARequest &);
+  void  change_account_privacy_response(const ARequest &);
+
 
 private:
   void	ping_handler(const ARequest &);

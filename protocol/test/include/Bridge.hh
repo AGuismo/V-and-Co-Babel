@@ -3,6 +3,7 @@
 
 # include	<boost/thread.hpp>
 # include	<list>
+# include	<vector>
 
 class Bridge
 {
