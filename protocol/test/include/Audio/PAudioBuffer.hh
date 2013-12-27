@@ -5,7 +5,7 @@
 # include		"Bridge.hh"
 # include		"IAudioCodec.hh"
 # include		"portaudio.h"
-# include		"pa_asio.h"
+//# include		"pa_asio.h"
 # include		<fstream>
 
 #define			CHECK_CIRCULAR(data)	((data->fWrIndex < data->fIndexMax) ? (true) : (false))

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -83,9 +83,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\sources\Audio\OpAudioCodec.cpp" />
-    <ClCompile Include="..\..\sources\Audio\PAudioBuffer.cpp" />
-    <ClCompile Include="..\..\sources\Audio\PAudioStream.cpp" />
+    <ClCompile Include="..\..\test\sources\Audio\OpAudioCodec.cpp" />
+    <ClCompile Include="..\..\test\sources\Audio\PAudioBuffer.cpp" />
+    <ClCompile Include="..\..\test\sources\Audio\PAudioStream.cpp" />
     <ClCompile Include="..\..\test\sources\Bridge.cpp" />
     <ClCompile Include="..\..\test\sources\FakeAudio.cpp" />
     <ClCompile Include="..\..\test\sources\main.cpp" />
@@ -96,12 +96,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\Audio\AudioParams.hh" />
-    <ClInclude Include="..\..\include\Audio\IAudioCodec.hh" />
-    <ClInclude Include="..\..\include\Audio\IAudioStream.hh" />
-    <ClInclude Include="..\..\include\Audio\OpAudioCodec.hh" />
-    <ClInclude Include="..\..\include\Audio\PAudioBuffer.hh" />
-    <ClInclude Include="..\..\include\Audio\PAudioStream.hh" />
+    <ClInclude Include="..\..\test\include\Audio\AudioParams.hh" />
+    <ClInclude Include="..\..\test\include\Audio\IAudioCodec.hh" />
+    <ClInclude Include="..\..\test\include\Audio\IAudioStream.hh" />
+    <ClInclude Include="..\..\test\include\Audio\OpAudioCodec.hh" />
+    <ClInclude Include="..\..\test\include\Audio\PAudioBuffer.hh" />
+    <ClInclude Include="..\..\test\include\Audio\PAudioStream.hh" />
     <ClInclude Include="..\..\test\include\Bridge.hh" />
     <ClInclude Include="..\..\test\include\FakeAudio.hh" />
   </ItemGroup>

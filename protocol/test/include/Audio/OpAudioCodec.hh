@@ -2,7 +2,7 @@
 # define					 OPUS_AUDIOCODEC_H
 
 # include					"IAudioCodec.hh"
-# include					"opus.h"
+# include					"opus/opus.h"
 
 class						OpAudioCodec : public IAudioCodec
 {
