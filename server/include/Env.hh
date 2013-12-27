@@ -79,8 +79,10 @@ public:
   struct				auto_answer
   {
     static const file_path		EXTENTION_REP;
+    static const file_path		EXTENTION_VOC;
 
     file_path				AutoAnswerExtension;
+    file_path				voiceMessageExtension;
   }					auto_answer;
 
 public:

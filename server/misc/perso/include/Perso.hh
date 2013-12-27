@@ -30,6 +30,9 @@ private:
   void	pong(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
   void	unset_auto_answer(const std::list<IClient::Pointer> &, IClient::Pointer sender, const ARequest *req);
   bool	createAnswerFile(IClient::Pointer sender);
+  bool	createVoiceMessageFile(IClient::Pointer sender, IClient::Pointer receiver, const std::string &);
+  bool	searchClient(const std::list<IClient::Pointer> &clients, const std::string &name, IClient::Pointer &client);
+
   void	sendChangeStatusFriends(const IClient::Pointer &sender,
 				const Database::list_friend &friends,
 				const request::perso::client::StatusClient *,

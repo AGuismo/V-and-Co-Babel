@@ -13,8 +13,10 @@ class Database : public IDatabase
 {
 public:
   typedef std::string			Username;
+  typedef std::string			VoiceMessage;
   typedef std::list<ARequest *>		list_request;
   typedef std::list<Username>		list_friend;
+  typedef std::list<VoiceMessage>	list_message;
   struct			Client
   {
     request::Username		login;
@@ -23,6 +25,7 @@ public:
     request::Privacy		privacy;
     request::PasswordType	password;
     list_friend			friendList;
+    list_message		messageList;
     list_request		waitRequest;
     request::Rights		rights;
   };
