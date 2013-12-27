@@ -137,7 +137,6 @@ void  Application::change_account_privacy_response(const ARequest &req)
 }
 
 
-
 void  Application::delete_account_response(const ARequest &req)
 {
   if (req.code() == request::server::OK)

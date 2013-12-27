@@ -1,23 +1,271 @@
-<UI version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>ManageFriendWindow</class>
- <widget class="QDialog" name="ManageFriendWindow" >
-  <property name="objectName" >
-   <string notr="true">ManageFriendWindow</string>
-  </property>
-  <property name="geometry" >
+ <widget class="QDialog" name="ManageFriendWindow">
+  <property name="geometry">
    <rect>
-	<x>0</x>
-	<y>0</y>
-	<width>400</width>
-	<height>300</height>
+    <x>0</x>
+    <y>0</y>
+    <width>232</width>
+    <height>186</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>ManageFriendWindow</string>
-  </property>  
+  <property name="windowTitle">
+   <string>LoginWindow</string>
+  </property>
+  <widget class="QPushButton" name="changePasswordPushButton">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>133</y>
+     <width>100</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>22</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>100</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Change</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="changePrivacyPushButton">
+   <property name="geometry">
+    <rect>
+     <x>123</x>
+     <y>134</y>
+     <width>100</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>22</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>100</width>
+     <height>20</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Change</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="newPasswordLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>107</y>
+     <width>100</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>100</width>
+     <height>20</height>
+    </size>
+   </property>
+   <property name="inputMask">
+    <string/>
+   </property>
+   <property name="text">
+    <string>poil2cul</string>
+   </property>
+   <property name="maxLength">
+    <number>256</number>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="passwordLabel">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>88</y>
+     <width>86</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>MS UI Gothic</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>New Password :</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="currentPasswordLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>62</y>
+     <width>100</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>100</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>poil</string>
+   </property>
+   <property name="maxLength">
+    <number>256</number>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>34</y>
+     <width>214</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="loginLabel">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>43</y>
+     <width>108</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>MS UI Gothic</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Current Password :</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="loginTitleLabel">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>149</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>MS UI Gothic</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Account options</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>123</x>
+     <y>43</y>
+     <width>77</width>
+     <height>73</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Privacy</string>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QRadioButton" name="publicRadioButton">
+      <property name="text">
+       <string>Public</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QRadioButton" name="privateRadioButton">
+      <property name="text">
+       <string>Private</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="serverResponseLabel">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>161</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>MS UI Gothic</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>currentPasswordLineEdit</tabstop>
+  <tabstop>newPasswordLineEdit</tabstop>
+  <tabstop>changePasswordPushButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
-</UI>
+</ui>
