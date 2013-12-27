@@ -1,8 +1,11 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-#include <QObject>
+#include  <QObject>
+#include  <QThread>
 #include  "QTBridge.h"
+
+class IAudioStream;
 
 class Audio : public QObject
 {
@@ -12,15 +15,16 @@ public:
   explicit Audio(Bridge &);
   ~Audio();
 
-public slots:
+public:
   void  run();
 
-private:
+private slots:
   void  routine();
 
 private:
-  Bridge    &_bridge;
-  // Seb Object
+  Bridge        &_bridge;
+  QThread       _th;
+  IAudioStream  *_audio;// Seb Object
 };
 
 #endif // AUDIO_H

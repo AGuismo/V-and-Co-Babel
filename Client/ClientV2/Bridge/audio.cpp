@@ -2,24 +2,32 @@
 #include "ui_audio.h"
 #include  <limits>
 #include  <QDebug>
+#include  "PAudioStream.hh"
 
 Audio::Audio(Bridge &bridge) :
   _bridge(bridge)
 {
+  _audio = new PAudioStream(bridge);
+  moveToThread(&_th);
+  QObject::connect(&_th, SIGNAL(started()), this, SLOT(routine()));
 }
 
 Audio::~Audio()
 {
+  _th.terminate();
+  _th.wait();
 }
 
 void  Audio::routine()
 {
+  if (_audio->init())
+    _audio->run();
 // Call Seb object routine()
 }
 
 void  Audio::run()
 {
-  routine();
+  _th.start();
 }
 
 /*void  Audio::handleInputWrite(const std::string &str)
