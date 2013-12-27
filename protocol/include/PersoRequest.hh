@@ -177,7 +177,9 @@ namespace	request
 	static const char	*LET_MESSAGE;
 
 	LetMessage();
-	LetMessage(const request::Username &to,
+	LetMessage(const request::Username &from,
+		   const request::Username &to,
+		   const request::Time &time,
 		   const request::Stream &stream);
 	~LetMessage();
 	LetMessage(const LetMessage &);
@@ -190,9 +192,11 @@ namespace	request
 	bool			operator==(const ARequest *req) const;
 	bool			operator!=(const ARequest *req) const;
 
+	request::Username	_from;
 	request::Username	_to;
-	request::Stream		_stream;
-      };
+	request::Time		_time;
+ 	request::Stream		_stream;
+     };
 
     } // !client
 

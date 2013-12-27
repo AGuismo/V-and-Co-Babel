@@ -76,6 +76,13 @@ public:
     plugin_list				plugins;
   }					plugin;
 
+  struct				auto_answer
+  {
+    static const file_path		EXTENTION_REP;
+
+    file_path				AutoAnswerExtension;
+  }					auto_answer;
+
 public:
   static Env	&getInstance();
 

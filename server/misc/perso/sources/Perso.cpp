@@ -140,7 +140,7 @@ bool	Perso::createAnswerFile(IClient::Pointer sender)
 {
   std::ofstream	file;
 
-  file.open(std::string("./misc/auto_answer/" + sender->Username() + ".rep").c_str(), // to change
+  file.open(std::string("./misc/auto_answer/" + sender->Username() + _env.auto_answer.AutoAnswerExtension).c_str(),
 	    std::ios::trunc);
   if (file.bad())
     return false;
@@ -185,6 +185,9 @@ void	Perso::set_auto_answer(const std::list<IClient::Pointer> &clients, IClient:
 
 void	Perso::let_message(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
+
+
+
 }
 
 void	Perso::pong(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
@@ -202,7 +205,7 @@ void	Perso::unset_auto_answer(const std::list<IClient::Pointer> &clients, IClien
 {
   const request::perso::client::UnsetAutoAnswer	*origin = dynamic_cast<const request::perso::client::UnsetAutoAnswer *>(req);
 
-  if ((remove(std::string("/misc/auto_answer/" + sender->Username() + ".rep").c_str())) != 0) // To change
+  if ((remove(std::string("/misc/auto_answer/" + sender->Username() + _env.auto_answer.AutoAnswerExtension).c_str())) != 0)
     {
 #if defined(DEBUG)
       std::cout << "Can't remove the file" << std::endl;
