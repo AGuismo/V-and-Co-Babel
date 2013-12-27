@@ -523,9 +523,11 @@ namespace	request
       {
       }
 
-      LetMessage::LetMessage(const request::Username &to,
+      LetMessage::LetMessage(const request::Username &from,
+			     const request::Username &to,
+			     const request::Time &time,
 			     const request::Stream &stream):
-	Perso(request::client::perso::LET_MESSAGE), _to(to), _stream(stream)
+	Perso(request::client::perso::LET_MESSAGE), _from(from), _to(to), _time(time), _stream(stream)
       {
       }
 
@@ -534,7 +536,7 @@ namespace	request
       }
 
       LetMessage::LetMessage(const LetMessage &src) :
-	Perso(request::client::perso::LET_MESSAGE), _to(src._to), _stream(src._stream)
+	Perso(request::client::perso::LET_MESSAGE), _from(src._from), _to(src._to), _time(src._time), _stream(src._stream)
       {
       }
 
@@ -542,7 +544,9 @@ namespace	request
       {
 	if (this != &src)
 	  {
+	    _from = src._from;
 	    _to = src._to;
+	    _time = src._time;
 	    _stream = src._stream;
 	  }
 	return (*this);
@@ -559,7 +563,7 @@ namespace	request
 	  return (false);
 
 	const LetMessage	*tmp = dynamic_cast<const LetMessage *>(req);
-	return (tmp->_to == _to && tmp->_stream == _stream);
+	return (tmp->_from == _from && tmp->_to == _to && tmp->_time == _time && tmp->_stream == _stream);
       }
 
       bool	LetMessage::operator!=(const ARequest *req) const
@@ -571,7 +575,12 @@ namespace	request
       {
 	Perso::serialize(rhs);
 	request::UsernameLen		toLen;
-	request::StreamLen	streamLen;
+	request::StreamLen		streamLen;
+	request::UsernameLen		fromLen;
+
+	fromLen = _from.size();
+	rhs << fromLen;
+	rhs.push(_from, fromLen);
 
 	toLen = _to.size();
 	rhs << toLen;
@@ -588,7 +597,11 @@ namespace	request
       {
 	Perso::unserialize(rhs);
 	request::UsernameLen	toLen;
+	request::UsernameLen	fromLen;
 	request::StreamLen	streamLen;
+
+	rhs >> fromLen;
+	rhs.pop(_from, fromLen);
 
 	rhs >> toLen;
 	rhs.pop(_to, toLen);
