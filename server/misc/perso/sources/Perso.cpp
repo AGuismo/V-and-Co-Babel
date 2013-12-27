@@ -56,6 +56,7 @@ void	Perso::privacy_mode(const std::list<IClient::Pointer> &clients, IClient::Po
 #if defined(DEBUG)
       std::cout << "Privacy set" << std::endl;
 #endif
+      sender->privacy(origin->_privacy);
       sender->serialize_data(request::server::Ok());
     }
   else
