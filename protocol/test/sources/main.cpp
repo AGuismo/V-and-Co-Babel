@@ -16,7 +16,7 @@
 #include	"PersoRequest.hh"
 #include	"Protocol.hpp"
 #include	"Bridge.hh"
-#include	"FakeAudio.hh"
+#include	"PAudioStream.hh"
 
 static unsigned short	g_portTCP;
 static unsigned short	g_server_portUDP;
@@ -53,7 +53,8 @@ public:
   void	writeTCP(const std::vector<Protocol::Byte> &data)
   {
 
-    boost::asio::async_write(_tcpSock, boost::asio::buffer(data),
+	  _tcpWrite = data;
+	  boost::asio::async_write(_tcpSock, boost::asio::buffer(_tcpWrite),
 			     boost::bind(&client::write_tcp_handler,
 					 shared_from_this(),
 					 boost::asio::placeholders::error,
@@ -97,7 +98,8 @@ public:
 
   void	startAudio()
   {
-    _audio.run();
+	  if (_audio->init())
+		  _audio->record();
     _t.expires_from_now(boost::posix_time::seconds(5));
     _t.async_wait(boost::bind(&client::writeUDP,
     			      shared_from_this()));
@@ -106,8 +108,9 @@ public:
 private:
   explicit client(boost::asio::io_service& io_service) :
     _service(io_service), _tcpSock(io_service), _udpClientSock(io_service),_udpServerSock(io_service),
-    _t(io_service), _audio(_bridge)
+    _t(io_service)
   {
+	  _audio = new PAudioStream();
   }
 
   void	connect(const std::string &ip, const std::string &port)
@@ -245,6 +248,7 @@ private:
   }
 
 private:
+	std::vector<Protocol::Byte>	_tcpWrite;
   boost::asio::io_service		&_service;
   tcp::socket				_tcpSock;
   udp::socket				_udpClientSock;
@@ -255,7 +259,7 @@ private:
   boost::asio::deadline_timer		_t;
   boost::thread				_audioThread;
   Bridge				_bridge;
-  FakeAudio				_audio;
+  IAudioStream			*_audio;
 };
 
 

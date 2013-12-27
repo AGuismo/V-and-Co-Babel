@@ -7,6 +7,8 @@
 class						OpAudioCodec : public IAudioCodec
 {
 private:
+	unsigned char			*_encBuffer;
+	SAMPLE					*_decBuffer;
 	OpusEncoder				*_encoder;
 	OpusDecoder				*_decoder;
 	opus_int32				_encodedSize;
