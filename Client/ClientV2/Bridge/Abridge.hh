@@ -42,6 +42,7 @@ template <typename T, typename U>
 void  ABridge<T, U>::inputWrite(const input_buffer &buff)
 {
   _input.insert(_input.end(), buff.begin(), buff.end());
+  inputReady();
 }
 
 template <typename T, typename U>
@@ -63,6 +64,7 @@ template <typename T, typename U>
 void  ABridge<T, U>::outputWrite(const output_buffer &buff)
 {
   _output.insert(_output.end(), buff.begin(), buff.end());
+  outputReady();
 }
 
 template <typename T, typename U>

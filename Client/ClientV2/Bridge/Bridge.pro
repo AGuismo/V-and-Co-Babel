@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,13 +15,16 @@ TEMPLATE = app
 SOURCES += main.cpp \
     QTBridge.cpp \
     AudioBridge.cpp \
-    audio.cpp
+    audio.cpp \
+    FakeMenu.cpp
 
 HEADERS  += \
     Abridge.hh \
     QTBridge.h \
     AudioBridge.hh \
-    audio.h
+    audio.h \
+    FakeMenu.h
 
 FORMS += \
-    audio.ui
+    audio.ui \
+    FakeMenu.ui

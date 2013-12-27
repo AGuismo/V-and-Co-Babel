@@ -1,8 +1,5 @@
-<?xml version='1.0'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>Audio</class>
  <widget class="QWidget" name="Audio">
   <property name="geometry">
@@ -16,7 +13,22 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0">
+    <widget class="QTextBrowser" name="Display"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QPushButton" name="inputWrite">
+     <property name="text">
+      <string>InputWrite</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLineEdit" name="inputWriteLine"/>
+   </item>
+  </layout>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>
