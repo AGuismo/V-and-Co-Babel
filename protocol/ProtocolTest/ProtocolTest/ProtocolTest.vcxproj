@@ -41,7 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\..\include;$(SolutionDir)\..\test\include;$(SolutionDir)\..\API;$(SolutionDir)\..\..\Serializer\include;$(IncludePath);C:\program files\boost\boost_1_55_0\</IncludePath>
+    <IncludePath>$(SolutionDir)\..\include;$(SolutionDir)\..\test\include;$(SolutionDir)\..\API;$(SolutionDir)\..\..\Serializer\include;$(IncludePath);C:\program files\boost\boost_1_55_0\;$(SolutionDir)\..\..\Audio\portaudio\include;$(SolutionDir)\..\..\Audio\opus-1.1\include;$(SolutionDir)\..\include\Audio</IncludePath>
+    <LibraryPath>$(SolutionDir)\..\..\Audio\portaudio\build\msvc\Win32\Debug\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -59,8 +60,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-gd-1_55.lib;libboost_filesystem-vc120-mt-gd-1_55.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-gd-1_55.lib;libboost_filesystem-vc120-mt-gd-1_55.lib;portaudio_x86.lib;celt.lib;opus.lib;silk_common.lib;silk_float.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0;$(SolutionDir)\..\..\Audio\portaudio\build\msvc\Win32\Debug\;$(SolutionDir)\..\..\Audio\opus-1.1\win32\VS2010\Win32\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,6 +83,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\sources\Audio\OpAudioCodec.cpp" />
+    <ClCompile Include="..\..\sources\Audio\PAudioBuffer.cpp" />
+    <ClCompile Include="..\..\sources\Audio\PAudioStream.cpp" />
     <ClCompile Include="..\..\test\sources\Bridge.cpp" />
     <ClCompile Include="..\..\test\sources\FakeAudio.cpp" />
     <ClCompile Include="..\..\test\sources\main.cpp" />
@@ -92,6 +96,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\Audio\AudioParams.hh" />
+    <ClInclude Include="..\..\include\Audio\IAudioCodec.hh" />
+    <ClInclude Include="..\..\include\Audio\IAudioStream.hh" />
+    <ClInclude Include="..\..\include\Audio\OpAudioCodec.hh" />
+    <ClInclude Include="..\..\include\Audio\PAudioBuffer.hh" />
+    <ClInclude Include="..\..\include\Audio\PAudioStream.hh" />
     <ClInclude Include="..\..\test\include\Bridge.hh" />
     <ClInclude Include="..\..\test\include\FakeAudio.hh" />
   </ItemGroup>

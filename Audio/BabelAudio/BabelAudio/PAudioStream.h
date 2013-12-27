@@ -4,6 +4,7 @@
 # include				<string>
 # include				<vector>
 # include				"PAudioBuffer.h"
+# include				"OpAudioCodec.h"
 
 class					PAudioStream
 {
@@ -11,8 +12,9 @@ private:
 	PaStream*			_stream;
 	PaStreamParameters	_inputParam;
 	PaStreamParameters	_outputParam;
-	PAudioBuffer		_input;
-	PAudioBuffer		_output;
+	OpAudioCodec		_codec;
+	PAudioBuffer		*_input;
+	PAudioBuffer		*_output;
 
 protected:
 	bool				initInput();

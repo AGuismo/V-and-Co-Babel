@@ -3,6 +3,37 @@
 
 // CallBacks
 
+void			PAudioBuffer::sendToNetwork()
+{
+	int				toReach;
+	int				i;
+	int				diff;
+	unsigned char	*compressed;
+	SAMPLE			*decompressed;
+
+	myFile << fRdIndex << " - " << fWrIndex << std::endl;
+	while (ABS(fRdIndex - fWrIndex) >= FRAME_PACKET_SIZE)
+	{
+		myFile << "SENDING PACKET, ";
+		toReach = fRdIndex + FRAME_PACKET_SIZE;
+		if (toReach >= fIndexMax)
+			toReach -= fIndexMax;
+		myFile << "ToReach : " << toReach << std::endl;
+		i = 0;
+		while (fRdIndex != toReach)
+		{
+			_frameBuff[i++] = content[fRdIndex++];
+			if (fRdIndex >= fIndexMax)
+				fRdIndex = 0;
+			if (fWrIndex >= fIndexMax)
+				fWrIndex = 0;
+		}
+		myFile << _frameBuff[0] << "<->" << _frameBuff[1] << std::endl;
+		compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE);
+		myFile << "Data : " << compressed << std::endl;;
+	}
+}
+
 int				PAudioBuffer::recordCallBack(const void *inputBuff, void *outputBuff,
 				unsigned long framesPerBuff, const PaStreamCallbackTimeInfo *timeInfo,
 				PaStreamCallbackFlags statusFlags, void *userData)
@@ -23,13 +54,13 @@ int				PAudioBuffer::recordCallBack(const void *inputBuff, void *outputBuff,
 		while (i < framesPerBuff)
 		{
 			if (!CHECK_CIRCULAR(data))
-				data->fRdIndex = 0;
-			writePtr[data->fRdIndex++] = SAMPLE_SILENCE;
+				data->fWrIndex = 0;
+			writePtr[data->fWrIndex++] = SAMPLE_SILENCE;
 			if (NUM_CHANNELS == 2)
 			{
 				if (!CHECK_CIRCULAR(data))
-				data->fRdIndex = 0;
-				writePtr[data->fRdIndex++] = *(readPtr++);
+					data->fWrIndex = 0;
+				writePtr[data->fWrIndex++] = *(readPtr++);
 			}
 			i++;
 		}
@@ -40,17 +71,18 @@ int				PAudioBuffer::recordCallBack(const void *inputBuff, void *outputBuff,
 		while (i < framesPerBuff)
 		{
 			if (!CHECK_CIRCULAR(data))
-				data->fRdIndex = 0;
-			writePtr[data->fRdIndex++] = (*readPtr++);
+				data->fWrIndex = 0;
+			writePtr[data->fWrIndex++] = (*readPtr++);
 			if (NUM_CHANNELS == 2 && CHECK_CIRCULAR(data))
 			{
 				if (!CHECK_CIRCULAR(data))
-				data->fRdIndex = 0;
-				writePtr[data->fRdIndex++] = *(readPtr++);
+				data->fWrIndex = 0;
+				writePtr[data->fWrIndex++] = *(readPtr++);
 			}
 			i++;
 		}
 	}
+	data->sendToNetwork();
 	return (paContinue);
 }
 
@@ -86,16 +118,21 @@ int				PAudioBuffer::playCallBack(const void *inputBuff, void *outputBuff,
 
 // Constructors & Destructors
 
-PAudioBuffer::PAudioBuffer() : 
-fRdIndex(0), fWrIndex(0), fIndexMax(CBUFF_SIZE), content(NULL)
+PAudioBuffer::PAudioBuffer(IAudioCodec *codec) : 
+fRdIndex(0), fWrIndex(0), fIndexMax(CBUFF_SIZE), content(NULL), _frameBuff(NULL), _codec(codec)
 {
-	content = (SAMPLE *)(malloc(CBUFF_SIZE * sizeof(SAMPLE)));
+	myFile.open("Audio.wav");
+	content = new (SAMPLE[CBUFF_SIZE]);
 	if (content != NULL)
-		memset(content, 0, 65536);
+		memset(content, 0, CBUFF_SIZE);
+	_frameBuff = new (SAMPLE[FRAME_PACKET_SIZE]);
+	if (_frameBuff != NULL)
+		memset(_frameBuff, 0, FRAME_PACKET_SIZE);
 }
 
 PAudioBuffer::~PAudioBuffer()
 {
 	if (content != NULL)
 		free(content);
+	myFile.close();
 }
