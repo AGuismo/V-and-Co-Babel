@@ -26,6 +26,7 @@ namespace	request
     _lnk[request::client::perso::STATUS] = new request::perso::client::StatusClient;
     _lnk[request::client::perso::MISSED_CALLS] = new request::perso::client::MissedCallClient;
     _lnk[request::client::perso::DEL_MISSED] = new request::perso::client::DelMissedClient;
+    _lnk[request::client::perso::LET_MESSAGE] = new request::perso::client::LetMessage;
     _lnk[request::client::perso::SET_AUTO_ANSWER] = new request::perso::client::SetAutoAnswerClient;
     _lnk[request::client::perso::PONG] = new request::perso::client::Pong;
     _lnk[request::client::perso::UNSET_AUTO_ANSWER] = new request::perso::client::UnsetAutoAnswer;

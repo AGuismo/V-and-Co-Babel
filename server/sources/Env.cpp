@@ -4,6 +4,7 @@
 #include	"IniParser.hh"
 #include	"Env.hh"
 
+const Env::file_path	Env::auto_answer::EXTENTION_REP		= ".rep";
 const Env::file_path	Env::server::CONF_PATH			= "./misc/conf.ini";
 const Env::port		Env::server::CLIENT_PORT		= 44201;
 const Env::port		Env::server::MIN_CLIENT_PORT		= 1025;
@@ -43,6 +44,7 @@ Env::Env()
   client.pongDelay = client::PONG_DELAY;
   client.pongRefresh = client::PONG_REFRESH;
   plugin.LibraryPath = plugin::LIBRARY_PATH;
+  auto_answer.AutoAnswerExtension = auto_answer::EXTENTION_REP;
 }
 
 Env::~Env()
