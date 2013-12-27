@@ -303,6 +303,11 @@ bool		Database::modClientPass(const std::string &login,
   boost::mutex::scoped_lock(_lock);
   clients::iterator it = _clients.find(login);
 
+  std::cout << "DB PASS : [" << it->second->password << "]" << std::endl;
+  std::cout << "OLD PASS : [" << oldpassword << "]" << std::endl;
+  std::cout << "DB LOGIN : [" << it->second->login << "]" << std::endl;
+  std::cout << "LOGIN : [" << login << "]" << std::endl;
+
   if (it == _clients.end())
     return (false);
   if (it->second->password != oldpassword)
