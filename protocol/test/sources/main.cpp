@@ -16,8 +16,12 @@
 #include	"PersoRequest.hh"
 #include	"Protocol.hpp"
 #include	"Bridge.hh"
+<<<<<<< HEAD
 #include	"PAudioStream.hh"
 #include	"FakeAudio.hh"
+=======
+// #include	"PAudioStream.hh"
+>>>>>>> fd099cdd5caffe874e86b1983219c0d32b7956f8
 
 static unsigned short	g_portTCP;
 static unsigned short	g_server_portUDP;
@@ -104,10 +108,16 @@ public:
 
   void	startAudio()
   {
+<<<<<<< HEAD
 	  if (_audio->init())
 		  _audioThread = boost::thread(boost::bind(&client::runAudio, this));
 //	  _audio->run();
     _t.expires_from_now(boost::posix_time::milliseconds(40));
+=======
+	  // if (_audio->init())
+	  // 	  _audio->record();
+    _t.expires_from_now(boost::posix_time::seconds(5));
+>>>>>>> fd099cdd5caffe874e86b1983219c0d32b7956f8
     _t.async_wait(boost::bind(&client::writeUDP,
     			      shared_from_this()));
   }
@@ -117,7 +127,11 @@ private:
     _service(io_service), _tcpSock(io_service), _udpClientSock(io_service),_udpServerSock(io_service),
     _t(io_service)
   {
+<<<<<<< HEAD
 	  _audio = new PAudioStream(_bridge);
+=======
+	  // _audio = new PAudioStream();
+>>>>>>> fd099cdd5caffe874e86b1983219c0d32b7956f8
   }
 
   void	connect(const std::string &ip, const std::string &port)
@@ -267,7 +281,7 @@ private:
   boost::asio::deadline_timer		_t;
   boost::thread				_audioThread;
   Bridge				_bridge;
-  IAudioStream			*_audio;
+  // IAudioStream			*_audio;
 };
 
 
@@ -314,38 +328,58 @@ public:
       {
       case '\0':
 	exit(0);
+	break;
       case 'a':
-	send_req(new request::auth::client::NewClient("toto", md5("poil"), false));
+	send_req(new request::auth::client::NewClient("Poil", md5("lol"), false));
 	break;
       case 'b':
-	send_req(new request::auth::client::NewClient("tata", md5("poil"), false));
+	send_req(new request::auth::client::ConnectClient("Poil", md5("lol")));
 	break;
       case 'c':
-	send_req(new request::auth::client::ConnectClient("toto", md5("poil")));
+	send_req(new request::auth::client::ModifyClient("Poil", md5("lol"), md5("loli")));
 	break;
       case 'd':
-	send_req(new request::auth::client::ConnectClient("tata", md5("poil")));
+	send_req(new request::auth::client::DisconnectClient());
 	break;
       case 'e':
-	send_req(new request::call::client::CallClient("toto", "tata", 1, 0x7F000001, g_server_portUDP));
+	send_req(new request::auth::client::ConnectClient("Poil", md5("lol")));
 	break;
       case 'f':
-	send_req(new request::call::client::CallClient("tata", "toto", 1, 0x7F000001, g_server_portUDP));
+	send_req(new request::auth::client::ConnectClient("Poil", md5("loli")));
 	break;
-      case 'g':
-	send_req(new request::call::client::AcceptClient("toto", "tata", 0x7F000001, g_server_portUDP));
-	_client->startAudio();
-	break;
-      case 'h':
-	send_req(new request::call::client::AcceptClient("tata", "toto", 0x7F000001, g_server_portUDP));
-	_client->startAudio();
-	break;
-      case 'i':
-	send_req(new request::call::client::RefuseClient("toto", "tata"));
-	break;
-      case 'j':
-	send_req(new request::call::client::RefuseClient("tata", "toto"));
-	break;
+
+      // case 'a':
+      // 	send_req(new request::auth::client::NewClient("toto", md5("poil"), false));
+      // 	break;
+      // case 'b':
+      // 	send_req(new request::auth::client::NewClient("tata", md5("poil"), false));
+      // 	break;
+      // case 'c':
+      // 	send_req(new request::auth::client::ConnectClient("toto", md5("poil")));
+      // 	break;
+      // case 'd':
+      // 	send_req(new request::auth::client::ConnectClient("tata", md5("poil")));
+      // 	break;
+      // case 'e':
+      // 	send_req(new request::call::client::CallClient("toto", "tata", 1, 0x7F000001, g_server_portUDP));
+      // 	break;
+      // case 'f':
+      // 	send_req(new request::call::client::CallClient("tata", "toto", 1, 0x7F000001, g_server_portUDP));
+      // 	break;
+      // case 'g':
+      // 	send_req(new request::call::client::AcceptClient("toto", "tata", 0x7F000001, g_server_portUDP));
+      // 	_client->startAudio();
+      // 	break;
+      // case 'h':
+      // 	send_req(new request::call::client::AcceptClient("tata", "toto", 0x7F000001, g_server_portUDP));
+      // 	_client->startAudio();
+      // 	break;
+      // case 'i':
+      // 	send_req(new request::call::client::RefuseClient("toto", "tata"));
+      // 	break;
+      // case 'j':
+      // 	send_req(new request::call::client::RefuseClient("tata", "toto"));
+      // 	break;
       default:
 	break;
       }
