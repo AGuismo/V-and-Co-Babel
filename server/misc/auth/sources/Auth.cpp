@@ -105,6 +105,7 @@ void	Auth::connect(const std::list<IClient::Pointer> &clients, IClient::Pointer 
       sender->addRequest(request::friends::client::List());
       sender->Authenticated(true);
       sender->status(request::User::Status::CONNECTED);
+      sender->Username(origin->_name);
       if (_db.listFriend(sender->Username(), friends))
 	sendStatusFriends(sender, friends, clients, request::User::Status::CONNECTED);
     }
