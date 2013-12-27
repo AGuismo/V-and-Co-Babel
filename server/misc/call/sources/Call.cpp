@@ -53,16 +53,12 @@ bool	Call::searchClient(const std::list<IClient::Pointer> &clients, const std::s
 {
   for (Server::client_list::const_iterator it = clients.begin(); it != clients.end(); ++it)
     {
-      std::cout << "Test " << (*it)->Username() << ", " << name << "...";
       if ((*it)->Username() == name)
 	{
-	  std::cout << "Success !" << std::endl;
 	  client = *it;
 	  return (true);
 	}
-      std::cout << "Failed !" << std::endl;
     }
-  std::cout << "searchClient(): " << name << ": No match" << std::endl;
   return (false);
 }
 
