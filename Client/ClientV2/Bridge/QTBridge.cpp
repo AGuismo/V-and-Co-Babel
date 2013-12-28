@@ -13,13 +13,11 @@ Bridge::~Bridge()
 
 void  Bridge::inputReady()
 {
-  qDebug() << __PRETTY_FUNCTION__;
   emit(inputReadReady());
 }
 
 void  Bridge::outputReady()
 {
-  qDebug() << __PRETTY_FUNCTION__;
   emit(outputReadReady());
 }
 

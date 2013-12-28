@@ -15,8 +15,9 @@ public:
   explicit Audio(Bridge &);
   ~Audio();
 
-public:
+public slots:
   void  run();
+  void	stop();
 
 private slots:
   void  routine();

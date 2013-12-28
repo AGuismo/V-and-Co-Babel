@@ -14,15 +14,22 @@ class FakeMenu : public QMainWindow
   Q_OBJECT
   
 public:
-  explicit FakeMenu(Bridge &bridge, const QString &, int, int);
+  explicit FakeMenu(Bridge &bridge);
   ~FakeMenu();
   const Ui::FakeMenu *ui() const {return (_ui);}
+  QString	clientIP() const;
+  quint16	clientPort() const;
 
 private slots:
   void  handleInputRead();
   void  handleOutputWrite(const QByteArray &bytes);
-  void  handleClicked();
   void  readPendingDatagrams();
+  void	clicConnect();
+  void	clicDisconnect();
+
+signals:
+  void	serverStop();
+  void	serverStart();
 
 private:
   Bridge        &_bridge;

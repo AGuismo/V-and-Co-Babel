@@ -1,5 +1,4 @@
 #include "audio.h"
-#include "ui_audio.h"
 #include  <limits>
 #include  <QDebug>
 #include  "PAudioStream.hh"
@@ -28,6 +27,12 @@ void  Audio::routine()
 void  Audio::run()
 {
   _th.start();
+}
+
+void	Audio::stop()
+{
+	_audio->stop();
+	_th.wait();
 }
 
 /*void  Audio::handleInputWrite(const std::string &str)

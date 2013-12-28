@@ -83,6 +83,11 @@ void			PAudioStream::run()
 	*/
 }
 
+void			PAudioStream::stop()
+{
+	Pa_StopStream(_stream);
+}
+
 /*
 void			PAudioStream::play()
 {
