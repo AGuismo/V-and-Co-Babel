@@ -5,7 +5,7 @@
 #include  <QThread>
 #include  "QTBridge.h"
 
-class Worker;
+struct Worker;
 
 class Audio : public QObject
 {

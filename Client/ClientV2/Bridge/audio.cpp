@@ -23,10 +23,6 @@ void  Audio::run()
   _work = new Worker(_bridge);
   _work->moveToThread(_th);
   QObject::connect(_th, SIGNAL(started()), _work, SLOT(routine()));
-  QObject::connect(_work, SIGNAL(workFinished()), _th, SLOT(quit()), Qt::BlockingQueuedConnection);
-  QObject::connect(this, SIGNAL(stopWork()), _work, SLOT(stop()));
-  QObject::connect(_th, SIGNAL(finished()), _work, SLOT(deleteLater()));
-  QObject::connect(_th, SIGNAL(finished()), _th, SLOT(deleteLater()));
   _th->start();
   qDebug() << "Audio::run(): "<< "Thread Started(" << QThread::currentThreadId() << ")" ;
 }
@@ -37,7 +33,11 @@ void	Audio::stop()
     {
       _work->stop();
       qDebug() << "Audio::stop(): " << "Thread Stopped (" << QThread::currentThreadId() << ")";
+	  _th->wait();
+	  delete _th;
+	  delete _work;
       _work = 0;
+	  _th = 0;
     }
 }
 
