@@ -15,11 +15,11 @@ public:
   virtual ~Bridge();
 
 public:
-  void    inputRead(input_buffer &, std::size_t);
+  void    inputRead(input_buffer &, std::size_t, bool blocking = true);
   void    inputWrite(const input_buffer &);
   void    inputReady();
 
-  void    outputRead(output_buffer &, std::size_t size);
+  void    outputRead(output_buffer &, std::size_t size, bool blocking = true);
   void    outputWrite(const output_buffer &);
   void    outputReady();
 

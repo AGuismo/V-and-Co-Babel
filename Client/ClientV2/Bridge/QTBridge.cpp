@@ -21,11 +21,11 @@ void  Bridge::outputReady()
   emit(outputReadReady());
 }
 
-void  Bridge::inputRead(input_buffer &buff, std::size_t size)
+void  Bridge::inputRead(input_buffer &buff, std::size_t size, bool blocking)
 {
   QMutexLocker  lock(&_inputLock);
 
-  if (AudioBridge::inputEmpty())
+  if (blocking && AudioBridge::inputEmpty())
     _inputReady.wait(&_inputLock);
   AudioBridge::inputRead(buff, size);
 }
@@ -39,11 +39,11 @@ void  Bridge::inputWrite(const input_buffer &buff)
     _inputReady.wakeAll();
 }
 
-void  Bridge::outputRead(output_buffer &buff, std::size_t size)
+void  Bridge::outputRead(output_buffer &buff, std::size_t size, bool blocking)
 {
   QMutexLocker  lock(&_outputLock);
 
-  if (AudioBridge::outputEmpty())
+  if (blocking && AudioBridge::outputEmpty())
     _outputReady.wait(&_outputLock);
   AudioBridge::outputRead(buff, size);
 }

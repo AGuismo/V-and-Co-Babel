@@ -58,14 +58,11 @@ void			PAudioStream::run()
   _start = true;
   while (_start && (error = Pa_IsStreamActive(_stream)) == 1)
     {
-      if (!(_bridge.outputEmpty()))
-	{
 	  _bridge.outputRead(buff, 65000);
 	  std::cout << "Received : [";
 	  for (std::size_t it = 0; ((it < buff.size()) && (it < 40)); ++it)
 	    std::cout << buff[it];
 	  std::cout << "]" << std::endl;
-	}
     }
   std::cout << "RECORDING ENDED" << std::endl;
   if (error < 0)

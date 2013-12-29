@@ -18,7 +18,9 @@ FakeMenu::FakeMenu(Bridge &bridge) :
 
 void	FakeMenu::clicConnect()
 {
-  if (!_sock.bind(QHostAddress::Any, _ui->ServerPort->text().toInt()))
+	if (_sock.openMode() == QIODevice::NotOpen)
+		_sock.open(QIODevice::ReadWrite);
+	if (!_sock.bind(QHostAddress::Any, _ui->ServerPort->text().toInt()))
     {
       _ui->Display_2->setPlainText("Unable to create server");
       return ;
@@ -94,7 +96,7 @@ void  FakeMenu::handleInputRead()
   AudioBridge::input_buffer buff;
   QByteArray                bytes;
 
-  _bridge.inputRead(buff, std::numeric_limits<std::size_t>::max());
+  _bridge.inputRead(buff, std::numeric_limits<std::size_t>::max(), false);
   for (AudioBridge::input_buffer::const_iterator it = buff.begin(); it != buff.end(); ++it)
     bytes += *it;
   qDebug() << "Write " << bytes.size() << "octets";
