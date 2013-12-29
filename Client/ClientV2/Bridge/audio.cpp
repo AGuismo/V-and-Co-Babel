@@ -1,59 +1,66 @@
-#include "audio.h"
-#include  <limits>
-#include  <QDebug>
-#include  "PAudioStream.hh"
+#include	<limits>
+#include	<iostream>
+#include	<QDebug>
+#include	"audio.h"
+#include	"PAudioStream.hh"
+#include	"AudioWorker.h"
 
 Audio::Audio(Bridge &bridge) :
-  _bridge(bridge)
+  _bridge(bridge), _th(0), _work(0)
 {
-  _audio = new PAudioStream(bridge);
-  moveToThread(&_th);
-  QObject::connect(&_th, SIGNAL(started()), this, SLOT(routine()));
+  //QObject::connect();
 }
 
 Audio::~Audio()
 {
-  _th.terminate();
-  _th.wait();
-}
-
-void  Audio::routine()
-{
-  if (_audio->init())
-    _audio->run();
-// Call Seb object routine()
+  if (_th != 0 && _th->isRunning())
+    _th->wait();
 }
 
 void  Audio::run()
 {
-  _th.start();
+  _th = new QThread;
+  _work = new Worker(_bridge);
+  _work->moveToThread(_th);
+  QObject::connect(_th, SIGNAL(started()), _work, SLOT(routine()));
+  QObject::connect(_work, SIGNAL(workFinished()), _th, SLOT(quit()), Qt::BlockingQueuedConnection);
+  QObject::connect(this, SIGNAL(stopWork()), _work, SLOT(stop()));
+  QObject::connect(_th, SIGNAL(finished()), _work, SLOT(deleteLater()));
+  QObject::connect(_th, SIGNAL(finished()), _th, SLOT(deleteLater()));
+  _th->start();
+  qDebug() << "Audio::run(): "<< "Thread Started(" << QThread::currentThreadId() << ")" ;
 }
 
 void	Audio::stop()
 {
-	_audio->stop();
-	_th.wait();
+  if (_work != 0)
+    {
+      _work->stop();
+      qDebug() << "Audio::stop(): " << "Thread Stopped (" << QThread::currentThreadId() << ")";
+      _work = 0;
+    }
 }
 
+
 /*void  Audio::handleInputWrite(const std::string &str)
-{
+  {
   AudioBridge::input_buffer buff;
 
   for (std::string::const_iterator it = str.begin(); it != str.end(); ++it)
-    {
-      buff.push_back(*it);
-    }
+  {
+  buff.push_back(*it);
+  }
   _bridge.inputWrite(buff);
-}
+  }
 
-void  Audio::handleOutputRead()
-{
+  void  Audio::handleOutputRead()
+  {
   AudioBridge::input_buffer buff;
   QString               str;
 
   _bridge.outputRead(buff, std::numeric_limits<std::size_t>::max());
   for (AudioBridge::input_buffer::const_iterator it = buff.begin(); it != buff.end(); ++it)
-    str += *it;
-//  handleInputWrite(str.toStdString());
-}
+  str += *it;
+  //  handleInputWrite(str.toStdString());
+  }
 */

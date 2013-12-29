@@ -1,7 +1,8 @@
 #ifndef BRIDGE_HH
 #define BRIDGE_HH
 
-# include <vector>
+# include	<vector>
+# include	<iostream>
 
 template <typename T, typename U>
 class ABridge
@@ -12,7 +13,7 @@ public:
 
 public:
   virtual   ~ABridge() {}
-  
+
 public:
   virtual void    inputRead(input_buffer &, std::size_t);
   virtual void    inputWrite(const input_buffer &);
@@ -42,7 +43,8 @@ template <typename T, typename U>
 void  ABridge<T, U>::inputWrite(const input_buffer &buff)
 {
   _input.insert(_input.end(), buff.begin(), buff.end());
-  inputReady();
+  if (!inputEmpty())
+    inputReady();
 }
 
 template <typename T, typename U>
@@ -64,7 +66,8 @@ template <typename T, typename U>
 void  ABridge<T, U>::outputWrite(const output_buffer &buff)
 {
   _output.insert(_output.end(), buff.begin(), buff.end());
-  outputReady();
+  if (!outputEmpty())
+    outputReady();
 }
 
 template <typename T, typename U>

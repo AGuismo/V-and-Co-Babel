@@ -19,6 +19,7 @@ SOURCES += main.cpp \
     QTBridge.cpp \
     AudioBridge.cpp \
     audio.cpp \
+    AudioWorker.cpp \
     FakeMenu.cpp \
     PAudioStream.cpp \
     PAudioBuffer.cpp \
@@ -30,6 +31,7 @@ HEADERS  += \
     QTBridge.h \
     AudioBridge.hh \
     audio.h \
+    AudioWorker.h \
     FakeMenu.h \
     PAudioStream.hh \
     PAudioBuffer.hh \

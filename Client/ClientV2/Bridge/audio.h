@@ -5,27 +5,27 @@
 #include  <QThread>
 #include  "QTBridge.h"
 
-class IAudioStream;
+class Worker;
 
 class Audio : public QObject
 {
   Q_OBJECT
-  
+
 public:
-  explicit Audio(Bridge &);
-  ~Audio();
+  explicit	Audio(Bridge &);
+  virtual	~Audio();
 
 public slots:
   void  run();
   void	stop();
 
-private slots:
-  void  routine();
+signals:
+  void	stopWork();
 
 private:
-  Bridge        &_bridge;
-  QThread       _th;
-  IAudioStream  *_audio;// Seb Object
+  Bridge	&_bridge;
+  QThread	*_th;
+  Worker	*_work;
 };
 
 #endif // AUDIO_H

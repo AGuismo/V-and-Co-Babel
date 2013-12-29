@@ -13,9 +13,9 @@ public:
   void  run();
 
 private:
-  Bridge    _bridge;
-  Audio     _audioStarter;
-  FakeMenu  _menu;
+  Bridge	_bridge;
+  Audio		_audioStarter;
+  FakeMenu	_menu;
 };
 
 #endif // MYAPPLICATION_HH

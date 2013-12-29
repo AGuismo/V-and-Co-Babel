@@ -15,21 +15,41 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="3">
-     <widget class="QPushButton" name="Connect">
-      <property name="text">
-       <string>Connect</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0" colspan="5">
-     <widget class="QTextBrowser" name="Display"/>
-    </item>
     <item row="1" column="2">
      <widget class="QLineEdit" name="ServerPort"/>
     </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>ServerPort</string>
+      </property>
+      <property name="buddy">
+       <cstring>ServerPort</cstring>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="0">
      <widget class="QLineEdit" name="ClientIP"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>ClientIP</string>
+      </property>
+      <property name="buddy">
+       <cstring>ClientIP</cstring>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>ClientPort</string>
+      </property>
+      <property name="buddy">
+       <cstring>ClientPort</cstring>
+      </property>
+     </widget>
     </item>
     <item row="1" column="4">
      <widget class="QPushButton" name="Disconnect">
@@ -44,24 +64,13 @@
     <item row="1" column="1">
      <widget class="QLineEdit" name="ClientPort"/>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>ClientIP</string>
-      </property>
-     </widget>
+    <item row="2" column="0" colspan="5">
+     <widget class="QTextBrowser" name="Display"/>
     </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="label_2">
+    <item row="1" column="3">
+     <widget class="QPushButton" name="Connect">
       <property name="text">
-       <string>ClientPort</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="2">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>ServerPort</string>
+       <string>Connect</string>
       </property>
      </widget>
     </item>
@@ -85,6 +94,15 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>ClientIP</tabstop>
+  <tabstop>ClientPort</tabstop>
+  <tabstop>ServerPort</tabstop>
+  <tabstop>Connect</tabstop>
+  <tabstop>Disconnect</tabstop>
+  <tabstop>Display</tabstop>
+  <tabstop>Display_2</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

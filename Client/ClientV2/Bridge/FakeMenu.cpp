@@ -7,41 +7,47 @@ FakeMenu::FakeMenu(Bridge &bridge) :
   _ui(new Ui::FakeMenu)
 {
   _ui->setupUi(this);
-//  _sock.bind(QHostAddress::Any, serverPort);
+  //  _sock.bind(QHostAddress::Any, serverPort);
   connect(&_sock, SIGNAL(readyRead()),
-               this, SLOT(readPendingDatagrams()));
+	  this, SLOT(readPendingDatagrams()));
   QObject::connect(&bridge, SIGNAL(inputReadReady()), this, SLOT(handleInputRead()));
-//  QObject::connect(_ui->outputWrite, SIGNAL(clicked()), this, SLOT(handleClicked()));
+  //  QObject::connect(_ui->outputWrite, SIGNAL(clicked()), this, SLOT(handleClicked()));
   connect(_ui->Connect, SIGNAL(clicked()), this, SLOT(clicConnect()));
   connect(_ui->Disconnect, SIGNAL(clicked()), this, SLOT(clicDisconnect()));
 }
 
 void	FakeMenu::clicConnect()
 {
-	if (!_sock.bind(QHostAddress::Any, _ui->ServerPort->text().toInt()))
-	{
-		_ui->Display_2->setPlainText("Unable to create server");
-		return ;
-	}
-	_clientIP = _ui->ClientIP->text();
-	_clientPort = _ui->ClientPort->text().toInt();
-	emit (serverStart());
+  if (!_sock.bind(QHostAddress::Any, _ui->ServerPort->text().toInt()))
+    {
+      _ui->Display_2->setPlainText("Unable to create server");
+      return ;
+    }
+  _clientIP = _ui->ClientIP->text();
+  _clientPort = _ui->ClientPort->text().toInt();
+  _ui->Display_2->setPlainText("Server Started");
+  _ui->Disconnect->setEnabled(true);
+  _ui->Connect->setEnabled(false);
+  emit (serverStart());
 }
 
 QString	FakeMenu::clientIP() const
 {
-	return (_clientIP);
+  return (_clientIP);
 }
 
 quint16	FakeMenu::clientPort() const
 {
-	return (_clientPort);
+  return (_clientPort);
 }
 
 void	FakeMenu::clicDisconnect()
 {
-	_sock.close();
-	emit (serverStop());
+  _sock.close();
+  _ui->Disconnect->setEnabled(false);
+  _ui->Connect->setEnabled(true);
+  _ui->Display_2->setPlainText("Server Stopped");
+  emit (serverStop());
 }
 
 FakeMenu::~FakeMenu()
@@ -51,18 +57,15 @@ FakeMenu::~FakeMenu()
 
 void  FakeMenu::readPendingDatagrams()
 {
-  while (_sock.hasPendingDatagrams())
-    {
-          QByteArray datagram;
-          QHostAddress sender;
-          quint16 senderPort;
+  QByteArray datagram;
+  QHostAddress sender;
+  quint16 senderPort;
 
-          datagram.resize(_sock.pendingDatagramSize());
-          _sock.readDatagram(datagram.data(), datagram.size(),
-                                  &sender, &senderPort);
-          qDebug() << "Read " << datagram.size() << "octets";
-          handleOutputWrite(datagram);
-      }
+  datagram.resize(_sock.pendingDatagramSize());
+  _sock.readDatagram(datagram.data(), datagram.size(),
+		     &sender, &senderPort);
+  qDebug() << "Read " << datagram.size() << "octets";
+  handleOutputWrite(datagram);
 }
 
 void  FakeMenu::handleOutputWrite(const QByteArray &bytes)

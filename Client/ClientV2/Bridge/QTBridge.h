@@ -1,10 +1,11 @@
 #ifndef QTBRIDGE_H
 #define QTBRIDGE_H
 
-# include   <QObject>
-# include   <QThread>
-# include   <QMutex>
-# include  "AudioBridge.hh"
+# include	<QObject>
+# include	<QThread>
+# include	<QMutex>
+# include	<QWaitCondition>
+# include	"AudioBridge.hh"
 
 class Bridge : public QObject, public AudioBridge
 {
@@ -27,8 +28,10 @@ signals:
   void    outputReadReady();
 
 private:
-  QMutex  _inputLock;
-  QMutex  _outputLock;
+  QMutex		_inputLock;
+  QMutex		_outputLock;
+  QWaitCondition	_inputReady;
+  QWaitCondition	_outputReady;
 };
 
 #endif // QTBRIDGE_H
