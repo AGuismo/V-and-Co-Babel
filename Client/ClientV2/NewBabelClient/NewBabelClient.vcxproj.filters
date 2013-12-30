@@ -188,6 +188,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ManageFriendWindow.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="AddFriendWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_AddFriendWindow.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_AddFriendWindow.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Graphic.h">
@@ -244,6 +253,12 @@
     <CustomBuild Include="ManageFriendWindow.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="AddFriendWindow.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="AddFriendWindow.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Function.hpp">
@@ -268,6 +283,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_ManageFriendWindow.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_AddFriendWindow.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

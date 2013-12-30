@@ -39,7 +39,7 @@ public:
     {
         if (ConnectWindow->objectName().isEmpty())
             ConnectWindow->setObjectName(QStringLiteral("ConnectWindow"));
-        ConnectWindow->resize(338, 138);
+        ConnectWindow->resize(338, 118);
         gridLayout = new QGridLayout(ConnectWindow);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -119,10 +119,10 @@ public:
     void retranslateUi(QDialog *ConnectWindow)
     {
         ConnectWindow->setWindowTitle(QApplication::translate("ConnectWindow", "ConnectWindow", 0));
-        portTcpLineEdit->setText(QApplication::translate("ConnectWindow", "40202", 0));
+        portTcpLineEdit->setText(QApplication::translate("ConnectWindow", "40042", 0));
         passwordLabel->setText(QApplication::translate("ConnectWindow", "TCP Port :", 0));
         connectPushButton->setText(QApplication::translate("ConnectWindow", "Connect", 0));
-        ipLineEdit->setText(QApplication::translate("ConnectWindow", "10.16.253.250", 0));
+        ipLineEdit->setText(QApplication::translate("ConnectWindow", "78.230.102.179", 0));
         serverResponseLabel->setText(QApplication::translate("ConnectWindow", "Disconnected", 0));
         closePushButton->setText(QApplication::translate("ConnectWindow", "Close", 0));
         loginLabel->setText(QApplication::translate("ConnectWindow", "Ip Address :", 0));
