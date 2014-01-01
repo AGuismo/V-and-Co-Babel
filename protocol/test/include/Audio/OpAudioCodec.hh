@@ -2,7 +2,11 @@
 # define					 OPUS_AUDIOCODEC_H
 
 # include					"IAudioCodec.hh"
+#if defined(WIN32)
+# include					"opus.h"
+#else
 # include					"opus/opus.h"
+#endif
 
 class						OpAudioCodec : public IAudioCodec
 {
