@@ -12,7 +12,7 @@ namespace Ui {
 class FakeMenu : public QMainWindow
 {
   Q_OBJECT
-  
+
 public:
   explicit FakeMenu(Bridge &bridge);
   ~FakeMenu();
@@ -37,7 +37,8 @@ private:
   quint16       _serverPort;
   QString       _clientIP;
   quint16       _clientPort;
-  QUdpSocket   _sock;
+  QUdpSocket   *_sock;
+  QMutex	_sockLocker;
 };
 
 #endif // FAKEMENU_H

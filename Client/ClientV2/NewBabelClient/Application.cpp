@@ -9,11 +9,16 @@ Application::Application(int ac, char *av[]):
   _ac(ac), _app(_ac, av)
 {
   _requestActions[request::server::perso::PING] = callback_handler(&Application::ping_handler, this);
+  _requestActions[request::server::friends::UPDATE] = callback_handler(&Application::update_friend_handler, this);
+}
+
+void		Application::update_friend_handler(const ARequest &)
+{
+	qDebug() << "update friend received";
 }
 
 Application::~Application()
 {
-
 }
 
 void  Application::init()

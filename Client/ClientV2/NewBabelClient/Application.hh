@@ -49,6 +49,7 @@ private:
 
 private:
   void	ping_handler(const ARequest &);
+  void	update_friend_handler(const ARequest &);
 
 public:
   void  init();

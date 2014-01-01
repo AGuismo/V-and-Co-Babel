@@ -1,79 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ConnectWindow</class>
- <widget class="QDialog" name="ConnectWindow">
+ <class>AddFriendWindow</class>
+ <widget class="QDialog" name="AddFriendWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>338</width>
-    <height>118</height>
+    <width>270</width>
+    <height>92</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ConnectWindow</string>
+   <string>LoginWindow</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="1" colspan="2">
-    <widget class="QLineEdit" name="portTcpLineEdit">
-     <property name="text">
-      <string>40042</string>
-     </property>
-     <property name="maxLength">
-      <number>5</number>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="passwordLabel">
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>TCP Port :</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QPushButton" name="connectPushButton">
-     <property name="text">
-      <string>Connect</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1" colspan="2">
-    <widget class="QLineEdit" name="ipLineEdit">
-     <property name="text">
-      <string>78.230.102.179</string>
-     </property>
-     <property name="maxLength">
-      <number>15</number>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="serverResponseLabel">
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Disconnected</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QPushButton" name="closePushButton">
-     <property name="text">
-      <string>Close</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
     <widget class="QLabel" name="loginLabel">
      <property name="font">
@@ -82,18 +22,51 @@
       </font>
      </property>
      <property name="text">
-      <string>Ip Address :</string>
+      <string>Friend pseudo :</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="2">
+    <widget class="QLineEdit" name="loginLineEdit">
+     <property name="text">
+      <string>tata</string>
+     </property>
+     <property name="maxLength">
+      <number>256</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="serverResponseLabel">
+     <property name="font">
+      <font>
+       <family>MS UI Gothic</family>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="closePushButton">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="addPushButton">
+     <property name="text">
+      <string>Add</string>
      </property>
     </widget>
    </item>
    <item row="0" column="0" colspan="3">
-    <widget class="QLabel" name="label">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+    <widget class="QLabel" name="loginTitleLabel">
      <property name="font">
       <font>
        <family>MS UI Gothic</family>
@@ -103,7 +76,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Connect</string>
+      <string>Add friend</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -114,9 +87,8 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>ipLineEdit</tabstop>
-  <tabstop>portTcpLineEdit</tabstop>
-  <tabstop>connectPushButton</tabstop>
+  <tabstop>loginLineEdit</tabstop>
+  <tabstop>addPushButton</tabstop>
   <tabstop>closePushButton</tabstop>
  </tabstops>
  <resources/>

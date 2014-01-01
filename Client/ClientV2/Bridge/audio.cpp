@@ -33,11 +33,11 @@ void	Audio::stop()
     {
       _work->stop();
       qDebug() << "Audio::stop(): " << "Thread Stopped (" << QThread::currentThreadId() << ")";
-	  _th->wait();
-	  delete _th;
-	  delete _work;
+      _th->wait();
+      delete _th;
+      delete _work;
       _work = 0;
-	  _th = 0;
+      _th = 0;
     }
 }
 

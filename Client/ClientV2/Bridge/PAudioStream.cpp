@@ -1,4 +1,5 @@
 #include		<stdint.h>
+#include		<iomanip> // Debug purpose
 #include		<iostream>
 #include		"PAudioStream.hh"
 
@@ -7,8 +8,6 @@
 bool			PAudioStream::initInput()
 {
   if (_input->content == NULL)
-    return (false);
-  if (Pa_Initialize() != paNoError)
     return (false);
   if ((_inputParam.device = Pa_GetDefaultInputDevice()) == paNoDevice)
     {
@@ -40,6 +39,8 @@ bool			PAudioStream::initOutput()
 
 bool			PAudioStream::init()
 {
+  if (Pa_Initialize() != paNoError)
+    return (false);
   return (_codec.init() && initInput() && initOutput());
 }
 
@@ -58,17 +59,32 @@ void			PAudioStream::run()
   _start = true;
   while (_start && (error = Pa_IsStreamActive(_stream)) == 1)
     {
-	  _bridge.outputRead(buff, 65000);
-	  std::cout << "Received : [";
-	  for (std::size_t it = 0; ((it < buff.size()) && (it < 40)); ++it)
-	    std::cout << buff[it];
-	  std::cout << "]" << std::endl;
+      _bridge.outputRead(buff, 65000);
+      std::cout << "Received : [";
+      for (std::size_t it = 0; ((it < buff.size()) && (it < 40)); ++it)
+	{
+	  if (it != 0 && it % 4 == 0)
+	    std::cout << " ";
+	  std::cout << std::hex << std::setprecision(2) << std::fixed
+		    << (unsigned int)buff[it] << std::dec;
+	}
+      std::cout << "]" << std::endl;
     }
+  if (Pa_IsStreamActive(_stream) == 1)
+    Pa_StopStream(_stream);
   std::cout << "RECORDING ENDED" << std::endl;
   if (error < 0)
     return;
-  if (Pa_CloseStream(_stream) != paNoError)
-    return;
+  if ((error = Pa_CloseStream(_stream)) != paNoError)
+    {
+      std::cout << "PAudioStream::run(): " << Pa_GetErrorText(error) << std::endl;
+      return;
+    }
+  if ((error = Pa_Terminate()) != paNoError)
+    {
+      std::cout << "PAudioStream::run(): " << Pa_GetErrorText(error) << std::endl;
+      return;
+    }
   /*
     while ((error = Pa_IsStreamActive(_stream)) == 1)
     {
