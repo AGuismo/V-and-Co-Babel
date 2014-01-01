@@ -18,14 +18,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -40,13 +40,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
+    <IncludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
     <TargetExt>.dll</TargetExt>
     <LinkIncremental>false</LinkIncremental>
     <TargetName>auth</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
+    <IncludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);$(ProjectDir)\..\include;$(ProjectDir)\..\..\..\include;$(ProjectDir)\..\..\..\database\include;$(ProjectDir)\..\..\..\..\protocol\API;$(ProjectDir)\..\..\..\..\protocol\include;$(ProjectDir)\..\..\..\..\serializer\include;C:\Program Files\Boost\boost_1_55_0\</IncludePath>
     <TargetExt>.dll</TargetExt>
     <TargetName>auth</TargetName>
   </PropertyGroup>
@@ -59,8 +59,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-gd-1_55.lib;libboost_filesystem-vc120-mt-gd-1_55.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc110-mt-gd-1_55.lib;libboost_filesystem-vc110-mt-gd-1_55.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-11.0</AdditionalLibraryDirectories>
       <ForceFileOutput>
       </ForceFileOutput>
       <OptimizeReferences>true</OptimizeReferences>
@@ -87,8 +87,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-1_55.lib;libboost_filesystem-vc120-mt-1_55.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc110-mt-1_55.lib;libboost_filesystem-vc110-mt-1_55.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-11.0</AdditionalLibraryDirectories>
       <ForceFileOutput>
       </ForceFileOutput>
     </Link>
@@ -103,17 +103,17 @@
     <ClCompile Include="..\sources\Auth.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\protocol\Protocol\Protocol.vcxproj">
-      <Project>{d69a5c00-cd7c-4ba7-a23e-4d2bb1d8b76c}</Project>
+    <ProjectReference Include="..\..\..\..\protocol\Protocol\protocol.vcxproj">
+      <Project>{526b2a25-7a1e-4da4-af53-75ef2dfa48c8}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\serializer\serializer\serializer.vcxproj">
-      <Project>{75219cf9-86e6-419b-b2e7-31eeb47ac113}</Project>
+      <Project>{1ccd039d-d05c-48c7-ad60-5a22c5314646}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Core\Core.vcxproj">
-      <Project>{add81711-b5f3-429f-acd6-0a1968464c3d}</Project>
+      <Project>{53e3a3f3-c0aa-42cb-bef0-970fb89093a3}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\database\Database\Database.vcxproj">
-      <Project>{d08b4714-51f4-457c-9e5d-36c528f9f78b}</Project>
+      <Project>{8a50ecaa-cb51-4715-bf7c-5e4d2bfef120}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

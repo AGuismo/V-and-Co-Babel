@@ -148,7 +148,7 @@ bool	Perso::createAnswerFile(IClient::Pointer sender)
 
   sender->serializeAnswer() << (request::StreamLen)sender->AutoAnswer().size();
   sender->serializeAnswer().push(sender->AutoAnswer(), sender->AutoAnswer().size());
-  file << sender->serializeAnswer().data();
+  //file << sender->serializeAnswer().data();
   file.close();
   return true;
 }
@@ -169,10 +169,10 @@ bool	Perso::createVoiceMessageFile(IClient::Pointer sender, IClient::Pointer rec
   sender->serializeAnswer() << (request::UsernameLen)receiver->Username().size();
   sender->serializeAnswer().push(receiver->Username(), receiver->Username().size());
 
-  sender->serializeAnswer() << date;
+  sender->serializeAnswer().push(date, date.size());
   sender->serializeAnswer() << (request::StreamLen)sender->AutoAnswer().size();
   sender->serializeAnswer().push(sender->AutoAnswer(), sender->AutoAnswer().size());
-  file << sender->serializeAnswer().data();
+  //file << sender->serializeAnswer().data();
   file.close();
   return true;
 }
