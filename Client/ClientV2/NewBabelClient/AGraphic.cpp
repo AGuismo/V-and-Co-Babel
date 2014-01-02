@@ -68,7 +68,17 @@ void		AGraphic::setStatusHandler(Function<void (const request::Status &)> handle
 	_statusHandler = handle;
 }
 
- void		AGraphic::setStatusTxtHandler(Function<void (const request::Message &)> handle)
- {
+void		AGraphic::setStatusTxtHandler(Function<void (const request::Message &)> handle)
+{
  	_statusTxtHandler = handle;
- }
+}
+
+void		AGraphic::setSetAnswerHandler(Function<void ()> handle)
+{
+	_setAnswerHandler = handle;
+}
+
+void		AGraphic::setUnSetAnswerHandler(Function<void ()> handle)
+{
+	_unSetAnswerHandler = handle;
+}

@@ -369,8 +369,8 @@
     <property name="title">
      <string>Voicemail</string>
     </property>
-    <addaction name="actionSet_voicemail"/>
-    <addaction name="actionUnset_voicemail"/>
+    <addaction name="actionSetAnswer"/>
+    <addaction name="actionUnSetAnswer"/>
    </widget>
    <widget class="QMenu" name="menuFriends_list">
     <property name="enabled">
@@ -414,17 +414,17 @@
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionSet_voicemail">
+  <action name="actionSetAnswer">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Set voicemail</string>
    </property>
   </action>
-  <action name="actionUnset_voicemail">
+  <action name="actionUnSetAnswer">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Unset voicemail</string>

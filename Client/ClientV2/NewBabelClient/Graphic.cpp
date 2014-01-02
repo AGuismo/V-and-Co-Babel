@@ -34,7 +34,10 @@ void					Graphic::init()
 	connect(ui.statusLineEdit, SIGNAL(returnPressed()), this, SLOT(on_change_status_txt_triggered()));
 	// Status change comboBox
 	connect(ui.statusComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(on_change_status_triggered(int)));
-
+	// Set answer Triggered
+	connect(ui.actionSetAnswer, SIGNAL(triggered()), this, SLOT(on_set_auto_answer_triggered()));
+	// Unset answer Triggered
+	connect(ui.actionUnSetAnswer, SIGNAL(triggered()), this, SLOT(on_unset_auto_answer_triggered()));	
 
 
 	// Create Account Window Triggered
@@ -216,6 +219,8 @@ void					Graphic::on_add_friend_window_triggered()
 
 
 
+
+
 void					Graphic::on_try_add_friend(const std::string &friendName)
 {
 	qDebug() << "adding friend here mtfk";
@@ -268,7 +273,15 @@ void					Graphic::on_change_status_txt_triggered()
 	qDebug() << "changing status txt here mtfk !";
 }
 
+void					Graphic::on_set_auto_answer_triggered()
+{
+	qDebug() << "setting auto answer here mtfk !";
+}
 
+void					Graphic::on_unset_auto_answer_triggered()
+{
+	qDebug() << "unsetting auto answer here mtfk !";
+}
 
 
 

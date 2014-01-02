@@ -45,6 +45,10 @@ protected:
   // Chat
   Function<void (const request::Username &, const std::string &)> _chatHandler;
   
+  // Answering machine
+  Function<void ()>												_setAnswerHandler;
+  Function<void ()>												_unSetAnswerHandler;
+
 public:
   // Connection
   virtual void		setTryConnectHandler(Function<void (unsigned short, const std::string &)>);
@@ -81,6 +85,10 @@ public:
 
   // Chat
   virtual void		setChatHandler(Function<void (const request::Username &, const request::Message &)>);
+
+  // Answering machine
+  virtual void		setSetAnswerHandler(Function<void ()>);
+  virtual void		setUnSetAnswerHandler(Function<void ()>);
 
 public:
   virtual void		init() = 0;

@@ -42,8 +42,8 @@ public:
     QAction *actionCreateAccount;
     QAction *actionLogin;
     QAction *actionExit;
-    QAction *actionSet_voicemail;
-    QAction *actionUnset_voicemail;
+    QAction *actionSetAnswer;
+    QAction *actionUnSetAnswer;
     QAction *actionCall;
     QAction *actionDeleteAccount;
     QAction *actionAddFriend;
@@ -116,12 +116,12 @@ public:
         actionLogin->setEnabled(false);
         actionExit = new QAction(GraphicClass);
         actionExit->setObjectName(QStringLiteral("actionExit"));
-        actionSet_voicemail = new QAction(GraphicClass);
-        actionSet_voicemail->setObjectName(QStringLiteral("actionSet_voicemail"));
-        actionSet_voicemail->setEnabled(false);
-        actionUnset_voicemail = new QAction(GraphicClass);
-        actionUnset_voicemail->setObjectName(QStringLiteral("actionUnset_voicemail"));
-        actionUnset_voicemail->setEnabled(false);
+        actionSetAnswer = new QAction(GraphicClass);
+        actionSetAnswer->setObjectName(QStringLiteral("actionSetAnswer"));
+        actionSetAnswer->setEnabled(true);
+        actionUnSetAnswer = new QAction(GraphicClass);
+        actionUnSetAnswer->setObjectName(QStringLiteral("actionUnSetAnswer"));
+        actionUnSetAnswer->setEnabled(true);
         actionCall = new QAction(GraphicClass);
         actionCall->setObjectName(QStringLiteral("actionCall"));
         actionCall->setEnabled(false);
@@ -419,8 +419,8 @@ public:
         menuManage_account->addAction(actionCreateAccount);
         menuManage_account->addAction(actionDeleteAccount);
         menuManage_account->addAction(actionAccountOptions);
-        menuVoicemail->addAction(actionSet_voicemail);
-        menuVoicemail->addAction(actionUnset_voicemail);
+        menuVoicemail->addAction(actionSetAnswer);
+        menuVoicemail->addAction(actionUnSetAnswer);
         menuFriends_list->addAction(actionAddFriend);
 
         retranslateUi(GraphicClass);
@@ -438,8 +438,8 @@ public:
         actionCreateAccount->setText(QApplication::translate("GraphicClass", "Create account", 0));
         actionLogin->setText(QApplication::translate("GraphicClass", "Log in", 0));
         actionExit->setText(QApplication::translate("GraphicClass", "Exit", 0));
-        actionSet_voicemail->setText(QApplication::translate("GraphicClass", "Set voicemail", 0));
-        actionUnset_voicemail->setText(QApplication::translate("GraphicClass", "Unset voicemail", 0));
+        actionSetAnswer->setText(QApplication::translate("GraphicClass", "Set voicemail", 0));
+        actionUnSetAnswer->setText(QApplication::translate("GraphicClass", "Unset voicemail", 0));
         actionCall->setText(QApplication::translate("GraphicClass", "Call", 0));
         actionDeleteAccount->setText(QApplication::translate("GraphicClass", "Delete account", 0));
         actionAddFriend->setText(QApplication::translate("GraphicClass", "Add friend", 0));
