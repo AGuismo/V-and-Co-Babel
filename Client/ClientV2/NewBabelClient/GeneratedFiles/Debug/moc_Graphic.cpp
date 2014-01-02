@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Graphic_t {
-    QByteArrayData data[33];
-    char stringdata[696];
+    QByteArrayData data[34];
+    char stringdata[721];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -61,7 +61,8 @@ QT_MOC_LITERAL(28, 616, 15),
 QT_MOC_LITERAL(29, 632, 11),
 QT_MOC_LITERAL(30, 644, 21),
 QT_MOC_LITERAL(31, 666, 10),
-QT_MOC_LITERAL(32, 677, 17)
+QT_MOC_LITERAL(32, 677, 24),
+QT_MOC_LITERAL(33, 702, 17)
     },
     "Graphic\0on_connect_window_triggered\0"
     "\0on_login_window_triggered\0"
@@ -83,7 +84,8 @@ QT_MOC_LITERAL(32, 677, 17)
     "login\0password\0on_try_create\0on_try_delete\0"
     "on_try_change_password\0currentPassword\0"
     "newPassword\0on_try_change_privacy\0"
-    "newPrivacy\0on_try_add_friend\0"
+    "newPrivacy\0enable_status_txt_change\0"
+    "on_try_add_friend\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -93,7 +95,7 @@ static const uint qt_meta_data_Graphic[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      22,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -101,28 +103,29 @@ static const uint qt_meta_data_Graphic[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  124,    2, 0x0a,
-       3,    0,  125,    2, 0x0a,
-       4,    0,  126,    2, 0x0a,
-       5,    0,  127,    2, 0x0a,
-       6,    0,  128,    2, 0x0a,
-       7,    0,  129,    2, 0x0a,
-       8,    0,  130,    2, 0x0a,
-       9,    0,  131,    2, 0x0a,
-      10,    0,  132,    2, 0x0a,
-      11,    0,  133,    2, 0x0a,
-      12,    0,  134,    2, 0x0a,
-      13,    1,  135,    2, 0x0a,
-      14,    0,  138,    2, 0x0a,
-      15,    0,  139,    2, 0x0a,
-      16,    0,  140,    2, 0x0a,
-      17,    2,  141,    2, 0x0a,
-      22,    2,  146,    2, 0x0a,
-      25,    2,  151,    2, 0x0a,
-      26,    2,  156,    2, 0x0a,
-      27,    2,  161,    2, 0x0a,
-      30,    1,  166,    2, 0x0a,
-      32,    1,  169,    2, 0x0a,
+       1,    0,  129,    2, 0x0a,
+       3,    0,  130,    2, 0x0a,
+       4,    0,  131,    2, 0x0a,
+       5,    0,  132,    2, 0x0a,
+       6,    0,  133,    2, 0x0a,
+       7,    0,  134,    2, 0x0a,
+       8,    0,  135,    2, 0x0a,
+       9,    0,  136,    2, 0x0a,
+      10,    0,  137,    2, 0x0a,
+      11,    0,  138,    2, 0x0a,
+      12,    0,  139,    2, 0x0a,
+      13,    1,  140,    2, 0x0a,
+      14,    0,  143,    2, 0x0a,
+      15,    0,  144,    2, 0x0a,
+      16,    0,  145,    2, 0x0a,
+      17,    2,  146,    2, 0x0a,
+      22,    2,  151,    2, 0x0a,
+      25,    2,  156,    2, 0x0a,
+      26,    2,  161,    2, 0x0a,
+      27,    2,  166,    2, 0x0a,
+      30,    1,  171,    2, 0x0a,
+      32,    0,  174,    2, 0x0a,
+      33,    1,  175,    2, 0x0a,
 
  // slots: parameters
     QMetaType::Void,
@@ -146,6 +149,7 @@ static const uint qt_meta_data_Graphic[] = {
     QMetaType::Void, 0x80000000 | 18, 0x80000000 | 18,   23,   24,
     QMetaType::Void, 0x80000000 | 18, 0x80000000 | 18,   28,   29,
     QMetaType::Void, QMetaType::Bool,   31,
+    QMetaType::Void,
     QMetaType::Void, 0x80000000 | 18,    2,
 
        0        // eod
@@ -177,7 +181,8 @@ void Graphic::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 18: _t->on_try_delete((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
         case 19: _t->on_try_change_password((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
         case 20: _t->on_try_change_privacy((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 21: _t->on_try_add_friend((*reinterpret_cast< const std::string(*)>(_a[1]))); break;
+        case 21: _t->enable_status_txt_change(); break;
+        case 22: _t->on_try_add_friend((*reinterpret_cast< const std::string(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -210,13 +215,13 @@ int Graphic::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 22)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 22;
+        _id -= 23;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 22)
+        if (_id < 23)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 22;
+        _id -= 23;
     }
     return _id;
 }

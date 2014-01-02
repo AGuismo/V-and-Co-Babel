@@ -31,29 +31,86 @@ void  Application::init()
   _udpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Application::triggerUdpError, this));
   _graphic.setTryConnectHandler(Function<void (unsigned short, const std::string &)>(&TCPNetwork::tryConnect, &_tcpNetwork));
   _graphic.setTryAuthentificationHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryLogin, this));
-
   _graphic.setTryCreateAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryCreateAccount, this));
-
-   _graphic.setTryChangeAccountPasswordHandler(Function<void (const request::PasswordType &, const request::PasswordType &)>(&Application::triggerTryChangeAccountPassword, this));
-
-	_graphic.setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)>(&Application::triggerTryChangeAccountPrivacy, this));
-
+  _graphic.setTryChangeAccountPasswordHandler(Function<void (const request::PasswordType &, const request::PasswordType &)>(&Application::triggerTryChangeAccountPassword, this));
+  _graphic.setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)>(&Application::triggerTryChangeAccountPrivacy, this));
   _graphic.setTryDeleteAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryDeleteAccount, this));
-
   _graphic.setDesAuthentificationHandler(Function<void ()>(&Application::triggerDesAuthentification, this));
+
+  // Here we go !
+  _graphic.setStatusHandler(Function<void (const request::Status &)>(&Application::triggerStatusHandler, this));	
+  _graphic.setStatusTxtHandler(Function<void (const request::Message &)>(&Application::triggerStatusTxtHandler, this));
+  _graphic.setAddFriendHandler(Function<void (const request::Username &)>(&Application::triggerAddFriendHandler, this));
+  _graphic.setDelFriendHandler(Function<void (const request::Username &)>(&Application::triggerDelFriendHandler, this));
 }
 
-void  Application::run()
+
+void	Application::triggerStatusHandler(const request::Status &newStatus)
 {
-  _tcpNetwork.run();
-  _graphic.run();
-  _app.exec();
+//	send_request(request::perso::client::StatusClient(newStatus));
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
 
-void  Application::stop()
+void	Application::triggerStatusTxtHandler(const request::Message &newStatusTxt)
 {
-
+//	send_request(request::perso::client::StatusClient(newStatusTxt));
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
+
+void	Application::triggerAddFriendHandler(const request::Username &newFriend)
+{
+//	send_request(request::);
+	_waitedResponses.push(response_handler(&Application::add_friend_response, this));
+}
+
+void  Application::add_friend_response(const ARequest &req)
+{
+  if (req.code() == request::server::OK)
+    {
+      _graphic.on_add_friend_success();
+      return ;
+    }
+	_graphic.on_add_friend_error("User do not exist");
+}
+
+void	Application::triggerDelFriendHandler(const request::Username &)
+{
+//	send_request(request:);
+	_waitedResponses.push(response_handler(&Application::del_friend_response, this));
+}
+
+void  Application::del_friend_response(const ARequest &req)
+{
+	(void)req;
+}
+
+
+
+
+/*void	Application::triggerHandler(const request: &)
+{
+	send_request(request:);
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+}
+
+void  Application::_response(const ARequest &req)
+{
+  if (req.code() == request::server::OK)
+    {
+//      _graphic
+      return ;
+    }
+//  _graphic
+}*/
+
+
+
+
+
+
+
+
+
 
 void  Application::triggerUdpError(ANetwork::SocketState st)
 {
@@ -73,7 +130,7 @@ void	Application::triggerTryChangeAccountPassword(const request::PasswordType &c
 	_waitedResponses.push(response_handler(&Application::change_account_password_response, this));
 }
 
- void	Application::triggerTryChangeAccountPrivacy(const request::Privacy &newPrivacy)
+void	Application::triggerTryChangeAccountPrivacy(const request::Privacy &newPrivacy)
 {
 	send_request(request::perso::client::ModifyPrivacy(newPrivacy));
 	_waitedResponses.push(response_handler(&Application::change_account_privacy_response, this));
@@ -157,11 +214,16 @@ void  Application::desauthentification_response(const ARequest &req)
   if (req.code() == request::server::OK)
     {
       _graphic.on_desauthentification_success();
-      qDebug() << "oh mon keke il a deco, le batard ! (des-response ok)";
+      qDebug() << "(des-response ok)";
       return ;
     }
   _graphic.on_desauthentification_error();
-  qDebug() << "oh mon keke il a deco, le batard ! (des-response not ok)";
+  qDebug() << "(des-response not ok)";
+}
+
+void  Application::ignore_response(const ARequest & req)
+{
+	(void)req;
 }
 
 void  Application::triggerTryLogin(const request::Username &login, const request::PasswordType &password)
@@ -237,4 +299,15 @@ void  Application::triggerAvailableData(const ANetwork::ByteArray data)
 void	Application::ping_handler(const ARequest &req)
 {
   send_request(request::perso::client::Pong(dynamic_cast<const request::perso::server::Ping &>(req)._id));
+}
+
+void  Application::run()
+{
+  _tcpNetwork.run();
+  _graphic.run();
+  _app.exec();
+}
+
+void  Application::stop()
+{
 }

@@ -51,6 +51,7 @@ public slots:
 	void			on_try_delete(const std::string &login, const std::string &password);
 	void			on_try_change_password(const std::string &currentPassword, const std::string &newPassword);
 	void			on_try_change_privacy(bool newPrivacy);
+	void			enable_status_txt_change();
 
 	void			on_try_add_friend(const std::string &);
 

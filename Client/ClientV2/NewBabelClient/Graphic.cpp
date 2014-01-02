@@ -221,9 +221,12 @@ void					Graphic::on_add_friend_window_triggered()
 
 
 
+
+
 void					Graphic::on_try_add_friend(const std::string &friendName)
 {
 	qDebug() << "adding friend here mtfk";
+	_addFriendHandler(friendName);
 }
 
 void					Graphic::on_add_friend_success()
@@ -240,6 +243,7 @@ void					Graphic::on_add_friend_error(const std::string &error)
 
 void					Graphic::on_delete_friend_triggered()
 {
+	// DONT FORGET HERE MTFK env and everything
 	if (QMessageBox::Yes == QMessageBox(QMessageBox::Information, "Delete selected contact", "Are you sure to delete this contact ?", QMessageBox::Yes|QMessageBox::No).exec()) 
 	{
 		qDebug() << "deleting friend here mtfk !";
@@ -266,11 +270,15 @@ void					Graphic::on_hang_up_push_button_released()
 void					Graphic::on_change_status_triggered(int newStatus)
 {
 	qDebug() << "changing status here mtfk !";
+	_statusHandler(newStatus);
 }
 
 void					Graphic::on_change_status_txt_triggered()
 {
 	qDebug() << "changing status txt here mtfk !";
+	_statusTxtHandler(ui.statusLineEdit->text().toStdString());
+	ui.statusLineEdit->setEnabled(false);
+	QTimer::singleShot(800, this, SLOT(enable_status_txt_change()));
 }
 
 void					Graphic::on_set_auto_answer_triggered()
@@ -282,6 +290,12 @@ void					Graphic::on_unset_auto_answer_triggered()
 {
 	qDebug() << "unsetting auto answer here mtfk !";
 }
+
+
+
+
+
+
 
 
 
@@ -317,6 +331,10 @@ void					Graphic::on_try_change_privacy(bool newPrivacy)
 	_tryChangePrivacyHandler(newPrivacy);
 }
 
+void					Graphic::enable_status_txt_change()
+{
+	ui.statusLineEdit->setEnabled(true);
+}
 
 void					Graphic::disconnected()
 {
