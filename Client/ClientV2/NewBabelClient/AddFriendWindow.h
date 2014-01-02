@@ -26,7 +26,6 @@ public slots:
 signals:
     void						add_try(const std::string &friendLogin);
 
-
 };
 
 #endif // ADDFRIENDWINDOW_H

@@ -1,7 +1,8 @@
 #include				"Graphic.h"
 #include				"Env.hh"
 #include				<QTimer>
-#include				<QDebug>
+#include				<QMessageBox>
+#include				<QDebug> // à virer
 
 
 void					Graphic::init()
@@ -12,6 +13,24 @@ void					Graphic::init()
 	connect(ui.actionLogin, SIGNAL(triggered()), this, SLOT(on_login_window_triggered()));
 	// Logout Window Triggered
 	connect(ui.actionLogout, SIGNAL(triggered()), this, SLOT(on_logout_window_triggered()));
+
+	// Add Friend Window Triggered
+	connect(ui.actionAddFriend, SIGNAL(triggered()), this, SLOT(on_add_friend_window_triggered()));
+	// Add Friend Window Push Button Released
+	connect(ui.addFriendPushButton, SIGNAL(released()), this, SLOT(on_add_friend_window_triggered()));
+	// Delete Friend Triggered
+	connect(ui.deleteFriendPushButton, SIGNAL(released()), this, SLOT(on_delete_friend_triggered()));
+	// Send message pushbutton released
+	connect(ui.sendBoxPushButton, SIGNAL(released()), this, SLOT(on_send_box_push_button_released()));
+	// Send message box return released
+	connect(ui.sendBoxTextEdit, SIGNAL(returnPressed()), this, SLOT(on_send_box_push_button_released()));
+	// Call friend push button left released
+	connect(ui.callFriendLeftPushButton, SIGNAL(released()), this, SLOT(on_call_friend_push_button_released()));
+	// Call friend push button right released
+	connect(ui.callFriendRightPushButton, SIGNAL(released()), this, SLOT(on_call_friend_push_button_released()));
+	// Hang up push button  released
+	connect(ui.hangUpPushButton, SIGNAL(released()), this, SLOT(on_hang_up_push_button_released()));
+
 	// Create Account Window Triggered
 	connect(ui.actionCreateAccount, SIGNAL(triggered()), this, SLOT(on_create_account_window_triggered()));
 	// Delete Account Window Triggered
@@ -30,6 +49,9 @@ void					Graphic::init()
 	connect(&_createAccountWindow, SIGNAL(create_account_try(const std::string &, const std::string &)), this, SLOT(on_try_create(const std::string &, const std::string &)));
 	// Delete account try triggered
 	connect(&_deleteAccountWindow, SIGNAL(delete_account_try(const std::string &, const std::string &)), this, SLOT(on_try_delete(const std::string &, const std::string &)));
+
+	// Add friend try triggered
+	connect(&_addFriendWindow, SIGNAL(add_try(const std::string &)), this, SLOT(on_try_add_friend(const std::string &)));
 }
 
 void					Graphic::on_connection_error(enum ANetwork::SocketState state)
@@ -175,6 +197,69 @@ void					Graphic::on_account_management_window_triggered()
 	_accountManagementWindow.clearServerResponse();
 }
 
+void					Graphic::on_add_friend_window_triggered()
+{
+	_addFriendWindow.show();
+	_addFriendWindow.setEnabled(true);
+	_addFriendWindow.clearServerResponse();
+
+}
+
+
+
+
+
+
+void					Graphic::on_try_add_friend(const std::string &friendName)
+{
+	qDebug() << "adding friend here mtfk";
+}
+
+void					Graphic::on_add_friend_success()
+{
+  _addFriendWindow.displayAddResponse(QString("Request sended"));
+  _addFriendWindow.setEnabled(false);
+  QTimer::singleShot(800, &_addFriendWindow, SLOT(on_close_button_clicked()));
+}
+
+void					Graphic::on_add_friend_error(const std::string &error)
+{
+  _addFriendWindow.displayAddResponse(QString(error.c_str()));
+}
+
+void					Graphic::on_delete_friend_triggered()
+{
+	if (QMessageBox::Yes == QMessageBox(QMessageBox::Information, "Delete selected contact", "Are you sure to delete this contact ?", QMessageBox::Yes|QMessageBox::No).exec()) 
+	{
+		qDebug() << "deleting friend here mtfk !";
+	}
+}
+
+void					Graphic::on_send_box_push_button_released()
+{
+	qDebug() << "sending here mtfk !"; // warning pseufo
+	ui.sendBoxTextEdit->clear();
+}
+
+
+void					Graphic::on_call_friend_push_button_released()
+{
+	qDebug() << "calling here mtfck !";
+}
+
+void					Graphic::on_hang_up_push_button_released()
+{
+	qDebug() << "hanging up here mtfck !";
+}
+
+
+
+
+
+
+
+
+
 void					Graphic::on_try_connect(const std::string &ipAddress, unsigned short int port)
 {
 	_tryConnectHandler(port, ipAddress);
@@ -241,7 +326,7 @@ void					Graphic::loggedOut()
 	ui.actionLogout->setEnabled(false);
 }
 
-Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this), _deleteAccountWindow(this), _accountManagementWindow(this)
+Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this), _deleteAccountWindow(this), _accountManagementWindow(this), _addFriendWindow(this)
 {
 	ui.setupUi(this);
 }

@@ -57,14 +57,14 @@ public:
   void  stop();
 
 private:
-  int				_ac;
-  QApplication			_app;
-  Graphic			_graphic;
-  TCPNetwork			_tcpNetwork;
-  UDPNetwork			_udpNetwork;
+  int						_ac;
+  QApplication				_app;
+  Graphic					_graphic;
+  TCPNetwork				_tcpNetwork;
+  UDPNetwork				_udpNetwork;
   Protocol::serialized_data	_buffer;
   stack_response_handler	_waitedResponses;
-  request_callback		_requestActions;
+  request_callback			_requestActions;
 };
 
 #endif // APPLICATION_HH

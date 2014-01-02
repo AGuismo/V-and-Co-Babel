@@ -9,6 +9,7 @@
 #include		"LoginWindow.h"
 #include		"DeleteAccountWindow.h"
 #include		"AccountManagementWindow.h"
+#include		"AddFriendWindow.h"
 
 class Graphic : public QMainWindow, public AGraphic
 {
@@ -23,6 +24,7 @@ private:
 	CreateAccountWindow		_createAccountWindow;
 	DeleteAccountWindow		_deleteAccountWindow;
 	AccountManagementWindow	_accountManagementWindow;
+	AddFriendWindow			_addFriendWindow;
 
 public slots:
 	void			on_connect_window_triggered();
@@ -32,6 +34,12 @@ public slots:
 	void			on_delete_account_window_triggered();
 	void			on_account_management_window_triggered();
 
+	void			on_add_friend_window_triggered();
+	void			on_delete_friend_triggered();
+	void			on_send_box_push_button_released();
+	void			on_call_friend_push_button_released();
+	void			on_hang_up_push_button_released();
+
 public slots:
 	void			on_try_connect(const std::string &ipAddress, unsigned short int port);
 	void			on_try_login(const std::string &login, const std::string &password);
@@ -40,6 +48,7 @@ public slots:
 	void			on_try_change_password(const std::string &currentPassword, const std::string &newPassword);
 	void			on_try_change_privacy(bool newPrivacy);
 
+	void			on_try_add_friend(const std::string &);
 
 public:
 	void			on_connection_error(enum ANetwork::SocketState);
@@ -56,6 +65,10 @@ public:
 	void			on_change_account_privacy_error(const std::string &error);
 	void			on_change_account_password_success();
 	void			on_change_account_password_error(const std::string &error);
+
+	void			on_add_friend_success();
+	void			on_add_friend_error(const std::string &error);
+
 
 private:
 	void			connected();

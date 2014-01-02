@@ -31,8 +31,34 @@ void		AGraphic::setTryChangeAccountPrivacyHandler(Function<void (const request::
 	_tryChangePrivacyHandler = handle;
 }
 
-
 void		AGraphic::setDesAuthentificationHandler(Function<void ()> handle)
 {
 	_desAuthentificationHandler = handle;
+}
+
+
+
+void		AGraphic::setAddFriendHandler(Function<void (const request::Username &)> handle)
+{
+	_addFriendHandler = handle;
+}
+
+void		AGraphic::setDelFriendHandler(Function<void (const request::Username &)> handle)
+{
+	_delFriendHandler = handle;
+}
+
+void		AGraphic::setCallHandler(Function<void (const request::Username &)> handle)
+{
+	_callHandler = handle;
+}
+
+void		AGraphic::setHangUpHandler(Function<void ()> handle)
+{
+	_hangupHandler = handle;
+}
+
+void		AGraphic::setChatHandler(Function<void (const request::Username &, const std::string &)> handle)
+{
+	_chatHandler = handle;
 }

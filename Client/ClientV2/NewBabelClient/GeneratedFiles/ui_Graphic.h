@@ -46,7 +46,7 @@ public:
     QAction *actionUnset_voicemail;
     QAction *actionCall;
     QAction *actionDeleteAccount;
-    QAction *actionAdd_friend;
+    QAction *actionAddFriend;
     QAction *actionDelete_friend;
     QAction *actionLogout;
     QAction *actionAccountOptions;
@@ -70,9 +70,9 @@ public:
     QVBoxLayout *verticalLayout_2;
     QGridLayout *gridLayout_3;
     QFrame *line_2;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
-    QPushButton *deleteSelectedFriendPushButton;
+    QPushButton *callFriendLeftPushButton;
+    QPushButton *addFriendPushButton;
+    QPushButton *deleteFriendPushButton;
     QSpacerItem *horizontalSpacer_5;
     QSpacerItem *horizontalSpacer_4;
     QFrame *line_3;
@@ -81,12 +81,13 @@ public:
     QVBoxLayout *verticalLayout_4;
     QVBoxLayout *verticalLayout_3;
     QGridLayout *gridLayout;
-    QPushButton *activeFriendCallPushButton;
     QLabel *selectedFriendNameLabel;
     QLabel *selectedFriendPersonalMsgLabel;
-    QLabel *selectedFriendIconStatusLabel;
     QSpacerItem *horizontalSpacer_2;
     QFrame *line_4;
+    QPushButton *hangUpPushButton;
+    QPushButton *callFriendRightPushButton;
+    QLabel *selectedFriendIconStatusLabel;
     QHBoxLayout *horizontalLayout_2;
     QTextBrowser *friendMsgBox;
     QHBoxLayout *horizontalLayout;
@@ -127,9 +128,9 @@ public:
         actionDeleteAccount = new QAction(GraphicClass);
         actionDeleteAccount->setObjectName(QStringLiteral("actionDeleteAccount"));
         actionDeleteAccount->setEnabled(false);
-        actionAdd_friend = new QAction(GraphicClass);
-        actionAdd_friend->setObjectName(QStringLiteral("actionAdd_friend"));
-        actionAdd_friend->setEnabled(false);
+        actionAddFriend = new QAction(GraphicClass);
+        actionAddFriend->setObjectName(QStringLiteral("actionAddFriend"));
+        actionAddFriend->setEnabled(true);
         actionDelete_friend = new QAction(GraphicClass);
         actionDelete_friend->setObjectName(QStringLiteral("actionDelete_friend"));
         actionDelete_friend->setEnabled(false);
@@ -246,23 +247,23 @@ public:
 
         gridLayout_3->addWidget(line_2, 2, 0, 1, 5);
 
-        pushButton = new QPushButton(layoutWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setEnabled(true);
+        callFriendLeftPushButton = new QPushButton(layoutWidget);
+        callFriendLeftPushButton->setObjectName(QStringLiteral("callFriendLeftPushButton"));
+        callFriendLeftPushButton->setEnabled(true);
 
-        gridLayout_3->addWidget(pushButton, 1, 1, 1, 1);
+        gridLayout_3->addWidget(callFriendLeftPushButton, 1, 1, 1, 1);
 
-        pushButton_2 = new QPushButton(layoutWidget);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setEnabled(true);
+        addFriendPushButton = new QPushButton(layoutWidget);
+        addFriendPushButton->setObjectName(QStringLiteral("addFriendPushButton"));
+        addFriendPushButton->setEnabled(true);
 
-        gridLayout_3->addWidget(pushButton_2, 1, 2, 1, 1);
+        gridLayout_3->addWidget(addFriendPushButton, 1, 2, 1, 1);
 
-        deleteSelectedFriendPushButton = new QPushButton(layoutWidget);
-        deleteSelectedFriendPushButton->setObjectName(QStringLiteral("deleteSelectedFriendPushButton"));
-        deleteSelectedFriendPushButton->setEnabled(true);
+        deleteFriendPushButton = new QPushButton(layoutWidget);
+        deleteFriendPushButton->setObjectName(QStringLiteral("deleteFriendPushButton"));
+        deleteFriendPushButton->setEnabled(true);
 
-        gridLayout_3->addWidget(deleteSelectedFriendPushButton, 1, 3, 1, 1);
+        gridLayout_3->addWidget(deleteFriendPushButton, 1, 3, 1, 1);
 
         horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -303,11 +304,6 @@ public:
         gridLayout = new QGridLayout();
         gridLayout->setSpacing(6);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        activeFriendCallPushButton = new QPushButton(layoutWidget1);
-        activeFriendCallPushButton->setObjectName(QStringLiteral("activeFriendCallPushButton"));
-
-        gridLayout->addWidget(activeFriendCallPushButton, 1, 1, 1, 1);
-
         selectedFriendNameLabel = new QLabel(layoutWidget1);
         selectedFriendNameLabel->setObjectName(QStringLiteral("selectedFriendNameLabel"));
         selectedFriendNameLabel->setEnabled(true);
@@ -324,22 +320,32 @@ public:
 
         gridLayout->addWidget(selectedFriendPersonalMsgLabel, 1, 0, 1, 1);
 
-        selectedFriendIconStatusLabel = new QLabel(layoutWidget1);
-        selectedFriendIconStatusLabel->setObjectName(QStringLiteral("selectedFriendIconStatusLabel"));
-        selectedFriendIconStatusLabel->setFont(font1);
-
-        gridLayout->addWidget(selectedFriendIconStatusLabel, 0, 1, 1, 1);
-
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout->addItem(horizontalSpacer_2, 0, 2, 1, 1);
+        gridLayout->addItem(horizontalSpacer_2, 0, 4, 1, 1);
 
         line_4 = new QFrame(layoutWidget1);
         line_4->setObjectName(QStringLiteral("line_4"));
         line_4->setFrameShape(QFrame::HLine);
         line_4->setFrameShadow(QFrame::Sunken);
 
-        gridLayout->addWidget(line_4, 2, 0, 1, 3);
+        gridLayout->addWidget(line_4, 2, 0, 1, 5);
+
+        hangUpPushButton = new QPushButton(layoutWidget1);
+        hangUpPushButton->setObjectName(QStringLiteral("hangUpPushButton"));
+
+        gridLayout->addWidget(hangUpPushButton, 1, 2, 1, 1);
+
+        callFriendRightPushButton = new QPushButton(layoutWidget1);
+        callFriendRightPushButton->setObjectName(QStringLiteral("callFriendRightPushButton"));
+
+        gridLayout->addWidget(callFriendRightPushButton, 1, 1, 1, 1);
+
+        selectedFriendIconStatusLabel = new QLabel(layoutWidget1);
+        selectedFriendIconStatusLabel->setObjectName(QStringLiteral("selectedFriendIconStatusLabel"));
+        selectedFriendIconStatusLabel->setFont(font1);
+
+        gridLayout->addWidget(selectedFriendIconStatusLabel, 0, 1, 1, 1);
 
 
         verticalLayout_3->addLayout(gridLayout);
@@ -408,7 +414,6 @@ public:
         menuBar->addAction(menuManage_account->menuAction());
         menuBar->addAction(menuFriends_list->menuAction());
         menuBar->addAction(menuVoicemail->menuAction());
-        menuVBabel->addAction(actionCall);
         menuVBabel->addAction(actionExit);
         menuConnection->addAction(actionConnect);
         menuConnection->addAction(actionLogin);
@@ -418,8 +423,7 @@ public:
         menuManage_account->addAction(actionAccountOptions);
         menuVoicemail->addAction(actionSet_voicemail);
         menuVoicemail->addAction(actionUnset_voicemail);
-        menuFriends_list->addAction(actionAdd_friend);
-        menuFriends_list->addAction(actionDelete_friend);
+        menuFriends_list->addAction(actionAddFriend);
 
         retranslateUi(GraphicClass);
 
@@ -440,7 +444,7 @@ public:
         actionUnset_voicemail->setText(QApplication::translate("GraphicClass", "Unset voicemail", 0));
         actionCall->setText(QApplication::translate("GraphicClass", "Call", 0));
         actionDeleteAccount->setText(QApplication::translate("GraphicClass", "Delete account", 0));
-        actionAdd_friend->setText(QApplication::translate("GraphicClass", "Add friend", 0));
+        actionAddFriend->setText(QApplication::translate("GraphicClass", "Add friend", 0));
         actionDelete_friend->setText(QApplication::translate("GraphicClass", "Delete friend", 0));
         actionLogout->setText(QApplication::translate("GraphicClass", "Log out", 0));
         actionAccountOptions->setText(QApplication::translate("GraphicClass", "Account options", 0));
@@ -449,12 +453,13 @@ public:
         label_4->setText(QApplication::translate("GraphicClass", "Icon", 0));
         FriendTabWidget->setTabText(FriendTabWidget->indexOf(Friends), QApplication::translate("GraphicClass", "Friends", 0));
         FriendTabWidget->setTabText(FriendTabWidget->indexOf(Nothing), QApplication::translate("GraphicClass", "Nothing", 0));
-        pushButton->setText(QApplication::translate("GraphicClass", "Call", 0));
-        pushButton_2->setText(QApplication::translate("GraphicClass", "Add", 0));
-        deleteSelectedFriendPushButton->setText(QApplication::translate("GraphicClass", "Delete", 0));
-        activeFriendCallPushButton->setText(QApplication::translate("GraphicClass", "Call", 0));
+        callFriendLeftPushButton->setText(QApplication::translate("GraphicClass", "Call", 0));
+        addFriendPushButton->setText(QApplication::translate("GraphicClass", "Add", 0));
+        deleteFriendPushButton->setText(QApplication::translate("GraphicClass", "Delete", 0));
         selectedFriendNameLabel->setText(QApplication::translate("GraphicClass", "Selected Friend", 0));
         selectedFriendPersonalMsgLabel->setText(QApplication::translate("GraphicClass", "Selected Friend Personal Message", 0));
+        hangUpPushButton->setText(QApplication::translate("GraphicClass", "Hang Up", 0));
+        callFriendRightPushButton->setText(QApplication::translate("GraphicClass", "Call", 0));
         selectedFriendIconStatusLabel->setText(QApplication::translate("GraphicClass", "Icon", 0));
         sendBoxPushButton->setText(QApplication::translate("GraphicClass", "Send", 0));
         menuVBabel->setTitle(QApplication::translate("GraphicClass", "VBabel", 0));

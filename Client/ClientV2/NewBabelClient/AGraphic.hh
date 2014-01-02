@@ -29,15 +29,19 @@ protected:
   Function<void (const request::Privacy &)>										_tryChangePrivacyHandler;
 
 
-  // Friend
-  Function<void (const std::string &, bool)>				_friendRequestResponseHandler;
-  Function<void (const std::string &)>						_askForFriendHandler;
 
+
+  // Friends
+  Function<void (const request::Username &)>					_addFriendHandler;
+  Function<void (const request::Username &)>					_delFriendHandler;
+  
   // Calls
-  Function<void (bool)>										_callResponseHandler;
-  Function<void ()>											_hangupHandler;
+  Function<void (const request::Username &)>					_callHandler;
+  Function<void ()>												_hangupHandler;
 
-
+  // Chat
+  Function<void (const request::Username &, const std::string &)> _chatHandler;
+  
 public:
   // Connection
   virtual void		setTryConnectHandler(Function<void (unsigned short, const std::string &)>);
@@ -59,12 +63,16 @@ public:
   virtual void		setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)>);
 
 
-  // Friend
-  //virtual void		setFriendRequestResponse(Function<void (const std::string &, bool)>); // To do
+  // Friends
+  virtual void		setAddFriendHandler(Function<void (const request::Username &)>);
+  virtual void		setDelFriendHandler(Function<void (const request::Username &)>);
 
   // Calls
-  //virtual void		setCallResponse(Function<void (bool)>); // To do
-  //virtual void		setHangup(Function<void ()>); // To do
+  virtual void		setCallHandler(Function<void (const request::Username &)>);
+  virtual void		setHangUpHandler(Function<void ()>);
+
+  // Chat
+  virtual void		setChatHandler(Function<void (const request::Username &, const std::string &)>);
 
 public:
   // Connection
