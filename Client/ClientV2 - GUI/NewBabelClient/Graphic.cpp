@@ -1,7 +1,14 @@
-#include "Graphic.h"
-#include	<QTimer>
-#include	<QDebug>
+#ifdef WIN32
+	#define		NOMINMAX
+	#undef		min
+	#undef		max
+	#include	"windows.h"
+#endif
 
+#include	"Graphic.h"
+#include	<QTimer>
+#include	<QTime>
+#include	<QDebug>
 
 void					Graphic::init()
 {
@@ -19,6 +26,56 @@ void					Graphic::init()
 	connect(&_loginWindow, SIGNAL(login_try(const std::string &, const std::string &)), this, SLOT(on_try_login(const std::string &, const std::string &)));
 	// Createa account try triggered
 	connect(&_createAccountWindow, SIGNAL(create_account_try(const std::string &, const std::string &)), this, SLOT(on_try_create(const std::string &, const std::string &)));
+
+	// Combo Box
+	connect(ui.comboBox_9, SIGNAL(currentIndexChanged(int)), this, SLOT(changeStatus()));
+}
+
+void					Graphic::changeContact(int value)
+{
+	QPixmap *pixmap_img;
+
+	switch (value)
+	{
+	case 0:
+		pixmap_img = new QPixmap("./Img/Guyman-Helmet-Smiley-icon.png");
+		break;
+	case 1:
+		pixmap_img = new QPixmap("./Img/Guyman-Helmet-On-icon.png");
+		break;
+	case 2:
+		pixmap_img = new QPixmap("./Img/Guyman-Helmet-Music-icon.png");
+		break;
+	case 3:
+		pixmap_img = new QPixmap("./Img/Guyman-Helmet-icon.png");
+		break;
+	default:
+		pixmap_img = new QPixmap("./Img/Guyman-Helmet-Smiley-icon.png");
+		break;
+	}
+	pixmap_img->scaled(39, 41, Qt::KeepAspectRatio);
+	ui.selectedFriendIconStatusLabel_8->setPixmap(*pixmap_img);
+}
+
+void					Graphic::changeStatus()
+{
+	int value = ui.comboBox_9->currentIndex();
+	qDebug() << "Status : " << value;
+
+	switch (value)
+	{
+	case 0:
+		break;
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	default:
+		break;
+	}
+	changeContact(value);
 }
 
 void					Graphic::on_connection_error(enum ANetwork::SocketState state)
@@ -136,11 +193,29 @@ void					Graphic::on_try_create(const std::string &login, const std::string &pas
 	_tryCreateAccountHandler(login, password);
 }
 
+void		Graphic::showTime()
+{
+	QTime		timer;
+
+	ui.statusBar->showMessage(timer.currentTime().toString());
+}
+
 Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this)
 {
 	ui.setupUi(this);
 
-	//ui.listWidget_7->setStyleSheet("border-image : url(./Img/friend_chat.png);");
+	ui.comboBox_9->addItem(QIcon("./Img/Guyman-Helmet-Smiley-icon.png"), "Online", QVariant("e"));
+	ui.comboBox_9->addItem(QIcon("./Img/Guyman-Helmet-On-icon.png"), "Away", QVariant("e"));
+	ui.comboBox_9->addItem(QIcon("./Img/Guyman-Helmet-Music-icon.png"), "Occuped", QVariant("e"));
+	ui.comboBox_9->addItem(QIcon("./Img/Guyman-Helmet-icon.png"), "Invisible", QVariant("e"));
+	ui.comboBox_9->setIconSize(QSize(34, 41));
+
+	ui.lineEdit->setMaxLength(84);
+
+	QTimer *timer = new QTimer(this);
+	connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
+	timer->start(1000);
+	showTime();
 }
 
 Graphic::~Graphic()
