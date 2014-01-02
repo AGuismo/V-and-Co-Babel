@@ -5,6 +5,8 @@
 #include	"Protocol.hpp"
 #include	"Env.hh"
 
+#include	<QDebug>
+
 Application::Application(int ac, char *av[]):
   _ac(ac), _app(_ac, av)
 {
@@ -15,6 +17,7 @@ Application::Application(int ac, char *av[]):
 void		Application::update_friend_handler(const ARequest &)
 {
 	qDebug() << "update friend received";
+	exit(1);
 }
 
 Application::~Application()
