@@ -58,7 +58,17 @@ void		AGraphic::setHangUpHandler(Function<void ()> handle)
 	_hangupHandler = handle;
 }
 
-void		AGraphic::setChatHandler(Function<void (const request::Username &, const std::string &)> handle)
+void		AGraphic::setChatHandler(Function<void (const request::Username &, const request::Message &)> handle)
 {
 	_chatHandler = handle;
 }
+
+void		AGraphic::setStatusHandler(Function<void (const request::Status &)> handle)
+{
+	_statusHandler = handle;
+}
+
+ void		AGraphic::setStatusTxtHandler(Function<void (const request::Message &)> handle)
+ {
+ 	_statusTxtHandler = handle;
+ }

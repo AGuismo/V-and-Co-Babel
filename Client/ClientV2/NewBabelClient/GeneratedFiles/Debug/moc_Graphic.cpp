@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Graphic_t {
-    QByteArrayData data[29];
-    char stringdata[578];
+    QByteArrayData data[31];
+    char stringdata[636];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,22 +42,24 @@ QT_MOC_LITERAL(9, 230, 26),
 QT_MOC_LITERAL(10, 257, 32),
 QT_MOC_LITERAL(11, 290, 35),
 QT_MOC_LITERAL(12, 326, 31),
-QT_MOC_LITERAL(13, 358, 14),
-QT_MOC_LITERAL(14, 373, 11),
-QT_MOC_LITERAL(15, 385, 9),
-QT_MOC_LITERAL(16, 395, 18),
-QT_MOC_LITERAL(17, 414, 4),
-QT_MOC_LITERAL(18, 419, 12),
-QT_MOC_LITERAL(19, 432, 5),
-QT_MOC_LITERAL(20, 438, 8),
-QT_MOC_LITERAL(21, 447, 13),
-QT_MOC_LITERAL(22, 461, 13),
-QT_MOC_LITERAL(23, 475, 22),
-QT_MOC_LITERAL(24, 498, 15),
-QT_MOC_LITERAL(25, 514, 11),
-QT_MOC_LITERAL(26, 526, 21),
-QT_MOC_LITERAL(27, 548, 10),
-QT_MOC_LITERAL(28, 559, 17)
+QT_MOC_LITERAL(13, 358, 26),
+QT_MOC_LITERAL(14, 385, 30),
+QT_MOC_LITERAL(15, 416, 14),
+QT_MOC_LITERAL(16, 431, 11),
+QT_MOC_LITERAL(17, 443, 9),
+QT_MOC_LITERAL(18, 453, 18),
+QT_MOC_LITERAL(19, 472, 4),
+QT_MOC_LITERAL(20, 477, 12),
+QT_MOC_LITERAL(21, 490, 5),
+QT_MOC_LITERAL(22, 496, 8),
+QT_MOC_LITERAL(23, 505, 13),
+QT_MOC_LITERAL(24, 519, 13),
+QT_MOC_LITERAL(25, 533, 22),
+QT_MOC_LITERAL(26, 556, 15),
+QT_MOC_LITERAL(27, 572, 11),
+QT_MOC_LITERAL(28, 584, 21),
+QT_MOC_LITERAL(29, 606, 10),
+QT_MOC_LITERAL(30, 617, 17)
     },
     "Graphic\0on_connect_window_triggered\0"
     "\0on_login_window_triggered\0"
@@ -70,6 +72,8 @@ QT_MOC_LITERAL(28, 559, 17)
     "on_send_box_push_button_released\0"
     "on_call_friend_push_button_released\0"
     "on_hang_up_push_button_released\0"
+    "on_change_status_triggered\0"
+    "on_change_status_txt_triggered\0"
     "on_try_connect\0std::string\0ipAddress\0"
     "unsigned short int\0port\0on_try_login\0"
     "login\0password\0on_try_create\0on_try_delete\0"
@@ -85,7 +89,7 @@ static const uint qt_meta_data_Graphic[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      18,   14, // methods
+      20,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -93,24 +97,26 @@ static const uint qt_meta_data_Graphic[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  104,    2, 0x0a,
-       3,    0,  105,    2, 0x0a,
-       4,    0,  106,    2, 0x0a,
-       5,    0,  107,    2, 0x0a,
-       6,    0,  108,    2, 0x0a,
-       7,    0,  109,    2, 0x0a,
-       8,    0,  110,    2, 0x0a,
-       9,    0,  111,    2, 0x0a,
-      10,    0,  112,    2, 0x0a,
-      11,    0,  113,    2, 0x0a,
-      12,    0,  114,    2, 0x0a,
-      13,    2,  115,    2, 0x0a,
-      18,    2,  120,    2, 0x0a,
-      21,    2,  125,    2, 0x0a,
-      22,    2,  130,    2, 0x0a,
-      23,    2,  135,    2, 0x0a,
-      26,    1,  140,    2, 0x0a,
-      28,    1,  143,    2, 0x0a,
+       1,    0,  114,    2, 0x0a,
+       3,    0,  115,    2, 0x0a,
+       4,    0,  116,    2, 0x0a,
+       5,    0,  117,    2, 0x0a,
+       6,    0,  118,    2, 0x0a,
+       7,    0,  119,    2, 0x0a,
+       8,    0,  120,    2, 0x0a,
+       9,    0,  121,    2, 0x0a,
+      10,    0,  122,    2, 0x0a,
+      11,    0,  123,    2, 0x0a,
+      12,    0,  124,    2, 0x0a,
+      13,    1,  125,    2, 0x0a,
+      14,    0,  128,    2, 0x0a,
+      15,    2,  129,    2, 0x0a,
+      20,    2,  134,    2, 0x0a,
+      23,    2,  139,    2, 0x0a,
+      24,    2,  144,    2, 0x0a,
+      25,    2,  149,    2, 0x0a,
+      28,    1,  154,    2, 0x0a,
+      30,    1,  157,    2, 0x0a,
 
  // slots: parameters
     QMetaType::Void,
@@ -124,13 +130,15 @@ static const uint qt_meta_data_Graphic[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 14, 0x80000000 | 16,   15,   17,
-    QMetaType::Void, 0x80000000 | 14, 0x80000000 | 14,   19,   20,
-    QMetaType::Void, 0x80000000 | 14, 0x80000000 | 14,   19,   20,
-    QMetaType::Void, 0x80000000 | 14, 0x80000000 | 14,   19,   20,
-    QMetaType::Void, 0x80000000 | 14, 0x80000000 | 14,   24,   25,
-    QMetaType::Void, QMetaType::Bool,   27,
-    QMetaType::Void, 0x80000000 | 14,    2,
+    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 16, 0x80000000 | 18,   17,   19,
+    QMetaType::Void, 0x80000000 | 16, 0x80000000 | 16,   21,   22,
+    QMetaType::Void, 0x80000000 | 16, 0x80000000 | 16,   21,   22,
+    QMetaType::Void, 0x80000000 | 16, 0x80000000 | 16,   21,   22,
+    QMetaType::Void, 0x80000000 | 16, 0x80000000 | 16,   26,   27,
+    QMetaType::Void, QMetaType::Bool,   29,
+    QMetaType::Void, 0x80000000 | 16,    2,
 
        0        // eod
 };
@@ -151,13 +159,15 @@ void Graphic::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 8: _t->on_send_box_push_button_released(); break;
         case 9: _t->on_call_friend_push_button_released(); break;
         case 10: _t->on_hang_up_push_button_released(); break;
-        case 11: _t->on_try_connect((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< unsigned short int(*)>(_a[2]))); break;
-        case 12: _t->on_try_login((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
-        case 13: _t->on_try_create((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
-        case 14: _t->on_try_delete((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
-        case 15: _t->on_try_change_password((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
-        case 16: _t->on_try_change_privacy((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 17: _t->on_try_add_friend((*reinterpret_cast< const std::string(*)>(_a[1]))); break;
+        case 11: _t->on_change_status_triggered((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 12: _t->on_change_status_txt_triggered(); break;
+        case 13: _t->on_try_connect((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< unsigned short int(*)>(_a[2]))); break;
+        case 14: _t->on_try_login((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
+        case 15: _t->on_try_create((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
+        case 16: _t->on_try_delete((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
+        case 17: _t->on_try_change_password((*reinterpret_cast< const std::string(*)>(_a[1])),(*reinterpret_cast< const std::string(*)>(_a[2]))); break;
+        case 18: _t->on_try_change_privacy((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 19: _t->on_try_add_friend((*reinterpret_cast< const std::string(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -190,13 +200,13 @@ int Graphic::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 18)
+        if (_id < 20)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 18;
+        _id -= 20;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 18)
+        if (_id < 20)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 18;
+        _id -= 20;
     }
     return _id;
 }

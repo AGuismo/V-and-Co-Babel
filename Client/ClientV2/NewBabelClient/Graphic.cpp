@@ -30,6 +30,12 @@ void					Graphic::init()
 	connect(ui.callFriendRightPushButton, SIGNAL(released()), this, SLOT(on_call_friend_push_button_released()));
 	// Hang up push button  released
 	connect(ui.hangUpPushButton, SIGNAL(released()), this, SLOT(on_hang_up_push_button_released()));
+	// Status change line edit
+	connect(ui.statusLineEdit, SIGNAL(returnPressed()), this, SLOT(on_change_status_txt_triggered()));
+	// Status change comboBox
+	connect(ui.statusComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(on_change_status_triggered(int)));
+
+
 
 	// Create Account Window Triggered
 	connect(ui.actionCreateAccount, SIGNAL(triggered()), this, SLOT(on_create_account_window_triggered()));
@@ -252,8 +258,15 @@ void					Graphic::on_hang_up_push_button_released()
 	qDebug() << "hanging up here mtfck !";
 }
 
+void					Graphic::on_change_status_triggered(int newStatus)
+{
+	qDebug() << "changing status here mtfk !";
+}
 
-
+void					Graphic::on_change_status_txt_triggered()
+{
+	qDebug() << "changing status txt here mtfk !";
+}
 
 
 

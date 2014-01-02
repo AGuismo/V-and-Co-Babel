@@ -56,11 +56,11 @@ public:
     QWidget *layoutWidget;
     QGridLayout *gridLayout_5;
     QGridLayout *gridLayout_2;
-    QLabel *label_2;
-    QLabel *label_3;
     QSpacerItem *horizontalSpacer;
-    QComboBox *comboBox_2;
+    QComboBox *statusComboBox;
     QLabel *label_4;
+    QLineEdit *statusLineEdit;
+    QLabel *label_3;
     QGridLayout *gridLayout_6;
     QTabWidget *FriendTabWidget;
     QWidget *Friends;
@@ -105,7 +105,7 @@ public:
     {
         if (GraphicClass->objectName().isEmpty())
             GraphicClass->setObjectName(QStringLiteral("GraphicClass"));
-        GraphicClass->resize(628, 389);
+        GraphicClass->resize(670, 389);
         actionConnect = new QAction(GraphicClass);
         actionConnect->setObjectName(QStringLiteral("actionConnect"));
         actionCreateAccount = new QAction(GraphicClass);
@@ -161,46 +161,41 @@ public:
         gridLayout_2->setSpacing(6);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
         gridLayout_2->setSizeConstraint(QLayout::SetDefaultConstraint);
-        label_2 = new QLabel(layoutWidget);
-        label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setEnabled(false);
-        QFont font;
-        font.setFamily(QStringLiteral("MS PGothic"));
-        font.setPointSize(10);
-        label_2->setFont(font);
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_2->addWidget(label_2, 1, 0, 1, 1);
+        gridLayout_2->addItem(horizontalSpacer, 0, 3, 1, 1);
+
+        statusComboBox = new QComboBox(layoutWidget);
+        statusComboBox->setObjectName(QStringLiteral("statusComboBox"));
+        statusComboBox->setEnabled(true);
+
+        gridLayout_2->addWidget(statusComboBox, 1, 2, 1, 1);
+
+        label_4 = new QLabel(layoutWidget);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setEnabled(true);
+        QFont font;
+        font.setPointSize(14);
+        label_4->setFont(font);
+
+        gridLayout_2->addWidget(label_4, 0, 2, 1, 1);
+
+        statusLineEdit = new QLineEdit(layoutWidget);
+        statusLineEdit->setObjectName(QStringLiteral("statusLineEdit"));
+
+        gridLayout_2->addWidget(statusLineEdit, 1, 1, 1, 1);
 
         label_3 = new QLabel(layoutWidget);
         label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setEnabled(false);
+        label_3->setEnabled(true);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(label_3->sizePolicy().hasHeightForWidth());
         label_3->setSizePolicy(sizePolicy);
-        QFont font1;
-        font1.setPointSize(14);
-        label_3->setFont(font1);
+        label_3->setFont(font);
 
-        gridLayout_2->addWidget(label_3, 0, 0, 1, 1);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_2->addItem(horizontalSpacer, 0, 2, 1, 1);
-
-        comboBox_2 = new QComboBox(layoutWidget);
-        comboBox_2->setObjectName(QStringLiteral("comboBox_2"));
-        comboBox_2->setEnabled(false);
-
-        gridLayout_2->addWidget(comboBox_2, 1, 1, 1, 1);
-
-        label_4 = new QLabel(layoutWidget);
-        label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setEnabled(false);
-        label_4->setFont(font1);
-
-        gridLayout_2->addWidget(label_4, 0, 1, 1, 1);
+        gridLayout_2->addWidget(label_3, 0, 1, 1, 1);
 
 
         gridLayout_5->addLayout(gridLayout_2, 0, 0, 1, 1);
@@ -309,14 +304,17 @@ public:
         selectedFriendNameLabel->setEnabled(true);
         sizePolicy.setHeightForWidth(selectedFriendNameLabel->sizePolicy().hasHeightForWidth());
         selectedFriendNameLabel->setSizePolicy(sizePolicy);
-        selectedFriendNameLabel->setFont(font1);
+        selectedFriendNameLabel->setFont(font);
         selectedFriendNameLabel->setAutoFillBackground(false);
 
         gridLayout->addWidget(selectedFriendNameLabel, 0, 0, 1, 1);
 
         selectedFriendPersonalMsgLabel = new QLabel(layoutWidget1);
         selectedFriendPersonalMsgLabel->setObjectName(QStringLiteral("selectedFriendPersonalMsgLabel"));
-        selectedFriendPersonalMsgLabel->setFont(font);
+        QFont font1;
+        font1.setFamily(QStringLiteral("MS PGothic"));
+        font1.setPointSize(10);
+        selectedFriendPersonalMsgLabel->setFont(font1);
 
         gridLayout->addWidget(selectedFriendPersonalMsgLabel, 1, 0, 1, 1);
 
@@ -343,7 +341,7 @@ public:
 
         selectedFriendIconStatusLabel = new QLabel(layoutWidget1);
         selectedFriendIconStatusLabel->setObjectName(QStringLiteral("selectedFriendIconStatusLabel"));
-        selectedFriendIconStatusLabel->setFont(font1);
+        selectedFriendIconStatusLabel->setFont(font);
 
         gridLayout->addWidget(selectedFriendIconStatusLabel, 0, 1, 1, 1);
 
@@ -392,7 +390,7 @@ public:
         GraphicClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(GraphicClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 628, 21));
+        menuBar->setGeometry(QRect(0, 0, 670, 21));
         menuVBabel = new QMenu(menuBar);
         menuVBabel->setObjectName(QStringLiteral("menuVBabel"));
         menuConnection = new QMenu(menuBar);
@@ -448,9 +446,9 @@ public:
         actionDelete_friend->setText(QApplication::translate("GraphicClass", "Delete friend", 0));
         actionLogout->setText(QApplication::translate("GraphicClass", "Log out", 0));
         actionAccountOptions->setText(QApplication::translate("GraphicClass", "Account options", 0));
-        label_2->setText(QApplication::translate("GraphicClass", "User Personal Message................", 0));
-        label_3->setText(QApplication::translate("GraphicClass", "User", 0));
         label_4->setText(QApplication::translate("GraphicClass", "Icon", 0));
+        statusLineEdit->setText(QApplication::translate("GraphicClass", "Status here", 0));
+        label_3->setText(QApplication::translate("GraphicClass", "User", 0));
         FriendTabWidget->setTabText(FriendTabWidget->indexOf(Friends), QApplication::translate("GraphicClass", "Friends", 0));
         FriendTabWidget->setTabText(FriendTabWidget->indexOf(Nothing), QApplication::translate("GraphicClass", "Nothing", 0));
         callFriendLeftPushButton->setText(QApplication::translate("GraphicClass", "Call", 0));

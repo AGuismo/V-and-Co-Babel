@@ -31,6 +31,9 @@ protected:
 
 
 
+  Function<void (const request::Status &)>						_statusHandler;
+  Function<void (const request::Message &)>						_statusTxtHandler;
+  
   // Friends
   Function<void (const request::Username &)>					_addFriendHandler;
   Function<void (const request::Username &)>					_delFriendHandler;
@@ -63,6 +66,11 @@ public:
   virtual void		setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)>);
 
 
+
+
+  virtual void		setStatusHandler(Function<void (const request::Status &)>);
+  virtual void		setStatusTxtHandler(Function<void (const request::Message &)>);
+
   // Friends
   virtual void		setAddFriendHandler(Function<void (const request::Username &)>);
   virtual void		setDelFriendHandler(Function<void (const request::Username &)>);
@@ -72,22 +80,7 @@ public:
   virtual void		setHangUpHandler(Function<void ()>);
 
   // Chat
-  virtual void		setChatHandler(Function<void (const request::Username &, const std::string &)>);
-
-public:
-  // Connection
-  // virtual void		ConnectionStateChanged(enum ANetwork::SocketState) = 0;  // To do
-
-  // Authentification
-  // virtual void		Authenticated(bool) = 0;  // To do
-
-  // Personal Changes
-
-  // Friends
-
-  // Call
-  // virtual void		Call(const std::string &) = 0;  // To do
-  // virtual void		EndCall() = 0; // To do
+  virtual void		setChatHandler(Function<void (const request::Username &, const request::Message &)>);
 
 public:
   virtual void		init() = 0;

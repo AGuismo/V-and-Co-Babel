@@ -39,6 +39,10 @@ public slots:
 	void			on_send_box_push_button_released();
 	void			on_call_friend_push_button_released();
 	void			on_hang_up_push_button_released();
+	void			on_change_status_triggered(int);
+	void			on_change_status_txt_triggered();
+	void			on_set_auto_answering_triggered();
+	void			on_unset_auto_answering_triggered();
 
 public slots:
 	void			on_try_connect(const std::string &ipAddress, unsigned short int port);
