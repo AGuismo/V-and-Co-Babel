@@ -1,5 +1,6 @@
 #include		<cstring>
 #include		<iostream>
+#include		<qdebug.h>
 #include		"PAudioBuffer.hh"
 
 // CallBacks
@@ -33,7 +34,7 @@ void			PAudioBuffer::sendToNetwork()
       encodedSize = 0;
       compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE, encodedSize);
       buff.assign(compressed, compressed + encodedSize);
-      std::cout << "Sending packet" << std::endl;
+      qDebug() << "Sending packet";
       //		_bridge.inputDispatch(buff);
       _bridge.inputWrite(buff);
       //myFile << "Data : " << compressed << std::endl;;
@@ -61,36 +62,36 @@ int		PAudioBuffer::recordCallBack(const void *inputBuff,
     {
       i = 0;
       while (i < framesPerBuff)
-	{
-	  if (!CHECK_CIRCULAR(data))
-	    data->fWrIndex = 0;
-	  writePtr[data->fWrIndex++] = SAMPLE_SILENCE;
-	  if (NUM_CHANNELS == 2)
-	    {
-	      if (!CHECK_CIRCULAR(data))
-		data->fWrIndex = 0;
-	      writePtr[data->fWrIndex++] = *(readPtr++);
-	    }
-	  i++;
-	}
-    }
+	  {
+		  if (!CHECK_CIRCULAR(data))
+			  data->fWrIndex = 0;
+		  writePtr[data->fWrIndex++] = SAMPLE_SILENCE;
+		  if (NUM_CHANNELS == 2)
+		  {
+			  if (!CHECK_CIRCULAR(data))
+				  data->fWrIndex = 0;
+			  writePtr[data->fWrIndex++] = *(readPtr++);
+		  }
+		  i++;
+	  }
+  }
   else
-    {
-      i = 0;
+  {
+	  i = 0;
       while (i < framesPerBuff)
-	{
-	  if (!CHECK_CIRCULAR(data))
-	    data->fWrIndex = 0;
-	  writePtr[data->fWrIndex++] = (*readPtr++);
-	  if (NUM_CHANNELS == 2 && CHECK_CIRCULAR(data))
-	    {
-	      if (!CHECK_CIRCULAR(data))
-		data->fWrIndex = 0;
-	      writePtr[data->fWrIndex++] = *(readPtr++);
-	    }
-	  i++;
-	}
-    }
+	  {
+		  if (!CHECK_CIRCULAR(data))
+			  data->fWrIndex = 0;
+		  writePtr[data->fWrIndex++] = (*readPtr++);
+		  if (NUM_CHANNELS == 2 && CHECK_CIRCULAR(data))
+		  {
+			  if (!CHECK_CIRCULAR(data))
+				  data->fWrIndex = 0;
+			  writePtr[data->fWrIndex++] = *(readPtr++);
+		  }
+		  i++;
+	  }
+  }
   data->sendToNetwork();
   return (paContinue);
 }

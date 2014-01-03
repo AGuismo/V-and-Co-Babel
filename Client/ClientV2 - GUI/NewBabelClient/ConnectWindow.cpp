@@ -8,6 +8,8 @@ ConnectWindow::ConnectWindow(QWidget *parent)
 	setModal(true);
 	connect(ui.closePushButton, SIGNAL(clicked()), this, SLOT(on_close_button_clicked()));
 	connect(ui.connectPushButton, SIGNAL(clicked()), this, SLOT(on_connect_button_clicked()));
+
+	this->setFixedSize(this->size());
 }
 
 void					ConnectWindow::clearServerResponse()

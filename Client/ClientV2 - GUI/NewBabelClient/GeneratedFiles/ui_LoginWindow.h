@@ -26,86 +26,139 @@ class Ui_LoginWindow
 {
 public:
     QGridLayout *gridLayout;
-    QLabel *loginLabel;
-    QLabel *passwordLabel;
-    QLineEdit *loginLineEdit;
-    QLineEdit *passwordLineEdit;
-    QLabel *serverResponseLabel;
-    QPushButton *closePushButton;
-    QPushButton *loginPushButton;
     QLabel *loginTitleLabel;
+    QLabel *passwordLabel;
+    QLabel *loginLabel;
+    QPushButton *loginPushButton;
+    QLabel *serverResponseLabel;
+    QLineEdit *passwordLineEdit;
+    QLineEdit *loginLineEdit;
+    QPushButton *closePushButton;
 
     void setupUi(QDialog *LoginWindow)
     {
         if (LoginWindow->objectName().isEmpty())
             LoginWindow->setObjectName(QStringLiteral("LoginWindow"));
-        LoginWindow->resize(298, 138);
+        LoginWindow->resize(378, 145);
+        LoginWindow->setStyleSheet(QLatin1String("LoginWindow \n"
+"{\n"
+"	border-image: url(./Img/wallpaper-16618.jpg);\n"
+"}"));
         gridLayout = new QGridLayout(LoginWindow);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        loginLabel = new QLabel(LoginWindow);
-        loginLabel->setObjectName(QStringLiteral("loginLabel"));
+        loginTitleLabel = new QLabel(LoginWindow);
+        loginTitleLabel->setObjectName(QStringLiteral("loginTitleLabel"));
         QFont font;
-        font.setPointSize(10);
-        loginLabel->setFont(font);
+        font.setFamily(QStringLiteral("MS Reference Sans Serif"));
+        font.setPointSize(14);
+        font.setBold(true);
+        font.setWeight(75);
+        loginTitleLabel->setFont(font);
+        loginTitleLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
+        loginTitleLabel->setAlignment(Qt::AlignCenter);
 
-        gridLayout->addWidget(loginLabel, 1, 0, 1, 1);
+        gridLayout->addWidget(loginTitleLabel, 0, 0, 1, 3);
 
         passwordLabel = new QLabel(LoginWindow);
         passwordLabel->setObjectName(QStringLiteral("passwordLabel"));
         QFont font1;
-        font1.setFamily(QStringLiteral("MS UI Gothic"));
+        font1.setFamily(QStringLiteral("MS Reference Sans Serif"));
         font1.setPointSize(10);
         passwordLabel->setFont(font1);
+        passwordLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
 
         gridLayout->addWidget(passwordLabel, 2, 0, 1, 1);
 
-        loginLineEdit = new QLineEdit(LoginWindow);
-        loginLineEdit->setObjectName(QStringLiteral("loginLineEdit"));
-        loginLineEdit->setMaxLength(256);
+        loginLabel = new QLabel(LoginWindow);
+        loginLabel->setObjectName(QStringLiteral("loginLabel"));
+        loginLabel->setFont(font1);
+        loginLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
 
-        gridLayout->addWidget(loginLineEdit, 1, 1, 1, 2);
+        gridLayout->addWidget(loginLabel, 1, 0, 1, 1);
+
+        loginPushButton = new QPushButton(LoginWindow);
+        loginPushButton->setObjectName(QStringLiteral("loginPushButton"));
+        loginPushButton->setStyleSheet(QLatin1String("QPushButton#loginPushButton\n"
+"{\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));\n"
+"	border-style: outset;\n"
+"	border-width: 1px;\n"
+"	border-radius: 10px;\n"
+"	border-color: rgb(255, 255, 255);\n"
+"	min-width: 4em;\n"
+"	padding: 6px;\n"
+"}\n"
+"\n"
+" QPushButton#loginPushButton:pressed \n"
+"{\n"
+"	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
+"     border-style: inset;\n"
+" }"));
+
+        gridLayout->addWidget(loginPushButton, 3, 2, 1, 1);
+
+        serverResponseLabel = new QLabel(LoginWindow);
+        serverResponseLabel->setObjectName(QStringLiteral("serverResponseLabel"));
+        serverResponseLabel->setMinimumSize(QSize(185, 0));
+        QFont font2;
+        font2.setFamily(QStringLiteral("MS Reference Sans Serif"));
+        font2.setPointSize(10);
+        font2.setBold(true);
+        font2.setWeight(75);
+        serverResponseLabel->setFont(font2);
+        serverResponseLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
+
+        gridLayout->addWidget(serverResponseLabel, 3, 0, 1, 1);
 
         passwordLineEdit = new QLineEdit(LoginWindow);
         passwordLineEdit->setObjectName(QStringLiteral("passwordLineEdit"));
+        passwordLineEdit->setStyleSheet(QLatin1String("background-color: rgba(255, 255, 255, 230);\n"
+"border-width: 2px;\n"
+"border-radius: 8px;\n"
+"border-color: rgb(0, 0, 0);\n"
+"min-width: 10em;\n"
+"padding: 2px;"));
         passwordLineEdit->setMaxLength(256);
         passwordLineEdit->setEchoMode(QLineEdit::Password);
 
         gridLayout->addWidget(passwordLineEdit, 2, 1, 1, 2);
 
-        serverResponseLabel = new QLabel(LoginWindow);
-        serverResponseLabel->setObjectName(QStringLiteral("serverResponseLabel"));
-        QFont font2;
-        font2.setFamily(QStringLiteral("MS UI Gothic"));
-        font2.setPointSize(10);
-        font2.setBold(true);
-        font2.setWeight(75);
-        serverResponseLabel->setFont(font2);
+        loginLineEdit = new QLineEdit(LoginWindow);
+        loginLineEdit->setObjectName(QStringLiteral("loginLineEdit"));
+        loginLineEdit->setStyleSheet(QLatin1String("background-color: rgba(255, 255, 255, 230);\n"
+"border-width: 2px;\n"
+"border-radius: 8px;\n"
+"border-color: rgb(0, 0, 0);\n"
+"min-width: 10em;\n"
+"padding: 2px;"));
+        loginLineEdit->setMaxLength(256);
 
-        gridLayout->addWidget(serverResponseLabel, 3, 0, 1, 1);
+        gridLayout->addWidget(loginLineEdit, 1, 1, 1, 2);
 
         closePushButton = new QPushButton(LoginWindow);
         closePushButton->setObjectName(QStringLiteral("closePushButton"));
+        closePushButton->setStyleSheet(QLatin1String("QPushButton#closePushButton\n"
+"{\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));\n"
+"	border-style: outset;\n"
+"	border-width: 1px;\n"
+"	border-radius: 10px;\n"
+"	border-color: rgb(255, 255, 255);\n"
+"	min-width: 4em;\n"
+"	padding: 6px;\n"
+"}\n"
+"\n"
+" QPushButton#closePushButton:pressed \n"
+"{\n"
+"	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
+"     border-style: inset;\n"
+" }"));
 
         gridLayout->addWidget(closePushButton, 3, 1, 1, 1);
-
-        loginPushButton = new QPushButton(LoginWindow);
-        loginPushButton->setObjectName(QStringLiteral("loginPushButton"));
-
-        gridLayout->addWidget(loginPushButton, 3, 2, 1, 1);
-
-        loginTitleLabel = new QLabel(LoginWindow);
-        loginTitleLabel->setObjectName(QStringLiteral("loginTitleLabel"));
-        QFont font3;
-        font3.setFamily(QStringLiteral("MS UI Gothic"));
-        font3.setPointSize(14);
-        font3.setBold(true);
-        font3.setWeight(75);
-        loginTitleLabel->setFont(font3);
-        loginTitleLabel->setAlignment(Qt::AlignCenter);
-
-        gridLayout->addWidget(loginTitleLabel, 0, 0, 1, 3);
 
         QWidget::setTabOrder(loginLineEdit, passwordLineEdit);
         QWidget::setTabOrder(passwordLineEdit, loginPushButton);
@@ -119,15 +172,15 @@ public:
     void retranslateUi(QDialog *LoginWindow)
     {
         LoginWindow->setWindowTitle(QApplication::translate("LoginWindow", "LoginWindow", 0));
-        loginLabel->setText(QApplication::translate("LoginWindow", "Login :", 0));
+        loginTitleLabel->setText(QApplication::translate("LoginWindow", "Login", 0));
         passwordLabel->setText(QApplication::translate("LoginWindow", "Password :", 0));
-        loginLineEdit->setText(QApplication::translate("LoginWindow", "toto", 0));
+        loginLabel->setText(QApplication::translate("LoginWindow", "Login :", 0));
+        loginPushButton->setText(QApplication::translate("LoginWindow", "Log in", 0));
+        serverResponseLabel->setText(QString());
         passwordLineEdit->setInputMask(QString());
         passwordLineEdit->setText(QApplication::translate("LoginWindow", "poil", 0));
-        serverResponseLabel->setText(QString());
+        loginLineEdit->setText(QApplication::translate("LoginWindow", "toto", 0));
         closePushButton->setText(QApplication::translate("LoginWindow", "Close", 0));
-        loginPushButton->setText(QApplication::translate("LoginWindow", "Log in", 0));
-        loginTitleLabel->setText(QApplication::translate("LoginWindow", "Login", 0));
     } // retranslateUi
 
 };

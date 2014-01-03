@@ -58,7 +58,7 @@ private:
 	Friend										*getFriend(std::string &friendName);
 
 public:
-	void										insertFriend(std::string &friendName, std::string &friendMsgPerso, Status status);
+	void										insertFriend(const std::string &friendName, const std::string &friendMsgPerso, Status status);
 	bool										removeFriend(std::string &friendName);
 
 public:

@@ -31,8 +31,8 @@ protected:
 
 
 
-  Function<void (const request::Status &)>						_statusHandler;
-  Function<void (const request::Message &)>						_statusTxtHandler;
+  Function<void (const request::Status &, const request::Message &)>	_statusHandler;
+
   
   // Friends
   Function<void (const request::Username &)>					_addFriendHandler;
@@ -72,8 +72,7 @@ public:
 
 
 
-  virtual void		setStatusHandler(Function<void (const request::Status &)>);
-  virtual void		setStatusTxtHandler(Function<void (const request::Message &)>);
+  virtual void		setStatusHandler(Function<void (const request::Status &, const request::Message &)>);
 
   // Friends
   virtual void		setAddFriendHandler(Function<void (const request::Username &)>);

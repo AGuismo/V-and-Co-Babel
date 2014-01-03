@@ -39,13 +39,23 @@ public:
     {
         if (ConnectWindow->objectName().isEmpty())
             ConnectWindow->setObjectName(QStringLiteral("ConnectWindow"));
-        ConnectWindow->resize(338, 138);
+        ConnectWindow->resize(378, 145);
+        ConnectWindow->setStyleSheet(QLatin1String("ConnectWindow \n"
+"{\n"
+"	border-image: url(./Img/wallpaper-16618.jpg);\n"
+"}"));
         gridLayout = new QGridLayout(ConnectWindow);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         portTcpLineEdit = new QLineEdit(ConnectWindow);
         portTcpLineEdit->setObjectName(QStringLiteral("portTcpLineEdit"));
+        portTcpLineEdit->setStyleSheet(QLatin1String("background-color: rgba(255, 255, 255, 230);\n"
+"border-width: 2px;\n"
+"border-radius: 8px;\n"
+"border-color: rgb(0, 0, 0);\n"
+"min-width: 10em;\n"
+"padding: 2px;"));
         portTcpLineEdit->setMaxLength(5);
 
         gridLayout->addWidget(portTcpLineEdit, 2, 1, 1, 2);
@@ -53,40 +63,85 @@ public:
         passwordLabel = new QLabel(ConnectWindow);
         passwordLabel->setObjectName(QStringLiteral("passwordLabel"));
         QFont font;
+        font.setFamily(QStringLiteral("MS Reference Sans Serif"));
         font.setPointSize(10);
         passwordLabel->setFont(font);
+        passwordLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
 
         gridLayout->addWidget(passwordLabel, 2, 0, 1, 1);
 
         connectPushButton = new QPushButton(ConnectWindow);
         connectPushButton->setObjectName(QStringLiteral("connectPushButton"));
+        connectPushButton->setStyleSheet(QLatin1String("QPushButton#connectPushButton\n"
+"{\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));\n"
+"	border-style: outset;\n"
+"	border-width: 1px;\n"
+"	border-radius: 10px;\n"
+"	border-color: rgb(255, 255, 255);\n"
+"	min-width: 4em;\n"
+"	padding: 6px;\n"
+"}\n"
+"\n"
+" QPushButton#connectPushButton:pressed \n"
+"{\n"
+"	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
+"     border-style: inset;\n"
+" }"));
 
         gridLayout->addWidget(connectPushButton, 3, 2, 1, 1);
 
         ipLineEdit = new QLineEdit(ConnectWindow);
         ipLineEdit->setObjectName(QStringLiteral("ipLineEdit"));
+        ipLineEdit->setStyleSheet(QLatin1String("background-color: rgba(255, 255, 255, 230);\n"
+"border-width: 2px;\n"
+"border-radius: 8px;\n"
+"border-color: rgb(0, 0, 0);\n"
+"min-width: 10em;\n"
+"padding: 2px;"));
         ipLineEdit->setMaxLength(15);
 
         gridLayout->addWidget(ipLineEdit, 1, 1, 1, 2);
 
         serverResponseLabel = new QLabel(ConnectWindow);
         serverResponseLabel->setObjectName(QStringLiteral("serverResponseLabel"));
+        serverResponseLabel->setMinimumSize(QSize(185, 0));
         QFont font1;
         font1.setPointSize(10);
         font1.setBold(true);
         font1.setWeight(75);
         serverResponseLabel->setFont(font1);
+        serverResponseLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
 
         gridLayout->addWidget(serverResponseLabel, 3, 0, 1, 1);
 
         closePushButton = new QPushButton(ConnectWindow);
         closePushButton->setObjectName(QStringLiteral("closePushButton"));
+        closePushButton->setStyleSheet(QLatin1String("QPushButton#closePushButton\n"
+"{\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));\n"
+"	border-style: outset;\n"
+"	border-width: 1px;\n"
+"	border-radius: 10px;\n"
+"	border-color: rgb(255, 255, 255);\n"
+"	min-width: 4em;\n"
+"	padding: 6px;\n"
+"}\n"
+"\n"
+" QPushButton#closePushButton:pressed \n"
+"{\n"
+"	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
+"     border-style: inset;\n"
+" }"));
 
         gridLayout->addWidget(closePushButton, 3, 1, 1, 1);
 
         loginLabel = new QLabel(ConnectWindow);
         loginLabel->setObjectName(QStringLiteral("loginLabel"));
         loginLabel->setFont(font);
+        loginLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
 
         gridLayout->addWidget(loginLabel, 1, 0, 1, 1);
 
@@ -98,11 +153,12 @@ public:
         sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
         label->setSizePolicy(sizePolicy);
         QFont font2;
-        font2.setFamily(QStringLiteral("MS UI Gothic"));
+        font2.setFamily(QStringLiteral("MS Reference Sans Serif"));
         font2.setPointSize(14);
         font2.setBold(true);
         font2.setWeight(75);
         label->setFont(font2);
+        label->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         label->setAlignment(Qt::AlignCenter);
 
         gridLayout->addWidget(label, 0, 0, 1, 3);

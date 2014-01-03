@@ -71,9 +71,12 @@ public:
 	void			on_change_account_password_success();
 	void			on_change_account_password_error(const std::string &error);
 
+	void			on_select_friend();// à coder
 	void			on_add_friend_success();
 	void			on_add_friend_error(const std::string &error);
 
+public:
+	bool			request_server_response(const std::string &title, const std::string &content);
 
 private:
 	void			connected();

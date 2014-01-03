@@ -137,7 +137,7 @@ void		Client::handle_read(const boost::system::error_code& error,
 
 void		Client::async_read()
 {
-  _socket.async_read_some(boost::asio::buffer(_input),
+  _socket.async_read_some(boost::asio::buffer(_input, DEFAULT_SIZE),
 			  boost::bind(&Client::handle_read, boost::dynamic_pointer_cast<Client>(shared_from_this()),
 				      boost::asio::placeholders::error,
 				      boost::asio::placeholders::bytes_transferred));

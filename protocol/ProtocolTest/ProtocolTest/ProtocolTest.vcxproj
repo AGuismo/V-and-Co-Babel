@@ -56,8 +56,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc110-mt-gd-1_55.lib;libboost_filesystem-vc110-mt-gd-1_55.lib;portaudio_x86.lib;celt.lib;opus.lib;silk_common.lib;silk_float.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-11.0;$(SolutionDir)\..\..\Audio\portaudio\build\msvc\Win32\Debug\;$(SolutionDir)\..\..\Audio\opus-1.1\win32\VS2010\Win32\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-gd-1_55.lib;libboost_filesystem-vc120-mt-gd-1_55.lib;portaudio_x86.lib;celt.lib;opus.lib;silk_common.lib;silk_float.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0;$(SolutionDir)\..\..\Audio\portaudio\build\msvc\Win32\Debug\;$(SolutionDir)\..\..\Audio\opus-1.1\win32\VS2010\Win32\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
