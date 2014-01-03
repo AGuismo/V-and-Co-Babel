@@ -22,12 +22,13 @@ void		Application::update_friend_handler(const ARequest &req)
 	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).status;
 	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).username.c_str();
 	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).detail.c_str();
+
+	_friendList.insertFriend(dynamic_cast<const request::friends::server::Update &>(req).username,  dynamic_cast<const request::friends::server::Update &>(req).detail, (Status)dynamic_cast<const request::friends::server::Update &>(req).status);
 }
 
 void		Application::get_friend_request_handler(const ARequest &req)
 {
 	qDebug() << "request friend received";
-
 	std::string content("\"");
 	content += dynamic_cast<const request::friends::client::Request &>(req).from;
 	content += "\" just asked you to be his friend.";
@@ -35,7 +36,6 @@ void		Application::get_friend_request_handler(const ARequest &req)
 	{
 		qDebug() << "request friend accepted";
 		send_request(request::friends::client::Accept(Env::getInstance().userInfo.login, dynamic_cast<const request::friends::client::Request &>(req).from));
-//				send_request(request::friends::client::Accept(dynamic_cast<const request::friends::client::Request &>(req).from, Env::getInstance().userInfo.login));
 		_waitedResponses.push(response_handler(&Application::ignore_response, this));
 	}
 	else
@@ -75,7 +75,9 @@ void  Application::init()
 
 void	Application::triggerStatusHandler(const request::Status &newStatus, const request::Message &msgStatus)
 {
-	get_friend_request_handler(request::friends::client::Request(Env::getInstance().userInfo.login, "shit"));
+//	get_friend_request_handler(request::friends::client::Request(Env::getInstance().userInfo.login, "shit"));
+
+
 //	send_request(request::perso::client::StatusClient(newStatus));
 //	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }

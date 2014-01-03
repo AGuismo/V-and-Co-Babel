@@ -108,7 +108,7 @@
              </attribute>
              <layout class="QGridLayout" name="gridLayout_9">
               <item row="0" column="0" colspan="2">
-               <widget class="FriendListWidget" name="listWidget"/>
+               <widget class="FriendListWidget" name="friendListWidget"/>
               </item>
              </layout>
             </widget>

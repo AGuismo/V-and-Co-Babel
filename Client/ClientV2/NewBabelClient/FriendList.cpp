@@ -10,7 +10,7 @@ Friend							*FriendList::getFriend(std::string &friendName)
 	return NULL;
 }
 
-void							FriendList::insertFriend(std::string &friendName, std::string &friendPersonalMsg, Status friendStatus)
+void							FriendList::insertFriend(const std::string &friendName, const std::string &friendPersonalMsg, Status friendStatus)
 {
 	Friend						newFriend;
 

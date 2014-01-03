@@ -65,7 +65,7 @@ public:
     QTabWidget *FriendTabWidget;
     QWidget *Friends;
     QGridLayout *gridLayout_9;
-    FriendListWidget *listWidget;
+    FriendListWidget *friendListWidget;
     QWidget *Nothing;
     QVBoxLayout *verticalLayout_2;
     QGridLayout *gridLayout_3;
@@ -211,10 +211,10 @@ public:
         gridLayout_9->setSpacing(6);
         gridLayout_9->setContentsMargins(11, 11, 11, 11);
         gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
-        listWidget = new FriendListWidget(Friends);
-        listWidget->setObjectName(QStringLiteral("listWidget"));
+        friendListWidget = new FriendListWidget(Friends);
+        friendListWidget->setObjectName(QStringLiteral("friendListWidget"));
 
-        gridLayout_9->addWidget(listWidget, 0, 0, 1, 2);
+        gridLayout_9->addWidget(friendListWidget, 0, 0, 1, 2);
 
         FriendTabWidget->addTab(Friends, QString());
         Nothing = new QWidget();

@@ -6,6 +6,7 @@
 # include "TCPNetwork.h"
 # include "UDPNetwork.h"
 # include "Protocol.hpp"
+# include  "FriendList.hh"
 # include <stack>
 
 class Application : public IApplication
@@ -15,6 +16,9 @@ public:
   typedef Function<void (const ARequest &)>		callback_handler;
   typedef std::stack<response_handler>			stack_response_handler;
   typedef std::map<request::ID, callback_handler>	request_callback;
+
+private:
+	FriendList			_friendList;
 
 public:
   Application(int ac, char *av[]);
