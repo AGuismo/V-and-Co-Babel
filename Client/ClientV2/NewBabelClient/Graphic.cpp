@@ -7,6 +7,12 @@
 
 void					Graphic::init()
 {
+	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-Smiley-icon.png"), "Online", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-On-icon.png"), "Away", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-Music-icon2.png"), "Occuped", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-icon.png"), "Invisible", QVariant("e"));
+	ui.statusComboBox->setIconSize(QSize(34, 41));
+
 	// Connect Window Triggered
 	connect(ui.actionConnect, SIGNAL(triggered()), this, SLOT(on_connect_window_triggered()));
 	// Login Window Triggered
@@ -61,6 +67,10 @@ void					Graphic::init()
 
 	// Add friend try triggered
 	connect(&_addFriendWindow, SIGNAL(add_try(const std::string &)), this, SLOT(on_try_add_friend(const std::string &)));
+
+
+
+
 }
 
 void					Graphic::on_connection_error(enum ANetwork::SocketState state)
@@ -270,7 +280,7 @@ void					Graphic::on_hang_up_push_button_released()
 void					Graphic::on_change_status_triggered(int newStatus)
 {
 	qDebug() << "changing status here mtfk !";
-	_statusHandler(newStatus, ui.statusLineEdit->text().toStdString());
+	_statusHandler(ui.statusComboBox->currentIndex(), ui.statusLineEdit->text().toStdString());
 }
 
 void					Graphic::on_change_status_txt_triggered()

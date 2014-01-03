@@ -75,11 +75,8 @@ void  Application::init()
 
 void	Application::triggerStatusHandler(const request::Status &newStatus, const request::Message &msgStatus)
 {
-//	get_friend_request_handler(request::friends::client::Request(Env::getInstance().userInfo.login, "shit"));
-
-
-//	send_request(request::perso::client::StatusClient(newStatus));
-//	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+	send_request(request::perso::client::StatusClient(newStatus, msgStatus));
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
 
 void	Application::triggerAddFriendHandler(const request::Username &newFriend)
