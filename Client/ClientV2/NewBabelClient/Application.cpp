@@ -21,16 +21,27 @@ Application::Application(int ac, char *av[]):
 void		Application::update_friend_handler(const ARequest &)
 {
 	qDebug() << "update friend received MOTHERFUCKER";
-	exit(1);
 }
 
-void		Application::get_friend_request_handler(const ARequest &)
+void		Application::get_friend_request_handler(const ARequest &req)
 {
 	qDebug() << "request friend received";
-	if (_graphic.request_server_response("Friend request", "\"Poop\" just asked you to be his friend."))
+
+	std::string content("\"");
+	content += dynamic_cast<const request::friends::client::Request &>(req).from;
+	content += "\" just asked you to be his friend.";
+	if (_graphic.request_server_response("Friend request", content))
+	{
 		qDebug() << "request friend accepted";
+		send_request(request::friends::client::Accept(Env::getInstance().userInfo.login, dynamic_cast<const request::friends::client::Request &>(req).from));
+//				send_request(request::friends::client::Accept(dynamic_cast<const request::friends::client::Request &>(req).from, Env::getInstance().userInfo.login));
+
+	}
 	else
+	{
+	send_request(request::friends::client::Refuse(Env::getInstance().userInfo.login, dynamic_cast<const request::friends::client::Request &>(req).from));
 		qDebug() << "request friend rejected";
+	}
 }
 
 Application::~Application()
