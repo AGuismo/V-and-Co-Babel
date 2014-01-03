@@ -1,6 +1,7 @@
 #include		<cstring>
 #include		<iostream>
 #include		<qdebug.h>
+#include		<QThread>
 #include		"PAudioBuffer.hh"
 
 // CallBacks
@@ -34,7 +35,7 @@ void			PAudioBuffer::sendToNetwork()
       encodedSize = 0;
       compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE, encodedSize);
       buff.assign(compressed, compressed + encodedSize);
-      qDebug() << "Sending packet";
+      qDebug() << QThread::currentThreadId() << "Sending packet";
       //		_bridge.inputDispatch(buff);
       _bridge.inputWrite(buff);
       //myFile << "Data : " << compressed << std::endl;;

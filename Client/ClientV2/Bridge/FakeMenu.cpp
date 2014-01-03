@@ -18,8 +18,8 @@ void		FakeMenu::clicConnect()
   QMutexLocker	_locker(&_sockLocker);
 
   _sock = new QUdpSocket;
-  connect(_sock, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
-  connect(&_bridge, SIGNAL(inputReadReady()), this, SLOT(handleInputRead()));
+  connect(_sock, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()), Qt::QueuedConnection);
+  connect(&_bridge, SIGNAL(inputReadReady()), this, SLOT(handleInputRead()), Qt::QueuedConnection);
   if (!_sock->bind(QHostAddress::Any, _ui->ServerPort->text().toInt()))
     {
       _ui->Display_2->setPlainText("Unable to create server");
@@ -69,14 +69,14 @@ void		FakeMenu::readPendingDatagrams()
   quint16	senderPort;
   QMutexLocker	_locker(&_sockLocker);
 
-  while (_sock->hasPendingDatagrams())
+  if (_sock->hasPendingDatagrams())
     {
 		QByteArray	datagram;
 
 		datagram.resize(_sock->pendingDatagramSize());
 		_sock->readDatagram(datagram.data(), datagram.size(),
 				  &sender, &senderPort);
-      qDebug() << "Read " << datagram.size() << "octets";
+      qDebug() << QThread::currentThreadId() << "Read " << datagram.size() << "octets";
       handleOutputWrite(datagram);
     }
 }
@@ -107,11 +107,12 @@ void				FakeMenu::handleInputRead()
   QByteArray			bytes;
   QMutexLocker			_locker(&_sockLocker);
 
+  qDebug() << QThread::currentThreadId() << "HandleInputRead";
   if (!_sock)
     return ;
   _bridge.inputRead(buff, std::numeric_limits<std::size_t>::max(), false);
   for (AudioBridge::input_buffer::const_iterator it = buff.begin(); it != buff.end(); ++it)
     bytes += *it;
-  qDebug() << "Write " << bytes.size() << "octets";
+  qDebug() << QThread::currentThreadId() << "Write " << bytes.size() << "octets";
   _sock->writeDatagram(bytes, QHostAddress(_clientIP), _clientPort);
 }

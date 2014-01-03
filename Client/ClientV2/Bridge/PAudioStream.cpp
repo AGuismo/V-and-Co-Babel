@@ -1,6 +1,7 @@
 #include		<stdint.h>
 #include		<iomanip> // Debug purpose
 #include		<qdebug.h>
+#include		<QThread>
 #include		<iostream>
 #include		"PAudioStream.hh"
 
@@ -56,16 +57,16 @@ void			PAudioStream::run()
     return ;
   if (Pa_StartStream(_stream) != paNoError)
     return ;
-  qDebug() << "RECORDING, SPEAK INTO THE MICROPHONE PLEASE";
+  qDebug() << QThread::currentThreadId() << "RECORDING, SPEAK INTO THE MICROPHONE PLEASE";
   _start = true;
   while (_start && (error = Pa_IsStreamActive(_stream)) == 1)
     {
       _bridge.outputRead(buff, 65000);
-      qDebug() << "Receiving " << buff.size() << " packets";
+      qDebug() << QThread::currentThreadId() << "Receiving " << buff.size() << " packets";
     }
   if (Pa_IsStreamActive(_stream) == 1)
     Pa_StopStream(_stream);
-  qDebug() << "RECORDING ENDED";
+  qDebug() << QThread::currentThreadId() << "RECORDING ENDED";
   if (error < 0)
     return;
   if ((error = Pa_CloseStream(_stream)) != paNoError)
