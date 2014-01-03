@@ -8,8 +8,11 @@ class FriendListWidget : public QListWidget
 {
 	Q_OBJECT
 
+private:
+	void		insertFriend(const std::string &name, const Status status);
+
 public:
-	void		insertFriend(const std::string &name, Status status);
+	void		updateFriendListWidget(const friend_list_type &friendList);
 
 public:
 	FriendListWidget(QWidget *parent);

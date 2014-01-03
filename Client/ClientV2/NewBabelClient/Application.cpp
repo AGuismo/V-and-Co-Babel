@@ -24,6 +24,7 @@ void		Application::update_friend_handler(const ARequest &req)
 	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).detail.c_str();
 
 	_friendList.insertFriend(dynamic_cast<const request::friends::server::Update &>(req).username,  dynamic_cast<const request::friends::server::Update &>(req).detail, (Status)dynamic_cast<const request::friends::server::Update &>(req).status);
+	_graphic.updateFriendList(_friendList.getFriendList());
 }
 
 void		Application::get_friend_request_handler(const ARequest &req)

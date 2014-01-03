@@ -60,7 +60,7 @@ public:
     QComboBox *statusComboBox;
     QLabel *label_4;
     QLineEdit *statusLineEdit;
-    QLabel *label_3;
+    QLabel *userNameLabel;
     QGridLayout *gridLayout_6;
     QTabWidget *FriendTabWidget;
     QWidget *Friends;
@@ -185,17 +185,17 @@ public:
 
         gridLayout_2->addWidget(statusLineEdit, 1, 1, 1, 1);
 
-        label_3 = new QLabel(layoutWidget);
-        label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setEnabled(true);
+        userNameLabel = new QLabel(layoutWidget);
+        userNameLabel->setObjectName(QStringLiteral("userNameLabel"));
+        userNameLabel->setEnabled(true);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(label_3->sizePolicy().hasHeightForWidth());
-        label_3->setSizePolicy(sizePolicy);
-        label_3->setFont(font);
+        sizePolicy.setHeightForWidth(userNameLabel->sizePolicy().hasHeightForWidth());
+        userNameLabel->setSizePolicy(sizePolicy);
+        userNameLabel->setFont(font);
 
-        gridLayout_2->addWidget(label_3, 0, 1, 1, 1);
+        gridLayout_2->addWidget(userNameLabel, 0, 1, 1, 1);
 
 
         gridLayout_5->addLayout(gridLayout_2, 0, 0, 1, 1);
@@ -448,7 +448,7 @@ public:
         actionAccountOptions->setText(QApplication::translate("GraphicClass", "Account options", 0));
         label_4->setText(QApplication::translate("GraphicClass", "Icon", 0));
         statusLineEdit->setText(QApplication::translate("GraphicClass", "Status here", 0));
-        label_3->setText(QApplication::translate("GraphicClass", "User", 0));
+        userNameLabel->setText(QApplication::translate("GraphicClass", "User", 0));
         FriendTabWidget->setTabText(FriendTabWidget->indexOf(Friends), QApplication::translate("GraphicClass", "Friends", 0));
         FriendTabWidget->setTabText(FriendTabWidget->indexOf(Nothing), QApplication::translate("GraphicClass", "Nothing", 0));
         callFriendLeftPushButton->setText(QApplication::translate("GraphicClass", "Call", 0));

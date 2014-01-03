@@ -104,6 +104,7 @@ void					Graphic::on_login_success()
   _loginWindow.displayLoginResponse(QString("Logged in"));
   loggedIn();
   Env::getInstance().userInfo.login = Env::getInstance().userInfo.loginTry;
+  loggedIn();
   QTimer::singleShot(800, &_loginWindow, SLOT(on_close_button_clicked()));
 }
 
@@ -317,7 +318,11 @@ bool					Graphic::request_server_response(const std::string &title, const std::s
 
 
 
-
+void					Graphic::updateFriendList(const friend_list_type &friendList)
+{
+	ui.friendListWidget->updateFriendListWidget(friendList);
+//	_friendListWidget.updateFriendListWidget(friendList);
+}
 
 
 
@@ -382,6 +387,7 @@ void					Graphic::loggedIn()
 	ui.actionDeleteAccount->setEnabled(false);
 	ui.actionCreateAccount->setEnabled(false);
 	_loginWindow.setEnabled(false);
+	ui.userNameLabel->setText(QString(Env::getInstance().userInfo.login.c_str()));
 }
 
 void					Graphic::loggedOut()
