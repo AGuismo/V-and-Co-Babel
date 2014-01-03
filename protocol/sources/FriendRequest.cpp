@@ -195,6 +195,14 @@ namespace	request
 	  return (false);
 
 	const Request	*tmp = dynamic_cast<const Request *>(req);
+	std::cout << std::endl;
+	std::cout << "__________________________" << std::endl;
+	std::cout << "FROM DB : [" << from << "]" << std::endl;
+	std::cout << "FROM REQ : [" << tmp->from << "]" << std::endl;
+	std::cout << "TO DB : [" << to << "]" << std::endl;
+	std::cout << "TO REQ : [" << tmp->to << "]" << std::endl;
+	std::cout << "__________________________" << std::endl;
+	std::cout << std::endl;
 	return (tmp->from == from && tmp->to == to);
       }
 

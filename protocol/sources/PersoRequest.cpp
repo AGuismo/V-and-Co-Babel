@@ -187,7 +187,7 @@ namespace	request
       {
 	StatusDetailLen	DetailsLen;
 
-	Perso::serialize(rhs);
+	Perso::unserialize(rhs);
 
 	rhs >> _status;
 

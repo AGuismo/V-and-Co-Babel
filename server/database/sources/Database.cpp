@@ -405,3 +405,23 @@ bool		Database::clientExist(const std::string &login,
 
   return (it != _clients.end() && it->second->password == password && it->second->rights == rights);
 }
+
+bool		Database::waitRequest(const std::string &login)
+{
+  clients::const_iterator	it = _clients.find(login);
+
+  if (it->second->waitRequest.size() == 0)
+    return false;
+  else
+    return true;
+}
+
+std::vector<ARequest*>	Database::getAllRequest(const std::string &login)
+{
+  clients::const_iterator	it = _clients.find(login);
+  std::vector<ARequest*>	req;
+
+  for (list_request::iterator itReq = it->second->waitRequest.begin(); itReq != it->second->waitRequest.end(); ++itReq)
+    req.push_back((*itReq)->clone());
+  return (req);
+}

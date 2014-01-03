@@ -33,6 +33,7 @@ public:
 
 public:
   static ARequest		*consume(const serialized_data &, int &);
+  static ARequest		*consume(Protocol &, int &);
   static serialized_data	product(const ARequest &);
 
 public:

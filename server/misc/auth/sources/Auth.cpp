@@ -108,6 +108,17 @@ void	Auth::connect(const std::list<IClient::Pointer> &clients, IClient::Pointer 
       sender->Username(origin->_name);
       if (_db.listFriend(sender->Username(), friends))
 	sendStatusFriends(sender, friends, clients, request::User::Status::CONNECTED);
+      if (_db.waitRequest(sender->Username()))
+	{
+	  std::vector<ARequest *>	reqList = _db.getAllRequest(sender->Username());
+
+	  for (std::vector<ARequest *>::const_iterator it = reqList.begin();
+	       it != reqList.end(); ++it)
+	    {
+	      sender->serialize_data(**it);
+	      delete *it;
+	    }
+	}
     }
   else
     {
