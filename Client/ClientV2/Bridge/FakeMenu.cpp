@@ -65,16 +65,17 @@ FakeMenu::~FakeMenu()
 
 void		FakeMenu::readPendingDatagrams()
 {
-  QByteArray	datagram;
   QHostAddress	sender;
   quint16	senderPort;
   QMutexLocker	_locker(&_sockLocker);
 
   while (_sock->hasPendingDatagrams())
     {
-      datagram.resize(_sock->pendingDatagramSize());
-      _sock->readDatagram(datagram.data(), datagram.size(),
-			  &sender, &senderPort);
+		QByteArray	datagram;
+
+		datagram.resize(_sock->pendingDatagramSize());
+		_sock->readDatagram(datagram.data(), datagram.size(),
+				  &sender, &senderPort);
       qDebug() << "Read " << datagram.size() << "octets";
       handleOutputWrite(datagram);
     }
