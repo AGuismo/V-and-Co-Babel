@@ -1,6 +1,16 @@
 #ifndef GRAPHIC_H
 #define GRAPHIC_H
 
+#ifdef WIN32
+	#define		NOMINMAX
+	#undef		min
+	#undef		max
+	#include	"windows.h"
+#endif
+
+#include	<QTimer>
+#include	<QTime>
+
 #include		<QtWidgets/QMainWindow>
 #include		"ui_Graphic.h"
 #include		"AGraphic.hh"
@@ -16,6 +26,8 @@ private:
 	ConnectWindow			_connectWindow;
 	LoginWindow				_loginWindow;
 	CreateAccountWindow		_createAccountWindow;
+	QLabel					*TimeLabel;
+	QTime					time;
 
 public:
 	Graphic(QWidget *parent = 0);

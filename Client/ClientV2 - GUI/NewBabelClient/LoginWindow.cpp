@@ -8,6 +8,8 @@ LoginWindow::LoginWindow(QWidget *parent)
 	setModal(true);
 	connect(ui.closePushButton, SIGNAL(clicked()), this, SLOT(on_close_button_clicked()));
 	connect(ui.loginPushButton, SIGNAL(clicked()), this, SLOT(on_login_button_clicked()));
+
+	this->setFixedSize(this->size());
 }
 
 void				LoginWindow::on_close_button_clicked()
