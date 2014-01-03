@@ -2,6 +2,7 @@
 #include	"Function.hpp"
 #include	"AuthRequest.hh"
 #include	"PersoRequest.hh"
+#include	"FriendRequest.hh"
 #include	"Protocol.hpp"
 #include	"Env.hh"
 
@@ -12,12 +13,24 @@ Application::Application(int ac, char *av[]):
 {
   _requestActions[request::server::perso::PING] = callback_handler(&Application::ping_handler, this);
   _requestActions[request::server::friends::UPDATE] = callback_handler(&Application::update_friend_handler, this);
+//  request::friends::client::Accept(from, to);
+  _requestActions[request::client::friends::REQUEST] = callback_handler(&Application::get_friend_request_handler, this);
+//  request::friends::client::Request
 }
 
 void		Application::update_friend_handler(const ARequest &)
 {
-	qDebug() << "update friend received";
+	qDebug() << "update friend received MOTHERFUCKER";
 	exit(1);
+}
+
+void		Application::get_friend_request_handler(const ARequest &)
+{
+	qDebug() << "request friend received";
+	if (_graphic.request_server_response("Friend request", "\"Poop\" just asked you to be his friend."))
+		qDebug() << "request friend accepted";
+	else
+		qDebug() << "request friend rejected";
 }
 
 Application::~Application()
@@ -41,28 +54,22 @@ void  Application::init()
   _graphic.setDesAuthentificationHandler(Function<void ()>(&Application::triggerDesAuthentification, this));
 
   // Here we go !
-  _graphic.setStatusHandler(Function<void (const request::Status &)>(&Application::triggerStatusHandler, this));	
-  _graphic.setStatusTxtHandler(Function<void (const request::Message &)>(&Application::triggerStatusTxtHandler, this));
+  _graphic.setStatusHandler(Function<void (const request::Status &, const request::Message &)>(&Application::triggerStatusHandler, this));	
   _graphic.setAddFriendHandler(Function<void (const request::Username &)>(&Application::triggerAddFriendHandler, this));
   _graphic.setDelFriendHandler(Function<void (const request::Username &)>(&Application::triggerDelFriendHandler, this));
 }
 
 
-void	Application::triggerStatusHandler(const request::Status &newStatus)
+void	Application::triggerStatusHandler(const request::Status &newStatus, const request::Message &msgStatus)
 {
+	get_friend_request_handler(request::friends::client::Request(Env::getInstance().userInfo.login, "shit"));
 //	send_request(request::perso::client::StatusClient(newStatus));
-	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-}
-
-void	Application::triggerStatusTxtHandler(const request::Message &newStatusTxt)
-{
-//	send_request(request::perso::client::StatusClient(newStatusTxt));
-	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+//	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
 
 void	Application::triggerAddFriendHandler(const request::Username &newFriend)
 {
-//	send_request(request::);
+	send_request(request::friends::client::Request(Env::getInstance().userInfo.login, newFriend));
 	_waitedResponses.push(response_handler(&Application::add_friend_response, this));
 }
 

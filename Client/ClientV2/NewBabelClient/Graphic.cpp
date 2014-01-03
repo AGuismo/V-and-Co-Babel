@@ -99,7 +99,7 @@ void					Graphic::on_login_success()
 
 void					Graphic::on_desauthentification_success()
 {
-  loggedIn();
+  loggedOut();
 }
 
 void					Graphic::on_desauthentification_error()
@@ -270,13 +270,13 @@ void					Graphic::on_hang_up_push_button_released()
 void					Graphic::on_change_status_triggered(int newStatus)
 {
 	qDebug() << "changing status here mtfk !";
-	_statusHandler(newStatus);
+	_statusHandler(newStatus, ui.statusLineEdit->text().toStdString());
 }
 
 void					Graphic::on_change_status_txt_triggered()
 {
 	qDebug() << "changing status txt here mtfk !";
-	_statusTxtHandler(ui.statusLineEdit->text().toStdString());
+	_statusHandler(ui.statusComboBox->currentIndex(), ui.statusLineEdit->text().toStdString());
 	ui.statusLineEdit->setEnabled(false);
 	QTimer::singleShot(800, this, SLOT(enable_status_txt_change()));
 }
@@ -291,6 +291,19 @@ void					Graphic::on_unset_auto_answer_triggered()
 	qDebug() << "unsetting auto answer here mtfk !";
 }
 
+
+
+bool					Graphic::request_server_response(const std::string &title, const std::string &content)
+{
+
+	if (QMessageBox::Yes == QMessageBox(QMessageBox::Information, QString(title.c_str()), QString(content.c_str()), QMessageBox::Yes|QMessageBox::No).exec()) 
+	{
+		qDebug() << "Accepted !";
+		return true;
+	}
+	return false;
+	qDebug() << "Decline !";
+}
 
 
 

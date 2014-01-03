@@ -32,8 +32,7 @@ private:
   void	triggerTryChangeAccountPrivacy(const request::Privacy &);
 
   // Work needed here
-  void	triggerStatusHandler(const request::Status &);
-  void	triggerStatusTxtHandler(const request::Message &);
+  void	triggerStatusHandler(const request::Status &, const request::Message &);
 
   void	triggerAddFriendHandler(const request::Username &);
   void	triggerDelFriendHandler(const request::Username &);
@@ -73,6 +72,7 @@ private:
 private:
   void	ping_handler(const ARequest &);
   void	update_friend_handler(const ARequest &);
+  void	get_friend_request_handler(const ARequest &);
 
 public:
   void  init();
