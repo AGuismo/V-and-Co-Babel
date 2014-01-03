@@ -3,12 +3,10 @@
 
 ANetwork::ANetwork()
 {
-
 }
 
 ANetwork::~ANetwork()
 {
-
 }
 
 void  ANetwork::setErrorHandler(Function<void (enum ANetwork::SocketState)> handler)

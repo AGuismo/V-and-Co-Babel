@@ -1,11 +1,16 @@
 #include  <QApplication>
 #include  <QtWidgets>
+#include  "MyApplication.hh"
+
 
 int main(int argc, char *argv[])
 {
   QApplication  a(argc, argv);
-  QWidget       w;
-  
-  w.show();
-  return a.exec();
+  MyApplication app(argc, argv);
+
+  // audio
+  //QObject::connect(&bridge, SIGNAL(outputReadReady()), &audioLayer, SLOT(handleOutputRead()));
+
+  app.run();
+  a.exec();
 }

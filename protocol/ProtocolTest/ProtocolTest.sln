@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProtocolTest", "ProtocolTest\ProtocolTest.vcxproj", "{145F8F4F-A9BB-4093-A69D-0B12DA6CBE92}"
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProtocolTest", "ProtocolTest\ProtocolTest.vcxproj", "{50A48BBF-BC08-43D9-86DE-BD29886B15FD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Protocol", "..\Protocol\Protocol.vcxproj", "{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "protocol", "..\Protocol\protocol.vcxproj", "{526B2A25-7A1E-4DA4-AF53-75EF2DFA48C8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "serializer", "..\..\serializer\serializer\serializer.vcxproj", "{75219CF9-86E6-419B-B2E7-31EEB47AC113}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "serializer", "..\..\serializer\serializer\serializer.vcxproj", "{1CCD039D-D05C-48C7-AD60-5A22C5314646}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +13,18 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{145F8F4F-A9BB-4093-A69D-0B12DA6CBE92}.Debug|Win32.ActiveCfg = Debug|Win32
-		{145F8F4F-A9BB-4093-A69D-0B12DA6CBE92}.Debug|Win32.Build.0 = Debug|Win32
-		{145F8F4F-A9BB-4093-A69D-0B12DA6CBE92}.Release|Win32.ActiveCfg = Release|Win32
-		{145F8F4F-A9BB-4093-A69D-0B12DA6CBE92}.Release|Win32.Build.0 = Release|Win32
-		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}.Debug|Win32.Build.0 = Debug|Win32
-		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}.Release|Win32.ActiveCfg = Release|Win32
-		{D69A5C00-CD7C-4BA7-A23E-4D2BB1D8B76C}.Release|Win32.Build.0 = Release|Win32
-		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Debug|Win32.ActiveCfg = Debug|Win32
-		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Debug|Win32.Build.0 = Debug|Win32
-		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Release|Win32.ActiveCfg = Release|Win32
-		{75219CF9-86E6-419B-B2E7-31EEB47AC113}.Release|Win32.Build.0 = Release|Win32
+		{50A48BBF-BC08-43D9-86DE-BD29886B15FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{50A48BBF-BC08-43D9-86DE-BD29886B15FD}.Debug|Win32.Build.0 = Debug|Win32
+		{50A48BBF-BC08-43D9-86DE-BD29886B15FD}.Release|Win32.ActiveCfg = Release|Win32
+		{50A48BBF-BC08-43D9-86DE-BD29886B15FD}.Release|Win32.Build.0 = Release|Win32
+		{526B2A25-7A1E-4DA4-AF53-75EF2DFA48C8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{526B2A25-7A1E-4DA4-AF53-75EF2DFA48C8}.Debug|Win32.Build.0 = Debug|Win32
+		{526B2A25-7A1E-4DA4-AF53-75EF2DFA48C8}.Release|Win32.ActiveCfg = Release|Win32
+		{526B2A25-7A1E-4DA4-AF53-75EF2DFA48C8}.Release|Win32.Build.0 = Release|Win32
+		{1CCD039D-D05C-48C7-AD60-5A22C5314646}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1CCD039D-D05C-48C7-AD60-5A22C5314646}.Debug|Win32.Build.0 = Debug|Win32
+		{1CCD039D-D05C-48C7-AD60-5A22C5314646}.Release|Win32.ActiveCfg = Release|Win32
+		{1CCD039D-D05C-48C7-AD60-5A22C5314646}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

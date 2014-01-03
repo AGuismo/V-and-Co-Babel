@@ -7,7 +7,7 @@
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -24,13 +24,13 @@
     <ClCompile Include="..\..\test\sources\FakeAudio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sources\Audio\OpAudioCodec.cpp">
+    <ClCompile Include="..\..\test\sources\OpAudioCodec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sources\Audio\PAudioBuffer.cpp">
+    <ClCompile Include="..\..\test\sources\PAudioBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sources\Audio\PAudioStream.cpp">
+    <ClCompile Include="..\..\test\sources\PAudioStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,22 +41,22 @@
     <ClInclude Include="..\..\test\include\FakeAudio.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\Audio\AudioParams.hh">
+    <ClInclude Include="..\..\test\include\Audio\AudioParams.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\Audio\IAudioCodec.hh">
+    <ClInclude Include="..\..\test\include\Audio\IAudioCodec.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\Audio\IAudioStream.hh">
+    <ClInclude Include="..\..\test\include\Audio\IAudioStream.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\Audio\OpAudioCodec.hh">
+    <ClInclude Include="..\..\test\include\Audio\OpAudioCodec.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\Audio\PAudioBuffer.hh">
+    <ClInclude Include="..\..\test\include\Audio\PAudioBuffer.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\Audio\PAudioStream.hh">
+    <ClInclude Include="..\..\test\include\Audio\PAudioStream.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

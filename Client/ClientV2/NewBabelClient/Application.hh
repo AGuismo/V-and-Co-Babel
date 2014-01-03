@@ -28,6 +28,22 @@ private:
   void	triggerDesAuthentification();
   void	triggerTryCreateAccount(const request::Username &, const request::PasswordType &);
   void	triggerTryDeleteAccount(const request::Username &, const request::PasswordType &);
+  void	triggerTryChangeAccountPassword(const request::PasswordType &, const request::PasswordType &);
+  void	triggerTryChangeAccountPrivacy(const request::Privacy &);
+
+  // Work needed here
+  void	triggerStatusHandler(const request::Status &);
+  void	triggerStatusTxtHandler(const request::Message &);
+
+  void	triggerAddFriendHandler(const request::Username &);
+  void	triggerDelFriendHandler(const request::Username &);
+
+  void	triggerCallHandler(const request::Username &);
+  void	triggerHangUpHandler();
+  void	triggerChatHandler(const request::Username &, const request::Message &);
+  void	triggerSetAnswerHandler();
+  void	triggerUnSetAnswerHandler();
+  // End of need work here :p
 
 private:
   void  bufferise(const ANetwork::ByteArray &);
@@ -40,9 +56,23 @@ private:
   void  login_response(const ARequest &);
   void  create_account_response(const ARequest &);
   void  delete_account_response(const ARequest &);
+  void  change_account_password_response(const ARequest &);
+  void  change_account_privacy_response(const ARequest &);
+
+  // Work needed here
+  void	add_friend_response(const ARequest &);		
+  void	del_friend_response(const ARequest &);
+  void	call_response(const ARequest &);
+  void	hang_up_response(const ARequest &);
+  void	set_answer_response(const ARequest &);
+  void	unset_answer_response(const ARequest &);
+  void	ignore_response(const ARequest &);
+  // End of work needed here
+
 
 private:
   void	ping_handler(const ARequest &);
+  void	update_friend_handler(const ARequest &);
 
 public:
   void  init();
@@ -50,14 +80,14 @@ public:
   void  stop();
 
 private:
-  int				_ac;
-  QApplication			_app;
-  Graphic			_graphic;
-  TCPNetwork			_tcpNetwork;
-  UDPNetwork			_udpNetwork;
+  int						_ac;
+  QApplication				_app;
+  Graphic					_graphic;
+  TCPNetwork				_tcpNetwork;
+  UDPNetwork				_udpNetwork;
   Protocol::serialized_data	_buffer;
   stack_response_handler	_waitedResponses;
-  request_callback		_requestActions;
+  request_callback			_requestActions;
 };
 
 #endif // APPLICATION_HH

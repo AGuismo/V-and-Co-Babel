@@ -3,16 +3,25 @@
 #include	"AuthRequest.hh"
 #include	"PersoRequest.hh"
 #include	"Protocol.hpp"
+#include	"Env.hh"
+
+#include	<QDebug>
 
 Application::Application(int ac, char *av[]):
   _ac(ac), _app(_ac, av)
 {
   _requestActions[request::server::perso::PING] = callback_handler(&Application::ping_handler, this);
+  _requestActions[request::server::friends::UPDATE] = callback_handler(&Application::update_friend_handler, this);
+}
+
+void		Application::update_friend_handler(const ARequest &)
+{
+	qDebug() << "update friend received";
+	exit(1);
 }
 
 Application::~Application()
 {
-
 }
 
 void  Application::init()
@@ -26,23 +35,85 @@ void  Application::init()
   _graphic.setTryConnectHandler(Function<void (unsigned short, const std::string &)>(&TCPNetwork::tryConnect, &_tcpNetwork));
   _graphic.setTryAuthentificationHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryLogin, this));
   _graphic.setTryCreateAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryCreateAccount, this));
-
+  _graphic.setTryChangeAccountPasswordHandler(Function<void (const request::PasswordType &, const request::PasswordType &)>(&Application::triggerTryChangeAccountPassword, this));
+  _graphic.setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)>(&Application::triggerTryChangeAccountPrivacy, this));
   _graphic.setTryDeleteAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryDeleteAccount, this));
-
   _graphic.setDesAuthentificationHandler(Function<void ()>(&Application::triggerDesAuthentification, this));
+
+  // Here we go !
+  _graphic.setStatusHandler(Function<void (const request::Status &)>(&Application::triggerStatusHandler, this));	
+  _graphic.setStatusTxtHandler(Function<void (const request::Message &)>(&Application::triggerStatusTxtHandler, this));
+  _graphic.setAddFriendHandler(Function<void (const request::Username &)>(&Application::triggerAddFriendHandler, this));
+  _graphic.setDelFriendHandler(Function<void (const request::Username &)>(&Application::triggerDelFriendHandler, this));
 }
 
-void  Application::run()
+
+void	Application::triggerStatusHandler(const request::Status &newStatus)
 {
-  _tcpNetwork.run();
-  _graphic.run();
-  _app.exec();
+//	send_request(request::perso::client::StatusClient(newStatus));
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
 
-void  Application::stop()
+void	Application::triggerStatusTxtHandler(const request::Message &newStatusTxt)
 {
-
+//	send_request(request::perso::client::StatusClient(newStatusTxt));
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
+
+void	Application::triggerAddFriendHandler(const request::Username &newFriend)
+{
+//	send_request(request::);
+	_waitedResponses.push(response_handler(&Application::add_friend_response, this));
+}
+
+void  Application::add_friend_response(const ARequest &req)
+{
+  if (req.code() == request::server::OK)
+    {
+      _graphic.on_add_friend_success();
+      return ;
+    }
+	_graphic.on_add_friend_error("User do not exist");
+}
+
+void	Application::triggerDelFriendHandler(const request::Username &)
+{
+//	send_request(request:);
+	_waitedResponses.push(response_handler(&Application::del_friend_response, this));
+}
+
+void  Application::del_friend_response(const ARequest &req)
+{
+	(void)req;
+}
+
+
+
+
+/*void	Application::triggerHandler(const request: &)
+{
+	send_request(request:);
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+}
+
+void  Application::_response(const ARequest &req)
+{
+  if (req.code() == request::server::OK)
+    {
+//      _graphic
+      return ;
+    }
+//  _graphic
+}*/
+
+
+
+
+
+
+
+
+
 
 void  Application::triggerUdpError(ANetwork::SocketState st)
 {
@@ -53,6 +124,19 @@ void  Application::triggerTryConnect(const std::string &ip, unsigned short port)
 {
   _tcpNetwork.tryConnect(port, ip);
   _waitedResponses.push(response_handler(&Application::connection_response, this));
+}
+
+
+void	Application::triggerTryChangeAccountPassword(const request::PasswordType &currentPassword, const request::PasswordType &newPassword)
+{
+	send_request(request::auth::client::ModifyClient(Env::getInstance().userInfo.loginTry, md5(currentPassword), md5(newPassword)));
+	_waitedResponses.push(response_handler(&Application::change_account_password_response, this));
+}
+
+void	Application::triggerTryChangeAccountPrivacy(const request::Privacy &newPrivacy)
+{
+	send_request(request::perso::client::ModifyPrivacy(newPrivacy));
+	_waitedResponses.push(response_handler(&Application::change_account_privacy_response, this));
 }
 
 void  Application::triggerDesAuthentification()
@@ -94,6 +178,30 @@ void  Application::create_account_response(const ARequest &req)
   _graphic.on_create_account_error("Creation Error");
 }
 
+
+void  Application::change_account_password_response(const ARequest &req)
+{
+	qDebug() << "return change : " << req.code();
+  if (req.code() == request::server::OK)
+    {
+      _graphic.on_change_account_password_success();
+      return ;
+    }
+  _graphic.on_change_account_password_error("Error, password unchanged");
+}
+
+
+void  Application::change_account_privacy_response(const ARequest &req)
+{
+  if (req.code() == request::server::OK)
+    {
+      _graphic.on_change_account_privacy_success();
+      return ;
+    }
+  _graphic.on_change_account_privacy_error("Error, privacy settings unchanged");
+}
+
+
 void  Application::delete_account_response(const ARequest &req)
 {
   if (req.code() == request::server::OK)
@@ -109,11 +217,16 @@ void  Application::desauthentification_response(const ARequest &req)
   if (req.code() == request::server::OK)
     {
       _graphic.on_desauthentification_success();
-      qDebug() << "oh mon keke il a deco, le batard ! (des-response ok)";
+      qDebug() << "(des-response ok)";
       return ;
     }
   _graphic.on_desauthentification_error();
-  qDebug() << "oh mon keke il a deco, le batard ! (des-response not ok)";
+  qDebug() << "(des-response not ok)";
+}
+
+void  Application::ignore_response(const ARequest & req)
+{
+	(void)req;
 }
 
 void  Application::triggerTryLogin(const request::Username &login, const request::PasswordType &password)
@@ -189,4 +302,15 @@ void  Application::triggerAvailableData(const ANetwork::ByteArray data)
 void	Application::ping_handler(const ARequest &req)
 {
   send_request(request::perso::client::Pong(dynamic_cast<const request::perso::server::Ping &>(req)._id));
+}
+
+void  Application::run()
+{
+  _tcpNetwork.run();
+  _graphic.run();
+  _app.exec();
+}
+
+void  Application::stop()
+{
 }

@@ -69,7 +69,7 @@ void		Client::close()
 {
   _pongTimer.cancel();
   _service.post(boost::bind(&Server::handleClientClose, _server, share()));
-  _socket.cancel();
+  //_socket.close();
 }
 
 void		Client::handle_write(const boost::system::error_code &error,

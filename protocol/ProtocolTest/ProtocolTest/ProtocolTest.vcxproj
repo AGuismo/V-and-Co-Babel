@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -11,23 +11,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{145F8F4F-A9BB-4093-A69D-0B12DA6CBE92}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{50A48BBF-BC08-43D9-86DE-BD29886B15FD}</ProjectGuid>
     <RootNamespace>ProtocolTest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -40,18 +39,15 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\..\include;$(SolutionDir)\..\test\include;$(SolutionDir)\..\API;$(SolutionDir)\..\..\Serializer\include;$(IncludePath);C:\program files\boost\boost_1_55_0\;$(SolutionDir)\..\..\Audio\portaudio\include;$(SolutionDir)\..\..\Audio\opus-1.1\include;$(SolutionDir)\..\include\Audio</IncludePath>
-    <LibraryPath>$(SolutionDir)\..\..\Audio\portaudio\build\msvc\Win32\Debug\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);$(SolutionDir)\..\include;$(SolutionDir)\..\test\include;$(SolutionDir)\..\API;$(SolutionDir)\..\..\Serializer\include;C:\program files\boost\boost_1_55_0\;$(SolutionDir)\..\..\Audio\portaudio\include;$(SolutionDir)\..\..\Audio\opus-1.1\include;$(ProjectDir)\..\..\test\include\Audio</IncludePath>
+    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);$(SolutionDir)\..\..\Audio\portaudio\build\msvc\Win32\Debug\</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)\..\..\include;$(SolutionDir)\..\include;$(SolutionDir)\..\..\..\libraries\network\network\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);$(SolutionDir)\..\include;$(SolutionDir)\..\test\include;$(SolutionDir)\..\API;$(SolutionDir)\..\..\Serializer\include;C:\program files\boost\boost_1_55_0\;$(SolutionDir)\..\..\Audio\portaudio\include;$(SolutionDir)\..\..\Audio\opus-1.1\include;$(ProjectDir)\..\..\test\include\Audio</IncludePath>
+    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);$(SolutionDir)\..\..\Audio\portaudio\build\msvc\Win32\Debug\</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);_WIN32_WINNT=0x0501</PreprocessorDefinitions>
@@ -60,8 +56,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc120-mt-gd-1_55.lib;libboost_filesystem-vc120-mt-gd-1_55.lib;portaudio_x86.lib;celt.lib;opus.lib;silk_common.lib;silk_float.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-12.0;$(SolutionDir)\..\..\Audio\portaudio\build\msvc\Win32\Debug\;$(SolutionDir)\..\..\Audio\opus-1.1\win32\VS2010\Win32\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc110-mt-gd-1_55.lib;libboost_filesystem-vc110-mt-gd-1_55.lib;portaudio_x86.lib;celt.lib;opus.lib;silk_common.lib;silk_float.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-11.0;$(SolutionDir)\..\..\Audio\portaudio\build\msvc\Win32\Debug\;$(SolutionDir)\..\..\Audio\opus-1.1\win32\VS2010\Win32\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,28 +76,30 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libboost_system-vc110-mt-gd-1_55.lib;libboost_filesystem-vc110-mt-gd-1_55.lib;portaudio_x86.lib;celt.lib;opus.lib;silk_common.lib;silk_float.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Boost\boost_1_55_0\lib32-msvc-11.0;$(SolutionDir)\..\..\Audio\portaudio\build\msvc\Win32\Debug\;$(SolutionDir)\..\..\Audio\opus-1.1\win32\VS2010\Win32\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\sources\Audio\OpAudioCodec.cpp" />
-    <ClCompile Include="..\..\sources\Audio\PAudioBuffer.cpp" />
-    <ClCompile Include="..\..\sources\Audio\PAudioStream.cpp" />
-    <ClCompile Include="..\..\test\sources\Bridge.cpp" />
-    <ClCompile Include="..\..\test\sources\FakeAudio.cpp" />
-    <ClCompile Include="..\..\test\sources\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Protocol\Protocol.vcxproj">
-      <Project>{d69a5c00-cd7c-4ba7-a23e-4d2bb1d8b76c}</Project>
+    <ProjectReference Include="..\..\Protocol\protocol.vcxproj">
+      <Project>{526b2a25-7a1e-4da4-af53-75ef2dfa48c8}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\Audio\AudioParams.hh" />
-    <ClInclude Include="..\..\include\Audio\IAudioCodec.hh" />
-    <ClInclude Include="..\..\include\Audio\IAudioStream.hh" />
-    <ClInclude Include="..\..\include\Audio\OpAudioCodec.hh" />
-    <ClInclude Include="..\..\include\Audio\PAudioBuffer.hh" />
-    <ClInclude Include="..\..\include\Audio\PAudioStream.hh" />
+    <ClCompile Include="..\..\test\sources\Bridge.cpp" />
+    <ClCompile Include="..\..\test\sources\FakeAudio.cpp" />
+    <ClCompile Include="..\..\test\sources\main.cpp" />
+    <ClCompile Include="..\..\test\sources\OpAudioCodec.cpp" />
+    <ClCompile Include="..\..\test\sources\PAudioBuffer.cpp" />
+    <ClCompile Include="..\..\test\sources\PAudioStream.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\test\include\Audio\AudioParams.hh" />
+    <ClInclude Include="..\..\test\include\Audio\IAudioCodec.hh" />
+    <ClInclude Include="..\..\test\include\Audio\IAudioStream.hh" />
+    <ClInclude Include="..\..\test\include\Audio\OpAudioCodec.hh" />
+    <ClInclude Include="..\..\test\include\Audio\PAudioBuffer.hh" />
+    <ClInclude Include="..\..\test\include\Audio\PAudioStream.hh" />
     <ClInclude Include="..\..\test\include\Bridge.hh" />
     <ClInclude Include="..\..\test\include\FakeAudio.hh" />
   </ItemGroup>

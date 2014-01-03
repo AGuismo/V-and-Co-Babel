@@ -25,15 +25,29 @@ protected:
   Function<void (const request::Username &, const request::PasswordType &)> 	_tryDeleteAccountHandler;
 
   // Personal changes
+  Function<void (const request::PasswordType &, const request::PasswordType &)>	_tryChangePasswordHandler;
+  Function<void (const request::Privacy &)>										_tryChangePrivacyHandler;
 
-  // Friend
-  Function<void (const std::string &, bool)>				_friendRequestResponseHandler;
-  Function<void (const std::string &)>						_askForFriendHandler;
 
+
+
+  Function<void (const request::Status &)>						_statusHandler;
+  Function<void (const request::Message &)>						_statusTxtHandler;
+  
+  // Friends
+  Function<void (const request::Username &)>					_addFriendHandler;
+  Function<void (const request::Username &)>					_delFriendHandler;
+  
   // Calls
-  Function<void (bool)>										_callResponseHandler;
-  Function<void ()>											_hangupHandler;
+  Function<void (const request::Username &)>					_callHandler;
+  Function<void ()>												_hangupHandler;
 
+  // Chat
+  Function<void (const request::Username &, const std::string &)> _chatHandler;
+  
+  // Answering machine
+  Function<void ()>												_setAnswerHandler;
+  Function<void ()>												_unSetAnswerHandler;
 
 public:
   // Connection
@@ -52,28 +66,29 @@ public:
   virtual void		setTryDeleteAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>);
 
   // Personal changes
+  virtual void		setTryChangeAccountPasswordHandler(Function<void (const request::PasswordType &, const request::PasswordType &)>);
+  virtual void		setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)>);
 
-  // Friend
-  //virtual void		setFriendRequestResponse(Function<void (const std::string &, bool)>); // To do
 
-  // Calls
-  //virtual void		setCallResponse(Function<void (bool)>); // To do
-  //virtual void		setHangup(Function<void ()>); // To do
 
-public:
-  // Connection
-  // virtual void		ConnectionStateChanged(enum ANetwork::SocketState) = 0;  // To do
 
-  // Authentification
-  // virtual void		Authenticated(bool) = 0;  // To do
-
-  // Personal Changes
+  virtual void		setStatusHandler(Function<void (const request::Status &)>);
+  virtual void		setStatusTxtHandler(Function<void (const request::Message &)>);
 
   // Friends
+  virtual void		setAddFriendHandler(Function<void (const request::Username &)>);
+  virtual void		setDelFriendHandler(Function<void (const request::Username &)>);
 
-  // Call
-  // virtual void		Call(const std::string &) = 0;  // To do
-  // virtual void		EndCall() = 0; // To do
+  // Calls
+  virtual void		setCallHandler(Function<void (const request::Username &)>);
+  virtual void		setHangUpHandler(Function<void ()>);
+
+  // Chat
+  virtual void		setChatHandler(Function<void (const request::Username &, const request::Message &)>);
+
+  // Answering machine
+  virtual void		setSetAnswerHandler(Function<void ()>);
+  virtual void		setUnSetAnswerHandler(Function<void ()>);
 
 public:
   virtual void		init() = 0;

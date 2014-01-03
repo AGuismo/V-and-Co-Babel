@@ -26,6 +26,9 @@ public slots:
 	void			on_login_window_triggered();
 	void			on_logout_window_triggered();
 	void			on_create_account_window_triggered();
+	void			changeStatus();
+	void			showTime();
+	void			changeContact(int);
 
 public slots:
 	void			on_try_connect(const std::string &ipAddress, unsigned short int port);

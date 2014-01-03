@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>628</width>
+    <width>670</width>
     <height>389</height>
    </rect>
   </property>
@@ -30,26 +30,52 @@
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
+          <item row="0" column="3">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="2">
+           <widget class="QComboBox" name="statusComboBox">
             <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>MS PGothic</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>User Personal Message................</string>
+             <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_4">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Icon</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="statusLineEdit">
+            <property name="text">
+             <string>Status here</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
            <widget class="QLabel" name="label_3">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -64,41 +90,6 @@
             </property>
             <property name="text">
              <string>User</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="comboBox_2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label_4">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>14</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Icon</string>
             </property>
            </widget>
           </item>
@@ -143,7 +134,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="callFriendLeftPushButton">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -153,7 +144,7 @@
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="addFriendPushButton">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -163,7 +154,7 @@
            </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QPushButton" name="deleteSelectedFriendPushButton">
+           <widget class="QPushButton" name="deleteFriendPushButton">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -222,13 +213,6 @@
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <layout class="QGridLayout" name="gridLayout">
-            <item row="1" column="1">
-             <widget class="QPushButton" name="activeFriendCallPushButton">
-              <property name="text">
-               <string>Call</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="0">
              <widget class="QLabel" name="selectedFriendNameLabel">
               <property name="enabled">
@@ -266,19 +250,7 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="selectedFriendIconStatusLabel">
-              <property name="font">
-               <font>
-                <pointsize>14</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Icon</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
+            <item row="0" column="4">
              <spacer name="horizontalSpacer_2">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -291,10 +263,36 @@
               </property>
              </spacer>
             </item>
-            <item row="2" column="0" colspan="3">
+            <item row="2" column="0" colspan="5">
              <widget class="Line" name="line_4">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QPushButton" name="hangUpPushButton">
+              <property name="text">
+               <string>Hang Up</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="callFriendRightPushButton">
+              <property name="text">
+               <string>Call</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="selectedFriendIconStatusLabel">
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Icon</string>
               </property>
              </widget>
             </item>
@@ -341,7 +339,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>628</width>
+     <width>670</width>
      <height>21</height>
     </rect>
    </property>
@@ -349,7 +347,6 @@
     <property name="title">
      <string>VBabel</string>
     </property>
-    <addaction name="actionCall"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuConnection">
@@ -372,8 +369,8 @@
     <property name="title">
      <string>Voicemail</string>
     </property>
-    <addaction name="actionSet_voicemail"/>
-    <addaction name="actionUnset_voicemail"/>
+    <addaction name="actionSetAnswer"/>
+    <addaction name="actionUnSetAnswer"/>
    </widget>
    <widget class="QMenu" name="menuFriends_list">
     <property name="enabled">
@@ -382,8 +379,7 @@
     <property name="title">
      <string>Friends list</string>
     </property>
-    <addaction name="actionAdd_friend"/>
-    <addaction name="actionDelete_friend"/>
+    <addaction name="actionAddFriend"/>
    </widget>
    <addaction name="menuVBabel"/>
    <addaction name="menuConnection"/>
@@ -418,17 +414,17 @@
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionSet_voicemail">
+  <action name="actionSetAnswer">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Set voicemail</string>
    </property>
   </action>
-  <action name="actionUnset_voicemail">
+  <action name="actionUnSetAnswer">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Unset voicemail</string>
@@ -450,9 +446,9 @@
     <string>Delete account</string>
    </property>
   </action>
-  <action name="actionAdd_friend">
+  <action name="actionAddFriend">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Add friend</string>

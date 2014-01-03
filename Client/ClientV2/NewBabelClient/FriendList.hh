@@ -49,9 +49,6 @@ struct Friend
 class FriendList
 {
 private:
-	std::string									_userName;
-
-private:
 	typedef	std::map<std::string, Friend>		friend_list_type;
 
 private:
@@ -78,10 +75,7 @@ public:
 	msg_type									*getFriendCurrentTypingMsg(std::string &friendName);
 
 public:
-	void										setUserName(std::string &userName);
-
-public:
-	FriendList(std::string	&userName);
+	FriendList();
 	~FriendList();
 
 private:

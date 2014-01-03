@@ -1,22 +1,31 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-#include <QWidget>
+#include  <QObject>
+#include  <QThread>
+#include  "QTBridge.h"
 
-namespace Ui {
-  class Audio;
-}
+struct Worker;
 
-class Audio : public QWidget
+class Audio : public QObject
 {
   Q_OBJECT
-  
+
 public:
-  explicit Audio(QWidget *parent = 0);
-  ~Audio();
-  
+  explicit	Audio(Bridge &);
+  virtual	~Audio();
+
+public slots:
+  void  run();
+  void	stop();
+
+signals:
+  void	stopWork();
+
 private:
-  Ui::Audio *ui;
+  Bridge	&_bridge;
+  QThread	*_th;
+  Worker	*_work;
 };
 
 #endif // AUDIO_H

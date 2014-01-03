@@ -15,12 +15,14 @@ public:
   AudioBridge();
   virtual ~AudioBridge();
 
-protected:
-  virtual void    inputRead(input_buffer &, std::size_t);
+public:
+  virtual void    inputRead(input_buffer &, std::size_t, bool blocking = true);
   virtual void    inputWrite(const input_buffer &);
+  virtual bool    inputEmpty() const;
 
-  virtual void    outputRead(output_buffer &, std::size_t size);
+  virtual void    outputRead(output_buffer &, std::size_t size, bool blocking = true);
   virtual void    outputWrite(const output_buffer &);
+  virtual bool    outputEmpty() const;
 
 public:
   virtual void    inputReady() = 0;

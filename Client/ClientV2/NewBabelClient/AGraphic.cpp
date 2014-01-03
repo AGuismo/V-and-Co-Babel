@@ -21,7 +21,64 @@ void		AGraphic::setTryCreateAccountHandler(Function<void (const request::Usernam
   _tryCreateAccountHandler = handle;
 }
 
+void		AGraphic::setTryChangeAccountPasswordHandler(Function<void (const request::PasswordType &, const request::PasswordType &)> handle)
+{
+	_tryChangePasswordHandler = handle;
+}
+
+void		AGraphic::setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)> handle)
+{
+	_tryChangePrivacyHandler = handle;
+}
+
 void		AGraphic::setDesAuthentificationHandler(Function<void ()> handle)
 {
 	_desAuthentificationHandler = handle;
+}
+
+
+
+void		AGraphic::setAddFriendHandler(Function<void (const request::Username &)> handle)
+{
+	_addFriendHandler = handle;
+}
+
+void		AGraphic::setDelFriendHandler(Function<void (const request::Username &)> handle)
+{
+	_delFriendHandler = handle;
+}
+
+void		AGraphic::setCallHandler(Function<void (const request::Username &)> handle)
+{
+	_callHandler = handle;
+}
+
+void		AGraphic::setHangUpHandler(Function<void ()> handle)
+{
+	_hangupHandler = handle;
+}
+
+void		AGraphic::setChatHandler(Function<void (const request::Username &, const request::Message &)> handle)
+{
+	_chatHandler = handle;
+}
+
+void		AGraphic::setStatusHandler(Function<void (const request::Status &)> handle)
+{
+	_statusHandler = handle;
+}
+
+void		AGraphic::setStatusTxtHandler(Function<void (const request::Message &)> handle)
+{
+ 	_statusTxtHandler = handle;
+}
+
+void		AGraphic::setSetAnswerHandler(Function<void ()> handle)
+{
+	_setAnswerHandler = handle;
+}
+
+void		AGraphic::setUnSetAnswerHandler(Function<void ()> handle)
+{
+	_unSetAnswerHandler = handle;
 }
