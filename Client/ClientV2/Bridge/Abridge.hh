@@ -15,12 +15,12 @@ public:
   virtual   ~ABridge() {}
 
 public:
-  virtual void    inputRead(input_buffer &, std::size_t);
+  virtual void    inputRead(input_buffer &, std::size_t, bool blocking = true);
   virtual void    inputWrite(const input_buffer &);
   virtual bool    inputEmpty() const;
   virtual void    inputReady() = 0;
 
-  virtual void    outputRead(output_buffer &, std::size_t);
+  virtual void    outputRead(output_buffer &, std::size_t, bool blocking = true);
   virtual void    outputWrite(const output_buffer &);
   virtual bool    outputEmpty() const;
   virtual void    outputReady() = 0;
@@ -31,10 +31,11 @@ private:
 };
 
 template <typename T, typename U>
-void  ABridge<T, U>::inputRead(input_buffer &buff, std::size_t size)
+void  ABridge<T, U>::inputRead(input_buffer &buff, std::size_t size, bool blocking)
 {
   std::size_t realSize = size > _input.size() ? _input.size() : size;
 
+  (void)blocking;
   buff.assign(_input.begin(), _input.begin() + realSize);
   _input.erase(_input.begin(), _input.begin() + realSize);
 }
@@ -54,10 +55,11 @@ bool  ABridge<T, U>::inputEmpty() const
 }
 
 template <typename T, typename U>
-void  ABridge<T, U>::outputRead(output_buffer &buff, std::size_t size)
+void  ABridge<T, U>::outputRead(output_buffer &buff, std::size_t size, bool blocking)
 {
   std::size_t realSize = size > _output.size() ? _output.size() : size;
 
+  (void)blocking;
   buff.assign(_output.begin(), _output.begin() + realSize);
   _output.erase(_output.begin(), _output.begin() + realSize);
 }

@@ -27,7 +27,7 @@ void  Bridge::inputRead(input_buffer &buff, std::size_t size, bool blocking)
 
   if (blocking && AudioBridge::inputEmpty())
     _inputReady.wait(&_inputLock);
-  AudioBridge::inputRead(buff, size);
+  AudioBridge::inputRead(buff, size, blocking);
 }
 
 void  Bridge::inputWrite(const input_buffer &buff)
@@ -45,7 +45,7 @@ void  Bridge::outputRead(output_buffer &buff, std::size_t size, bool blocking)
 
   if (blocking && AudioBridge::outputEmpty())
     _outputReady.wait(&_outputLock);
-  AudioBridge::outputRead(buff, size);
+  AudioBridge::outputRead(buff, size, blocking);
 }
 
 void  Bridge::outputWrite(const output_buffer &buff)
