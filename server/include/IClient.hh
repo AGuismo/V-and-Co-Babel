@@ -33,9 +33,7 @@ public:
   virtual void				statusDetail(request::StatusDetail &) = 0;
   virtual request::IP			IP() const = 0;
   virtual const request::Stream		&AutoAnswer() const = 0;
-  virtual void				updateAutoAnswer(const request::Stream &) = 0;
-  virtual void				cleanAutoAnswer() = 0;
-  virtual Serializer			&serializeAnswer() = 0;
+  virtual Protocol			&serializeAnswer() = 0;
   virtual request::PingPongID		pong() const = 0;
   virtual void				pong(request::PingPongID) = 0;
 };

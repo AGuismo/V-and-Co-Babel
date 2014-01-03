@@ -202,6 +202,30 @@ namespace	request
 
     namespace	server
     {
+      struct	StreamData : public Perso
+      {
+	static const char	*STREAM_DATA;
+
+	StreamData();
+	StreamData(const request::IdxAnswer &idx,
+		   const request::StreamLen &streamLen,
+		   const request::Stream &stream);
+	~StreamData();
+	StreamData(const StreamData &);
+	StreamData	&operator=(const StreamData &);
+
+	ARequest			*clone() const;
+	Protocol			&serialize(Protocol &) const;
+	Protocol			&unserialize(Protocol &);
+
+	bool			operator==(const ARequest *req) const;
+	bool			operator!=(const ARequest *req) const;
+
+	request::IdxAnswer	_answer;
+	request::StreamLen	_streamLen;
+	request::Stream		_stream;
+      };
+
       struct	MissedCallServer : public Perso
       {
 	static const char	*MISSED_CALLS;
@@ -228,6 +252,7 @@ namespace	request
 
 	GetMissedServer();
 	GetMissedServer(const request::IdxAnswer &idxAnswer,
+			const request::FromLen &fromLen,
 			const request::From &from,
 			const request::SinceWhen &since);
 	~GetMissedServer();
@@ -242,6 +267,7 @@ namespace	request
 	bool			operator!=(const ARequest *req) const;
 
 	request::IdxAnswer	_idxAnswer;
+	request::FromLen	_fromLen;
 	request::From		_from;
 	request::SinceWhen	_since;
       };

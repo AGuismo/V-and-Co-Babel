@@ -12,11 +12,13 @@
 class Database : public IDatabase
 {
 public:
+  typedef Rint32			NbMissed;
   typedef std::string			Username;
-  typedef std::string			VoiceMessage;
+  typedef std::string			FileName;
   typedef std::list<ARequest *>		list_request;
   typedef std::list<Username>		list_friend;
-  typedef std::list<VoiceMessage>	list_message;
+  typedef std::list<FileName>		list_message;
+
   struct			Client
   {
     request::Username		login;
@@ -47,6 +49,13 @@ public:
   bool		drop();
 
 public:
+  NbMissed	getNbMissed(const std::string &login);
+  bool		addMessage(const std::string &login,
+  			   const std::string &fileName);
+  bool		delMessage(const std::string &login,
+  			   const request::IdxAnswer &idx);
+  std::string	getMessage(const std::string &login,
+  			   const request::IdxAnswer &idx);
   bool		addFriend(const std::string &login,
 			  const std::string &FriendLogin);
   bool		delFriend(const std::string &login,
