@@ -13,14 +13,15 @@ Application::Application(int ac, char *av[]):
 {
   _requestActions[request::server::perso::PING] = callback_handler(&Application::ping_handler, this);
   _requestActions[request::server::friends::UPDATE] = callback_handler(&Application::update_friend_handler, this);
-//  request::friends::client::Accept(from, to);
   _requestActions[request::client::friends::REQUEST] = callback_handler(&Application::get_friend_request_handler, this);
-//  request::friends::client::Request
 }
 
-void		Application::update_friend_handler(const ARequest &)
+void		Application::update_friend_handler(const ARequest &req)
 {
-	qDebug() << "update friend received MOTHERFUCKER";
+	qDebug() << "update friend received MOTHERFUCKINGSHIT !!!!!!!!!!!!!!!!!!!";
+	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).status;
+	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).username.c_str();
+	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).detail.c_str();
 }
 
 void		Application::get_friend_request_handler(const ARequest &req)
@@ -35,12 +36,13 @@ void		Application::get_friend_request_handler(const ARequest &req)
 		qDebug() << "request friend accepted";
 		send_request(request::friends::client::Accept(Env::getInstance().userInfo.login, dynamic_cast<const request::friends::client::Request &>(req).from));
 //				send_request(request::friends::client::Accept(dynamic_cast<const request::friends::client::Request &>(req).from, Env::getInstance().userInfo.login));
-
+		_waitedResponses.push(response_handler(&Application::ignore_response, this));
 	}
 	else
 	{
 	send_request(request::friends::client::Refuse(Env::getInstance().userInfo.login, dynamic_cast<const request::friends::client::Request &>(req).from));
-		qDebug() << "request friend rejected";
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+	qDebug() << "request friend rejected";
 	}
 }
 
