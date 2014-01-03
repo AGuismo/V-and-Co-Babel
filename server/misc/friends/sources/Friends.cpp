@@ -162,8 +162,8 @@ void	Friends::refuse(const std::list<IClient::Pointer> &clients, IClient::Pointe
 
   if (sender->Authenticated() &&
       sender->Username() == origin->from &&
-      _db.isRequestExist(origin->from, request::friends::client::Request(origin->from, origin->to)) &&
-      _db.isRequestExist(origin->to, request::friends::client::Request(origin->from, origin->to)))
+      _db.isRequestExist(origin->from, request::friends::client::Request(origin->to, origin->from)) &&
+      _db.isRequestExist(origin->to, request::friends::client::Request(origin->to, origin->from)))
     {
       IClient::Pointer				receiver;
 

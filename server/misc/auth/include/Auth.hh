@@ -39,6 +39,7 @@ class CALL_PLUGIN_DLL_EXPORT Auth : public request::IRequestPlugin
 			  const Database::list_friend &friends,
 			  const std::list<IClient::Pointer> &clients,
 			  const request::Status) const;
+  void	deleteFriendList(IClient::Pointer sender, const Database::list_friend &friends, const std::list<IClient::Pointer> &clients);
 
  public:
   Auth(Auth const&);
