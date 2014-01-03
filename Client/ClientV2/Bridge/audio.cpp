@@ -24,7 +24,7 @@ void  Audio::run()
   _work->moveToThread(_th);
   QObject::connect(_th, SIGNAL(started()), _work, SLOT(routine()));
   _th->start();
-  qDebug() << "Audio::run(): "<< "Thread Started(" << QThread::currentThreadId() << ")" ;
+  qDebug() << "Audio::run(): "<< "Thread Started(" << QThread::currentThreadId() << ")";
 }
 
 void	Audio::stop()

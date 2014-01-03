@@ -1,5 +1,6 @@
 #include		<stdint.h>
 #include		<iomanip> // Debug purpose
+#include		<qdebug.h>
 #include		<iostream>
 #include		"PAudioStream.hh"
 
@@ -11,7 +12,7 @@ bool			PAudioStream::initInput()
     return (false);
   if ((_inputParam.device = Pa_GetDefaultInputDevice()) == paNoDevice)
     {
-      std::cout << "No default input device." << std::endl;
+      qDebug() << "No default input device.";
       return (false);
     }
   _inputParam.channelCount = 2;
@@ -27,7 +28,7 @@ bool			PAudioStream::initOutput()
     return (false);
   if ((_outputParam.device = Pa_GetDefaultOutputDevice()) == paNoDevice)
     {
-      std::cout << "No default output device." << std::endl;
+      qDebug() << "No default output device.";
       return (false);
     }
   _outputParam.channelCount = 2;
@@ -55,24 +56,16 @@ void			PAudioStream::run()
     return ;
   if (Pa_StartStream(_stream) != paNoError)
     return ;
-  std::cout << "RECORDING, SPEAK INTO THE MICROPHONE PLEASE" << std::endl;
+  qDebug() << "RECORDING, SPEAK INTO THE MICROPHONE PLEASE";
   _start = true;
   while (_start && (error = Pa_IsStreamActive(_stream)) == 1)
     {
       _bridge.outputRead(buff, 65000);
-      std::cout << "Received : [";
-      for (std::size_t it = 0; ((it < buff.size()) && (it < 40)); ++it)
-	{
-	  if (it != 0 && it % 4 == 0)
-	    std::cout << " ";
-	  std::cout << std::hex << std::setprecision(2) << std::fixed
-		    << (unsigned int)buff[it] << std::dec;
-	}
-      std::cout << "]" << std::endl;
+      qDebug() << "Receiving " << buff.size() << " packets";
     }
   if (Pa_IsStreamActive(_stream) == 1)
     Pa_StopStream(_stream);
-  std::cout << "RECORDING ENDED" << std::endl;
+  qDebug() << "RECORDING ENDED";
   if (error < 0)
     return;
   if ((error = Pa_CloseStream(_stream)) != paNoError)
