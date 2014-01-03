@@ -8,6 +8,7 @@ TAGS
 *.so
 *.tlog
 *.lastbuildstate
+*.opensdf
 *.idb
 *.pdb
 *.obj
@@ -18,4 +19,3 @@ TAGS
 *.suo
 *.exp
 *.cache
-*.lib
