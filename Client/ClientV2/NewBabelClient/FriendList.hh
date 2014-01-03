@@ -46,16 +46,19 @@ struct Friend
 	msg_type		currentTypingMsg;
 };
 
+typedef	std::map<std::string, Friend>		friend_list_type;
+
+
 class FriendList
 {
-private:
-	typedef	std::map<std::string, Friend>		friend_list_type;
+public:
 
 private:
 	friend_list_type							_friendList;
 
-private:
+public:
 	Friend										*getFriend(std::string &friendName);
+	const friend_list_type						&getFriendList();
 
 public:
 	void										insertFriend(const std::string &friendName, const std::string &friendMsgPerso, Status status);

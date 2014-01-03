@@ -104,6 +104,11 @@ msg_type						*FriendList::getFriendCurrentTypingMsg(std::string &friendName)
 	return NULL;
 }
 
+const friend_list_type						&FriendList::getFriendList()
+{
+	return _friendList;
+}
+
 FriendList::FriendList()
 {
 }

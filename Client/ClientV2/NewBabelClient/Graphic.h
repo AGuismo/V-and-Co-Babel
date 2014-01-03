@@ -10,6 +10,7 @@
 #include		"DeleteAccountWindow.h"
 #include		"AccountManagementWindow.h"
 #include		"AddFriendWindow.h"
+#include		"FriendListWidget.h"
 
 class Graphic : public QMainWindow, public AGraphic
 {
@@ -77,6 +78,7 @@ public:
 
 public:
 	bool			request_server_response(const std::string &title, const std::string &content);
+	void			updateFriendList(const friend_list_type	&);
 
 private:
 	void			connected();

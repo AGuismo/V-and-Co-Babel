@@ -6,7 +6,7 @@ FriendListWidget::FriendListWidget(QWidget *parent)
 
 }
 
-void						FriendListWidget::insertFriend(const std::string &name, Status status)
+void						FriendListWidget::insertFriend(const std::string &name, const Status status)
 {
 	QIcon					*tmp;
 
@@ -35,7 +35,16 @@ void						FriendListWidget::insertFriend(const std::string &name, Status status)
 	addItem(new QListWidgetItem(*tmp, QString(name.c_str())));
 }
 
+void					FriendListWidget::updateFriendListWidget(const friend_list_type &friendList)
+{
+	this->clear();
+	for (friend_list_type::const_iterator	it = friendList.begin(); it != friendList.end(); ++it)
+		insertFriend( it->first, it->second.status);
+}
+
+
 FriendListWidget::~FriendListWidget()
 {
 
 }
+
