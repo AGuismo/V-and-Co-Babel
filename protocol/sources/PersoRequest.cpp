@@ -691,9 +691,10 @@ namespace	request
       }
 
       GetMissedServer::GetMissedServer(const request::IdxAnswer &idxAnswer,
+				       const request::FromLen &fromLen,
 				       const request::From &from,
 				       const request::SinceWhen &since):
-	Perso(request::server::perso::GET_MISSED), _idxAnswer(idxAnswer), _from(from), _since(since)
+	Perso(request::server::perso::GET_MISSED), _idxAnswer(idxAnswer), _fromLen(fromLen), _from(from), _since(since)
       {
       }
 
@@ -702,7 +703,7 @@ namespace	request
       }
 
       GetMissedServer::GetMissedServer(const GetMissedServer &src) :
-	Perso(request::server::perso::GET_MISSED), _idxAnswer(src._idxAnswer), _from(src._from), _since(src._since)
+	Perso(request::server::perso::GET_MISSED), _idxAnswer(src._idxAnswer), _fromLen(src._fromLen), _from(src._from), _since(src._since)
       {
       }
 
@@ -711,6 +712,7 @@ namespace	request
 	if (this != &src)
 	  {
 	    _idxAnswer = src._idxAnswer;
+	    _fromLen = src._fromLen;
 	    _from = src._from;
 	    _since = src._since;
 	  }
@@ -728,7 +730,7 @@ namespace	request
 	  return (false);
 
 	const GetMissedServer	*tmp = dynamic_cast<const GetMissedServer *>(req);
-	return (tmp->_idxAnswer == _idxAnswer && tmp->_from == _from && tmp->_since == _since);
+	return (tmp->_idxAnswer == _idxAnswer && tmp->_fromLen == _fromLen && tmp->_from == _from && tmp->_since == _since);
       }
 
       bool	GetMissedServer::operator!=(const ARequest *req) const
@@ -830,6 +832,86 @@ namespace	request
 	Perso::unserialize(rhs);
 
 	rhs >> _id;
+
+	return (rhs);
+      }
+
+      StreamData::StreamData():
+	Perso(request::server::perso::STREAM_DATA)
+      {
+      }
+
+      StreamData::StreamData(const request::IdxAnswer &answer,
+			     const request::StreamLen &streamLen,
+			     const request::Stream    &stream):
+	Perso(request::server::perso::STREAM_DATA), _answer(answer), _streamLen(streamLen), _stream(stream)
+      {
+      }
+
+      StreamData::~StreamData()
+      {
+      }
+
+      StreamData::StreamData(const StreamData &src) :
+	Perso(request::server::perso::STREAM_DATA), _answer(src._answer), _streamLen(src._streamLen), _stream(src._stream)
+      {
+      }
+
+      StreamData	&StreamData::operator=(const StreamData &src)
+      {
+	if (this != &src)
+	  {
+	    _answer = src._answer;
+	    _streamLen = src._streamLen;
+	    _stream = src._stream;
+	  }
+	return (*this);
+      }
+
+      ARequest	*StreamData::clone() const
+      {
+	return (new StreamData(*this));
+      }
+
+      bool	StreamData::operator==(const ARequest *req) const
+      {
+	if (ARequest::operator!=(req))
+	  return (false);
+
+	const StreamData	*tmp = dynamic_cast<const StreamData *>(req);
+	return (tmp->_answer == _answer && tmp->_streamLen == _streamLen && tmp->_stream == _stream);
+      }
+
+      bool	StreamData::operator!=(const ARequest *req) const
+      {
+	return (!operator==(req));
+      }
+
+      Protocol		&StreamData::serialize(Protocol &rhs) const
+      {
+	Perso::serialize(rhs);
+	request::StreamLen	streamLen;
+	request::Stream		stream;
+
+	rhs << _answer;
+
+	streamLen = _stream.size();
+	rhs << streamLen;
+	rhs.push(_stream, streamLen);
+
+	return (rhs);
+      }
+
+      Protocol	&StreamData::unserialize(Protocol &rhs)
+      {
+	Perso::unserialize(rhs);
+	request::StreamLen	streamLen;
+	request::Stream		stream;
+
+	rhs >> _answer;
+
+	rhs >> streamLen;
+	rhs.pop(_stream, streamLen);
 
 	return (rhs);
       }

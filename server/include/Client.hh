@@ -74,9 +74,7 @@ public:
   { return (_socket.remote_endpoint().address().to_v4().to_ulong()); };
   const request::Stream		&AutoAnswer() const
   { return (InfosClient._autoAnswer);};
-  void				updateAutoAnswer(const request::Stream &);
-  void				cleanAutoAnswer();
-  Serializer			&serializeAnswer()
+  Protocol			&serializeAnswer()
   { return (_serializeAnswer);};
   request::PingPongID		pong() const
   { return (_currentPong); }
@@ -97,7 +95,7 @@ private:
   buffer			_output;
   tcp::socket			_socket;
   Server			*_server;
-  Serializer			_serializeAnswer;
+  Protocol			_serializeAnswer;
   boost::asio::deadline_timer	_pongTimer;
   request::PingPongID		_currentPong;
   request_list			_waitedRequest;

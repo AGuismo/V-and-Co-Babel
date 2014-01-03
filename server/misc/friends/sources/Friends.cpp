@@ -213,7 +213,7 @@ void	Friends::list(const std::list<IClient::Pointer> &clients, IClient::Pointer 
       _db.clientExist(sender->Username()) &&
       _db.listFriend(sender->Username(), friends))
     {
-      sender->serialize_data(request::server::Ok());
+      // sender->serialize_data(request::server::Ok());
       for (Database::list_friend::const_iterator it = friends.begin(); it != friends.end(); ++it)
 	{
 	  if (!_db.clientExist(*it))

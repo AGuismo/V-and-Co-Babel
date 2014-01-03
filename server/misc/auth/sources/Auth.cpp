@@ -123,7 +123,7 @@ void	Auth::modify(const std::list<IClient::Pointer> &clients, IClient::Pointer s
   const request::auth::client::ModifyClient	*origin = dynamic_cast<const request::auth::client::ModifyClient *>(req);
 
   std::cout << "Auth::modify()" << std::endl;
-  if (sender->Authenticated()
+  if (sender->Authenticated() &&
       _db.modClientPass(origin->_name, origin->_oldPassword, origin->_newPassword))
     {
 #if defined(DEBUG)

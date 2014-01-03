@@ -116,25 +116,45 @@ void	Perso::status(const std::list<IClient::Pointer> &clients, IClient::Pointer 
 
 void	Perso::missed_calls(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
-  const request::perso::client::MissedCallClient	*origin = dynamic_cast<const request::perso::client::MissedCallClient *>(req);
-
-  std::cout << "Perso::missed_call()" << std::endl;
+  Rint32 nb;
+  if (sender->Authenticated() &&
+      ((nb = _db.getNbMissed(sender->Username())) != -1))
+    sender->serialize_data(request::perso::server::MissedCallServer(nb));
+  else
+    sender->serialize_data(request::server::Forbidden());
 }
 
 void	Perso::get_missed(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::GetMissedClient	*origin = dynamic_cast<const request::perso::client::GetMissedClient *>(req);
 
-  std::cout << "Perso::get_Missed()" << std::endl;
-  std::cout << "IDX ANSWER : " << origin->_idxAnswer << std::endl;
+  std::string filename;
+
+  if (sender->Authenticated() &&
+      ((filename = _db.getMessage(sender->Username(), origin->_idxAnswer)) != ""))
+    {
+      std::ofstream	file;
+
+      file.open(std::string("./misc/auto_answer/" + sender->Username() + _env.auto_answer.AutoAnswerExtension).c_str(),
+		std::ios::trunc);
+      if (file.bad())
+	{
+	  sender->serialize_data(request::server::Forbidden());
+	  return ;
+	}
+      // La faut coder ce que lamber veut :3
+    }
 }
 
 void	Perso::del_missed(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::DelMissedClient	*origin = dynamic_cast<const request::perso::client::DelMissedClient *>(req);
 
-  std::cout << "Perso::del_missed()" << std::endl;
-  std::cout << "IDX ANSWER : " << origin->_idxAnswer << std::endl;
+  if (sender->Authenticated() &&
+      _db.delMessage(sender->Username(), origin->_idxAnswer))
+    sender->serialize_data(request::server::Ok());
+  else
+    sender->serialize_data(request::server::Forbidden());
 }
 
 bool	Perso::createAnswerFile(IClient::Pointer sender)
@@ -146,33 +166,24 @@ bool	Perso::createAnswerFile(IClient::Pointer sender)
   if (file.bad())
     return false;
 
-  sender->serializeAnswer() << (request::StreamLen)sender->AutoAnswer().size();
-  sender->serializeAnswer().push(sender->AutoAnswer(), sender->AutoAnswer().size());
-  file << sender->serializeAnswer().data();
+  file << sender->serializeAnswer();
   file.close();
   return true;
 }
 
-bool	Perso::createVoiceMessageFile(IClient::Pointer sender, IClient::Pointer receiver, const std::string &date)
+bool	Perso::createVoiceMessageFile(IClient::Pointer sender, const std::string &date)
 {
   std::ofstream	file;
 
-  file.open(std::string("./misc/voice_message/" + md5(sender->Username() + date) + _env.auto_answer.voiceMessageExtension).c_str(),
-	    std::ios::trunc);
+  std::string time = std::string("./misc/voice_message/" + md5(sender->Username() + date) + _env.auto_answer.voiceMessageExtension);
+
+  file.open(time.c_str(), std::ios::trunc);
   if (file.bad())
     return false;
 
+  _db.addMessage(sender->Username(), time);
 
-  sender->serializeAnswer() << (request::UsernameLen)sender->Username().size();
-  sender->serializeAnswer().push(sender->Username(), sender->Username().size());
-
-  sender->serializeAnswer() << (request::UsernameLen)receiver->Username().size();
-  sender->serializeAnswer().push(receiver->Username(), receiver->Username().size());
-
-  sender->serializeAnswer() << date;
-  sender->serializeAnswer() << (request::StreamLen)sender->AutoAnswer().size();
-  sender->serializeAnswer().push(sender->AutoAnswer(), sender->AutoAnswer().size());
-  file << sender->serializeAnswer().data();
+  file << sender->serializeAnswer();
   file.close();
   return true;
 }
@@ -187,7 +198,7 @@ void	Perso::set_auto_answer(const std::list<IClient::Pointer> &clients, IClient:
 #if defined(DEBUG)
       std::cout << "Receive : [" << origin->_answer.size() << "] " << std::endl;
 #endif
-      sender->updateAutoAnswer(origin->_answer);
+      req->serialize(sender->serializeAnswer());
     }
   else
     {
@@ -240,7 +251,7 @@ void	Perso::let_message(const std::list<IClient::Pointer> &clients, IClient::Poi
 #if defined(DEBUG)
 	  std::cout << "Receive : [" << origin->_stream.size() << "] " << std::endl;
 #endif
-	  sender->updateAutoAnswer(origin->_stream);
+	  req->serialize(sender->serializeAnswer());
 	}
       else
 	{
@@ -257,7 +268,7 @@ void	Perso::let_message(const std::list<IClient::Pointer> &clients, IClient::Poi
 
 	      date << origin->_time;
 	      date >> strDate;
-	      if (createVoiceMessageFile(sender, receiver, strDate))
+	      if (createVoiceMessageFile(sender, strDate))
 		{
 #if defined(DEBUG)
 		  std::cout << "File Message was successfuly created !" << std::endl;
