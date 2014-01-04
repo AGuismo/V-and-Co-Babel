@@ -371,7 +371,7 @@ void					Graphic::receiveFriendInformation(Friend *friendInfo)
 		for ( convers_type::const_iterator it =	friendInfo->conversation.begin(); it != friendInfo->conversation.end(); ++it)
 		{
 			ui.friendMsgBox->append(QString(it->header.c_str()));
-			ui.friendMsgBox->append(QString(it->content.c_str()));
+		//	ui.friendMsgBox->append(QString(it->content.c_str()));
 		}
 	}
 }
