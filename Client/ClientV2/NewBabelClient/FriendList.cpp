@@ -66,10 +66,11 @@ bool							FriendList::insertOutcomingMsg(const std::string &friendName, const s
 	if ((tmpFriend = getFriend(friendName)) != NULL)
 	{
 		newMsg.header += "[";
-		newMsg.header +=  Env::getInstance().userInfo.login;
+		newMsg.header +=  timeMsg.currentTime().toString().toStdString();
 		newMsg.header += "]:[";
-		newMsg.header += timeMsg.currentTime().toString().toStdString();
+		newMsg.header += Env::getInstance().userInfo.login;
 		newMsg.header += "]:";
+		newMsg.header += msg;
 		newMsg.content = msg;
 		tmpFriend->conversation.push_back(newMsg);
 		return true;
@@ -86,10 +87,11 @@ bool							FriendList::insertIncomingMsg(const std::string &friendName, const st
 	if ((tmpFriend = getFriend(friendName)) != NULL)
 	{
 		newMsg.header += "[";
-		newMsg.header += friendName;
-		newMsg.header += "]:[";
 		newMsg.header += timeMsg.currentTime().toString().toStdString();
+		newMsg.header += "]:[";
+		newMsg.header += friendName;
 		newMsg.header += "]:";
+		newMsg.header += msg;
 		newMsg.content = msg;
 		tmpFriend->conversation.push_back(newMsg);
 		return true;

@@ -6,20 +6,30 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>270</width>
-    <height>92</height>
+    <width>337</width>
+    <height>109</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>LoginWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">AddFriendWindow 
+{
+	border-image: url(./Img/dialog-background.jpg);
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
     <widget class="QLabel" name="loginLabel">
      <property name="font">
       <font>
+       <family>MS Reference Sans Serif</family>
        <pointsize>10</pointsize>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Friend pseudo :</string>
@@ -28,11 +38,19 @@
    </item>
    <item row="1" column="1" colspan="2">
     <widget class="QLineEdit" name="loginLineEdit">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(255, 255, 255, 230);
+border-width: 2px;
+border-radius: 8px;
+border-color: rgb(0, 0, 0);
+min-width: 10em;
+padding: 2px;</string>
+     </property>
      <property name="text">
       <string>tata</string>
      </property>
      <property name="maxLength">
-      <number>256</number>
+      <number>42</number>
      </property>
     </widget>
    </item>
@@ -40,7 +58,7 @@
     <widget class="QLabel" name="serverResponseLabel">
      <property name="font">
       <font>
-       <family>MS UI Gothic</family>
+       <family>MS Reference Sans Serif</family>
        <pointsize>10</pointsize>
        <weight>75</weight>
        <bold>true</bold>
@@ -53,6 +71,38 @@
    </item>
    <item row="2" column="1">
     <widget class="QPushButton" name="closePushButton">
+     <property name="font">
+      <font>
+       <family>MS Reference Sans Serif</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#closePushButton
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+	min-width: 4em;
+	padding: 6px;
+}
+
+QPushButton#closePushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
+ QPushButton#closePushButton:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }
+
+</string>
+     </property>
      <property name="text">
       <string>Close</string>
      </property>
@@ -60,6 +110,38 @@
    </item>
    <item row="2" column="2">
     <widget class="QPushButton" name="addPushButton">
+     <property name="font">
+      <font>
+       <family>MS Reference Sans Serif</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#addPushButton
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+	min-width: 4em;
+	padding: 6px;
+}
+
+QPushButton#addPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
+ QPushButton#addPushButton:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }
+
+</string>
+     </property>
      <property name="text">
       <string>Add</string>
      </property>
@@ -69,11 +151,14 @@
     <widget class="QLabel" name="loginTitleLabel">
      <property name="font">
       <font>
-       <family>MS UI Gothic</family>
+       <family>MS Reference Sans Serif</family>
        <pointsize>14</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Add friend</string>

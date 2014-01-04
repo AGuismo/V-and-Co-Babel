@@ -7,16 +7,16 @@
     <x>0</x>
     <y>0</y>
     <width>378</width>
-    <height>145</height>
+    <height>136</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>LoginWindow</string>
+   <string>Login</string>
   </property>
   <property name="styleSheet">
    <string notr="true">CreateAccountWindow 
 {
-	border-image: url(./Img/wallpaper-16618.jpg);
+	border-image: url(./Img/dialog-background.jpg);
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -133,11 +133,19 @@ padding: 2px;</string>
 	padding: 6px;
 }
 
+QPushButton#closePushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
  QPushButton#closePushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
- }</string>
+ }
+
+</string>
      </property>
      <property name="text">
       <string>Close</string>
@@ -159,11 +167,19 @@ padding: 2px;</string>
 	padding: 6px;
 }
 
+QPushButton#createPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
  QPushButton#createPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
- }</string>
+ }
+
+</string>
      </property>
      <property name="text">
       <string>Create</string>

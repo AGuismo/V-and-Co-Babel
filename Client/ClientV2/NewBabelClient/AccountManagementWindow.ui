@@ -6,20 +6,31 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>232</width>
-    <height>186</height>
+    <width>283</width>
+    <height>238</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>MS Reference Sans Serif</family>
+   </font>
   </property>
   <property name="windowTitle">
    <string>LoginWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">AccountManagementWindow 
+{
+	border-image: url(./Img/dialog-background.jpg);
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="6" column="0">
     <widget class="QPushButton" name="changePasswordPushButton">
      <property name="minimumSize">
       <size>
-       <width>100</width>
-       <height>22</height>
+       <width>78</width>
+       <height>30</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -27,6 +38,38 @@
        <width>100</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>MS Reference Sans Serif</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#changePasswordPushButton
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+	min-width: 4em;
+	padding: 6px;
+}
+
+QPushButton#changePasswordPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
+ QPushButton#changePasswordPushButton:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }
+
+</string>
      </property>
      <property name="text">
       <string>Change</string>
@@ -37,18 +80,56 @@
     <widget class="QPushButton" name="changePrivacyPushButton">
      <property name="minimumSize">
       <size>
-       <width>100</width>
-       <height>22</height>
+       <width>78</width>
+       <height>30</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>100</width>
-       <height>20</height>
+       <height>100</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>MS Reference Sans Serif</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#changePrivacyPushButton
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+	min-width: 4em;
+	padding: 6px;
+}
+
+QPushButton#changePrivacyPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
+ QPushButton#changePrivacyPushButton:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }
+
+</string>
      </property>
      <property name="text">
       <string>Change</string>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -60,6 +141,14 @@
        <height>20</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(255, 255, 255, 230);
+border-width: 2px;
+border-radius: 8px;
+border-color: rgb(0, 0, 0);
+min-width: 10em;
+padding: 2px;</string>
+     </property>
      <property name="inputMask">
       <string/>
      </property>
@@ -67,7 +156,7 @@
       <string>poil2cul</string>
      </property>
      <property name="maxLength">
-      <number>256</number>
+      <number>42</number>
      </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>
@@ -81,9 +170,12 @@
      </property>
      <property name="font">
       <font>
-       <family>MS UI Gothic</family>
+       <family>MS Reference Sans Serif</family>
        <pointsize>10</pointsize>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>New Password :</string>
@@ -94,7 +186,7 @@
     <widget class="QLineEdit" name="currentPasswordLineEdit">
      <property name="minimumSize">
       <size>
-       <width>100</width>
+       <width>164</width>
        <height>0</height>
       </size>
      </property>
@@ -104,11 +196,19 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(255, 255, 255, 230);
+border-width: 2px;
+border-radius: 8px;
+border-color: rgb(0, 0, 0);
+min-width: 10em;
+padding: 2px;</string>
+     </property>
      <property name="text">
       <string>poil</string>
      </property>
      <property name="maxLength">
-      <number>256</number>
+      <number>42</number>
      </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>
@@ -126,9 +226,12 @@
     <widget class="QLabel" name="loginLabel">
      <property name="font">
       <font>
-       <family>MS UI Gothic</family>
+       <family>MS Reference Sans Serif</family>
        <pointsize>10</pointsize>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Current Password :</string>
@@ -139,11 +242,14 @@
     <widget class="QLabel" name="loginTitleLabel">
      <property name="font">
       <font>
-       <family>MS UI Gothic</family>
+       <family>MS Reference Sans Serif</family>
        <pointsize>14</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Account options</string>
@@ -155,6 +261,9 @@
    </item>
    <item row="2" column="1" rowspan="4">
     <widget class="QGroupBox" name="groupBox">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
      <property name="title">
       <string>Privacy</string>
      </property>
