@@ -203,7 +203,6 @@ void	Auth::remove(const std::list<IClient::Pointer> &clients, IClient::Pointer s
     }
 }
 
-
 void	Auth::disconnect(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::auth::client::DisconnectClient	*origin = dynamic_cast<const request::auth::client::DisconnectClient *>(req);

@@ -62,6 +62,26 @@ bool	Call::searchClient(const std::list<IClient::Pointer> &clients, const std::s
   return (false);
 }
 
+bool	Call::verifCall(IClient::Pointer sender, IClient::Pointer receiver, Database::list_friend friends, const std::list<IClient::Pointer> &clients)
+{
+  for (std::list<IClient::Pointer>::const_iterator itClient = clients.begin();
+       itClient != clients.end(); ++itClient)
+    {
+      for (Database::list_friend::const_iterator it = friends.begin();
+	   it != friends.end(); ++it)
+	{
+	  if ((*itClient)->Username() == *it && (*itClient)->Username() == receiver->Username())
+	    {
+	      return true;
+	    }
+	}
+    }
+  if (receiver->privacy() == request::User::PRIVATE)
+    return false;
+  else
+    return true;
+}
+
 void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::call::client::CallClient	*origin = dynamic_cast<const request::call::client::CallClient *>(req);
@@ -72,23 +92,30 @@ void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sen
       _db.clientExist(origin->_from) &&
       _db.clientExist(origin->_to))
     {
+      Database::list_friend friends;
+
+
 #if defined(DEBUG)
       std::cout << "Receive a call request from [" << origin->_from << "] to [" << origin->_to << "]" << std::endl;
 #endif
-      if (searchClient(clients, origin->_to, receiver))
+      if (_db.listFriend(sender->Username(), friends))
 	{
+	  if (searchClient(clients, origin->_to, receiver))
+	    {
 #if defined(DEBUG)
-	  std::cout << "Call send ..." << std::endl;
+	      std::cout << "Call send ..." << std::endl;
 #endif
-	  request::call::client::CallClient fwd(*origin);
-	  fwd._ip = sender->IP();
+	      request::call::client::CallClient fwd(*origin);
+	      fwd._ip = sender->IP();
 
-	  if (receiver->Authenticated() &&
-	      receiver->status() == request::User::Status::CONNECTED)
-	    receiver->serialize_data(fwd);
-	  else
-	    sender->serialize_data(request::server::Forbidden());
-	  return ;
+	      if (receiver->Authenticated() &&
+		  receiver->status() == request::User::Status::CONNECTED &&
+		  verifCall(sender, receiver, friends, clients))
+		receiver->serialize_data(fwd);
+	      else
+		sender->serialize_data(request::server::Forbidden());
+	      return ;
+	    }
 	}
     }
   sender->serialize_data(request::server::Forbidden());

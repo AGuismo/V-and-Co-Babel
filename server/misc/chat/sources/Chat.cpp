@@ -84,13 +84,11 @@ void	Chat::message(const std::list<IClient::Pointer> &clients, IClient::Pointer 
 	    {
 	      receiver->serialize_data(*origin);
 	      sender->serialize_data(request::server::Ok());
+	      return ;
 	    }
-	  else
-	    sender->serialize_data(request::server::Forbidden());
 	}
     }
-  else
-    sender->serialize_data(request::server::Forbidden());
+  sender->serialize_data(request::server::Forbidden());
 }
 
 void	Chat::setActions(std::map<request::ID, plugin::request_handler> &map)
