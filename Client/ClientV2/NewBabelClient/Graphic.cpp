@@ -2,6 +2,9 @@
 #include				"Env.hh"
 #include				<QTimer>
 #include				<QMessageBox>
+#include				<QMovie>
+#include				<QSplashScreen>
+#include				<QTimer>
 #include				<QDebug> // à virer
 
 
@@ -41,11 +44,9 @@ void					Graphic::init()
 	// Status change comboBox
 	connect(ui.statusComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(on_change_status_triggered(int)));
 	// Set answer Triggered
-	connect(ui.actionSetAnswer, SIGNAL(triggered()), this, SLOT(on_set_auto_answer_triggered()));
+	connect(ui.actionSetVoicemail, SIGNAL(triggered()), this, SLOT(on_set_auto_answer_triggered()));
 	// Unset answer Triggered
-	connect(ui.actionUnSetAnswer, SIGNAL(triggered()), this, SLOT(on_unset_auto_answer_triggered()));	
-
-
+	connect(ui.actionUnsetVoicemail, SIGNAL(triggered()), this, SLOT(on_unset_auto_answer_triggered()));	
 	// Create Account Window Triggered
 	connect(ui.actionCreateAccount, SIGNAL(triggered()), this, SLOT(on_create_account_window_triggered()));
 	// Delete Account Window Triggered
@@ -182,9 +183,26 @@ void					Graphic::on_delete_account_success()
   QTimer::singleShot(800, &_deleteAccountWindow, SLOT(on_close_button_clicked()));
 }
 
+bool					Graphic::eventFilter(QObject *target, QEvent *event)
+{
+	return (true);
+}
+
 void					Graphic::run()
 {
-  show();
+	QSplashScreen screen;
+
+	screen.setPixmap(QPixmap("./Img/logoBabelSplash.png"));
+	screen.show();
+	screen.installEventFilter(this);
+	
+	QEventLoop evtLoop;
+	QTimer::singleShot(2000, &evtLoop, SLOT(quit()));
+	evtLoop.exec();
+
+	screen.hide();
+
+	show();
 }
 
 void					Graphic::on_connect_window_triggered()
@@ -448,9 +466,31 @@ void					Graphic::loggedOut()
 	ui.actionLogout->setEnabled(false);
 }
 
+void		Graphic::showTime()
+{
+	_timeLabel->setText(_time.currentTime().toString());
+}
+
 Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this), _deleteAccountWindow(this), _accountManagementWindow(this), _addFriendWindow(this)
 {
 	ui.setupUi(this);
+	ui.statusLineEdit->setMaxLength(84);
+
+	QTimer *timer = new QTimer(this);
+	connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
+	timer->start(1000);
+
+	_timeLabel = new QLabel(_time.currentTime().toString());
+	ui.statusBar->addPermanentWidget(_timeLabel);
+
+	showTime();
+	
+	setWindowIcon(QIcon("./Img/logoBabel.png"));
+	QMovie *movie = new QMovie("./Img/appel_en_cours.gif", QByteArray(), this);
+	//QMovie *movie = new QMovie("./Img/en_communication.gif", QByteArray(), this);
+	ui.callLabel->setMovie(movie);
+	movie->start();
+	//ui.callLabel->setMovie(NULL);
 }
 
 Graphic::~Graphic()
