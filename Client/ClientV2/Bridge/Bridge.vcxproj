@@ -118,8 +118,7 @@
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>qtmaind.lib;Qt5Widgetsd.lib;Qt5Networkd.lib;Qt5Guid.lib;Qt5Cored.lib;libEGLd.lib;libGLESv2d.lib;gdi32.lib;user32.lib;opus.lib;celt.lib;portaudio_x86.lib;silk_common.lib;silk_fixed.lib;silk_float.lib;Qt5Multimediad.lib;Qt5WebKitd.lib;Qt5WebkitWidgetsd.lib;Qt5MultimediaWidgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;C:\Users\Kevin\Documents\GitHub\V-and-Co-Babel\Client\ClientV2\Bridge\..\..\..\Audio\portaudio\build\msvc\Win32\debug\;C:\Users\Kevin\Documents\GitHub\V-and-Co-Babel\Client\ClientV2\Bridge\..\..\..\Audio\opus-1.1\win32\VS2010\Win32\debug\;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;..\..\..\Audio\portaudio\build\msvc\Win32\debug\;..\..\..\Audio\opus-1.1\win32\VS2010\Win32\debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -128,6 +127,9 @@
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies);qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5MultimediaWidgetsd.lib;Qt5Networkd.lib;Qt5WebKitd.lib;Qt5WebkitWidgetsd.lib;Qt5Widgetsd.lib;portaudio_x86.lib;opus.lib;celt.lib;silk_common.lib;silk_fixed.lib;silk_float.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <DefaultCharType>Unsigned</DefaultCharType>
