@@ -7,6 +7,7 @@
 #include	"Database.hh"
 #include	"types.hh"
 #include	"Function.hpp"
+#include	"Server.hh"
 
 Chat::Chat(Database &db, Env &env):
   _db(db), _env(env)
@@ -49,15 +50,47 @@ void	Chat::getVersion(plugin::version::major &maj, plugin::version::minor &min) 
   min = plugin::version::MINOR;
 }
 
+bool	Chat::searchClient(const std::list<IClient::Pointer> &clients, const std::string &name, IClient::Pointer &client)
+{
+  for (Server::client_list::const_iterator it = clients.begin(); it != clients.end(); ++it)
+    {
+      if ((*it)->Username() == name)
+	{
+	  client = *it;
+	  return (true);
+	}
+    }
+  return (false);
+}
+
 void	Chat::message(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::chat::client::Message	*origin = dynamic_cast<const request::chat::client::Message *>(req);
+  IClient::Pointer receiver;
 
-  std::cout << "Chat::Message()" << std::endl;
-  std::cout << "From : " << origin->from << std::endl;
-  std::cout << "To : " << origin->to << std::endl;
-  std::cout << "Time : " << origin->time << std::endl;
-  std::cout << "Msg : " << origin->msg << std::endl;
+  if (sender->Authenticated() &&
+      sender->Username() == origin->from &&
+      _db.clientExist(origin->to))
+    {
+#if defined(DEBUG)
+      std::cout << "Message FROM : [" << origin->from << "], TO : [" << origin->to << "] CONTENT : [" << origin->msg << "], DATE : [" << origin->time << "]" << std::endl;
+#endif
+      if (searchClient(clients, origin->to, receiver))
+	{
+#if defined(DEBUG)
+	  std::cout << "Message send ..." << std::endl;
+#endif
+	  if (receiver->Authenticated())
+	    {
+	      receiver->serialize_data(*origin);
+	      sender->serialize_data(request::server::Ok());
+	    }
+	  else
+	    sender->serialize_data(request::server::Forbidden());
+	}
+    }
+  else
+    sender->serialize_data(request::server::Forbidden());
 }
 
 void	Chat::setActions(std::map<request::ID, plugin::request_handler> &map)

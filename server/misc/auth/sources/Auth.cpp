@@ -183,8 +183,11 @@ void	Auth::remove(const std::list<IClient::Pointer> &clients, IClient::Pointer s
     {
       Database::list_friend	friends;
 
-      sendStatusFriends(sender, friends, clients, request::User::Status::DELETED);
-      deleteFriendList(sender, friends, clients);
+      if (_db.listFriend(sender->Username(), friends))
+	{
+	  sendStatusFriends(sender, friends, clients, request::User::Status::DELETED);
+	  deleteFriendList(sender, friends, clients);
+	}
       _db.delClient(origin->_name, origin->_password);
 #if defined(DEBUG)
       std::cout << "The account : [" << origin->_name << "] has been deleted" << std::endl;

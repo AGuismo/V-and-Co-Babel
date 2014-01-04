@@ -245,8 +245,8 @@ namespace	request
       {
       }
 
-      DelFriend::DelFriend(const request::Username &from):
-	Friend(request::client::friends::DEL_FRIEND), from(from)
+      DelFriend::DelFriend(const request::Username &to):
+	Friend(request::client::friends::DEL_FRIEND), to(to)
       {
       }
 
@@ -255,7 +255,7 @@ namespace	request
       }
 
       DelFriend::DelFriend(const DelFriend &src) :
-	Friend(request::client::friends::DEL_FRIEND), from(src.from)
+	Friend(request::client::friends::DEL_FRIEND), to(src.to)
       {
 
       }
@@ -264,7 +264,7 @@ namespace	request
       {
 	if (this != &src)
 	  {
-	    from = src.from;
+	    to = src.to;
 	  }
 	return (*this);
       }
@@ -280,7 +280,7 @@ namespace	request
 	  return (false);
 
 	const DelFriend	*tmp = dynamic_cast<const DelFriend *>(req);
-	return (tmp->from == from);
+	return (tmp->to == to);
       }
 
       bool	DelFriend::operator!=(const ARequest *req) const
@@ -293,9 +293,9 @@ namespace	request
 	UsernameLen	userLen;
 
 	Friend::serialize(rhs);
-	userLen = from.length();
+	userLen = to.length();
 	rhs << userLen;
-	rhs.push(from, userLen);
+	rhs.push(to, userLen);
 	return (rhs);
       }
 
@@ -306,7 +306,7 @@ namespace	request
 	Friend::unserialize(rhs);
 
 	rhs >> userLen;
-	rhs.pop(from, userLen);
+	rhs.pop(to, userLen);
 
 	return (rhs);
       }
