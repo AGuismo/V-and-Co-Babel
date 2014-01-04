@@ -44,6 +44,11 @@ void		AGraphic::setAddFriendHandler(Function<void (const request::Username &)> h
 	_addFriendHandler = handle;
 }
 
+void		AGraphic::setGetFriendHandler(Function<void (const request::Username &)> handle)
+{
+	_getFriendHandler = handle;
+}
+
 void		AGraphic::setDelFriendHandler(Function<void (const request::Username &)> handle)
 {
 	_delFriendHandler = handle;

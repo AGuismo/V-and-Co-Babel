@@ -37,13 +37,14 @@ protected:
   // Friends
   Function<void (const request::Username &)>					_addFriendHandler;
   Function<void (const request::Username &)>					_delFriendHandler;
+  Function<void (const request::Username &)>					_getFriendHandler;
   
   // Calls
   Function<void (const request::Username &)>					_callHandler;
   Function<void ()>												_hangupHandler;
 
   // Chat
-  Function<void (const request::Username &, const std::string &)> _chatHandler;
+  Function<void (const request::Username &, const request::Message &)> _chatHandler;
   
   // Answering machine
   Function<void ()>												_setAnswerHandler;
@@ -77,6 +78,7 @@ public:
   // Friends
   virtual void		setAddFriendHandler(Function<void (const request::Username &)>);
   virtual void		setDelFriendHandler(Function<void (const request::Username &)>);
+  virtual void		setGetFriendHandler(Function<void (const request::Username &)>);
 
   // Calls
   virtual void		setCallHandler(Function<void (const request::Username &)>);

@@ -2,6 +2,7 @@
 #include	"Function.hpp"
 #include	"AuthRequest.hh"
 #include	"PersoRequest.hh"
+#include	"ChatRequest.hh"
 #include	"FriendRequest.hh"
 #include	"Protocol.hpp"
 #include	"Env.hh"
@@ -14,6 +15,7 @@ Application::Application(int ac, char *av[]):
   _requestActions[request::server::perso::PING] = callback_handler(&Application::ping_handler, this);
   _requestActions[request::server::friends::UPDATE] = callback_handler(&Application::update_friend_handler, this);
   _requestActions[request::client::friends::REQUEST] = callback_handler(&Application::get_friend_request_handler, this);
+    _requestActions[request::client::chat::MESSAGE] = callback_handler(&Application::get_msg_handler, this);
 }
 
 void		Application::update_friend_handler(const ARequest &req)
@@ -25,9 +27,27 @@ void		Application::update_friend_handler(const ARequest &req)
 
 	_friendList.insertFriend(dynamic_cast<const request::friends::server::Update &>(req).username,  dynamic_cast<const request::friends::server::Update &>(req).detail, (Status)dynamic_cast<const request::friends::server::Update &>(req).status);
 	_graphic.updateFriendList(_friendList.getFriendList());
+	if (Env::getInstance().selectedFriend.name == dynamic_cast<const request::friends::server::Update &>(req).username)
+		_graphic.receiveFriendInformation(_friendList.getFriend(dynamic_cast<const request::friends::server::Update &>(req).username));
+
+}
+
+void		Application::get_msg_handler(const ARequest &req)
+{
+	std::string			friendName(dynamic_cast<const request::chat::client::Message &>(req).from);
+
+
+	_friendList.insertIncomingMsg(friendName, "12", dynamic_cast<const request::chat::client::Message &>(req).msg);
+
+	if (Env::getInstance().selectedFriend.name == dynamic_cast<const request::chat::client::Message &>(req).from)
+	{
+		_graphic.receiveFriendInformation(_friendList.getFriend(dynamic_cast<const request::chat::client::Message &>(req).from));
+	}
+
 
 
 }
+
 
 void		Application::get_friend_request_handler(const ARequest &req)
 {
@@ -73,6 +93,8 @@ void  Application::init()
   _graphic.setStatusHandler(Function<void (const request::Status &, const request::Message &)>(&Application::triggerStatusHandler, this));	
   _graphic.setAddFriendHandler(Function<void (const request::Username &)>(&Application::triggerAddFriendHandler, this));
   _graphic.setDelFriendHandler(Function<void (const request::Username &)>(&Application::triggerDelFriendHandler, this));
+ _graphic.setGetFriendHandler(Function<void (const request::Username &)>(&Application::triggerGetFriendHandler, this));
+  _graphic.setChatHandler(Function<void (const request::Username &, const request::Message &)>(&Application::triggerChatHandler, this));
 }
 
 
@@ -112,12 +134,23 @@ void	Application::triggerDelFriendHandler(const request::Username &friendName)
 	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
 
-void  Application::del_friend_response(const ARequest &req)
+void	Application::triggerGetFriendHandler(const request::Username &friendName)
 {
-	(void)req;
+	_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
 }
 
 
+void	Application::triggerChatHandler(const request::Username &friendName, const request::Message &msg)
+{
+	qDebug() << "msg : " << msg.c_str();
+	send_request(request::chat::client::Message(Env::getInstance().userInfo.login, friendName, 45, msg));
+	
+	_friendList.insertOutcomingMsg(friendName, msg);
+	qDebug() << "msg : " << msg.c_str();
+	_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
+
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+}
 
 
 /*void	Application::triggerHandler(const request: &)

@@ -57,7 +57,7 @@ private:
 	friend_list_type							_friendList;
 
 public:
-	Friend										*getFriend(std::string &friendName);
+	Friend										*getFriend(const std::string &friendName);
 	const friend_list_type						&getFriendList();
 
 public:
@@ -69,8 +69,8 @@ public:
 	bool										updateFriendPersonalMsg(std::string &friendName, std::string &newPersonalMsg);
 
 public:
-	bool										insertIncomingMsg(std::string &friendName, std::string &header, std::string &msg);
-	bool										insertOutcomingMsg(std::string &friendName, std::string &msg);
+	bool										insertIncomingMsg(const std::string &friendName,  const std::string &header, const std::string &msg);
+	bool										insertOutcomingMsg(const std::string &friendName, const std::string &msg);
 	bool										saveCurrentTypingMsg(std::string &friendName, std::string &msg);
 
 public:
