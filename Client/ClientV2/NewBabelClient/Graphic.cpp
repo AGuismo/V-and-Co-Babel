@@ -70,9 +70,6 @@ void					Graphic::init()
 
 	// Friend list Item changed
 	connect(ui.friendListWidget, SIGNAL(itemSelectionChanged()), this, SLOT(on_friend_list_selection_changed()));
-	// Friend deletion triggered
-	connect(ui.deleteFriendPushButton , SIGNAL(released()), this, SLOT(on_delete_friend_triggered()));
-
 }
 
 
@@ -265,17 +262,21 @@ void					Graphic::on_add_friend_error(const std::string &error)
 
 void					Graphic::on_delete_friend_triggered()
 {
-	// DONT FORGET HERE MTFK env and everything
+	if (ui.friendListWidget->currentItem() == NULL)
+		return;
+
 	QString				msg("Are you sure to delete \"");
 	msg += 	ui.friendListWidget->currentItem()->text();
 	msg += "\", he is really going to miss you..";
+
 
 	if (QMessageBox::Yes == QMessageBox(QMessageBox::Information, "Delete contact", msg, QMessageBox::Yes|QMessageBox::No).exec()) 
 	{
 		_delFriendHandler(ui.friendListWidget->currentItem()->text().toStdString());
 		qDebug() << "deleting friend here mtfk !";
 	}
-	qDebug() << "deletion aborted";
+	else
+		qDebug() << "deletion aborted";
 }
 
 void					Graphic::on_send_box_push_button_released()
