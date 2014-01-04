@@ -8,30 +8,41 @@
 //# include		"pa_asio.h"
 # include		<fstream>
 
-#define			CHECK_CIRCULAR(data)	((data->fWrIndex < data->fIndexMax) ? (true) : (false))
+#define			CHECK_CIRCULAR_IN(data)		((data->fWrIn < data->fMaxIn) ? (true) : (false))
+#define			CHECK_CIRCULAR_OUT(data)	((data->fWrOut < data->fMaxOut) ? (true) : (false))
 
 class			PAudioBuffer
 {
 private:
-	SAMPLE		*_frameBuff;
+	SAMPLE			*_frameBuff;
+//	unsigned char	*_compressedBuff;
 	IAudioCodec	*_codec;
 	std::ofstream	myFile;
 
 public:
-	int			fRdIndex;
-	int			fWrIndex;
-	int			fIndexMax;
-	SAMPLE		*content;
+	int			fRdIn;
+	int			fWrIn;
+	int			fMaxIn;
+	SAMPLE		*input;
+
+	int			fRdOut;
+	int			fWrOut;
+	int			fMaxOut;
+	SAMPLE		*output;
+
 	AudioBridge		&_bridge;
 
 public:
 	void		sendToNetwork();
-	void		feed(char *data);
-	static int	recordCallBack(const void *inputBuff, void *outputBuff,
+	void		feed(AudioChunk &chunk);
+	static int	streamCallBack(const void *inputBuff, void *outputBuff,
 				unsigned long framesPerBuff, const PaStreamCallbackTimeInfo *timeInfo,
 				PaStreamCallbackFlags statusFlags, void *userData);
 
-	static int	playCallBack(const void *inputBuff, void *outputBuff,
+	int			recordCallBack(const void *inputBuff, void *outputBuff,
+				unsigned long framesPerBuff, const PaStreamCallbackTimeInfo *timeInfo,
+				PaStreamCallbackFlags statusFlags, void *userData);
+	int			playCallBack(const void *inputBuff, void *outputBuff,
 				unsigned long framesPerBuff, const PaStreamCallbackTimeInfo *timeInfo,
 				PaStreamCallbackFlags statusFlags, void *userData);
 

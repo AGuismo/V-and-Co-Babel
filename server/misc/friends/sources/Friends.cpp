@@ -100,25 +100,29 @@ void	Friends::del_friend(const std::list<IClient::Pointer> &clients, IClient::Po
 {
   const request::friends::client::DelFriend	*origin = dynamic_cast<const request::friends::client::DelFriend *>(req);
 
+#if defined(DEBUG)
+  std::cout << "Delete request from : [" << sender->Username() << "] For : [" << origin->to << "]" << std::endl;
+#endif
   if (sender->Authenticated() &&
-      sender->Username() == origin->from &&
-      !_db.isFriend(origin->from, origin->to))
+      _db.isFriend(sender->Username(), origin->to))
     {
-      if (_db.delFriend(origin->from, origin->to))
+#if defined(DEBUG)
+      std::cout << "Deleting..." << std::endl;
+#endif
+      if (_db.delFriend(sender->Username(), origin->to))
 	{
 	  sender->serialize_data(request::server::Ok());
-	  if (_db.isFriend(origin->to, origin->from))
+	  sender->serialize_data(request::friends::server::Update(request::User::Status::DELETED, std::string(), origin->to));
+	  if (_db.isFriend(origin->to, sender->Username()))
 	    {
 	      IClient::Pointer		receiver;
 
-	      _db.delFriend(origin->to, origin->from);
+	      _db.delFriend(origin->to, sender->Username());
 	      if (searchClient(clients, origin->to, receiver))
-		receiver->serialize_data(request::friends::server::Update(request::User::Status::DELETED, std::string(), origin->from));
+		receiver->serialize_data(request::friends::server::Update(request::User::Status::DELETED, std::string(), sender->Username()));
 	    }
+	  return;
 	}
-#if defined(DEBUG)
-      std::cout << "Receive a delete friend request from [" << origin->from << "] to [" << origin->to << "]" << std::endl;
-#endif
     }
   sender->serialize_data(request::server::Forbidden());
 }

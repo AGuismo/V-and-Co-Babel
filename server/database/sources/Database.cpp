@@ -214,6 +214,29 @@ bool		Database::addFriend(const std::string &login,
   return (true);
 }
 
+bool		Database::delFriend(const std::string &login,
+				    const std::string &FriendLogin)
+{
+  boost::mutex::scoped_lock(_lock);
+  clients::iterator	it;
+
+#if defined(DEBUG)
+  std::cout << "Friend deleted" << std::endl;
+#endif
+  if ((it = _clients.find(login)) == _clients.end() || _clients.find(FriendLogin) == _clients.end())
+    return (false);
+  for (list_friend::iterator itFr = it->second->friendList.begin();
+       itFr != it->second->friendList.end(); ++itFr)
+    {
+      if (*itFr == FriendLogin)
+	{
+	  itFr = it->second->friendList.erase(itFr);
+	  return (true);
+	}
+    }
+  return (false);
+}
+
 Database::NbMissed	Database::getNbMissed(const std::string &login)
 {
   boost::mutex::scoped_lock(_lock);
@@ -253,7 +276,7 @@ bool		Database::addMessage(const std::string &login,
   clients::iterator	it;
 
   if ((it = _clients.find(login)) == _clients.end())
-    return (false);
+   return (false);
 
   it->second->messageList.push_back(filename);
   return (true);
@@ -359,8 +382,6 @@ bool		Database::modClientPass(const std::string &login,
   it->second->password = newpassword;
   return (true);
 }
-
-
 
 bool		Database::getClient(const std::string &login, Client &client) const
 {

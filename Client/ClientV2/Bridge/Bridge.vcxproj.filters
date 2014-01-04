@@ -101,6 +101,9 @@
     <ClCompile Include="GeneratedFiles\Release\moc_audio.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="AudioChunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Abridge.hh">
@@ -150,5 +153,10 @@
     <CustomBuild Include="AudioWorker.h">
       <Filter>Generated Files</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AudioChunk.hh">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
