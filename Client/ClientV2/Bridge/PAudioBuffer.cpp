@@ -16,6 +16,10 @@ void			PAudioBuffer::feed(AudioChunk &chunk)
 	else
 		qDebug() << QThread::currentThreadId() << "Chunk Size : [" << chunk.size() << "]";*/
 //	frames = _codec->decode(chunk.getContent(), FRAME_PACKET_SIZE);
+//	if (chunk.size() == 0)
+//		return ;
+	if (chunk.empty())
+		return ;
 	frames = reinterpret_cast<float *>(chunk.getContent());
 	if (frames == NULL)
 		return ;
@@ -23,9 +27,9 @@ void			PAudioBuffer::feed(AudioChunk &chunk)
 	while (i < FRAME_PACKET_SIZE)
 	{
 		if (fRdOut >= fMaxOut)
-			fRdIn = 0;
+			fRdOut = 0;
 		if (fWrOut >= fMaxOut)
-			fWrIn = 0;
+			fWrOut = 0;
 		output[fWrOut++] = frames[i++];
 		if (fWrOut == fRdOut)
 			return ;
@@ -131,12 +135,9 @@ int				PAudioBuffer::recordCallBack(const void *inputBuff,
   return (paContinue);
 }
 
-int				PAudioBuffer::playCallBack(const void *inputBuff,
-							   void *outputBuff,
-							   unsigned long framesPerBuff,
-							   const PaStreamCallbackTimeInfo *timeInfo,
-							   PaStreamCallbackFlags statusFlags,
-							   void *userData)
+int				PAudioBuffer::playCallBack(const void *inputBuff, void *outputBuff,
+							   unsigned long framesPerBuff, const PaStreamCallbackTimeInfo *timeInfo,
+							   PaStreamCallbackFlags statusFlags, void *userData)
 {
   PAudioBuffer		*data = (PAudioBuffer *)(userData);
   SAMPLE			*readPtr = data->output;
@@ -149,20 +150,16 @@ int				PAudioBuffer::playCallBack(const void *inputBuff,
   (void)statusFlags;
   (void)userData;
 
-  if (data->fRdOut == data->fWrOut)
-  {
-	  _bridge.outputRead(chunkList, 1, false);
-	  if (chunkList.size() != 0)
-		  data->feed(chunkList[0]);
-  }
-
-  while (ABS(data->fRdOut - data->fWrOut) > 0 && i < framesPerBuff)
+  _bridge.outputRead(chunkList, 1, false);
+  if (chunkList.size() != 0)
+	  data->feed(chunkList[0]);
+  while ((ABS(data->fRdOut - data->fWrOut) > 0) && (i < framesPerBuff))
   {
 	  writePtr[i++] = readPtr[data->fRdOut++];
 	  if (data->fRdOut >= data->fMaxOut)
-	    data->fRdIn = 0;
+	    data->fRdOut = 0;
 	  if (data->fWrOut >= data->fMaxOut)
-	    data->fWrIn = 0;
+	    data->fWrOut = 0;
   }
   return (paContinue);
 }
