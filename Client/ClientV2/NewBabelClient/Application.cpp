@@ -3,6 +3,7 @@
 #include	"AuthRequest.hh"
 #include	"PersoRequest.hh"
 #include	"ChatRequest.hh"
+#include	"CallRequest.hh"
 #include	"FriendRequest.hh"
 #include	"Protocol.hpp"
 #include	"Env.hh"
@@ -44,9 +45,6 @@ void		Application::get_msg_handler(const ARequest &req)
 	{
 		_graphic.receiveFriendInformation(_friendList.getFriend(dynamic_cast<const request::chat::client::Message &>(req).from));
 	}
-
-
-
 }
 
 
@@ -109,8 +107,6 @@ void	Application::triggerStatusHandler(const request::Status &newStatus, const r
 	_friendList.insertFriend("toto3", "gdfg", INVISIBLE);
 	_friendList.insertFriend("toto44", "gdfg4255", OCCUPIED);
 	_graphic.updateFriendList(_friendList.getFriendList());
-
-
 }
 
 void	Application::triggerAddFriendHandler(const request::Username &newFriend)
@@ -153,6 +149,13 @@ void	Application::triggerChatHandler(const request::Username &friendName, const 
 	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
 
+
+void	Application::triggerCallHandler(const request::Username &friendName)
+{
+	send_request(request::call::client::CallClient(Env::getInstance().userInfo.login, friendName, request::options::AUDIO, "eee", 40284));
+
+//	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+}
 
 /*void	Application::triggerHandler(const request: &)
 {

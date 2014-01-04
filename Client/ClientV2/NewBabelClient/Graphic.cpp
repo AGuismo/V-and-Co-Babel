@@ -295,6 +295,8 @@ void					Graphic::on_send_box_push_button_released()
 void					Graphic::on_call_friend_push_button_released()
 {
 	qDebug() << "calling here mtfck !";
+	if (ui.friendListWidget->currentItem() != NULL)
+		_callHandler(ui.friendListWidget->currentItem()->text().toStdString());
 }
 
 void					Graphic::on_hang_up_push_button_released()
