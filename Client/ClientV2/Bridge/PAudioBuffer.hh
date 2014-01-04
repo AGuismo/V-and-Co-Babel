@@ -15,7 +15,7 @@ class			PAudioBuffer
 {
 private:
 	SAMPLE			*_frameBuff;
-	unsigned char	*_compressedBuff;
+//	unsigned char	*_compressedBuff;
 	IAudioCodec	*_codec;
 	std::ofstream	myFile;
 

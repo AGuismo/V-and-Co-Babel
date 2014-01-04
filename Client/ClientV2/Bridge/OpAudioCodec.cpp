@@ -13,7 +13,7 @@ unsigned char	*OpAudioCodec::encode(SAMPLE *frame, unsigned int frameSize, unsig
 
 SAMPLE			*OpAudioCodec::decode(unsigned char *compressed, unsigned int frameSize)
 {
-	SAMPLE		*frame = new (SAMPLE[FRAME_PACKET_SIZE]);
+	SAMPLE		*frame = new (SAMPLE[frameSize * NUM_CHANNELS]);
 
   opus_packet_get_nb_channels(compressed);
   opus_decode_float(_decoder, compressed, _encodedSize, frame, frameSize, 0);

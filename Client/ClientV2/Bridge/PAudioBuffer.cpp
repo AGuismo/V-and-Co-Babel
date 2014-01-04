@@ -15,15 +15,18 @@ void			PAudioBuffer::feed(AudioChunk &chunk)
 		qDebug() << QThread::currentThreadId() << "EMPTY CHUNK";
 	else
 		qDebug() << QThread::currentThreadId() << "Chunk Size : [" << chunk.size() << "]";*/
-	frames = _codec->decode(chunk.getContent(), FRAME_PACKET_SIZE);
+//	frames = _codec->decode(chunk.getContent(), FRAME_PACKET_SIZE);
+	frames = reinterpret_cast<float *>(chunk.getContent());
+	if (frames == NULL)
+		return ;
 	i = 0;
 	while (i < FRAME_PACKET_SIZE)
 	{
-		output[fWrOut++] = frames[i++];
 		if (fRdOut >= fMaxOut)
 			fRdIn = 0;
 		if (fWrOut >= fMaxOut)
 			fWrIn = 0;
+		output[fWrOut++] = frames[i++];
 		if (fWrOut == fRdOut)
 			return ;
 	}
@@ -31,10 +34,10 @@ void			PAudioBuffer::feed(AudioChunk &chunk)
 
 void			PAudioBuffer::sendToNetwork()
 {
-  int				toReach;
-  int				i;
-  unsigned char		*compressed;
-  unsigned int		encodedSize;
+  int						toReach;
+  int						i;
+  unsigned char				*compressed;
+  unsigned int				encodedSize;
   std::vector<AudioChunk>	vect;
   AudioChunk				chunk;
 
@@ -53,8 +56,9 @@ void			PAudioBuffer::sendToNetwork()
 	    fWrIn = 0;
 	}
       encodedSize = 0;
-      compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE, encodedSize);
-      chunk.assign(compressed, encodedSize);
+//    compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE, encodedSize);
+	  chunk.assign(reinterpret_cast<unsigned char *>(_frameBuff), (FRAME_PACKET_SIZE * sizeof(float)));
+//    chunk.assign(compressed, encodedSize);
 	  vect.push_back(chunk);
 //      qDebug() << QThread::currentThreadId() << "Sending packet";
       _bridge.inputWrite(vect);
@@ -145,11 +149,14 @@ int				PAudioBuffer::playCallBack(const void *inputBuff,
   (void)statusFlags;
   (void)userData;
 
-  _bridge.outputRead(chunkList, 1, false);
-//  if (chunkList.size() != 0)
-//	  data->feed(chunkList[0]);
+  if (data->fRdOut == data->fWrOut)
+  {
+	  _bridge.outputRead(chunkList, 1, false);
+	  if (chunkList.size() != 0)
+		  data->feed(chunkList[0]);
+  }
 
-  while (ABS(data->fRdOut - data->fWrOut) > 0)
+  while (ABS(data->fRdOut - data->fWrOut) > 0 && i < framesPerBuff)
   {
 	  writePtr[i++] = readPtr[data->fRdOut++];
 	  if (data->fRdOut >= data->fMaxOut)
@@ -176,9 +183,9 @@ PAudioBuffer::PAudioBuffer(IAudioCodec *codec, AudioBridge &bridge) :
   _frameBuff = new (SAMPLE[FRAME_PACKET_SIZE]);
   if (_frameBuff != NULL)
     memset(_frameBuff, 0, FRAME_PACKET_SIZE);
-  _compressedBuff = new (unsigned char[1105]);
-  if (_compressedBuff != NULL)
-	  memset(_compressedBuff, 0, 1105);
+//  _compressedBuff = new (unsigned char[1105]);
+//  if (_compressedBuff != NULL)
+//	  memset(_compressedBuff, 0, 1105);
 }
 
 PAudioBuffer::~PAudioBuffer()
