@@ -40,6 +40,7 @@ private:
 
   void	triggerAddFriendHandler(const request::Username &);
   void	triggerDelFriendHandler(const request::Username &);
+  void	triggerGetFriendHandler(const request::Username &);
 
   void	triggerCallHandler(const request::Username &);
   void	triggerHangUpHandler();
@@ -64,7 +65,6 @@ private:
 
   // Work needed here
   void	add_friend_response(const ARequest &);		
-  void	del_friend_response(const ARequest &);
   void	call_response(const ARequest &);
   void	hang_up_response(const ARequest &);
   void	set_answer_response(const ARequest &);
@@ -77,6 +77,7 @@ private:
   void	ping_handler(const ARequest &);
   void	update_friend_handler(const ARequest &);
   void	get_friend_request_handler(const ARequest &);
+  void	get_msg_handler(const ARequest &);
 
 public:
   void  init();

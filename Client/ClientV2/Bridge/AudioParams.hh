@@ -11,7 +11,7 @@
 # define		DITHER_FLAG			(0)
 
 # define		WRITE_TO_FILE		(0)
-# define		PA_SAMPLE_TYPE		paInt16
+# define		PA_SAMPLE_TYPE		paFloat32
 # define		SAMPLE_SILENCE		(0)
 typedef			float				SAMPLE;
 

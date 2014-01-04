@@ -9,10 +9,12 @@ const std::string	Administrator::NOT_IMPLEMENT = "Not implemented yet";
 Administrator::Administrator() :
   _shutdownServerHandler(&Administrator::ignoreCb, this),
   _dropDBHandler(&Administrator::ignoreCb, this),
-  _saveDBHandler(&Administrator::ignoreCb, this)
+  _saveDBHandler(&Administrator::ignoreCb, this),
+  _dumpDBHandler(&Administrator::ignoreCb, this)
 {
   _calls["dropdb"] = &Administrator::dropDB;
   _calls["savedb"] = &Administrator::saveDB;
+  _calls["dumpdb"] = &Administrator::dumpDB;
   _calls["shutdown"] = &Administrator::shutdown;
   _calls["help"] = &Administrator::help;
 }
@@ -41,6 +43,11 @@ void	Administrator::registerSaveDB(Function<const std::string ()> handler)
   _saveDBHandler = handler;
 }
 
+void	Administrator::registerDumpDB(Function<const std::string ()> handler)
+{
+	_dumpDBHandler = handler;
+}
+
 void	Administrator::shutdown(const args &args, buffer &response)
 {
   if (args.size() > 1)
@@ -65,11 +72,20 @@ void	Administrator::saveDB(const args &args, buffer &response)
     response = _saveDBHandler();
 }
 
+void	Administrator::dumpDB(const args &args, buffer &response)
+{
+  if (args.size() > 1)
+    response = CONTENT;
+  else
+	response = _dumpDBHandler();
+}
+
 void	Administrator::help(const args &args, buffer &response)
 {
   response =	"dropdb : Drop the Database\n";
   response +=	"savedb : Save the Database\n";
   response +=	"shutdown : Stop the server\n";
+  response +=	"dumpdb : Dump the database in human-readable\n";
   response +=	"help : Display this help\n";
 }
 

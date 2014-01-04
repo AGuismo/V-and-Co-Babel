@@ -58,6 +58,7 @@ public slots:
 
 	void			on_try_add_friend(const std::string &);
 
+
 public:
 	void			on_connection_error(enum ANetwork::SocketState);
 	void			on_connection_success();
@@ -77,6 +78,9 @@ public:
 	void			on_select_friend();// à coder
 	void			on_add_friend_success();
 	void			on_add_friend_error(const std::string &error);
+
+	void			askFriendInformation(const std::string &friendName);
+	void			receiveFriendInformation(Friend *friendInfo);
 
 public:
 	bool			request_server_response(const std::string &title, const std::string &content);

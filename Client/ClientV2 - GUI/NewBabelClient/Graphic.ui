@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>984</width>
-    <height>529</height>
+    <width>860</width>
+    <height>542</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -128,12 +128,12 @@ QMenuBar::item:pressed
              </spacer>
             </item>
             <item row="1" column="1">
-             <widget class="QPushButton" name="pushButton_17">
+             <widget class="QPushButton" name="callFriendLeftPushButton">
               <property name="enabled">
                <bool>true</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">QPushButton#pushButton_17
+               <string notr="true">QPushButton#callFriendLeftPushButton
 {
 	color: rgb(255, 255, 255);
 	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
@@ -145,7 +145,7 @@ QMenuBar::item:pressed
 	padding: 6px;
 }
 
- QPushButton#pushButton_17:pressed 
+ QPushButton#callFriendLeftPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
@@ -157,12 +157,12 @@ QMenuBar::item:pressed
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QPushButton" name="pushButton_18">
+             <widget class="QPushButton" name="addFriendPushButton">
               <property name="enabled">
                <bool>true</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">QPushButton#pushButton_18
+               <string notr="true">QPushButton#addFriendPushButton
 {
 	color: rgb(255, 255, 255);
 	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
@@ -174,7 +174,7 @@ QMenuBar::item:pressed
 	padding: 6px;
 }
 
- QPushButton#pushButton_18:pressed 
+ QPushButton#addFriendPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
@@ -186,12 +186,12 @@ QMenuBar::item:pressed
              </widget>
             </item>
             <item row="1" column="3">
-             <widget class="QPushButton" name="deleteSelectedFriendPushButton_9">
+             <widget class="QPushButton" name="deleteFriendPushButton">
               <property name="enabled">
                <bool>true</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">QPushButton#deleteSelectedFriendPushButton_9
+               <string notr="true">QPushButton#deleteFriendPushButton
 {
 	color: rgb(255, 255, 255);
 	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
@@ -203,7 +203,7 @@ QMenuBar::item:pressed
 	padding: 6px;
 }
 
- QPushButton#deleteSelectedFriendPushButton_9:pressed 
+ QPushButton#deleteFriendPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
@@ -252,7 +252,7 @@ QMenuBar::item:pressed
              </spacer>
             </item>
             <item row="0" column="1">
-             <widget class="FriendListWidget" name="listWidget_9">
+             <widget class="FriendListWidget" name="friendListWidget">
               <property name="styleSheet">
                <string notr="true">background-color: rgba(255, 255, 255, 200);
 border-width: 2px;
@@ -288,7 +288,7 @@ padding: 2px;</string>
               <item row="0" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_6">
                 <item>
-                 <widget class="QLabel" name="label_3">
+                 <widget class="QLabel" name="userNameLabel">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -313,7 +313,7 @@ padding: 2px;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="comboBox_11">
+                 <widget class="QComboBox" name="statusComboBox">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -324,7 +324,7 @@ padding: 2px;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QComboBox#comboBox_11
+                   <string notr="true">QComboBox#statusComboBox
 {
 	color: rgb(255, 255, 255);
 	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
@@ -334,7 +334,7 @@ padding: 2px;</string>
 	border-color: rgb(255, 255, 255);
 }
 
- QComboBox#comboBox_11:pressed 
+ QComboBox#statusComboBox:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
@@ -370,7 +370,7 @@ QComboBox::down-arrow
               <item row="1" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_7">
                 <item>
-                 <widget class="QLineEdit" name="lineEdit_3">
+                 <widget class="QLineEdit" name="statusLineEdit">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -434,7 +434,7 @@ padding: 2px;</string>
               <item>
                <layout class="QGridLayout" name="gridLayout_52">
                 <item row="0" column="0">
-                 <widget class="QLabel" name="selectedFriendNameLabel_9">
+                 <widget class="QLabel" name="selectedFriendNameLabel">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -472,7 +472,7 @@ padding: 2px;</string>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QLabel" name="selectedFriendIconStatusLabel_9">
+                 <widget class="QLabel" name="selectedFriendIconStatusLabel">
                   <property name="maximumSize">
                    <size>
                     <width>300</width>
@@ -523,7 +523,7 @@ padding: 2px;</string>
                  </spacer>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QPushButton" name="activeFriendCallPushButton_9">
+                 <widget class="QPushButton" name="callFriendRightPushButton">
                   <property name="font">
                    <font>
                     <family>MS Reference Sans Serif</family>
@@ -531,7 +531,7 @@ padding: 2px;</string>
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPushButton#activeFriendCallPushButton_9
+                   <string notr="true">QPushButton#callFriendRightPushButton
 {
 	color: rgb(255, 255, 255);
 	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
@@ -543,7 +543,7 @@ padding: 2px;</string>
 	padding: 6px;
 }
 
- QPushButton#activeFriendCallPushButton_9:pressed 
+ QPushButton#callFriendRightPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
@@ -555,7 +555,7 @@ padding: 2px;</string>
                  </widget>
                 </item>
                 <item row="0" column="0">
-                 <widget class="QLabel" name="selectedFriendPersonalMsgLabel_9">
+                 <widget class="QLabel" name="selectedFriendPersonalMsgLabel">
                   <property name="minimumSize">
                    <size>
                     <width>164</width>
@@ -584,7 +584,7 @@ padding: 2px;</string>
                  </widget>
                 </item>
                 <item row="0" column="2">
-                 <widget class="QPushButton" name="HangUpPushButton">
+                 <widget class="QPushButton" name="hangUpPushButton">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -595,7 +595,7 @@ padding: 2px;</string>
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPushButton#HangUpPushButton
+                   <string notr="true">QPushButton#hangUpPushButton
 {
 	color: rgb(255, 255, 255);
 	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
@@ -607,7 +607,7 @@ padding: 2px;</string>
 	padding: 6px;
 }
 
- QPushButton#HangUpPushButton:pressed 
+ QPushButton#hangUpPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
@@ -654,7 +654,28 @@ padding: 2px;</string>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QTextBrowser" name="friendMsgBox_9">
+             <widget class="QLabel" name="callLabel">
+              <property name="font">
+               <font>
+                <family>MS Reference Sans Serif</family>
+                <pointsize>10</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Call Status</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTextBrowser" name="friendMsgBox">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
                 <horstretch>2</horstretch>
@@ -697,7 +718,7 @@ padding: 2px;</string>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
-               <widget class="QLineEdit" name="sendBoxTextEdit_9">
+               <widget class="QLineEdit" name="sendBoxTextEdit">
                 <property name="maximumSize">
                  <size>
                   <width>700</width>
@@ -720,9 +741,9 @@ padding: 2px;</string>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="sendBoxPushButton_9">
+               <widget class="QPushButton" name="sendBoxPushButton">
                 <property name="styleSheet">
-                 <string notr="true">QPushButton#sendBoxPushButton_9
+                 <string notr="true">QPushButton#sendBoxPushButton
 {
 	color: rgb(255, 255, 255);
 	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
@@ -734,7 +755,7 @@ padding: 2px;</string>
 	padding: 6px;
 }
 
- QPushButton#sendBoxPushButton_9:pressed 
+ QPushButton#sendBoxPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
@@ -778,7 +799,7 @@ padding: 2px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>984</width>
+     <width>860</width>
      <height>23</height>
     </rect>
    </property>
@@ -802,14 +823,14 @@ padding: 2px;</string>
      <string>Manage account</string>
     </property>
     <addaction name="actionCreateAccount"/>
-    <addaction name="actionDelete_account"/>
+    <addaction name="actionDeleteAccount"/>
    </widget>
    <widget class="QMenu" name="menuVoicemail">
     <property name="title">
      <string>Voicemail</string>
     </property>
-    <addaction name="actionSet_voicemail"/>
-    <addaction name="actionUnset_voicemail"/>
+    <addaction name="actionSetVoicemail"/>
+    <addaction name="actionUnsetVoicemail"/>
    </widget>
    <widget class="QMenu" name="menuFriends_list">
     <property name="enabled">
@@ -818,8 +839,8 @@ padding: 2px;</string>
     <property name="title">
      <string>Friends list</string>
     </property>
-    <addaction name="actionAdd_friend"/>
-    <addaction name="actionDelete_friend"/>
+    <addaction name="actionAddFriend"/>
+    <addaction name="actionDeleteFriend"/>
    </widget>
    <addaction name="menuVBabel"/>
    <addaction name="menuConnection"/>
@@ -866,7 +887,7 @@ padding: 2px;</string>
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionSet_voicemail">
+  <action name="actionSetVoicemail">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -874,7 +895,7 @@ padding: 2px;</string>
     <string>Set voicemail</string>
    </property>
   </action>
-  <action name="actionUnset_voicemail">
+  <action name="actionUnsetVoicemail">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -895,7 +916,7 @@ padding: 2px;</string>
     </font>
    </property>
   </action>
-  <action name="actionDelete_account">
+  <action name="actionDeleteAccount">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -903,7 +924,7 @@ padding: 2px;</string>
     <string>Delete account</string>
    </property>
   </action>
-  <action name="actionAdd_friend">
+  <action name="actionAddFriend">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -911,7 +932,7 @@ padding: 2px;</string>
     <string>Add friend</string>
    </property>
   </action>
-  <action name="actionDelete_friend">
+  <action name="actionDeleteFriend">
    <property name="enabled">
     <bool>false</bool>
    </property>

@@ -41,6 +41,7 @@ private:
   const std::string	shutdownServer();
   const std::string	dropDB();
   const std::string	saveDB();
+  const std::string	dumpDB();
   void			autosaveDB(const boost::system::error_code &e);
 
 private:

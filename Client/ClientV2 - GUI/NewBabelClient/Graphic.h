@@ -10,6 +10,9 @@
 
 #include	<QTimer>
 #include	<QTime>
+//#include	<QtGui>
+#include	<QApplication>
+#include	<QSplashScreen>
 
 #include		<QtWidgets/QMainWindow>
 #include		"ui_Graphic.h"
@@ -21,6 +24,9 @@
 class Graphic : public QMainWindow, public AGraphic
 {
 	Q_OBJECT
+
+private:
+	bool	eventFilter(QObject *target, QEvent *event);
 
 private:
 	ConnectWindow			_connectWindow;
