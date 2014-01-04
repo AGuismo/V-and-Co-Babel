@@ -25,6 +25,8 @@ void		Application::update_friend_handler(const ARequest &req)
 
 	_friendList.insertFriend(dynamic_cast<const request::friends::server::Update &>(req).username,  dynamic_cast<const request::friends::server::Update &>(req).detail, (Status)dynamic_cast<const request::friends::server::Update &>(req).status);
 	_graphic.updateFriendList(_friendList.getFriendList());
+
+
 }
 
 void		Application::get_friend_request_handler(const ARequest &req)
@@ -78,6 +80,14 @@ void	Application::triggerStatusHandler(const request::Status &newStatus, const r
 {
 	send_request(request::perso::client::StatusClient(newStatus, msgStatus));
 	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+	//à virer
+	_friendList.insertFriend("toto1", "feeff", ABSENT);
+	_friendList.insertFriend("toto2", "pas top", CONNECTED);
+	_friendList.insertFriend("toto3", "gdfg", INVISIBLE);
+	_friendList.insertFriend("toto44", "gdfg4255", OCCUPIED);
+	_graphic.updateFriendList(_friendList.getFriendList());
+
+
 }
 
 void	Application::triggerAddFriendHandler(const request::Username &newFriend)
@@ -96,10 +106,10 @@ void  Application::add_friend_response(const ARequest &req)
 	_graphic.on_add_friend_error("User do not exist");
 }
 
-void	Application::triggerDelFriendHandler(const request::Username &)
+void	Application::triggerDelFriendHandler(const request::Username &friendName)
 {
-//	send_request(request:);
-	_waitedResponses.push(response_handler(&Application::del_friend_response, this));
+	send_request(request::friends::client::DelFriend(friendName));
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
 
 void  Application::del_friend_response(const ARequest &req)
