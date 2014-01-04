@@ -1,15 +1,16 @@
 #ifndef AUDIOBRIDGE_HH
 #define AUDIOBRIDGE_HH
 
-# include "Abridge.hh"
+# include	"Abridge.hh"
+# include	"AudioChunk.hh"
 
-class AudioBridge : ABridge<char, char>
+class AudioBridge : ABridge<AudioChunk, AudioChunk>
 {
 public:
-  typedef ABridge::input_buffer   input_buffer;
-  typedef ABridge::output_buffer  output_buffer;
-  typedef char                    input;
-  typedef char                    output;
+  typedef ABridge::input_buffer		input_buffer;
+  typedef ABridge::output_buffer	output_buffer;
+  typedef AudioChunk				input;
+  typedef AudioChunk				output;
 
 public:
   AudioBridge();

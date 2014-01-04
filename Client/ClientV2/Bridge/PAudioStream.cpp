@@ -9,7 +9,7 @@
 
 bool			PAudioStream::initInput()
 {
-  if (_input->content == NULL)
+  if (_buffer->input == NULL)
     return (false);
   if ((_inputParam.device = Pa_GetDefaultInputDevice()) == paNoDevice)
     {
@@ -25,7 +25,7 @@ bool			PAudioStream::initInput()
 
 bool			PAudioStream::initOutput()
 {
-  if (_output->content == NULL)
+  if (_buffer->output == NULL)
     return (false);
   if ((_outputParam.device = Pa_GetDefaultOutputDevice()) == paNoDevice)
     {
@@ -51,8 +51,8 @@ void			PAudioStream::run()
   PaError		error = paNoError;
   AudioBridge::output_buffer	buff;
 
-  error = Pa_OpenStream(&_stream, &_inputParam, NULL, SAMPLE_RATE,
-			FRAMES_PER_BUFFER, paClipOff, PAudioBuffer::recordCallBack, _input);
+  error = Pa_OpenStream(&_stream, &_inputParam, &_outputParam, SAMPLE_RATE,
+			FRAMES_PER_BUFFER, paClipOff, PAudioBuffer::streamCallBack, _buffer);
   if (error != paNoError)
     return ;
   if (Pa_StartStream(_stream) != paNoError)
@@ -61,8 +61,9 @@ void			PAudioStream::run()
   _start = true;
   while (_start && (error = Pa_IsStreamActive(_stream)) == 1)
     {
-      _bridge.outputRead(buff, 65000);
-      qDebug() << QThread::currentThreadId() << "Receiving " << buff.size() << " packets";
+      //_bridge.outputRead(buff, 65000);
+      //qDebug() << QThread::currentThreadId() << "Receiving " << buff.size() << " packets";
+	  //_buffer->feed(buff);
     }
   if (Pa_IsStreamActive(_stream) == 1)
     Pa_StopStream(_stream);
@@ -79,17 +80,6 @@ void			PAudioStream::run()
       std::cout << "PAudioStream::run(): " << Pa_GetErrorText(error) << std::endl;
       return;
     }
-  /*
-    while ((error = Pa_IsStreamActive(_stream)) == 1)
-    {
-    Pa_Sleep(1000);
-    std::cout << "Index = " << _input->fWrIndex << std::endl;
-    }
-    if (error < 0)
-    return ;
-    if (Pa_CloseStream(_stream) != paNoError)
-    return ;
-  */
 }
 
 void			PAudioStream::stop()
@@ -98,39 +88,11 @@ void			PAudioStream::stop()
   // Pa_StopStream(_stream);
 }
 
-/*
-  void			PAudioStream::play()
-  {
-  PaError		error = paNoError;
-
-  error = Pa_OpenStream(&_stream, NULL, &_outputParam, SAMPLE_RATE,
-  FRAMES_PER_BUFFER, paClipOff, PAudioBuffer::playCallBack, _output);
-  if (error != paNoError)
-  return;
-  _output->fRdIndex = 0;
-  std::cout << "PLAYING BACK RECORDED DATA" << std::endl;
-  if (_stream)
-  {
-  if (Pa_StartStream(_stream) != paNoError)
-  return;
-  std::cout << "Waiting for playback to end..." << std::endl;
-  while ((error = Pa_IsStreamActive(_stream)) == 1)
-  Pa_Sleep(100);
-  if (error < 0)
-  return;
-  if (Pa_CloseStream(_stream) != paNoError)
-  return;
-  std::cout << "Playback ended." << std::endl;
-  }
-  }
-*/
-
 // Constructor/Destructor
 
 PAudioStream::PAudioStream(AudioBridge &bridge) : _bridge(bridge)
 {
-  _input = new PAudioBuffer(&_codec, bridge);
-  _output = new PAudioBuffer(&_codec, bridge);
+  _buffer = new PAudioBuffer(&_codec, bridge);
 }
 
 PAudioStream::~PAudioStream()

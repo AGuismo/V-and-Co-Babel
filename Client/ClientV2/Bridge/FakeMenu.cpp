@@ -69,7 +69,7 @@ void		FakeMenu::readPendingDatagrams()
   quint16	senderPort;
   QMutexLocker	_locker(&_sockLocker);
 
-  if (_sock->hasPendingDatagrams())
+  while (_sock->hasPendingDatagrams())
     {
 		QByteArray	datagram;
 
@@ -84,35 +84,28 @@ void		FakeMenu::readPendingDatagrams()
 void				FakeMenu::handleOutputWrite(const QByteArray &bytes)
 {
   AudioBridge::input_buffer	buff;
+  AudioChunk				chunk;
   std::ostringstream		ss;
   std::size_t			i = 0;
 
-  for (QByteArray::const_iterator it = bytes.begin(); it != bytes.end(); ++it)
-    {
-      if (i != 0 && i % 4 == 0)
-        ss << " ";
-      if (i != 0 && i % 36 == 0)
-        ss << std::endl;
-      ss << std::hex << std::fixed << std::setprecision(2) << (unsigned int)(*it);
-      ++i;
-    }
-  _ui->Display->setPlainText(QString(ss.str().c_str()));
-  buff.assign(bytes.data(), bytes.data() + bytes.size());
+  chunk.assign(reinterpret_cast<const unsigned char*>(bytes.data()), bytes.size());
+  buff.push_back(chunk);
+  //_ui->Display->setPlainText(QString(ss.str().c_str()));
   _bridge.outputWrite(buff);
 }
 
 void				FakeMenu::handleInputRead()
 {
   AudioBridge::input_buffer	buff;
-  QByteArray			bytes;
+  unsigned char			*str;
   QMutexLocker			_locker(&_sockLocker);
 
   qDebug() << QThread::currentThreadId() << "HandleInputRead";
   if (!_sock)
     return ;
-  _bridge.inputRead(buff, std::numeric_limits<std::size_t>::max(), false);
-  for (AudioBridge::input_buffer::const_iterator it = buff.begin(); it != buff.end(); ++it)
-    bytes += *it;
+  _bridge.inputRead(buff, 1, false);
+  str = buff.front().getContent();
+  QByteArray			bytes(reinterpret_cast<char *>(str), buff.front().size());
   qDebug() << QThread::currentThreadId() << "Write " << bytes.size() << "octets";
   _sock->writeDatagram(bytes, QHostAddress(_clientIP), _clientPort);
 }

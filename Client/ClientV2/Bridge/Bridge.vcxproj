@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioBridge.cpp" />
+    <ClCompile Include="AudioChunk.cpp" />
     <ClCompile Include="AudioWorker.cpp" />
     <ClCompile Include="FakeMenu.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_audio.cpp">
@@ -242,6 +243,9 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AudioChunk.hh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
