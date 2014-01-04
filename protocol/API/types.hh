@@ -51,7 +51,7 @@ typedef double			Rdouble;	/**< Double floating point precision */
 # endif
 
 # define	GET_MINOR(version)		(version & 0xFF)			/**< Get the minor */
-# define	SET_MINOR(version, minor)	((version &= 0x00FF) += minor)		/**< Set the minor */
+# define	SET_MINOR(version, minor)	((version &= 0xFF00) += minor)		/**< Set the minor */
 # define	GET_MAJOR(version)		(version >> 8)				/**< Get the major*/
 # define	SET_MAJOR(version, major)	((version &= 0xFF) += (major << 8))	/**< Set the major */
 # define	SET_VERSION(major, minor)	((major << 8) + minor)			/**< Set the version */
