@@ -34,7 +34,7 @@ padding: 2px;</string>
       <string>40202</string>
      </property>
      <property name="maxLength">
-      <number>5</number>
+      <number>42</number>
      </property>
     </widget>
    </item>
@@ -56,6 +56,11 @@ padding: 2px;</string>
    </item>
    <item row="3" column="2">
     <widget class="QPushButton" name="connectPushButton">
+     <property name="font">
+      <font>
+       <family>MS Reference Sans Serif</family>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton#connectPushButton
 {
@@ -102,7 +107,7 @@ padding: 2px;</string>
       <string>78.230.102.179</string>
      </property>
      <property name="maxLength">
-      <number>15</number>
+      <number>42</number>
      </property>
     </widget>
    </item>
@@ -131,6 +136,11 @@ padding: 2px;</string>
    </item>
    <item row="3" column="1">
     <widget class="QPushButton" name="closePushButton">
+     <property name="font">
+      <font>
+       <family>MS Reference Sans Serif</family>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton#closePushButton
 {

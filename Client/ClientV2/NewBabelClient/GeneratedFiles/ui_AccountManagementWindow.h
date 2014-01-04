@@ -135,7 +135,7 @@ public:
 "border-color: rgb(0, 0, 0);\n"
 "min-width: 10em;\n"
 "padding: 2px;"));
-        newPasswordLineEdit->setMaxLength(256);
+        newPasswordLineEdit->setMaxLength(42);
         newPasswordLineEdit->setEchoMode(QLineEdit::Password);
 
         gridLayout->addWidget(newPasswordLineEdit, 5, 0, 1, 1);
@@ -161,7 +161,7 @@ public:
 "border-color: rgb(0, 0, 0);\n"
 "min-width: 10em;\n"
 "padding: 2px;"));
-        currentPasswordLineEdit->setMaxLength(256);
+        currentPasswordLineEdit->setMaxLength(42);
         currentPasswordLineEdit->setEchoMode(QLineEdit::Password);
 
         gridLayout->addWidget(currentPasswordLineEdit, 3, 0, 1, 1);

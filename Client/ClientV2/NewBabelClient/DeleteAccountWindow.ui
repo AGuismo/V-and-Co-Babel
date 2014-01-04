@@ -66,7 +66,7 @@ padding: 2px;</string>
       <string>toto</string>
      </property>
      <property name="maxLength">
-      <number>256</number>
+      <number>42</number>
      </property>
     </widget>
    </item>
@@ -87,7 +87,7 @@ padding: 2px;</string>
       <string>poil</string>
      </property>
      <property name="maxLength">
-      <number>256</number>
+      <number>42</number>
      </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>
@@ -111,6 +111,11 @@ padding: 2px;</string>
    </item>
    <item row="3" column="1">
     <widget class="QPushButton" name="closePushButton">
+     <property name="font">
+      <font>
+       <family>MS Reference Sans Serif</family>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton#closePushButton
 {
@@ -145,6 +150,11 @@ QPushButton#closePushButton:hover
    </item>
    <item row="3" column="2">
     <widget class="QPushButton" name="deletePushButton">
+     <property name="font">
+      <font>
+       <family>MS Reference Sans Serif</family>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton#deletePushButton
 {

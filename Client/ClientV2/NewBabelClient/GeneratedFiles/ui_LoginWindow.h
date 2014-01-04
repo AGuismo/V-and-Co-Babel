@@ -80,6 +80,9 @@ public:
 
         loginPushButton = new QPushButton(LoginWindow);
         loginPushButton->setObjectName(QStringLiteral("loginPushButton"));
+        QFont font2;
+        font2.setFamily(QStringLiteral("MS Reference Sans Serif"));
+        loginPushButton->setFont(font2);
         loginPushButton->setStyleSheet(QLatin1String("QPushButton#loginPushButton\n"
 "{\n"
 "	color: rgb(255, 255, 255);\n"
@@ -111,12 +114,12 @@ public:
         serverResponseLabel = new QLabel(LoginWindow);
         serverResponseLabel->setObjectName(QStringLiteral("serverResponseLabel"));
         serverResponseLabel->setMinimumSize(QSize(185, 0));
-        QFont font2;
-        font2.setFamily(QStringLiteral("MS Reference Sans Serif"));
-        font2.setPointSize(10);
-        font2.setBold(true);
-        font2.setWeight(75);
-        serverResponseLabel->setFont(font2);
+        QFont font3;
+        font3.setFamily(QStringLiteral("MS Reference Sans Serif"));
+        font3.setPointSize(10);
+        font3.setBold(true);
+        font3.setWeight(75);
+        serverResponseLabel->setFont(font3);
         serverResponseLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
 
         gridLayout->addWidget(serverResponseLabel, 3, 0, 1, 1);
@@ -129,7 +132,7 @@ public:
 "border-color: rgb(0, 0, 0);\n"
 "min-width: 10em;\n"
 "padding: 2px;"));
-        passwordLineEdit->setMaxLength(256);
+        passwordLineEdit->setMaxLength(42);
         passwordLineEdit->setEchoMode(QLineEdit::Password);
 
         gridLayout->addWidget(passwordLineEdit, 2, 1, 1, 2);
@@ -142,12 +145,13 @@ public:
 "border-color: rgb(0, 0, 0);\n"
 "min-width: 10em;\n"
 "padding: 2px;"));
-        loginLineEdit->setMaxLength(256);
+        loginLineEdit->setMaxLength(42);
 
         gridLayout->addWidget(loginLineEdit, 1, 1, 1, 2);
 
         closePushButton = new QPushButton(LoginWindow);
         closePushButton->setObjectName(QStringLiteral("closePushButton"));
+        closePushButton->setFont(font2);
         closePushButton->setStyleSheet(QLatin1String("QPushButton#closePushButton\n"
 "{\n"
 "	color: rgb(255, 255, 255);\n"

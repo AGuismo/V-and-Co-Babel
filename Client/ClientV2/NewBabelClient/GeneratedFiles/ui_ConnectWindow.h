@@ -56,7 +56,7 @@ public:
 "border-color: rgb(0, 0, 0);\n"
 "min-width: 10em;\n"
 "padding: 2px;"));
-        portTcpLineEdit->setMaxLength(5);
+        portTcpLineEdit->setMaxLength(42);
 
         gridLayout->addWidget(portTcpLineEdit, 2, 1, 1, 2);
 
@@ -72,6 +72,9 @@ public:
 
         connectPushButton = new QPushButton(ConnectWindow);
         connectPushButton->setObjectName(QStringLiteral("connectPushButton"));
+        QFont font1;
+        font1.setFamily(QStringLiteral("MS Reference Sans Serif"));
+        connectPushButton->setFont(font1);
         connectPushButton->setStyleSheet(QLatin1String("QPushButton#connectPushButton\n"
 "{\n"
 "	color: rgb(255, 255, 255);\n"
@@ -108,24 +111,25 @@ public:
 "border-color: rgb(0, 0, 0);\n"
 "min-width: 10em;\n"
 "padding: 2px;"));
-        ipLineEdit->setMaxLength(15);
+        ipLineEdit->setMaxLength(42);
 
         gridLayout->addWidget(ipLineEdit, 1, 1, 1, 2);
 
         serverResponseLabel = new QLabel(ConnectWindow);
         serverResponseLabel->setObjectName(QStringLiteral("serverResponseLabel"));
         serverResponseLabel->setMinimumSize(QSize(185, 0));
-        QFont font1;
-        font1.setPointSize(10);
-        font1.setBold(true);
-        font1.setWeight(75);
-        serverResponseLabel->setFont(font1);
+        QFont font2;
+        font2.setPointSize(10);
+        font2.setBold(true);
+        font2.setWeight(75);
+        serverResponseLabel->setFont(font2);
         serverResponseLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
 
         gridLayout->addWidget(serverResponseLabel, 3, 0, 1, 1);
 
         closePushButton = new QPushButton(ConnectWindow);
         closePushButton->setObjectName(QStringLiteral("closePushButton"));
+        closePushButton->setFont(font1);
         closePushButton->setStyleSheet(QLatin1String("QPushButton#closePushButton\n"
 "{\n"
 "	color: rgb(255, 255, 255);\n"
@@ -168,12 +172,12 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
         label->setSizePolicy(sizePolicy);
-        QFont font2;
-        font2.setFamily(QStringLiteral("MS Reference Sans Serif"));
-        font2.setPointSize(14);
-        font2.setBold(true);
-        font2.setWeight(75);
-        label->setFont(font2);
+        QFont font3;
+        font3.setFamily(QStringLiteral("MS Reference Sans Serif"));
+        font3.setPointSize(14);
+        font3.setBold(true);
+        font3.setWeight(75);
+        label->setFont(font3);
         label->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         label->setAlignment(Qt::AlignCenter);
 

@@ -64,7 +64,7 @@ public:
 "border-color: rgb(0, 0, 0);\n"
 "min-width: 10em;\n"
 "padding: 2px;"));
-        loginLineEdit->setMaxLength(256);
+        loginLineEdit->setMaxLength(42);
 
         gridLayout->addWidget(loginLineEdit, 1, 1, 1, 2);
 
@@ -81,6 +81,9 @@ public:
 
         closePushButton = new QPushButton(AddFriendWindow);
         closePushButton->setObjectName(QStringLiteral("closePushButton"));
+        QFont font2;
+        font2.setFamily(QStringLiteral("MS Reference Sans Serif"));
+        closePushButton->setFont(font2);
         closePushButton->setStyleSheet(QLatin1String("QPushButton#closePushButton\n"
 "{\n"
 "	color: rgb(255, 255, 255);\n"
@@ -111,6 +114,7 @@ public:
 
         addPushButton = new QPushButton(AddFriendWindow);
         addPushButton->setObjectName(QStringLiteral("addPushButton"));
+        addPushButton->setFont(font2);
         addPushButton->setStyleSheet(QLatin1String("QPushButton#addPushButton\n"
 "{\n"
 "	color: rgb(255, 255, 255);\n"
@@ -141,12 +145,12 @@ public:
 
         loginTitleLabel = new QLabel(AddFriendWindow);
         loginTitleLabel->setObjectName(QStringLiteral("loginTitleLabel"));
-        QFont font2;
-        font2.setFamily(QStringLiteral("MS Reference Sans Serif"));
-        font2.setPointSize(14);
-        font2.setBold(true);
-        font2.setWeight(75);
-        loginTitleLabel->setFont(font2);
+        QFont font3;
+        font3.setFamily(QStringLiteral("MS Reference Sans Serif"));
+        font3.setPointSize(14);
+        font3.setBold(true);
+        font3.setWeight(75);
+        loginTitleLabel->setFont(font3);
         loginTitleLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         loginTitleLabel->setAlignment(Qt::AlignCenter);
 

@@ -73,7 +73,7 @@ public:
 "border-color: rgb(0, 0, 0);\n"
 "min-width: 10em;\n"
 "padding: 2px;"));
-        loginLineEdit->setMaxLength(256);
+        loginLineEdit->setMaxLength(42);
 
         gridLayout->addWidget(loginLineEdit, 1, 1, 1, 2);
 
@@ -85,7 +85,7 @@ public:
 "border-color: rgb(0, 0, 0);\n"
 "min-width: 10em;\n"
 "padding: 2px;"));
-        passwordLineEdit->setMaxLength(256);
+        passwordLineEdit->setMaxLength(42);
         passwordLineEdit->setEchoMode(QLineEdit::Password);
 
         gridLayout->addWidget(passwordLineEdit, 2, 1, 1, 2);
@@ -103,6 +103,9 @@ public:
 
         closePushButton = new QPushButton(DeleteAccountWindow);
         closePushButton->setObjectName(QStringLiteral("closePushButton"));
+        QFont font2;
+        font2.setFamily(QStringLiteral("MS Reference Sans Serif"));
+        closePushButton->setFont(font2);
         closePushButton->setStyleSheet(QLatin1String("QPushButton#closePushButton\n"
 "{\n"
 "	color: rgb(255, 255, 255);\n"
@@ -133,6 +136,7 @@ public:
 
         deletePushButton = new QPushButton(DeleteAccountWindow);
         deletePushButton->setObjectName(QStringLiteral("deletePushButton"));
+        deletePushButton->setFont(font2);
         deletePushButton->setStyleSheet(QLatin1String("QPushButton#deletePushButton\n"
 "{\n"
 "	color: rgb(255, 255, 255);\n"
@@ -163,12 +167,12 @@ public:
 
         loginTitleLabel = new QLabel(DeleteAccountWindow);
         loginTitleLabel->setObjectName(QStringLiteral("loginTitleLabel"));
-        QFont font2;
-        font2.setFamily(QStringLiteral("MS Reference Sans Serif"));
-        font2.setPointSize(14);
-        font2.setBold(true);
-        font2.setWeight(75);
-        loginTitleLabel->setFont(font2);
+        QFont font3;
+        font3.setFamily(QStringLiteral("MS Reference Sans Serif"));
+        font3.setPointSize(14);
+        font3.setBold(true);
+        font3.setWeight(75);
+        loginTitleLabel->setFont(font3);
         loginTitleLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         loginTitleLabel->setAlignment(Qt::AlignCenter);
 

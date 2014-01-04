@@ -385,6 +385,32 @@ void					Graphic::receiveFriendInformation(Friend *friendInfo)
 		ui.selectedFriendNameLabel->setText(QString(friendInfo->name.c_str()));
 		ui.selectedFriendPersonalMsgLabel->setText(QString(friendInfo->personalMsg.c_str()));
 		ui.friendMsgBox->clear();
+
+		QPixmap					*tmp;
+
+		switch (friendInfo->status)
+		{
+		case 0:
+			tmp = new QPixmap("./Img/Invisible.png");
+			break;
+		case 1:
+			tmp = new QPixmap("./Img/Online.png");
+			break;
+		case 2:
+			tmp = new QPixmap("./Img/Away.png");
+			break;
+		case 3:
+			tmp = new QPixmap("./Img/Occuped.png");
+			break;
+		case 4:
+			return;
+			break;
+		default:
+			tmp = new QPixmap("./Img/Invisible.png");
+			break;
+		}
+		ui.selectedFriendIconStatusLabel->setPixmap(*tmp);
+
 		for ( convers_type::const_iterator it =	friendInfo->conversation.begin(); it != friendInfo->conversation.end(); ++it)
 		{
 			ui.friendMsgBox->append(QString(it->header.c_str()));
@@ -474,8 +500,11 @@ void		Graphic::showTime()
 Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this), _deleteAccountWindow(this), _accountManagementWindow(this), _addFriendWindow(this)
 {
 	ui.setupUi(this);
-	ui.statusLineEdit->setMaxLength(84);
 
+	QPixmap					*tmp;
+	tmp = new QPixmap("./Img/Invisible.png");
+	ui.selectedFriendIconStatusLabel->setPixmap(*tmp);
+	
 	QTimer *timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
 	timer->start(1000);

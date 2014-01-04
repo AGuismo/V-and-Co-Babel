@@ -118,6 +118,19 @@ void	Application::triggerStatusHandler(const request::Status &newStatus, const r
 	_friendList.insertFriend("toto2", "pas top", CONNECTED);
 	_friendList.insertFriend("toto3", "gdfg", INVISIBLE);
 	_friendList.insertFriend("toto44", "gdfg4255", OCCUPIED);
+	_friendList.insertFriend("totoaze1", "feeff", ABSENT);
+	_friendList.insertFriend("tofefto2", "pas top", CONNECTED);
+	_friendList.insertFriend("totefafo3", "gdfg", INVISIBLE);
+	_friendList.insertFriend("tazezfoto44", "gdfg4255", OCCUPIED);
+	_friendList.insertFriend("tobrbrbto1", "feeff", ABSENT);
+	_friendList.insertFriend("togzergto2", "pas top", CONNECTED);
+	_friendList.insertFriend("tosbdfsbdto3", "gdfg", INVISIBLE);
+	_friendList.insertFriend("towcvcxto44", "gdfg4255", OCCUPIED);
+	_friendList.insertFriend("totqfgro1", "feeff", ABSENT);
+	_friendList.insertFriend("totbnztikruo2", "pas top", CONNECTED);
+	_friendList.insertFriend("totruitio3", "gdfg", INVISIBLE);
+	_friendList.insertFriend("totheto44", "gdfg4255", OCCUPIED);
+
 	_graphic.updateFriendList(_friendList.getFriendList());
 }
 
