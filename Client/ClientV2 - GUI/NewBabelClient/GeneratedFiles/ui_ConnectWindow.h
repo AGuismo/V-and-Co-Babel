@@ -42,7 +42,7 @@ public:
         ConnectWindow->resize(378, 145);
         ConnectWindow->setStyleSheet(QLatin1String("ConnectWindow \n"
 "{\n"
-"	border-image: url(./Img/wallpaper-16618.jpg);\n"
+"	border-image: url(./Img/dialog-background.jpg);\n"
 "}"));
         gridLayout = new QGridLayout(ConnectWindow);
         gridLayout->setSpacing(6);

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddFriendWindow</class>
- <widget class="QDialog" name="AddFriendWindow">
+ <class>CreateAccountWindow</class>
+ <widget class="QDialog" name="CreateAccountWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>337</width>
-    <height>109</height>
+    <width>378</width>
+    <height>136</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>LoginWindow</string>
+   <string>Login</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">AddFriendWindow 
+   <string notr="true">CreateAccountWindow 
 {
 	border-image: url(./Img/dialog-background.jpg);
 }</string>
@@ -32,7 +32,23 @@
       <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>Friend pseudo :</string>
+      <string>Login :</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="passwordLabel">
+     <property name="font">
+      <font>
+       <family>MS Reference Sans Serif</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Password :</string>
      </property>
     </widget>
    </item>
@@ -47,15 +63,45 @@ min-width: 10em;
 padding: 2px;</string>
      </property>
      <property name="text">
-      <string>tata</string>
+      <string>toto</string>
      </property>
      <property name="maxLength">
       <number>256</number>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="2" column="1" colspan="2">
+    <widget class="QLineEdit" name="passwordLineEdit">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(255, 255, 255, 230);
+border-width: 2px;
+border-radius: 8px;
+border-color: rgb(0, 0, 0);
+min-width: 10em;
+padding: 2px;</string>
+     </property>
+     <property name="inputMask">
+      <string/>
+     </property>
+     <property name="text">
+      <string>poil</string>
+     </property>
+     <property name="maxLength">
+      <number>256</number>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
     <widget class="QLabel" name="serverResponseLabel">
+     <property name="minimumSize">
+      <size>
+       <width>185</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="font">
       <font>
        <family>MS Reference Sans Serif</family>
@@ -64,12 +110,15 @@ padding: 2px;</string>
        <bold>true</bold>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
      <property name="text">
       <string/>
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="3" column="1">
     <widget class="QPushButton" name="closePushButton">
      <property name="styleSheet">
       <string notr="true">QPushButton#closePushButton
@@ -103,10 +152,10 @@ QPushButton#closePushButton:hover
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="addPushButton">
+   <item row="3" column="2">
+    <widget class="QPushButton" name="createPushButton">
      <property name="styleSheet">
-      <string notr="true">QPushButton#addPushButton
+      <string notr="true">QPushButton#createPushButton
 {
 	color: rgb(255, 255, 255);
 	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
@@ -118,13 +167,13 @@ QPushButton#closePushButton:hover
 	padding: 6px;
 }
 
-QPushButton#addPushButton:hover
+QPushButton#createPushButton:hover
 {
 	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
 	border-style: inset;
 }
 
- QPushButton#addPushButton:pressed 
+ QPushButton#createPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
@@ -133,7 +182,7 @@ QPushButton#addPushButton:hover
 </string>
      </property>
      <property name="text">
-      <string>Add</string>
+      <string>Create</string>
      </property>
     </widget>
    </item>
@@ -151,7 +200,7 @@ QPushButton#addPushButton:hover
       <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>Add friend</string>
+      <string>Create account</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -163,7 +212,8 @@ QPushButton#addPushButton:hover
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
   <tabstop>loginLineEdit</tabstop>
-  <tabstop>addPushButton</tabstop>
+  <tabstop>passwordLineEdit</tabstop>
+  <tabstop>createPushButton</tabstop>
   <tabstop>closePushButton</tabstop>
  </tabstops>
  <resources/>

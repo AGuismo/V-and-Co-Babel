@@ -37,7 +37,11 @@ public:
     {
         if (AddFriendWindow->objectName().isEmpty())
             AddFriendWindow->setObjectName(QStringLiteral("AddFriendWindow"));
-        AddFriendWindow->resize(270, 92);
+        AddFriendWindow->resize(337, 109);
+        AddFriendWindow->setStyleSheet(QLatin1String("AddFriendWindow \n"
+"{\n"
+"	border-image: url(./Img/dialog-background.jpg);\n"
+"}"));
         gridLayout = new QGridLayout(AddFriendWindow);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -45,13 +49,21 @@ public:
         loginLabel = new QLabel(AddFriendWindow);
         loginLabel->setObjectName(QStringLiteral("loginLabel"));
         QFont font;
+        font.setFamily(QStringLiteral("MS Reference Sans Serif"));
         font.setPointSize(10);
         loginLabel->setFont(font);
+        loginLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
 
         gridLayout->addWidget(loginLabel, 1, 0, 1, 1);
 
         loginLineEdit = new QLineEdit(AddFriendWindow);
         loginLineEdit->setObjectName(QStringLiteral("loginLineEdit"));
+        loginLineEdit->setStyleSheet(QLatin1String("background-color: rgba(255, 255, 255, 230);\n"
+"border-width: 2px;\n"
+"border-radius: 8px;\n"
+"border-color: rgb(0, 0, 0);\n"
+"min-width: 10em;\n"
+"padding: 2px;"));
         loginLineEdit->setMaxLength(256);
 
         gridLayout->addWidget(loginLineEdit, 1, 1, 1, 2);
@@ -59,7 +71,7 @@ public:
         serverResponseLabel = new QLabel(AddFriendWindow);
         serverResponseLabel->setObjectName(QStringLiteral("serverResponseLabel"));
         QFont font1;
-        font1.setFamily(QStringLiteral("MS UI Gothic"));
+        font1.setFamily(QStringLiteral("MS Reference Sans Serif"));
         font1.setPointSize(10);
         font1.setBold(true);
         font1.setWeight(75);
@@ -69,22 +81,73 @@ public:
 
         closePushButton = new QPushButton(AddFriendWindow);
         closePushButton->setObjectName(QStringLiteral("closePushButton"));
+        closePushButton->setStyleSheet(QLatin1String("QPushButton#closePushButton\n"
+"{\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));\n"
+"	border-style: outset;\n"
+"	border-width: 1px;\n"
+"	border-radius: 10px;\n"
+"	border-color: rgb(255, 255, 255);\n"
+"	min-width: 4em;\n"
+"	padding: 6px;\n"
+"}\n"
+"\n"
+"QPushButton#closePushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
+" QPushButton#closePushButton:pressed \n"
+"{\n"
+"	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
+"     border-style: inset;\n"
+" }\n"
+"\n"
+""));
 
         gridLayout->addWidget(closePushButton, 2, 1, 1, 1);
 
         addPushButton = new QPushButton(AddFriendWindow);
         addPushButton->setObjectName(QStringLiteral("addPushButton"));
+        addPushButton->setStyleSheet(QLatin1String("QPushButton#addPushButton\n"
+"{\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));\n"
+"	border-style: outset;\n"
+"	border-width: 1px;\n"
+"	border-radius: 10px;\n"
+"	border-color: rgb(255, 255, 255);\n"
+"	min-width: 4em;\n"
+"	padding: 6px;\n"
+"}\n"
+"\n"
+"QPushButton#addPushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
+" QPushButton#addPushButton:pressed \n"
+"{\n"
+"	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
+"     border-style: inset;\n"
+" }\n"
+"\n"
+""));
 
         gridLayout->addWidget(addPushButton, 2, 2, 1, 1);
 
         loginTitleLabel = new QLabel(AddFriendWindow);
         loginTitleLabel->setObjectName(QStringLiteral("loginTitleLabel"));
         QFont font2;
-        font2.setFamily(QStringLiteral("MS UI Gothic"));
+        font2.setFamily(QStringLiteral("MS Reference Sans Serif"));
         font2.setPointSize(14);
         font2.setBold(true);
         font2.setWeight(75);
         loginTitleLabel->setFont(font2);
+        loginTitleLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         loginTitleLabel->setAlignment(Qt::AlignCenter);
 
         gridLayout->addWidget(loginTitleLabel, 0, 0, 1, 3);

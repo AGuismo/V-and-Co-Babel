@@ -4,7 +4,6 @@
 #include				<QMessageBox>
 #include				<QMovie>
 #include				<QSplashScreen>
-#include				<QTimer>
 #include				<QDebug> // à virer
 
 
@@ -468,6 +467,7 @@ void					Graphic::loggedOut()
 
 void		Graphic::showTime()
 {
+	qDebug() << "Showtime";
 	_timeLabel->setText(_time.currentTime().toString());
 }
 
@@ -483,7 +483,7 @@ Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _
 	_timeLabel = new QLabel(_time.currentTime().toString());
 	ui.statusBar->addPermanentWidget(_timeLabel);
 
-	showTime();
+	//showTime();
 	
 	setWindowIcon(QIcon("./Img/logoBabel.png"));
 	QMovie *movie = new QMovie("./Img/appel_en_cours.gif", QByteArray(), this);

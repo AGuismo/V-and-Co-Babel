@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddFriendWindow</class>
- <widget class="QDialog" name="AddFriendWindow">
+ <class>ConnectWindow</class>
+ <widget class="QDialog" name="ConnectWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>337</width>
-    <height>109</height>
+    <width>378</width>
+    <height>145</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>LoginWindow</string>
+   <string>Connect</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">AddFriendWindow 
+   <string notr="true">ConnectWindow 
 {
 	border-image: url(./Img/dialog-background.jpg);
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QLabel" name="loginLabel">
+   <item row="2" column="1" colspan="2">
+    <widget class="QLineEdit" name="portTcpLineEdit">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(255, 255, 255, 230);
+border-width: 2px;
+border-radius: 8px;
+border-color: rgb(0, 0, 0);
+min-width: 10em;
+padding: 2px;</string>
+     </property>
+     <property name="text">
+      <string>40202</string>
+     </property>
+     <property name="maxLength">
+      <number>5</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="passwordLabel">
      <property name="font">
       <font>
        <family>MS Reference Sans Serif</family>
@@ -32,12 +50,46 @@
       <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>Friend pseudo :</string>
+      <string>TCP Port :</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="connectPushButton">
+     <property name="styleSheet">
+      <string notr="true">QPushButton#connectPushButton
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+	min-width: 4em;
+	padding: 6px;
+}
+
+QPushButton#connectPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
+ QPushButton#connectPushButton:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }
+
+</string>
+     </property>
+     <property name="text">
+      <string>Connect</string>
      </property>
     </widget>
    </item>
    <item row="1" column="1" colspan="2">
-    <widget class="QLineEdit" name="loginLineEdit">
+    <widget class="QLineEdit" name="ipLineEdit">
      <property name="styleSheet">
       <string notr="true">background-color: rgba(255, 255, 255, 230);
 border-width: 2px;
@@ -47,29 +99,37 @@ min-width: 10em;
 padding: 2px;</string>
      </property>
      <property name="text">
-      <string>tata</string>
+      <string>78.230.102.179</string>
      </property>
      <property name="maxLength">
-      <number>256</number>
+      <number>15</number>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QLabel" name="serverResponseLabel">
+     <property name="minimumSize">
+      <size>
+       <width>185</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="font">
       <font>
-       <family>MS Reference Sans Serif</family>
        <pointsize>10</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
      <property name="text">
-      <string/>
+      <string>Disconnected</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="3" column="1">
     <widget class="QPushButton" name="closePushButton">
      <property name="styleSheet">
       <string notr="true">QPushButton#closePushButton
@@ -103,42 +163,30 @@ QPushButton#closePushButton:hover
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="addPushButton">
+   <item row="1" column="0">
+    <widget class="QLabel" name="loginLabel">
+     <property name="font">
+      <font>
+       <family>MS Reference Sans Serif</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="styleSheet">
-      <string notr="true">QPushButton#addPushButton
-{
-	color: rgb(255, 255, 255);
-	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
-	border-style: outset;
-	border-width: 1px;
-	border-radius: 10px;
-	border-color: rgb(255, 255, 255);
-	min-width: 4em;
-	padding: 6px;
-}
-
-QPushButton#addPushButton:hover
-{
-	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
-	border-style: inset;
-}
-
- QPushButton#addPushButton:pressed 
-{
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
-     border-style: inset;
- }
-
-</string>
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>Add</string>
+      <string>Ip Address :</string>
      </property>
     </widget>
    </item>
    <item row="0" column="0" colspan="3">
-    <widget class="QLabel" name="loginTitleLabel">
+    <widget class="QLabel" name="label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <family>MS Reference Sans Serif</family>
@@ -151,7 +199,7 @@ QPushButton#addPushButton:hover
       <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>Add friend</string>
+      <string>Connect</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -162,8 +210,9 @@ QPushButton#addPushButton:hover
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>loginLineEdit</tabstop>
-  <tabstop>addPushButton</tabstop>
+  <tabstop>ipLineEdit</tabstop>
+  <tabstop>portTcpLineEdit</tabstop>
+  <tabstop>connectPushButton</tabstop>
   <tabstop>closePushButton</tabstop>
  </tabstops>
  <resources/>

@@ -39,10 +39,10 @@ public:
     {
         if (CreateAccountWindow->objectName().isEmpty())
             CreateAccountWindow->setObjectName(QStringLiteral("CreateAccountWindow"));
-        CreateAccountWindow->resize(378, 145);
+        CreateAccountWindow->resize(378, 136);
         CreateAccountWindow->setStyleSheet(QLatin1String("CreateAccountWindow \n"
 "{\n"
-"	border-image: url(./Img/wallpaper-16618.jpg);\n"
+"	border-image: url(./Img/dialog-background.jpg);\n"
 "}"));
         gridLayout = new QGridLayout(CreateAccountWindow);
         gridLayout->setSpacing(6);

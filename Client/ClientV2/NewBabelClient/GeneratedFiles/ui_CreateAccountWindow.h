@@ -39,7 +39,7 @@ public:
     {
         if (CreateAccountWindow->objectName().isEmpty())
             CreateAccountWindow->setObjectName(QStringLiteral("CreateAccountWindow"));
-        CreateAccountWindow->resize(378, 136);
+        CreateAccountWindow->resize(378, 145);
         CreateAccountWindow->setStyleSheet(QLatin1String("CreateAccountWindow \n"
 "{\n"
 "	border-image: url(./Img/dialog-background.jpg);\n"

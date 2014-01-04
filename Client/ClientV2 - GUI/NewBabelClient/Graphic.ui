@@ -760,7 +760,42 @@ border-width: 2px;
 border-radius: 8px;
 border-color: rgb(0, 0, 0);
 min-width: 10em;
-padding: 2px;</string>
+padding: 2px;
+
+/*QScrollBar:vertical
+{
+     border: 2px solid grey;
+     background: #32CC99;
+     height: 15px;
+     margin: 0px 20px 0 20px;
+}*/
+ 
+/*QScrollBar::handle:vertical
+{
+     background: white;
+     min-width: 20px;
+}
+ 
+QScrollBar::add-line:vertical
+{
+     border: 2px solid grey;
+     background: #32CC99;
+     width: 20px;
+     subcontrol-position: right;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::sub-line:vertical
+{
+     border: 2px solid grey;
+     background: #32CC99;
+     width: 20px;
+     subcontrol-position: left;
+     subcontrol-origin: margin;
+ }*/</string>
+              </property>
+              <property name="verticalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
               </property>
              </widget>
             </item>
@@ -1018,5 +1053,22 @@ QPushButton#sendBoxPushButton:hover
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>sendBoxTextEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>friendMsgBox</receiver>
+   <slot>append(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>561</x>
+     <y>482</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>577</x>
+     <y>423</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

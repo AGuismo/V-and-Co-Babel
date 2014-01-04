@@ -4,6 +4,7 @@
 
 #include	<QDebug>
 #include	<QMovie>
+#include	<QScrollBar>
 
 void					Graphic::init()
 {
@@ -229,7 +230,7 @@ Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _
 	TimeLabel = new QLabel(time.currentTime().toString());
 	ui.statusBar->addPermanentWidget(TimeLabel);
 
-	showTime();
+	//showTime();
 	
 	setWindowIcon(QIcon("./Img/logoBabel.png"));
 	QMovie *movie = new QMovie("./Img/appel_en_cours.gif", QByteArray(), this);
@@ -237,6 +238,9 @@ Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _
 	ui.callLabel->setMovie(movie);
 	movie->start();
 	//ui.callLabel->setMovie(NULL);
+
+	QScrollBar *sb = ui.friendMsgBox->verticalScrollBar();
+    sb->setValue(sb->maximum());
 }
 
 Graphic::~Graphic()

@@ -42,7 +42,7 @@ public:
         LoginWindow->resize(378, 145);
         LoginWindow->setStyleSheet(QLatin1String("LoginWindow \n"
 "{\n"
-"	border-image: url(./Img/wallpaper-16618.jpg);\n"
+"	border-image: url(./Img/dialog-background.jpg);\n"
 "}"));
         gridLayout = new QGridLayout(LoginWindow);
         gridLayout->setSpacing(6);

@@ -51,6 +51,7 @@ public slots:
 	void			on_unset_auto_answer_triggered();
 
 	void			on_friend_list_selection_changed();
+	void			showTime();
 
 public slots:
 	void			on_try_connect(const std::string &ipAddress, unsigned short int port);
@@ -64,7 +65,6 @@ public slots:
 
 private:
 	bool			eventFilter(QObject *target, QEvent *event);
-	void			showTime();
 public:
 	void			on_connection_error(enum ANetwork::SocketState);
 	void			on_connection_success();

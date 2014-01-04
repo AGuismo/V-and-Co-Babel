@@ -682,7 +682,40 @@ public:
 "border-radius: 8px;\n"
 "border-color: rgb(0, 0, 0);\n"
 "min-width: 10em;\n"
-"padding: 2px;"));
+"padding: 2px;\n"
+"\n"
+"/*QScrollBar:vertical\n"
+"{\n"
+"     border: 2px solid grey;\n"
+"     background: #32CC99;\n"
+"     height: 15px;\n"
+"     margin: 0px 20px 0 20px;\n"
+"}*/\n"
+" \n"
+"/*QScrollBar::handle:vertical\n"
+"{\n"
+"     background: white;\n"
+"     min-width: 20px;\n"
+"}\n"
+" \n"
+"QScrollBar::add-line:vertical\n"
+"{\n"
+"     border: 2px solid grey;\n"
+"     background: #32CC99;\n"
+"     width: 20px;\n"
+"     subcontrol-position: right;\n"
+"     subcontrol-origin: margin;\n"
+" }\n"
+"\n"
+" QScrollBar::sub-line:vertical\n"
+"{\n"
+"     border: 2px solid grey;\n"
+"     background: #32CC99;\n"
+"     width: 20px;\n"
+"     subcontrol-position: left;\n"
+"     subcontrol-origin: margin;\n"
+" }*/"));
+        friendMsgBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
         verticalLayout_2->addWidget(friendMsgBox);
 
@@ -787,6 +820,7 @@ public:
         menuFriends_list->addAction(actionDeleteFriend);
 
         retranslateUi(GraphicClass);
+        QObject::connect(sendBoxTextEdit, SIGNAL(textEdited(QString)), friendMsgBox, SLOT(append(QString)));
 
         QMetaObject::connectSlotsByName(GraphicClass);
     } // setupUi
