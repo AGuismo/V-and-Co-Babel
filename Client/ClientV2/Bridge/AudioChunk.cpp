@@ -4,9 +4,7 @@
 
 bool					AudioChunk::empty() const
 {
-	if (_content == NULL)
-		return (true);
-	return (false);
+	return (_size == 0);
 }
 
 unsigned int			AudioChunk::size() const
@@ -35,4 +33,5 @@ AudioChunk::AudioChunk() :
 
 AudioChunk::~AudioChunk()
 {
+	delete [] _content;
 }
