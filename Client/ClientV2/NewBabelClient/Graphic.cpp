@@ -7,10 +7,10 @@
 
 void					Graphic::init()
 {
-	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-Smiley-icon.png"), "Online", QVariant("e"));
-	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-On-icon.png"), "Away", QVariant("e"));
-	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-Music-icon2.png"), "Occuped", QVariant("e"));
-	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-icon.png"), "Invisible", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Online.png"), "Online", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Away.png"), "Away", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Occuped.png"), "Occuped", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Invisible.png"), "Invisible", QVariant("e"));
 	ui.statusComboBox->setIconSize(QSize(34, 41));
 
 	// Connect Window Triggered
@@ -281,13 +281,18 @@ void					Graphic::on_hang_up_push_button_released()
 void					Graphic::on_change_status_triggered(int newStatus)
 {
 	qDebug() << "changing status here mtfk !";
-	_statusHandler(ui.statusComboBox->currentIndex(), ui.statusLineEdit->text().toStdString());
+	qDebug() << "[" << newStatus << ui.statusComboBox->currentIndex()  + 1 << "]";
+	if (ui.statusComboBox->currentIndex() + 1 == 4)
+		_statusHandler(ui.statusComboBox->currentIndex() + 2, ui.statusLineEdit->text().toStdString());		else
+		_statusHandler(ui.statusComboBox->currentIndex() + 1, ui.statusLineEdit->text().toStdString());
 }
 
 void					Graphic::on_change_status_txt_triggered()
 {
 	qDebug() << "changing status txt here mtfk !";
-	_statusHandler(ui.statusComboBox->currentIndex(), ui.statusLineEdit->text().toStdString());
+	if (ui.statusComboBox->currentIndex() + 1 == 4)
+		_statusHandler(ui.statusComboBox->currentIndex() + 2, ui.statusLineEdit->text().toStdString());		else
+		_statusHandler(ui.statusComboBox->currentIndex() + 1, ui.statusLineEdit->text().toStdString());
 	ui.statusLineEdit->setEnabled(false);
 	QTimer::singleShot(800, this, SLOT(enable_status_txt_change()));
 }
