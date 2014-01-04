@@ -11,15 +11,11 @@ void			PAudioBuffer::feed(AudioChunk &chunk)
 	SAMPLE			*frames;
 	unsigned int	i = 0;
 
-/*	if (chunk.empty())
-		qDebug() << QThread::currentThreadId() << "EMPTY CHUNK";
-	else
-		qDebug() << QThread::currentThreadId() << "Chunk Size : [" << chunk.size() << "]";*/
-//	frames = _codec->decode(chunk.getContent(), FRAME_PACKET_SIZE);
 //	if (chunk.size() == 0)
 //		return ;
 	if (chunk.empty())
 		return ;
+//	frames = _codec->decode(chunk.getContent(), FRAME_PACKET_SIZE);
 	frames = reinterpret_cast<float *>(chunk.getContent());
 	if (frames == NULL)
 		return ;
