@@ -1,4 +1,6 @@
-#include "FriendListWidget.h"
+#include	"FriendListWidget.h"
+
+#include	<QDebug> // à virer
 
 FriendListWidget::FriendListWidget(QWidget *parent)
 	: QListWidget(parent)
@@ -16,19 +18,22 @@ void						FriendListWidget::insertFriend(const std::string &name, const Status s
 	switch (status)
 	{
 	case 0:
-		tmp = new QIcon(QPixmap("./Img/Guyman-Helmet-Smiley-icon.png"));
+		tmp = new QIcon(QPixmap("./Img/Invisible.png"));
 		break;
 	case 1:
-		tmp = new QIcon(QPixmap("./Img/Guyman-Helmet-On-icon.png"));
+		tmp = new QIcon(QPixmap("./Img/Online.png"));
 		break;
 	case 2:
-		tmp = new QIcon(QPixmap("./Img/Guyman-Helmet-Music-icon.png"));
+		tmp = new QIcon(QPixmap("./Img/Away.png"));
 		break;
 	case 3:
-		tmp = new QIcon(QPixmap("./Img/Guyman-Helmet-icon.png"));
+		tmp = new QIcon(QPixmap("./Img/Occuped.png"));
+		break;
+	case 4:
+		return;
 		break;
 	default:
-		tmp = new QIcon(QPixmap("./Img/Guyman-Helmet-Smiley-icon.png"));
+		tmp = new QIcon(QPixmap("./Img/Invisible.png"));
 		break;
 	}
 	this->setIconSize(QSize(32, 39));

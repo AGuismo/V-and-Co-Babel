@@ -45,6 +45,8 @@ public slots:
 	void			on_set_auto_answer_triggered();
 	void			on_unset_auto_answer_triggered();
 
+	void			on_friend_list_selection_changed();
+
 public slots:
 	void			on_try_connect(const std::string &ipAddress, unsigned short int port);
 	void			on_try_login(const std::string &login, const std::string &password);
