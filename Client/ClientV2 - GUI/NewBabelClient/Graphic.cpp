@@ -3,6 +3,7 @@
 #include	"Graphic.h"
 
 #include	<QDebug>
+#include	<QMovie>
 
 void					Graphic::init()
 {
@@ -22,7 +23,7 @@ void					Graphic::init()
 	connect(&_createAccountWindow, SIGNAL(create_account_try(const std::string &, const std::string &)), this, SLOT(on_try_create(const std::string &, const std::string &)));
 
 	// Combo Box
-	connect(ui.comboBox_11, SIGNAL(currentIndexChanged(int)), this, SLOT(changeStatus()));
+	connect(ui.statusComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeStatus()));
 }
 
 void					Graphic::changeContact(int value)
@@ -32,10 +33,10 @@ void					Graphic::changeContact(int value)
 	switch (value)
 	{
 	case 0:
-		pixmap_img = new QPixmap("./Img/Guyman-Helmet-Smiley-icon.png");
+		pixmap_img = new QPixmap("./Img/Guyman-Helmet-Smiley-icon3.png");
 		break;
 	case 1:
-		pixmap_img = new QPixmap("./Img/Guyman-Helmet-On-icon.png");
+		pixmap_img = new QPixmap("./Img/Guyman-Helmet-Smiley-icon2.png");
 		break;
 	case 2:
 		pixmap_img = new QPixmap("./Img/Guyman-Helmet-Music-icon2.png");
@@ -48,12 +49,12 @@ void					Graphic::changeContact(int value)
 		break;
 	}
 	pixmap_img->scaled(39, 41, Qt::KeepAspectRatio);
-	ui.selectedFriendIconStatusLabel_9->setPixmap(*pixmap_img);
+	ui.selectedFriendIconStatusLabel->setPixmap(*pixmap_img);
 }
 
 void					Graphic::changeStatus()
 {
-	int value = ui.comboBox_11->currentIndex();
+	int value = ui.statusComboBox->currentIndex();
 	qDebug() << "Status : " << value;
 
 	switch (value)
@@ -139,9 +140,26 @@ void					Graphic::on_create_account_success()
   QTimer::singleShot(800, &_createAccountWindow, SLOT(on_close_button_clicked()));
 }
 
+bool Graphic::eventFilter(QObject *target, QEvent *event)
+{
+	return (true);
+}
+
 void					Graphic::run()
 {
-  show();
+	QSplashScreen screen;
+
+	screen.setPixmap(QPixmap("./Img/logoBabelSplash.png"));
+	screen.show();
+	screen.installEventFilter(this);
+	
+	QEventLoop evtLoop;
+	QTimer::singleShot(2000, &evtLoop, SLOT(quit()));
+	evtLoop.exec();
+
+	screen.hide();
+
+	show();
 }
 
 void					Graphic::on_connect_window_triggered()
@@ -196,13 +214,13 @@ Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _
 {
 	ui.setupUi(this);
 
-	ui.comboBox_11->addItem(QIcon("./Img/Guyman-Helmet-Smiley-icon.png"), "Online", QVariant("e"));
-	ui.comboBox_11->addItem(QIcon("./Img/Guyman-Helmet-On-icon.png"), "Away", QVariant("e"));
-	ui.comboBox_11->addItem(QIcon("./Img/Guyman-Helmet-Music-icon2.png"), "Occuped", QVariant("e"));
-	ui.comboBox_11->addItem(QIcon("./Img/Guyman-Helmet-icon.png"), "Invisible", QVariant("e"));
-	ui.comboBox_11->setIconSize(QSize(34, 41));
+	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-Smiley-icon3.png"), "Online", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-Smiley-icon2.png"), "Away", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-Music-icon2.png"), "Occuped", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Guyman-Helmet-icon.png"), "Invisible", QVariant("e"));
+	ui.statusComboBox->setIconSize(QSize(34, 41));
 
-	ui.lineEdit_3->setMaxLength(84);
+	ui.statusLineEdit->setMaxLength(84);
 
 	QTimer *timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
@@ -214,6 +232,11 @@ Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _
 	showTime();
 	
 	setWindowIcon(QIcon("./Img/logoBabel.png"));
+	QMovie *movie = new QMovie("./Img/appel_en_cours.gif", QByteArray(), this);
+	//QMovie *movie = new QMovie("./Img/encommunication.gif", QByteArray(), this);
+	ui.callLabel->setMovie(movie);
+	movie->start();
+	//ui.callLabel->setMovie(NULL);
 }
 
 Graphic::~Graphic()

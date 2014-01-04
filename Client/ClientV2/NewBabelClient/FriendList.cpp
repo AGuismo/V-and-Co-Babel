@@ -1,7 +1,7 @@
 #include						"FriendList.hh"
 #include						"Env.hh"
 
-Friend							*FriendList::getFriend(std::string &friendName)
+Friend							*FriendList::getFriend(const std::string &friendName)
 {
 	friend_list_type::iterator	it = _friendList.find(friendName);
 
@@ -56,7 +56,7 @@ bool							FriendList::updateFriendPersonalMsg(std::string &friendName, std::str
 	return false;
 }
 
-bool							FriendList::insertOutcomingMsg(std::string &friendName, std::string &msg)
+bool							FriendList::insertOutcomingMsg(const std::string &friendName, const std::string &msg)
 {
 	Friend						*tmpFriend;
 	Message						newMsg;
@@ -71,7 +71,7 @@ bool							FriendList::insertOutcomingMsg(std::string &friendName, std::string &
 	return false;
 }
 
-bool							FriendList::insertIncomingMsg(std::string &friendName, std::string &header, std::string &msg)
+bool							FriendList::insertIncomingMsg(const std::string &friendName, const std::string &header, const std::string &msg)
 {
 	Friend						*tmpFriend;
 	Message						newMsg;

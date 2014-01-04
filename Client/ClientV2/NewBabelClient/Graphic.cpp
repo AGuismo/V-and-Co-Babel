@@ -75,8 +75,11 @@ void					Graphic::init()
 
 void					Graphic::on_friend_list_selection_changed()
 {
+	if (ui.friendListWidget->currentItem() == NULL)
+		return;
 	qDebug() << "item changed: " << ui.friendListWidget->currentItem()->text();
 	Env::getInstance().selectedFriend.name = ui.friendListWidget->currentItem()->text().toStdString();
+	askFriendInformation(ui.friendListWidget->currentItem()->text().toStdString());
 }
 
 
@@ -281,7 +284,10 @@ void					Graphic::on_delete_friend_triggered()
 
 void					Graphic::on_send_box_push_button_released()
 {
-	qDebug() << "sending here mtfk !"; // warning pseufo
+	qDebug() << "sending here mtfk !" << ui.sendBoxTextEdit->text(); // warning pseufo
+	
+	if (ui.friendListWidget->currentItem() != NULL)
+		_chatHandler(ui.friendListWidget->currentItem()->text().toStdString(), ui.sendBoxTextEdit->text().toStdString());
 	ui.sendBoxTextEdit->clear();
 }
 
@@ -348,7 +354,28 @@ void					Graphic::updateFriendList(const friend_list_type &friendList)
 }
 
 
+void					Graphic::askFriendInformation(const std::string &friendName)
+{
+	_getFriendHandler(friendName);
+}
 
+void					Graphic::receiveFriendInformation(Friend *friendInfo)
+{
+				qDebug() << "receive information";
+	if (friendInfo != NULL)
+	{
+					qDebug() << "not null";
+		ui.selectedFriendNameLabel->setText(QString(friendInfo->name.c_str()));
+		ui.selectedFriendPersonalMsgLabel->setText(QString(friendInfo->personalMsg.c_str()));
+		ui.friendMsgBox->clear();
+		for ( convers_type::const_iterator it =	friendInfo->conversation.begin(); it != friendInfo->conversation.end(); ++it)
+		{
+			qDebug() << "LOOP";
+			ui.friendMsgBox->append(QString(it->content.c_str()));
+			qDebug() << it->content.c_str();
+		}
+	}
+}
 
 
 void					Graphic::on_try_connect(const std::string &ipAddress, unsigned short int port)

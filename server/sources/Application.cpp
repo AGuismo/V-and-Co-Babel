@@ -18,6 +18,7 @@ void	Application::init(const char *confPath)
   _adm.registerShutdownServer(Function<const std::string ()>(&Application::shutdownServer, this));
   _adm.registerDropDB(Function<const std::string ()>(&Application::dropDB, this));
   _adm.registerSaveDB(Function<const std::string ()>(&Application::saveDB, this));
+  _adm.registerDumpDB(Function<const std::string()>(&Application::dumpDB, this));
   try
     {
       if (confPath == 0)
@@ -97,7 +98,7 @@ const std::string	Application::dropDB()
   return ("An error Occured when dropping Database.");
 }
 
-const::std::string	Application::saveDB()
+const std::string	Application::saveDB()
 {
   if (_database.saveFile(Env::getInstance().databaseFilePath()))
     {
@@ -107,6 +108,11 @@ const::std::string	Application::saveDB()
       return ("Database Successfully saved.");
     }
   return ("An error Occured when saving Database.");
+}
+
+const std::string	Application::dumpDB()
+{
+	return ("DUMPDB");
 }
 
 ///////////////////////

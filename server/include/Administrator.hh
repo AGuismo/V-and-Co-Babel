@@ -23,11 +23,13 @@ private:
   void	dropDB(const args &, buffer &response);
   void	saveDB(const args &, buffer &response);
   void	help(const args &, buffer &response);
+  void	dumpDB(const args &, buffer &response);
 
 public:
   void	registerShutdownServer(Function<const std::string ()>);
   void	registerDropDB(Function<const std::string ()>);
   void	registerSaveDB(Function<const std::string ()>);
+  void	registerDumpDB(Function<const std::string ()>);
   const std::string	ignoreCb();
 
 public:
@@ -40,4 +42,5 @@ private:
   Function<const std::string ()>	_shutdownServerHandler;
   Function<const std::string ()>	_dropDBHandler;
   Function<const std::string ()>	_saveDBHandler;
+  Function<const std::string ()>	_dumpDBHandler;
 };
