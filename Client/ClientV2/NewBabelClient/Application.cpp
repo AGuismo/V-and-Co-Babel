@@ -18,14 +18,15 @@ Application::Application(int ac, char *av[]):
   _requestActions[request::client::friends::REQUEST] = callback_handler(&Application::get_friend_request_handler, this);
   _requestActions[request::server::auth::HANDSHAKE] = callback_handler(&Application::connection_response, this);
     _requestActions[request::client::chat::MESSAGE] = callback_handler(&Application::get_msg_handler, this);
+	_requestActions[request::client::call::CALL] = callback_handler(&Application::get_call_request_handler, this);
 }
 
 void		Application::update_friend_handler(const ARequest &req)
 {
-	qDebug() << "update friend received MOTHERFUCKINGSHIT !!!!!!!!!!!!!!!!!!!";
+/*	qDebug() << "update friend received MOTHERFUCKINGSHIT !!!!!!!!!!!!!!!!!!!";
 	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).status;
 	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).username.c_str();
-	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).detail.c_str();
+	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).detail.c_str();*/
 
 	_friendList.insertFriend(dynamic_cast<const request::friends::server::Update &>(req).username,  dynamic_cast<const request::friends::server::Update &>(req).detail, (Status)dynamic_cast<const request::friends::server::Update &>(req).status);
 	_graphic.updateFriendList(_friendList.getFriendList());
@@ -38,13 +39,23 @@ void		Application::get_msg_handler(const ARequest &req)
 {
 	std::string			friendName(dynamic_cast<const request::chat::client::Message &>(req).from);
 
-
-	_friendList.insertIncomingMsg(friendName, "12", dynamic_cast<const request::chat::client::Message &>(req).msg);
+	_friendList.insertIncomingMsg(friendName, dynamic_cast<const request::chat::client::Message &>(req).msg);
 
 	if (Env::getInstance().selectedFriend.name == dynamic_cast<const request::chat::client::Message &>(req).from)
 	{
 		_graphic.receiveFriendInformation(_friendList.getFriend(dynamic_cast<const request::chat::client::Message &>(req).from));
 	}
+}
+
+void		Application::get_call_request_handler(const ARequest &req)
+{
+	std::string			name(dynamic_cast<const request::call::client::CallClient &>(req)._from);
+	unsigned short int port = dynamic_cast<const request::call::client::CallClient &>(req)._port;
+	int					ip = dynamic_cast<const request::call::client::CallClient &>(req)._ip;
+
+	Env::getInstance().callInfo.addressIp = ip;
+	Env::getInstance().callInfo.name = name;
+	Env::getInstance().callInfo.portUDP = port;
 }
 
 
@@ -94,6 +105,7 @@ void  Application::init()
   _graphic.setDelFriendHandler(Function<void (const request::Username &)>(&Application::triggerDelFriendHandler, this));
  _graphic.setGetFriendHandler(Function<void (const request::Username &)>(&Application::triggerGetFriendHandler, this));
   _graphic.setChatHandler(Function<void (const request::Username &, const request::Message &)>(&Application::triggerChatHandler, this));
+ _graphic.setCallHandler(Function<void (const request::Username &)>(&Application::triggerCallHandler, this));
 }
 
 
@@ -101,7 +113,7 @@ void	Application::triggerStatusHandler(const request::Status &newStatus, const r
 {
 	send_request(request::perso::client::StatusClient(newStatus, msgStatus));
 	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-	//à virer
+	//à virer !!!!!
 	_friendList.insertFriend("toto1", "feeff", ABSENT);
 	_friendList.insertFriend("toto2", "pas top", CONNECTED);
 	_friendList.insertFriend("toto3", "gdfg", INVISIBLE);
@@ -152,7 +164,7 @@ void	Application::triggerChatHandler(const request::Username &friendName, const 
 
 void	Application::triggerCallHandler(const request::Username &friendName)
 {
-	send_request(request::call::client::CallClient(Env::getInstance().userInfo.login, friendName, request::options::AUDIO, "eee", 40284));
+	send_request(request::call::client::CallClient(Env::getInstance().userInfo.login, friendName, request::options::AUDIO, 0x7F000001, 40284));
 
 //	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }

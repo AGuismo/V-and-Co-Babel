@@ -4,7 +4,7 @@
 void			Env::initCallInfo()
 {
   callInfo.name = "";
-  callInfo.addressIp = "";
+  callInfo.addressIp = 0;
   callInfo.portUDP = 0;
 }
 

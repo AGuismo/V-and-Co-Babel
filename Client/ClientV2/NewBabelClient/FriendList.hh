@@ -69,7 +69,7 @@ public:
 	bool										updateFriendPersonalMsg(std::string &friendName, std::string &newPersonalMsg);
 
 public:
-	bool										insertIncomingMsg(const std::string &friendName,  const std::string &header, const std::string &msg);
+	bool										insertIncomingMsg(const std::string &friendName,  const std::string &msg);
 	bool										insertOutcomingMsg(const std::string &friendName, const std::string &msg);
 	bool										saveCurrentTypingMsg(std::string &friendName, std::string &msg);
 

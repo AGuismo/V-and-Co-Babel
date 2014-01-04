@@ -22,7 +22,7 @@ public:
   struct
   {
     std::string				name;
-	std::string				addressIp;
+	int						addressIp;
 	unsigned short int		portUDP;
   }							callInfo;
 

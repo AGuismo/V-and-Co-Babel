@@ -363,18 +363,15 @@ void					Graphic::askFriendInformation(const std::string &friendName)
 
 void					Graphic::receiveFriendInformation(Friend *friendInfo)
 {
-				qDebug() << "receive information";
 	if (friendInfo != NULL)
 	{
-					qDebug() << "not null";
 		ui.selectedFriendNameLabel->setText(QString(friendInfo->name.c_str()));
 		ui.selectedFriendPersonalMsgLabel->setText(QString(friendInfo->personalMsg.c_str()));
 		ui.friendMsgBox->clear();
 		for ( convers_type::const_iterator it =	friendInfo->conversation.begin(); it != friendInfo->conversation.end(); ++it)
 		{
-			qDebug() << "LOOP";
+			ui.friendMsgBox->append(QString(it->header.c_str()));
 			ui.friendMsgBox->append(QString(it->content.c_str()));
-			qDebug() << it->content.c_str();
 		}
 	}
 }

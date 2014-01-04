@@ -78,6 +78,7 @@ private:
   void	update_friend_handler(const ARequest &);
   void	get_friend_request_handler(const ARequest &);
   void	get_msg_handler(const ARequest &);
+  void	get_call_request_handler(const ARequest &);
 
 public:
   void  init();

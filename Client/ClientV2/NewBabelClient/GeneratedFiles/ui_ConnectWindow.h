@@ -121,7 +121,7 @@ public:
         ConnectWindow->setWindowTitle(QApplication::translate("ConnectWindow", "ConnectWindow", 0));
         portTcpLineEdit->setText(QApplication::translate("ConnectWindow", "40202", 0));
         connectPushButton->setText(QApplication::translate("ConnectWindow", "Connect", 0));
-        ipLineEdit->setText(QApplication::translate("ConnectWindow", "10.16.253.216", 0));
+        ipLineEdit->setText(QApplication::translate("ConnectWindow", "10.16.253.223", 0));
         serverResponseLabel->setText(QApplication::translate("ConnectWindow", "Disconnected", 0));
         closePushButton->setText(QApplication::translate("ConnectWindow", "Close", 0));
         loginLabel->setText(QApplication::translate("ConnectWindow", "Ip Address :", 0));
