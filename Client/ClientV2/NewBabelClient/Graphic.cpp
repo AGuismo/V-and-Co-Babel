@@ -7,6 +7,12 @@
 
 void					Graphic::init()
 {
+	ui.statusComboBox->addItem(QIcon("./Img/Online.png"), "Online", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Away.png"), "Away", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Occuped.png"), "Occuped", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Invisible.png"), "Invisible", QVariant("e"));
+	ui.statusComboBox->setIconSize(QSize(34, 41));
+
 	// Connect Window Triggered
 	connect(ui.actionConnect, SIGNAL(triggered()), this, SLOT(on_connect_window_triggered()));
 	// Login Window Triggered
@@ -61,7 +67,19 @@ void					Graphic::init()
 
 	// Add friend try triggered
 	connect(&_addFriendWindow, SIGNAL(add_try(const std::string &)), this, SLOT(on_try_add_friend(const std::string &)));
+
+	// Friend list Item changed
+	connect(ui.friendListWidget, SIGNAL(itemSelectionChanged()), this, SLOT(on_friend_list_selection_changed()));
 }
+
+
+void					Graphic::on_friend_list_selection_changed()
+{
+	qDebug() << "item changed: " << ui.friendListWidget->currentItem()->text();
+	Env::getInstance().selectedFriend.name = ui.friendListWidget->currentItem()->text().toStdString();
+}
+
+
 
 void					Graphic::on_connection_error(enum ANetwork::SocketState state)
 {
@@ -94,12 +112,13 @@ void					Graphic::on_login_success()
   _loginWindow.displayLoginResponse(QString("Logged in"));
   loggedIn();
   Env::getInstance().userInfo.login = Env::getInstance().userInfo.loginTry;
+  loggedIn();
   QTimer::singleShot(800, &_loginWindow, SLOT(on_close_button_clicked()));
 }
 
 void					Graphic::on_desauthentification_success()
 {
-  loggedIn();
+  loggedOut();
 }
 
 void					Graphic::on_desauthentification_error()
@@ -243,11 +262,21 @@ void					Graphic::on_add_friend_error(const std::string &error)
 
 void					Graphic::on_delete_friend_triggered()
 {
-	// DONT FORGET HERE MTFK env and everything
-	if (QMessageBox::Yes == QMessageBox(QMessageBox::Information, "Delete selected contact", "Are you sure to delete this contact ?", QMessageBox::Yes|QMessageBox::No).exec()) 
+	if (ui.friendListWidget->currentItem() == NULL)
+		return;
+
+	QString				msg("Are you sure to delete \"");
+	msg += 	ui.friendListWidget->currentItem()->text();
+	msg += "\", he is really going to miss you..";
+
+
+	if (QMessageBox::Yes == QMessageBox(QMessageBox::Information, "Delete contact", msg, QMessageBox::Yes|QMessageBox::No).exec()) 
 	{
+		_delFriendHandler(ui.friendListWidget->currentItem()->text().toStdString());
 		qDebug() << "deleting friend here mtfk !";
 	}
+	else
+		qDebug() << "deletion aborted";
 }
 
 void					Graphic::on_send_box_push_button_released()
@@ -270,13 +299,18 @@ void					Graphic::on_hang_up_push_button_released()
 void					Graphic::on_change_status_triggered(int newStatus)
 {
 	qDebug() << "changing status here mtfk !";
-	_statusHandler(newStatus);
+	qDebug() << "[" << newStatus << ui.statusComboBox->currentIndex()  + 1 << "]";
+	if (ui.statusComboBox->currentIndex() + 1 == 4)
+		_statusHandler(ui.statusComboBox->currentIndex() + 2, ui.statusLineEdit->text().toStdString());		else
+		_statusHandler(ui.statusComboBox->currentIndex() + 1, ui.statusLineEdit->text().toStdString());
 }
 
 void					Graphic::on_change_status_txt_triggered()
 {
 	qDebug() << "changing status txt here mtfk !";
-	_statusTxtHandler(ui.statusLineEdit->text().toStdString());
+	if (ui.statusComboBox->currentIndex() + 1 == 4)
+		_statusHandler(ui.statusComboBox->currentIndex() + 2, ui.statusLineEdit->text().toStdString());		else
+		_statusHandler(ui.statusComboBox->currentIndex() + 1, ui.statusLineEdit->text().toStdString());
 	ui.statusLineEdit->setEnabled(false);
 	QTimer::singleShot(800, this, SLOT(enable_status_txt_change()));
 }
@@ -293,8 +327,25 @@ void					Graphic::on_unset_auto_answer_triggered()
 
 
 
+bool					Graphic::request_server_response(const std::string &title, const std::string &content)
+{
+
+	if (QMessageBox::Yes == QMessageBox(QMessageBox::Information, QString(title.c_str()), QString(content.c_str()), QMessageBox::Yes|QMessageBox::No).exec()) 
+	{
+		qDebug() << "Accepted !";
+		return true;
+	}
+	return false;
+	qDebug() << "Decline !";
+}
 
 
+
+void					Graphic::updateFriendList(const friend_list_type &friendList)
+{
+	ui.friendListWidget->updateFriendListWidget(friendList);
+//	_friendListWidget.updateFriendListWidget(friendList);
+}
 
 
 
@@ -359,6 +410,7 @@ void					Graphic::loggedIn()
 	ui.actionDeleteAccount->setEnabled(false);
 	ui.actionCreateAccount->setEnabled(false);
 	_loginWindow.setEnabled(false);
+	ui.userNameLabel->setText(QString(Env::getInstance().userInfo.login.c_str()));
 }
 
 void					Graphic::loggedOut()

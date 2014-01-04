@@ -15,6 +15,7 @@ void						FriendList::insertFriend(QString &friendName, QString &friendMsgPerso,
 	//img.setIconSize(QSize(32, 39));
 
 	MainWindow::getInstance().getUi().friendListW->addFriendItem(img, friendName, friendMsgPerso);
+	MainWindow::getInstance().getUi().friendListW->setIconSize(QSize(32, 39));
 }
 
 Friend						*FriendList::getFriend(QString &friendName)

@@ -10,7 +10,7 @@ Friend							*FriendList::getFriend(std::string &friendName)
 	return NULL;
 }
 
-void							FriendList::insertFriend(std::string &friendName, std::string &friendPersonalMsg, Status friendStatus)
+void							FriendList::insertFriend(const std::string &friendName, const std::string &friendPersonalMsg, Status friendStatus)
 {
 	Friend						newFriend;
 
@@ -102,6 +102,11 @@ msg_type						*FriendList::getFriendCurrentTypingMsg(std::string &friendName)
 	if ((tmpFriend = getFriend(friendName)) != NULL)
 		return &(tmpFriend)->currentTypingMsg;
 	return NULL;
+}
+
+const friend_list_type						&FriendList::getFriendList()
+{
+	return _friendList;
 }
 
 FriendList::FriendList()

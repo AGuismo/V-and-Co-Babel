@@ -67,11 +67,6 @@ void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sen
   const request::call::client::CallClient	*origin = dynamic_cast<const request::call::client::CallClient *>(req);
   IClient::Pointer				receiver;
 
-  std::cout << "Call::call()" << std::endl;
-  std::cout << "From : " << origin->_from << std::endl;
-  std::cout << "To : " << origin->_to << std::endl;
-  std::cout << "Option : " << (int)origin->_option << std::endl;
-
   if (sender->Authenticated() &&
       sender->status() == request::User::Status::CONNECTED &&
       _db.clientExist(origin->_from) &&
@@ -124,7 +119,11 @@ void	Call::accept(const std::list<IClient::Pointer> &clients, IClient::Pointer s
 	  fwd._ip = sender->IP();
 	  if (receiver->Authenticated() &&
 	      receiver->status() == request::User::Status::CONNECTED)
-	    receiver->serialize_data(fwd);
+	    {
+	      receiver->status(request::User::Status::OCCUPIED);
+	      sender->status(request::User::Status::OCCUPIED);
+	      receiver->serialize_data(fwd);
+	    }
 	  else
 	    sender->serialize_data(request::server::Forbidden());
 	  return ;
@@ -156,7 +155,7 @@ void	Call::refuse(const std::list<IClient::Pointer> &clients, IClient::Pointer s
 #endif
 	  if (receiver->Authenticated() &&
 	      receiver->status() == request::User::Status::CONNECTED)
-	  receiver->serialize_data(*origin);
+	    receiver->serialize_data(*origin);
 	  else
 	    sender->serialize_data(request::server::Forbidden());
 	  return ;
@@ -167,10 +166,36 @@ void	Call::refuse(const std::list<IClient::Pointer> &clients, IClient::Pointer s
 void	Call::hangup(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::call::client::HangupClient	*origin = dynamic_cast<const request::call::client::HangupClient *>(req);
+  IClient::Pointer				receiver;
 
   std::cout << "Call::Hangup()" << std::endl;
   std::cout << "From : " << origin->_from << std::endl;
   std::cout << "To : " << origin->_to << std::endl;
+
+  if (sender->Authenticated() &&
+      _db.clientExist(origin->_from) &&
+      _db.clientExist(origin->_to))
+    {
+#if defined(DEBUG)
+      std::cout << "Receive a hang up request from [" << origin->_from << "] to [" << origin->_to << "]" << std::endl;
+#endif
+      if (searchClient(clients, origin->_to, receiver))
+	{
+#if defined(DEBUG)
+	  std::cout << "Hang up send ..." << std::endl;
+#endif
+	  if (receiver->Authenticated())
+	    {
+	      receiver->status(request::User::Status::CONNECTED);
+	      sender->status(request::User::Status::CONNECTED);
+	      receiver->serialize_data(*origin);
+	    }
+	  else
+	    sender->serialize_data(request::server::Forbidden());
+	  return ;
+	}
+    }
+  sender->serialize_data(request::server::Forbidden());
 }
 
 

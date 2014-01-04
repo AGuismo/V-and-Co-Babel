@@ -38,6 +38,7 @@ void		AGraphic::setDesAuthentificationHandler(Function<void ()> handle)
 
 
 
+
 void		AGraphic::setAddFriendHandler(Function<void (const request::Username &)> handle)
 {
 	_addFriendHandler = handle;
@@ -63,15 +64,11 @@ void		AGraphic::setChatHandler(Function<void (const request::Username &, const r
 	_chatHandler = handle;
 }
 
-void		AGraphic::setStatusHandler(Function<void (const request::Status &)> handle)
+void		AGraphic::setStatusHandler(Function<void (const request::Status &, const request::Message &)> handle)
 {
 	_statusHandler = handle;
 }
 
-void		AGraphic::setStatusTxtHandler(Function<void (const request::Message &)> handle)
-{
- 	_statusTxtHandler = handle;
-}
 
 void		AGraphic::setSetAnswerHandler(Function<void ()> handle)
 {

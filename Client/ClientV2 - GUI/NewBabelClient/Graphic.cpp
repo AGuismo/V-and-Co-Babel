@@ -1,13 +1,7 @@
-#ifdef WIN32
-	#define		NOMINMAX
-	#undef		min
-	#undef		max
-	#include	"windows.h"
-#endif
+
 
 #include	"Graphic.h"
-#include	<QTimer>
-#include	<QTime>
+
 #include	<QDebug>
 
 void					Graphic::init()
@@ -28,7 +22,7 @@ void					Graphic::init()
 	connect(&_createAccountWindow, SIGNAL(create_account_try(const std::string &, const std::string &)), this, SLOT(on_try_create(const std::string &, const std::string &)));
 
 	// Combo Box
-	connect(ui.comboBox_9, SIGNAL(currentIndexChanged(int)), this, SLOT(changeStatus()));
+	connect(ui.comboBox_11, SIGNAL(currentIndexChanged(int)), this, SLOT(changeStatus()));
 }
 
 void					Graphic::changeContact(int value)
@@ -44,7 +38,7 @@ void					Graphic::changeContact(int value)
 		pixmap_img = new QPixmap("./Img/Guyman-Helmet-On-icon.png");
 		break;
 	case 2:
-		pixmap_img = new QPixmap("./Img/Guyman-Helmet-Music-icon.png");
+		pixmap_img = new QPixmap("./Img/Guyman-Helmet-Music-icon2.png");
 		break;
 	case 3:
 		pixmap_img = new QPixmap("./Img/Guyman-Helmet-icon.png");
@@ -54,12 +48,12 @@ void					Graphic::changeContact(int value)
 		break;
 	}
 	pixmap_img->scaled(39, 41, Qt::KeepAspectRatio);
-	ui.selectedFriendIconStatusLabel_8->setPixmap(*pixmap_img);
+	ui.selectedFriendIconStatusLabel_9->setPixmap(*pixmap_img);
 }
 
 void					Graphic::changeStatus()
 {
-	int value = ui.comboBox_9->currentIndex();
+	int value = ui.comboBox_11->currentIndex();
 	qDebug() << "Status : " << value;
 
 	switch (value)
@@ -195,27 +189,31 @@ void					Graphic::on_try_create(const std::string &login, const std::string &pas
 
 void		Graphic::showTime()
 {
-	QTime		timer;
-
-	ui.statusBar->showMessage(timer.currentTime().toString());
+	TimeLabel->setText(time.currentTime().toString());
 }
 
 Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this)
 {
 	ui.setupUi(this);
 
-	ui.comboBox_9->addItem(QIcon("./Img/Guyman-Helmet-Smiley-icon.png"), "Online", QVariant("e"));
-	ui.comboBox_9->addItem(QIcon("./Img/Guyman-Helmet-On-icon.png"), "Away", QVariant("e"));
-	ui.comboBox_9->addItem(QIcon("./Img/Guyman-Helmet-Music-icon.png"), "Occuped", QVariant("e"));
-	ui.comboBox_9->addItem(QIcon("./Img/Guyman-Helmet-icon.png"), "Invisible", QVariant("e"));
-	ui.comboBox_9->setIconSize(QSize(34, 41));
+	ui.comboBox_11->addItem(QIcon("./Img/Guyman-Helmet-Smiley-icon.png"), "Online", QVariant("e"));
+	ui.comboBox_11->addItem(QIcon("./Img/Guyman-Helmet-On-icon.png"), "Away", QVariant("e"));
+	ui.comboBox_11->addItem(QIcon("./Img/Guyman-Helmet-Music-icon2.png"), "Occuped", QVariant("e"));
+	ui.comboBox_11->addItem(QIcon("./Img/Guyman-Helmet-icon.png"), "Invisible", QVariant("e"));
+	ui.comboBox_11->setIconSize(QSize(34, 41));
 
-	ui.lineEdit->setMaxLength(84);
+	ui.lineEdit_3->setMaxLength(84);
 
 	QTimer *timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
 	timer->start(1000);
+
+	TimeLabel = new QLabel(time.currentTime().toString());
+	ui.statusBar->addPermanentWidget(TimeLabel);
+
 	showTime();
+	
+	setWindowIcon(QIcon("./Img/logoBabel.png"));
 }
 
 Graphic::~Graphic()

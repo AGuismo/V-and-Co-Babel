@@ -6,6 +6,7 @@
 # include "TCPNetwork.h"
 # include "UDPNetwork.h"
 # include "Protocol.hpp"
+# include  "FriendList.hh"
 # include <stack>
 
 class Application : public IApplication
@@ -15,6 +16,9 @@ public:
   typedef Function<void (const ARequest &)>		callback_handler;
   typedef std::stack<response_handler>			stack_response_handler;
   typedef std::map<request::ID, callback_handler>	request_callback;
+
+private:
+	FriendList			_friendList;
 
 public:
   Application(int ac, char *av[]);
@@ -32,8 +36,7 @@ private:
   void	triggerTryChangeAccountPrivacy(const request::Privacy &);
 
   // Work needed here
-  void	triggerStatusHandler(const request::Status &);
-  void	triggerStatusTxtHandler(const request::Message &);
+  void	triggerStatusHandler(const request::Status &, const request::Message &);
 
   void	triggerAddFriendHandler(const request::Username &);
   void	triggerDelFriendHandler(const request::Username &);
@@ -73,6 +76,7 @@ private:
 private:
   void	ping_handler(const ARequest &);
   void	update_friend_handler(const ARequest &);
+  void	get_friend_request_handler(const ARequest &);
 
 public:
   void  init();

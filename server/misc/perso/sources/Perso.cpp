@@ -127,6 +127,7 @@ void	Perso::missed_calls(const std::list<IClient::Pointer> &clients, IClient::Po
 void	Perso::get_missed(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::perso::client::GetMissedClient	*origin = dynamic_cast<const request::perso::client::GetMissedClient *>(req);
+  IClient::Pointer receiver;
 
   std::string filename;
 
@@ -142,7 +143,20 @@ void	Perso::get_missed(const std::list<IClient::Pointer> &clients, IClient::Poin
 	  sender->serialize_data(request::server::Forbidden());
 	  return ;
 	}
-      // La faut coder ce que lamber veut :3
+      while (sender->serializeAnswer().size() != 0)
+      	{
+	  ARequest	*tmpReq;
+	  int		extracted;
+
+	  try
+	    {
+	      tmpReq = Protocol::consume(sender->serializeAnswer(), extracted);
+	    }
+	  catch (const Protocol::ConstructRequest &e)
+	    {
+	    }
+	  sender->serialize_data(*tmpReq);
+	}
     }
 }
 

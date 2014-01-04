@@ -51,6 +51,32 @@ ARequest		*Protocol::consume(const serialized_data &input, int &extracted)
   return (req);
 }
 
+ARequest		*Protocol::consume(Protocol &input, int &extracted)
+{
+  request::ID		code;
+  ARequest		*req;
+  int			protocolSize = input.content().size();
+
+  input >> code;
+  try
+    {
+      req = request::Factory::factory(input, code);
+    }
+  catch (const Serializer::invalid_argument &e)
+    {
+      throw ConstructRequest(e.what());
+    }
+  catch (const ARequest::Exception &e)
+    {
+      throw ConstructRequest(e.what());
+    }
+
+  extracted = protocolSize - input.content().size();
+  req->code(code);
+  return (req);
+}
+
+
 Protocol::serialized_data	Protocol::product(const ARequest &output)
 {
   Protocol		p;

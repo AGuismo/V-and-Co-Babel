@@ -83,9 +83,17 @@ void	Auth::sendStatusFriends(const IClient::Pointer &sender,
       for (Database::list_friend::const_iterator it = friends.begin();
 	   it != friends.end(); ++it)
 	{
-	  if ((*itClient)->Authenticated() && (*itClient)->Username() == *it)
-	    (*itClient)->serialize_data(request::friends::server::Update(st, std::string(),
-									 sender->Username()));
+	  if ((*itClient)->Username() == *it)
+	    {
+	      if ((*itClient)->Authenticated())
+		{
+		  sender->serialize_data(request::friends::server::Update((*itClient)->status(), (*itClient)->statusDetail(), (*itClient)->Username()));
+		  (*itClient)->serialize_data(request::friends::server::Update(st, std::string(),
+									   sender->Username()));
+		}
+	      else
+		sender->serialize_data(request::friends::server::Update(request::User::Status::DISCONNECTED, std::string(), (*itClient)->Username()));
+	    }
 	}
     }
 }
@@ -102,12 +110,22 @@ void	Auth::connect(const std::list<IClient::Pointer> &clients, IClient::Pointer 
       std::cout << "Connection on the account : [" << origin->_name << "]" << std::endl;
 #endif
       sender->serialize_data(request::server::Ok());
-      sender->addRequest(request::friends::client::List());
       sender->Authenticated(true);
       sender->status(request::User::Status::CONNECTED);
       sender->Username(origin->_name);
       if (_db.listFriend(sender->Username(), friends))
 	sendStatusFriends(sender, friends, clients, request::User::Status::CONNECTED);
+      if (_db.waitRequest(sender->Username()))
+	{
+	  std::vector<ARequest *>	reqList = _db.getAllRequest(sender->Username());
+
+	  for (std::vector<ARequest *>::const_iterator it = reqList.begin();
+	       it != reqList.end(); ++it)
+	    {
+	      sender->serialize_data(**it);
+	      delete *it;
+	    }
+	}
     }
   else
     {
@@ -140,14 +158,37 @@ void	Auth::modify(const std::list<IClient::Pointer> &clients, IClient::Pointer s
     }
 }
 
+void	Auth::deleteFriendList(IClient::Pointer sender, const Database::list_friend &friends, const std::list<IClient::Pointer> &clients)
+{
+  for (std::list<IClient::Pointer>::const_iterator itClient = clients.begin();
+       itClient != clients.end(); ++itClient)
+    {
+      for (Database::list_friend::const_iterator it = friends.begin();
+	   it != friends.end(); ++it)
+	{
+	  if ((*itClient)->Username() == *it)
+	    {
+	      _db.delFriend(sender->Username(), (*itClient)->Username());
+	    }
+	}
+    }
+}
+
 void	Auth::remove(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
 {
   const request::auth::client::DelClient	*origin = dynamic_cast<const request::auth::client::DelClient *>(req);
 
   std::cout << "Auth::delete()" << std::endl;
-  if (sender->Authenticated() == false &&
-      _db.delClient(origin->_name, origin->_password))
+  if (sender->Authenticated() == false && _db.clientExist(origin->_name, origin->_password))
     {
+      Database::list_friend	friends;
+
+      if (_db.listFriend(sender->Username(), friends))
+	{
+	  sendStatusFriends(sender, friends, clients, request::User::Status::DELETED);
+	  deleteFriendList(sender, friends, clients);
+	}
+      _db.delClient(origin->_name, origin->_password);
 #if defined(DEBUG)
       std::cout << "The account : [" << origin->_name << "] has been deleted" << std::endl;
 #endif

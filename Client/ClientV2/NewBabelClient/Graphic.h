@@ -10,6 +10,7 @@
 #include		"DeleteAccountWindow.h"
 #include		"AccountManagementWindow.h"
 #include		"AddFriendWindow.h"
+#include		"FriendListWidget.h"
 
 class Graphic : public QMainWindow, public AGraphic
 {
@@ -44,6 +45,8 @@ public slots:
 	void			on_set_auto_answer_triggered();
 	void			on_unset_auto_answer_triggered();
 
+	void			on_friend_list_selection_changed();
+
 public slots:
 	void			on_try_connect(const std::string &ipAddress, unsigned short int port);
 	void			on_try_login(const std::string &login, const std::string &password);
@@ -71,9 +74,13 @@ public:
 	void			on_change_account_password_success();
 	void			on_change_account_password_error(const std::string &error);
 
+	void			on_select_friend();// à coder
 	void			on_add_friend_success();
 	void			on_add_friend_error(const std::string &error);
 
+public:
+	bool			request_server_response(const std::string &title, const std::string &content);
+	void			updateFriendList(const friend_list_type	&);
 
 private:
 	void			connected();

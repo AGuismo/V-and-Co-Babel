@@ -53,7 +53,7 @@ namespace	request
 	static const char	*DEL_FRIEND;
 
 	DelFriend();
-	DelFriend(const request::Username &from);
+	DelFriend(const request::Username &to);
 	~DelFriend();
 	DelFriend(const DelFriend &);
 	DelFriend	&operator=(const DelFriend &);
@@ -65,7 +65,6 @@ namespace	request
 	bool		operator==(const ARequest *req) const;
 	bool		operator!=(const ARequest *req) const;
 
-	request::Username	from;
 	request::Username	to;
       };
 

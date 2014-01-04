@@ -2,6 +2,7 @@
 #include	"Function.hpp"
 #include	"AuthRequest.hh"
 #include	"PersoRequest.hh"
+#include	"FriendRequest.hh"
 #include	"Protocol.hpp"
 #include	"Env.hh"
 
@@ -12,12 +13,40 @@ Application::Application(int ac, char *av[]):
 {
   _requestActions[request::server::perso::PING] = callback_handler(&Application::ping_handler, this);
   _requestActions[request::server::friends::UPDATE] = callback_handler(&Application::update_friend_handler, this);
+  _requestActions[request::client::friends::REQUEST] = callback_handler(&Application::get_friend_request_handler, this);
 }
 
-void		Application::update_friend_handler(const ARequest &)
+void		Application::update_friend_handler(const ARequest &req)
 {
-	qDebug() << "update friend received";
-	exit(1);
+	qDebug() << "update friend received MOTHERFUCKINGSHIT !!!!!!!!!!!!!!!!!!!";
+	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).status;
+	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).username.c_str();
+	qDebug() << dynamic_cast<const request::friends::server::Update &>(req).detail.c_str();
+
+	_friendList.insertFriend(dynamic_cast<const request::friends::server::Update &>(req).username,  dynamic_cast<const request::friends::server::Update &>(req).detail, (Status)dynamic_cast<const request::friends::server::Update &>(req).status);
+	_graphic.updateFriendList(_friendList.getFriendList());
+
+
+}
+
+void		Application::get_friend_request_handler(const ARequest &req)
+{
+	qDebug() << "request friend received";
+	std::string content("\"");
+	content += dynamic_cast<const request::friends::client::Request &>(req).from;
+	content += "\" just asked you to be his friend.";
+	if (_graphic.request_server_response("Friend request", content))
+	{
+		qDebug() << "request friend accepted";
+		send_request(request::friends::client::Accept(Env::getInstance().userInfo.login, dynamic_cast<const request::friends::client::Request &>(req).from));
+		_waitedResponses.push(response_handler(&Application::ignore_response, this));
+	}
+	else
+	{
+	send_request(request::friends::client::Refuse(Env::getInstance().userInfo.login, dynamic_cast<const request::friends::client::Request &>(req).from));
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+	qDebug() << "request friend rejected";
+	}
 }
 
 Application::~Application()
@@ -41,28 +70,29 @@ void  Application::init()
   _graphic.setDesAuthentificationHandler(Function<void ()>(&Application::triggerDesAuthentification, this));
 
   // Here we go !
-  _graphic.setStatusHandler(Function<void (const request::Status &)>(&Application::triggerStatusHandler, this));	
-  _graphic.setStatusTxtHandler(Function<void (const request::Message &)>(&Application::triggerStatusTxtHandler, this));
+  _graphic.setStatusHandler(Function<void (const request::Status &, const request::Message &)>(&Application::triggerStatusHandler, this));	
   _graphic.setAddFriendHandler(Function<void (const request::Username &)>(&Application::triggerAddFriendHandler, this));
   _graphic.setDelFriendHandler(Function<void (const request::Username &)>(&Application::triggerDelFriendHandler, this));
 }
 
 
-void	Application::triggerStatusHandler(const request::Status &newStatus)
+void	Application::triggerStatusHandler(const request::Status &newStatus, const request::Message &msgStatus)
 {
-//	send_request(request::perso::client::StatusClient(newStatus));
+	send_request(request::perso::client::StatusClient(newStatus, msgStatus));
 	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-}
+	//à virer
+	_friendList.insertFriend("toto1", "feeff", ABSENT);
+	_friendList.insertFriend("toto2", "pas top", CONNECTED);
+	_friendList.insertFriend("toto3", "gdfg", INVISIBLE);
+	_friendList.insertFriend("toto44", "gdfg4255", OCCUPIED);
+	_graphic.updateFriendList(_friendList.getFriendList());
 
-void	Application::triggerStatusTxtHandler(const request::Message &newStatusTxt)
-{
-//	send_request(request::perso::client::StatusClient(newStatusTxt));
-	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+
 }
 
 void	Application::triggerAddFriendHandler(const request::Username &newFriend)
 {
-//	send_request(request::);
+	send_request(request::friends::client::Request(Env::getInstance().userInfo.login, newFriend));
 	_waitedResponses.push(response_handler(&Application::add_friend_response, this));
 }
 
@@ -76,10 +106,10 @@ void  Application::add_friend_response(const ARequest &req)
 	_graphic.on_add_friend_error("User do not exist");
 }
 
-void	Application::triggerDelFriendHandler(const request::Username &)
+void	Application::triggerDelFriendHandler(const request::Username &friendName)
 {
-//	send_request(request:);
-	_waitedResponses.push(response_handler(&Application::del_friend_response, this));
+	send_request(request::friends::client::DelFriend(friendName));
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
 
 void  Application::del_friend_response(const ARequest &req)

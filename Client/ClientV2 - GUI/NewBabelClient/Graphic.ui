@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>942</width>
-    <height>637</height>
+    <width>984</width>
+    <height>529</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,119 +27,393 @@ QStatusBar
 	border-color: rgb(0, 0, 0);
 	min-width: 10em;
 	padding: 2px;
+}
+
+QMenuBar
+{
+     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 lightgray, stop:1 darkgray);
+}
+
+QMenuBar::item
+{
+     spacing: 3px; /* spacing between menu bar items */
+     padding: 1px 4px;
+     background: transparent;
+     border-radius: 4px;
+}
+
+QMenuBar::item:selected
+{ /* when selected using mouse or keyboard */
+	background: #a8a8a8;
+}
+
+QMenuBar::item:pressed
+{
+	background: #888888;
 }</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true">QMenuBar
+{
+     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 lightgray, stop:1 darkgray);
+}
+
+QMenuBar::item
+{
+     spacing: 3px; /* spacing between menu bar items */
+     padding: 1px 4px;
+     background: transparent;
+     border-radius: 4px;
+}
+
+QMenuBar::item:selected
+{ /* when selected using mouse or keyboard */
+	background: #a8a8a8;
+}
+
+QMenuBar::item:pressed
+{
+	background: #888888;
+}</string>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QSplitter" name="splitter">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="childrenCollapsible">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="layoutWidget_13">
-       <layout class="QGridLayout" name="gridLayout_37">
+      <widget class="QWidget" name="widget" native="true">
+       <property name="maximumSize">
+        <size>
+         <width>542</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_7">
         <item row="0" column="0">
-         <layout class="QGridLayout" name="gridLayout_38">
+         <layout class="QGridLayout" name="gridLayout_47">
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
-          <item row="0" column="0">
-           <layout class="QGridLayout" name="gridLayout_3">
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-               <widget class="QLabel" name="label">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Dimitri Swank</family>
-                  <pointsize>14</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgba(156, 156, 156, 200);
-border-width: 2px;
-border-radius: 8px;
-border-color: rgb(0, 0, 0);
-padding: 2px;</string>
-                </property>
-                <property name="text">
-                 <string>User</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="comboBox_9">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_28">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
+          <item row="1" column="0">
+           <layout class="QGridLayout" name="gridLayout_49">
+            <item row="0" column="0" colspan="5">
+             <widget class="Line" name="line_33">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
             </item>
             <item row="1" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QLineEdit" name="lineEdit">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>MS Reference Sans Serif</family>
-                  <pointsize>10</pointsize>
-                  <weight>50</weight>
-                  <bold>false</bold>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgba(156, 156, 156, 200);
+             <spacer name="horizontalSpacer_35">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>35</width>
+                <height>25</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="pushButton_17">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton#pushButton_17
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+	min-width: 4em;
+	padding: 6px;
+}
+
+ QPushButton#pushButton_17:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }</string>
+              </property>
+              <property name="text">
+               <string>Call</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QPushButton" name="pushButton_18">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton#pushButton_18
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+	min-width: 4em;
+	padding: 6px;
+}
+
+ QPushButton#pushButton_18:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }</string>
+              </property>
+              <property name="text">
+               <string>Add</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QPushButton" name="deleteSelectedFriendPushButton_9">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton#deleteSelectedFriendPushButton_9
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+	min-width: 4em;
+	padding: 6px;
+}
+
+ QPushButton#deleteSelectedFriendPushButton_9:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }</string>
+              </property>
+              <property name="text">
+               <string>Delete</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <spacer name="horizontalSpacer_36">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>36</width>
+                <height>25</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="2" column="0" colspan="5">
+             <widget class="Line" name="line_34">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0">
+           <layout class="QGridLayout" name="gridLayout_50">
+            <item row="0" column="2">
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="1">
+             <widget class="FriendListWidget" name="listWidget_9">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgba(255, 255, 255, 200);
+border-width: 2px;
+border-radius: 8px;
+border-color: rgb(0, 0, 0);
+min-width: 10em;
+padding: 2px;</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_48">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="gridLayout_8">
+              <item row="0" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="QLabel" name="label_3">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>MS Reference Sans Serif</family>
+                    <pointsize>12</pointsize>
+                    <weight>50</weight>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgba(156, 156, 156, 200);
 border-width: 2px;
 border-radius: 8px;
 border-color: rgb(0, 0, 0);
 padding: 2px;</string>
-                </property>
-                <property name="text">
-                 <string>Personnal message...</string>
-                </property>
-               </widget>
+                  </property>
+                  <property name="text">
+                   <string>User</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBox_11">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>110</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QComboBox#comboBox_11
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+}
+
+ QComboBox#comboBox_11:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }
+
+QComboBox::drop-down
+{
+	border-width: 0px;
+}
+QComboBox::down-arrow 
+{
+	image: url(noimg);
+	border-width: 0px;
+}</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_34">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
               </item>
-              <item>
-               <spacer name="horizontalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
+              <item row="1" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_3">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>400</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>MS Reference Sans Serif</family>
+                    <pointsize>10</pointsize>
+                    <weight>50</weight>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgba(156, 156, 156, 200);
+border-width: 2px;
+border-radius: 8px;
+border-color: rgb(0, 0, 0);
+padding: 2px;</string>
+                  </property>
+                  <property name="text">
+                   <string>Personnal message...</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>
@@ -147,135 +421,20 @@ padding: 2px;</string>
           </item>
          </layout>
         </item>
-        <item row="0" column="1" rowspan="4">
-         <widget class="Line" name="line_27">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <layout class="QGridLayout" name="gridLayout_41">
-          <item row="0" column="0" colspan="5">
-           <widget class="Line" name="line_26">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <spacer name="horizontalSpacer_27">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>35</width>
-              <height>25</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="pushButton_13">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Call</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="pushButton_14">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Add</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QPushButton" name="deleteSelectedFriendPushButton_7">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Delete</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="4">
-           <spacer name="horizontalSpacer_26">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>36</width>
-              <height>25</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="0" colspan="5">
-           <widget class="Line" name="line_25">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="2" column="0">
-         <layout class="QGridLayout" name="gridLayout_39">
-          <item row="0" column="0">
-           <widget class="QTabWidget" name="FriendTabWidget_7">
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="currentIndex">
-             <number>0</number>
-            </property>
-            <widget class="QWidget" name="Friends_7">
-             <attribute name="title">
-              <string>Friends</string>
-             </attribute>
-             <layout class="QGridLayout" name="gridLayout_40">
-              <item row="0" column="0" colspan="2">
-               <widget class="FriendListWidget" name="listWidget_7">
-                <property name="styleSheet">
-                 <string notr="true">background-image: url(./Img/wallpaper-14461.jpg);
-</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="Nothing_7">
-             <attribute name="title">
-              <string>Nothing</string>
-             </attribute>
-            </widget>
-           </widget>
-          </item>
-         </layout>
-        </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget_14">
-       <layout class="QVBoxLayout" name="verticalLayout_21">
+      <widget class="QWidget" name="layoutWidget_15">
+       <layout class="QVBoxLayout" name="verticalLayout_24">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_22">
+         <layout class="QVBoxLayout" name="verticalLayout_25">
           <item>
-           <layout class="QGridLayout" name="gridLayout_42">
+           <layout class="QGridLayout" name="gridLayout_51">
             <item row="0" column="0">
-             <layout class="QVBoxLayout" name="verticalLayout_23">
+             <layout class="QVBoxLayout" name="verticalLayout_26">
               <item>
-               <layout class="QGridLayout" name="gridLayout_43">
+               <layout class="QGridLayout" name="gridLayout_52">
                 <item row="0" column="0">
-                 <widget class="QLabel" name="selectedFriendNameLabel_8">
+                 <widget class="QLabel" name="selectedFriendNameLabel_9">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -287,8 +446,8 @@ padding: 2px;</string>
                   </property>
                   <property name="font">
                    <font>
-                    <family>Dimitri Swank</family>
-                    <pointsize>14</pointsize>
+                    <family>MS Reference Sans Serif</family>
+                    <pointsize>12</pointsize>
                     <weight>50</weight>
                     <bold>false</bold>
                    </font>
@@ -313,7 +472,13 @@ padding: 2px;</string>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QLabel" name="selectedFriendIconStatusLabel_8">
+                 <widget class="QLabel" name="selectedFriendIconStatusLabel_9">
+                  <property name="maximumSize">
+                   <size>
+                    <width>300</width>
+                    <height>42</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>14</pointsize>
@@ -328,7 +493,7 @@ padding: 2px;</string>
                  </widget>
                 </item>
                 <item row="0" column="2">
-                 <spacer name="horizontalSpacer_29">
+                 <spacer name="horizontalSpacer_37">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -343,9 +508,60 @@ padding: 2px;</string>
                </layout>
               </item>
               <item>
-               <layout class="QGridLayout" name="gridLayout_2">
+               <layout class="QGridLayout" name="gridLayout_9">
+                <item row="0" column="3">
+                 <spacer name="horizontalSpacer_38">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>34</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QPushButton" name="activeFriendCallPushButton_9">
+                  <property name="font">
+                   <font>
+                    <family>MS Reference Sans Serif</family>
+                    <pointsize>8</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton#activeFriendCallPushButton_9
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+	min-width: 4em;
+	padding: 6px;
+}
+
+ QPushButton#activeFriendCallPushButton_9:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }</string>
+                  </property>
+                  <property name="text">
+                   <string>Call</string>
+                  </property>
+                 </widget>
+                </item>
                 <item row="0" column="0">
-                 <widget class="QLabel" name="selectedFriendPersonalMsgLabel_8">
+                 <widget class="QLabel" name="selectedFriendPersonalMsgLabel_9">
+                  <property name="minimumSize">
+                   <size>
+                    <width>164</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <family>MS Reference Sans Serif</family>
@@ -368,22 +584,37 @@ padding: 2px;</string>
                  </widget>
                 </item>
                 <item row="0" column="2">
-                 <spacer name="horizontalSpacer_30">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                 <widget class="QPushButton" name="HangUpPushButton">
+                  <property name="enabled">
+                   <bool>true</bool>
                   </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>34</width>
-                    <height>25</height>
-                   </size>
+                  <property name="font">
+                   <font>
+                    <family>MS Reference Sans Serif</family>
+                    <pointsize>8</pointsize>
+                   </font>
                   </property>
-                 </spacer>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="activeFriendCallPushButton_8">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton#HangUpPushButton
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+	min-width: 5em;
+	padding: 6px;
+}
+
+ QPushButton#HangUpPushButton:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }</string>
+                  </property>
                   <property name="text">
-                   <string>Call</string>
+                   <string>Hang-up</string>
                   </property>
                  </widget>
                 </item>
@@ -396,18 +627,21 @@ padding: 2px;</string>
          </layout>
         </item>
         <item>
-         <widget class="Line" name="line_29">
+         <widget class="Line" name="line_35">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_13">
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
           <item>
-           <spacer name="horizontalSpacer_3">
+           <spacer name="horizontalSpacer_6">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -418,19 +652,31 @@ padding: 2px;</string>
            </spacer>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QTextBrowser" name="friendMsgBox_8">
+             <widget class="QTextBrowser" name="friendMsgBox_9">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
                 <horstretch>2</horstretch>
                 <verstretch>3</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>164</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>800</width>
                 <height>16777215</height>
+               </size>
+              </property>
+              <property name="sizeIncrement">
+               <size>
+                <width>3</width>
+                <height>0</height>
                </size>
               </property>
               <property name="font">
@@ -449,9 +695,9 @@ padding: 2px;</string>
              </widget>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
-               <widget class="QLineEdit" name="sendBoxTextEdit_8">
+               <widget class="QLineEdit" name="sendBoxTextEdit_9">
                 <property name="maximumSize">
                  <size>
                   <width>700</width>
@@ -474,7 +720,26 @@ padding: 2px;</string>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="sendBoxPushButton_8">
+               <widget class="QPushButton" name="sendBoxPushButton_9">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton#sendBoxPushButton_9
+{
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 24, 185, 255), stop:1 rgba(163, 175, 255, 255));
+	border-style: outset;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: rgb(255, 255, 255);
+	min-width: 4em;
+	padding: 6px;
+}
+
+ QPushButton#sendBoxPushButton_9:pressed 
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
+     border-style: inset;
+ }</string>
+                </property>
                 <property name="text">
                  <string>Send</string>
                 </property>
@@ -485,9 +750,12 @@ padding: 2px;</string>
            </layout>
           </item>
           <item>
-           <spacer name="horizontalSpacer_2">
+           <spacer name="horizontalSpacer_7">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -510,8 +778,8 @@ padding: 2px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>942</width>
-     <height>26</height>
+     <width>984</width>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuVBabel">
@@ -567,8 +835,8 @@ padding: 2px;</string>
    <property name="font">
     <font>
      <family>MS Reference Sans Serif</family>
-     <weight>75</weight>
-     <bold>true</bold>
+     <weight>50</weight>
+     <bold>false</bold>
     </font>
    </property>
   </action>
@@ -672,22 +940,5 @@ padding: 2px;</string>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>sendBoxTextEdit_8</sender>
-   <signal>textEdited(QString)</signal>
-   <receiver>friendMsgBox_8</receiver>
-   <slot>setText(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>649</x>
-     <y>579</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>655</x>
-     <y>442</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

@@ -49,6 +49,8 @@ public:
   bool		drop();
 
 public:
+  bool		waitRequest(const std::string &login);
+  std::vector<ARequest*>	getAllRequest(const std::string &login);
   NbMissed	getNbMissed(const std::string &login);
   bool		addMessage(const std::string &login,
   			   const std::string &fileName);
@@ -158,6 +160,7 @@ bool		Database::isRequestExist(const request::Username &login, const Request &re
        itReq != itClient->second->waitRequest.end(); ++itReq)
     if (req.operator==(*itReq))
       return (true);
+  std::cout << "pas bon" << std::endl;
   return (false);
 }
 

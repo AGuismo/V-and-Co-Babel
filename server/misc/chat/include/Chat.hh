@@ -18,6 +18,7 @@ public:
   void		unload();
   void		setActions(std::map<request::ID, plugin::request_handler> &);
   void		getVersion(plugin::version::major &maj, plugin::version::minor &min) const;
+  bool		searchClient(const std::list<IClient::Pointer> &clients, const std::string &name, IClient::Pointer &client);
 
 private:
   void	message(const std::list<IClient::Pointer> &,
