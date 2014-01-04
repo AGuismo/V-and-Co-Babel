@@ -38,8 +38,7 @@ void			PAudioBuffer::sendToNetwork()
   int						i;
   unsigned char				*compressed;
   unsigned int				encodedSize;
-  std::vector<AudioChunk>	vect;
-  AudioChunk				chunk;
+  AudioChunk				*chunk;
 
   while (ABS(fRdIn - fWrIn) >= FRAME_PACKET_SIZE)
     {
@@ -57,11 +56,11 @@ void			PAudioBuffer::sendToNetwork()
 	}
       encodedSize = 0;
 //    compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE, encodedSize);
-	  chunk.assign(reinterpret_cast<unsigned char *>(_frameBuff), (FRAME_PACKET_SIZE * sizeof(float)));
+	  chunk = _bridge.popUnused();
+	  chunk->assign(reinterpret_cast<unsigned char *>(_frameBuff), (FRAME_PACKET_SIZE * sizeof(float)));
 //    chunk.assign(compressed, encodedSize);
-	  vect.push_back(chunk);
 //      qDebug() << QThread::currentThreadId() << "Sending packet";
-      _bridge.inputWrite(vect);
+      _bridge.inputPush(chunk);
     }
 }
 
@@ -146,9 +145,9 @@ int				PAudioBuffer::playCallBack(const void *inputBuff, void *outputBuff,
   (void)statusFlags;
   (void)userData;
 
-  _bridge.outputRead(chunkList, 1, false);
-  if (chunkList.size() != 0)
-	  data->feed(chunkList[0]);
+//  _bridge.outputRead(chunkList, 1, false);
+//  if (chunkList.size() != 0)
+//	  data->feed(chunkList[0]);
   while ((ABS(data->fRdOut - data->fWrOut) > 0) && (i < framesPerBuff))
   {
 	  writePtr[i++] = readPtr[data->fRdOut++];

@@ -8,6 +8,7 @@
 #include	"AuthRequest.hh"
 #include	"PersoRequest.hh"
 #include	"Env.hh"
+#include	"Database.hh"
 
 Client::Client(boost::asio::io_service &service, Server *server) :
   _service(service), _input(DEFAULT_SIZE), _socket(service), _server(server),
@@ -17,6 +18,7 @@ Client::Client(boost::asio::io_service &service, Server *server) :
   InfosClient._name = "";
   InfosClient._privacy = request::User::PUBLIC;
   InfosClient._status = request::User::Status::DISCONNECTED;
+  InfosClient._inCommunication = false;
 }
 
 Client::~Client()
@@ -67,8 +69,8 @@ void		Client::reset_pong()
 
 void		Client::close()
 {
-  _pongTimer.cancel();
-  _service.post(boost::bind(&Server::handleClientClose, _server, share()));
+	_pongTimer.cancel();
+	_service.post(boost::bind(&Server::handleClientClose, _server, share()));
   //_socket.close();
 }
 

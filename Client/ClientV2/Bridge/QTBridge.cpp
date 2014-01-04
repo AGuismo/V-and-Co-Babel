@@ -1,7 +1,8 @@
 #include  <QDebug>
 #include  "QTBridge.h"
 
-Bridge::Bridge()
+Bridge::Bridge(std::size_t capacity):
+	AudioBridge(capacity)
 {
 
 }
@@ -45,6 +46,20 @@ void  Bridge::inputWrite(const input_buffer &buff)
   AudioBridge::inputWrite(buff);
 }
 
+void  Bridge::inputPush(input &buff)
+{
+  QMutexLocker  lock(&_inputLock);
+
+  AudioBridge::inputPush(buff);
+}
+
+Bridge::input	&Bridge::inputPop()
+{
+  QMutexLocker  lock(&_inputLock);
+
+  return (AudioBridge::inputPop());
+}
+
 void  Bridge::outputRead(output_buffer &buff, std::size_t size, bool blocking)
 {
   QMutexLocker  lock(&_outputLock);
@@ -63,4 +78,32 @@ void  Bridge::outputWrite(const output_buffer &buff)
  QMutexLocker  lock(&_outputLock);
 
   AudioBridge::outputWrite(buff);
+}
+
+Bridge::output	&Bridge::outputPop()
+{
+  QMutexLocker  lock(&_outputLock);
+
+  return (AudioBridge::outputPop());
+}
+
+void  Bridge::outputPush(output &buff)
+{
+ QMutexLocker  lock(&_outputLock);
+
+  AudioBridge::outputPush(buff);
+}
+
+AudioChunk	*Bridge::popUnused()
+{
+	QMutexLocker  lock(&_unusedLock);
+
+	return (AudioBridge::popUnused());
+}
+
+void	Bridge::pushUnused(AudioChunk *chunk)
+{
+	QMutexLocker  lock(&_unusedLock);
+
+	AudioBridge::pushUnused(chunk);
 }

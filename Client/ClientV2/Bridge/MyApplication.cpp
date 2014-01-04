@@ -1,7 +1,8 @@
 #include "MyApplication.hh"
 
 MyApplication::MyApplication(int argc, char *argv[]):
-  _audioStarter(_bridge),
+	_bridge(150),
+	_audioStarter(_bridge),
   _menu(_bridge)
 {
   QObject::connect(&_menu, SIGNAL(destroyed()), &_audioStarter, SLOT(stop()));

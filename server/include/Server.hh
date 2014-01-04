@@ -55,8 +55,9 @@ public:
   const client_list	&getClients() const;
 
 private:
-  void	start_accept();
-  void	handle_accept(IClient::Pointer, const boost::system::error_code &error);
+  void			start_accept();
+  void			handle_accept(IClient::Pointer, const boost::system::error_code &error);
+  void			clientAboutToClose(IClient::Pointer &);
 
 private:
   Server(Server const&);
@@ -64,6 +65,7 @@ private:
 
 private:
   boost::asio::io_service		&_service;
+  Database						&_db;
   boost::asio::ip::tcp::acceptor	_acceptor;
   client_list				_clientList;
   request::PluginManager		*_plugs;

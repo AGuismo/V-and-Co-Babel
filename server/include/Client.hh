@@ -58,6 +58,10 @@ public:
   { return (InfosClient._isConnect); };
   void				Authenticated(bool auth)
   { InfosClient._isConnect = auth; };
+  bool				Communication() const
+  { return (InfosClient._inCommunication); };
+  void				Communication(bool comm)
+  { InfosClient._inCommunication = comm; };
   request::Privacy		privacy() const
   { return (InfosClient._privacy); };
   void				privacy(request::Privacy privacy)
@@ -104,6 +108,7 @@ public:
   struct
   {
     bool			_isConnect;
+	bool			_inCommunication;
     std::string	       		_name;
     request::Privacy		_privacy;
     request::Status		_status;
