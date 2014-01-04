@@ -233,7 +233,7 @@ Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _
 	
 	setWindowIcon(QIcon("./Img/logoBabel.png"));
 	QMovie *movie = new QMovie("./Img/appel_en_cours.gif", QByteArray(), this);
-	//QMovie *movie = new QMovie("./Img/encommunication.gif", QByteArray(), this);
+	//QMovie *movie = new QMovie("./Img/en_communication.gif", QByteArray(), this);
 	ui.callLabel->setMovie(movie);
 	movie->start();
 	//ui.callLabel->setMovie(NULL);

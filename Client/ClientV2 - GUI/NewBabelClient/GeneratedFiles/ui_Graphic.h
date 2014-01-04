@@ -149,6 +149,7 @@ public:
 "{\n"
 "	background: #888888;\n"
 "}"));
+        GraphicClass->setTabShape(QTabWidget::Rounded);
         actionConnect = new QAction(GraphicClass);
         actionConnect->setObjectName(QStringLiteral("actionConnect"));
         QFont font;
@@ -262,11 +263,17 @@ public:
 "	padding: 6px;\n"
 "}\n"
 "\n"
-" QPushButton#callFriendLeftPushButton:pressed \n"
+"QPushButton#callFriendLeftPushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
+"QPushButton#callFriendLeftPushButton:pressed \n"
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
 "     border-style: inset;\n"
-" }"));
+"}"));
 
         gridLayout_49->addWidget(callFriendLeftPushButton, 1, 1, 1, 1);
 
@@ -285,7 +292,13 @@ public:
 "	padding: 6px;\n"
 "}\n"
 "\n"
-" QPushButton#addFriendPushButton:pressed \n"
+"QPushButton#addFriendPushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
+"QPushButton#addFriendPushButton:pressed \n"
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
 "     border-style: inset;\n"
@@ -308,7 +321,13 @@ public:
 "	padding: 6px;\n"
 "}\n"
 "\n"
-" QPushButton#deleteFriendPushButton:pressed \n"
+"QPushButton#deleteFriendPushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
+"QPushButton#deleteFriendPushButton:pressed \n"
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
 "     border-style: inset;\n"
@@ -339,6 +358,7 @@ public:
 
         friendListWidget = new FriendListWidget(widget);
         friendListWidget->setObjectName(QStringLiteral("friendListWidget"));
+        friendListWidget->setMaximumSize(QSize(260, 16777215));
         friendListWidget->setStyleSheet(QLatin1String("background-color: rgba(255, 255, 255, 200);\n"
 "border-width: 2px;\n"
 "border-radius: 8px;\n"
@@ -396,7 +416,13 @@ public:
 "	border-color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
-" QComboBox#statusComboBox:pressed \n"
+"QComboBox#statusComboBox:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
+"QComboBox#statusComboBox:pressed \n"
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
 "     border-style: inset;\n"
@@ -540,11 +566,19 @@ public:
 "	padding: 6px;\n"
 "}\n"
 "\n"
+"QPushButton#callFriendRightPushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
 " QPushButton#callFriendRightPushButton:pressed \n"
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
 "     border-style: inset;\n"
-" }"));
+" }\n"
+"\n"
+""));
 
         gridLayout_9->addWidget(callFriendRightPushButton, 0, 1, 1, 1);
 
@@ -577,11 +611,19 @@ public:
 "	padding: 6px;\n"
 "}\n"
 "\n"
+"QPushButton#hangUpPushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
 " QPushButton#hangUpPushButton:pressed \n"
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
 "     border-style: inset;\n"
-" }"));
+" }\n"
+"\n"
+""));
 
         gridLayout_9->addWidget(hangUpPushButton, 0, 2, 1, 1);
 
@@ -674,11 +716,19 @@ public:
 "	padding: 6px;\n"
 "}\n"
 "\n"
+"QPushButton#sendBoxPushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
 " QPushButton#sendBoxPushButton:pressed \n"
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
 "     border-style: inset;\n"
-" }"));
+" }\n"
+"\n"
+""));
 
         horizontalLayout_8->addWidget(sendBoxPushButton);
 
@@ -743,7 +793,7 @@ public:
 
     void retranslateUi(QMainWindow *GraphicClass)
     {
-        GraphicClass->setWindowTitle(QApplication::translate("GraphicClass", "MainWindow", 0));
+        GraphicClass->setWindowTitle(QApplication::translate("GraphicClass", "V & Co - Babel", 0));
         actionConnect->setText(QApplication::translate("GraphicClass", "Connect", 0));
         actionCreateAccount->setText(QApplication::translate("GraphicClass", "Create account", 0));
         actionLogin->setText(QApplication::translate("GraphicClass", "Log in", 0));

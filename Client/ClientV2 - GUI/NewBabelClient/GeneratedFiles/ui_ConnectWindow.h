@@ -84,11 +84,19 @@ public:
 "	padding: 6px;\n"
 "}\n"
 "\n"
+"QPushButton#connectPushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
 " QPushButton#connectPushButton:pressed \n"
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
 "     border-style: inset;\n"
-" }"));
+" }\n"
+"\n"
+""));
 
         gridLayout->addWidget(connectPushButton, 3, 2, 1, 1);
 
@@ -130,11 +138,19 @@ public:
 "	padding: 6px;\n"
 "}\n"
 "\n"
+"QPushButton#closePushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
 " QPushButton#closePushButton:pressed \n"
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
 "     border-style: inset;\n"
-" }"));
+" }\n"
+"\n"
+""));
 
         gridLayout->addWidget(closePushButton, 3, 1, 1, 1);
 
@@ -174,7 +190,7 @@ public:
 
     void retranslateUi(QDialog *ConnectWindow)
     {
-        ConnectWindow->setWindowTitle(QApplication::translate("ConnectWindow", "ConnectWindow", 0));
+        ConnectWindow->setWindowTitle(QApplication::translate("ConnectWindow", "Connect", 0));
         portTcpLineEdit->setText(QApplication::translate("ConnectWindow", "40202", 0));
         passwordLabel->setText(QApplication::translate("ConnectWindow", "TCP Port :", 0));
         connectPushButton->setText(QApplication::translate("ConnectWindow", "Connect", 0));

@@ -117,11 +117,19 @@ public:
 "	padding: 6px;\n"
 "}\n"
 "\n"
+"QPushButton#closePushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
 " QPushButton#closePushButton:pressed \n"
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
 "     border-style: inset;\n"
-" }"));
+" }\n"
+"\n"
+""));
 
         gridLayout->addWidget(closePushButton, 3, 1, 1, 1);
 
@@ -139,11 +147,19 @@ public:
 "	padding: 6px;\n"
 "}\n"
 "\n"
+"QPushButton#createPushButton:hover\n"
+"{\n"
+"	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));\n"
+"	border-style: inset;\n"
+"}\n"
+"\n"
 " QPushButton#createPushButton:pressed \n"
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));\n"
 "     border-style: inset;\n"
-" }"));
+" }\n"
+"\n"
+""));
 
         gridLayout->addWidget(createPushButton, 3, 2, 1, 1);
 
@@ -171,7 +187,7 @@ public:
 
     void retranslateUi(QDialog *CreateAccountWindow)
     {
-        CreateAccountWindow->setWindowTitle(QApplication::translate("CreateAccountWindow", "LoginWindow", 0));
+        CreateAccountWindow->setWindowTitle(QApplication::translate("CreateAccountWindow", "Login", 0));
         loginLabel->setText(QApplication::translate("CreateAccountWindow", "Login :", 0));
         passwordLabel->setText(QApplication::translate("CreateAccountWindow", "Password :", 0));
         loginLineEdit->setText(QApplication::translate("CreateAccountWindow", "toto", 0));

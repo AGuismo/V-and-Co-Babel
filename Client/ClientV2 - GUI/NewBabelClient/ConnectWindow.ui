@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ConnectWindow</string>
+   <string>Connect</string>
   </property>
   <property name="styleSheet">
    <string notr="true">ConnectWindow 
@@ -69,11 +69,19 @@ padding: 2px;</string>
 	padding: 6px;
 }
 
+QPushButton#connectPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
  QPushButton#connectPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
- }</string>
+ }
+
+</string>
      </property>
      <property name="text">
       <string>Connect</string>
@@ -136,11 +144,19 @@ padding: 2px;</string>
 	padding: 6px;
 }
 
+QPushButton#closePushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
  QPushButton#closePushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
- }</string>
+ }
+
+</string>
      </property>
      <property name="text">
       <string>Close</string>

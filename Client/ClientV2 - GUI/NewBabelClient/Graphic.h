@@ -10,7 +10,6 @@
 
 #include	<QTimer>
 #include	<QTime>
-//#include	<QtGui>
 #include	<QApplication>
 #include	<QSplashScreen>
 

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>V &amp; Co - Babel</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow 
@@ -51,6 +51,9 @@ QMenuBar::item:pressed
 {
 	background: #888888;
 }</string>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
@@ -145,11 +148,17 @@ QMenuBar::item:pressed
 	padding: 6px;
 }
 
- QPushButton#callFriendLeftPushButton:pressed 
+QPushButton#callFriendLeftPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
+QPushButton#callFriendLeftPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
- }</string>
+}</string>
               </property>
               <property name="text">
                <string>Call</string>
@@ -174,7 +183,13 @@ QMenuBar::item:pressed
 	padding: 6px;
 }
 
- QPushButton#addFriendPushButton:pressed 
+QPushButton#addFriendPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
+QPushButton#addFriendPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
@@ -203,7 +218,13 @@ QMenuBar::item:pressed
 	padding: 6px;
 }
 
- QPushButton#deleteFriendPushButton:pressed 
+QPushButton#deleteFriendPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
+QPushButton#deleteFriendPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
@@ -253,6 +274,12 @@ QMenuBar::item:pressed
             </item>
             <item row="0" column="1">
              <widget class="FriendListWidget" name="friendListWidget">
+              <property name="maximumSize">
+               <size>
+                <width>260</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgba(255, 255, 255, 200);
 border-width: 2px;
@@ -334,7 +361,13 @@ padding: 2px;</string>
 	border-color: rgb(255, 255, 255);
 }
 
- QComboBox#statusComboBox:pressed 
+QComboBox#statusComboBox:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
+QComboBox#statusComboBox:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
@@ -543,11 +576,19 @@ padding: 2px;</string>
 	padding: 6px;
 }
 
+QPushButton#callFriendRightPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
  QPushButton#callFriendRightPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
- }</string>
+ }
+
+</string>
                   </property>
                   <property name="text">
                    <string>Call</string>
@@ -607,11 +648,19 @@ padding: 2px;</string>
 	padding: 6px;
 }
 
+QPushButton#hangUpPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
  QPushButton#hangUpPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
- }</string>
+ }
+
+</string>
                   </property>
                   <property name="text">
                    <string>Hang-up</string>
@@ -755,11 +804,19 @@ padding: 2px;</string>
 	padding: 6px;
 }
 
+QPushButton#sendBoxPushButton:hover
+{
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 148, 255, 255), stop:1 rgba(0, 8, 84, 255));
+	border-style: inset;
+}
+
  QPushButton#sendBoxPushButton:pressed 
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 56, 183, 255), stop:1 rgba(135, 172, 255, 255));
      border-style: inset;
- }</string>
+ }
+
+</string>
                 </property>
                 <property name="text">
                  <string>Send</string>
