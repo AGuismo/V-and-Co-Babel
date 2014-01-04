@@ -14,6 +14,7 @@ Application::Application(int ac, char *av[]):
   _requestActions[request::server::perso::PING] = callback_handler(&Application::ping_handler, this);
   _requestActions[request::server::friends::UPDATE] = callback_handler(&Application::update_friend_handler, this);
   _requestActions[request::client::friends::REQUEST] = callback_handler(&Application::get_friend_request_handler, this);
+  _requestActions[request::server::auth::HANDSHAKE] = callback_handler(&Application::connection_response, this);
 }
 
 void		Application::update_friend_handler(const ARequest &req)
@@ -153,7 +154,6 @@ void  Application::triggerUdpError(ANetwork::SocketState st)
 void  Application::triggerTryConnect(const std::string &ip, unsigned short port)
 {
   _tcpNetwork.tryConnect(port, ip);
-  _waitedResponses.push(response_handler(&Application::connection_response, this));
 }
 
 
@@ -182,7 +182,10 @@ void  Application::connection_response(const ARequest &req)
       const request::auth::server::Handshake  &hs = dynamic_cast<const request::auth::server::Handshake &>(req);
 
       if (hs.version == SET_VERSION(request::version::MAJOR, request::version::MINOR))
-        return ;
+	  {
+		  send_request(hs);
+		  return ;
+	  }
     }
   _tcpNetwork.closeConnection();
   _graphic.on_connection_error(ANetwork::ERRHANDSHAKE);
@@ -305,7 +308,7 @@ bool  Application::handle_request()
     }
   _buffer.erase(_buffer.begin(), _buffer.begin() + consumed);
   qDebug() << req->code();
-  if (!_waitedResponses.empty() && (req->code() >= 1000 && req->code() < 1100))
+  if (!_waitedResponses.empty() && (req->code() >= 1000 && req->code() <= 1100))
     {
       response_handler  handle = _waitedResponses.top();
 
