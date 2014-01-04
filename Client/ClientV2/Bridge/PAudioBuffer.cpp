@@ -6,29 +6,31 @@
 
 // CallBacks
 
-void			PAudioBuffer::feed(AudioChunk &chunk)
+void			PAudioBuffer::feed()
 {
 	SAMPLE			*frames;
+	AudioBridge::output_buffer	chunkList;
 	unsigned int	i = 0;
 
-//	if (chunk.size() == 0)
-//		return ;
-	if (chunk.empty())
+	_bridge.outputRead(chunkList, 1, false);
+	if (chunkList.size() == 0)
 		return ;
-//	frames = _codec->decode(chunk.getContent(), FRAME_PACKET_SIZE);
-	frames = reinterpret_cast<float *>(chunk.getContent());
+//	if (chunkList[0].size() == 0)
+//		return ;
+	if (chunkList[0].empty())
+		return ;
+//	frames = _codec->decode(chunkList[0].getContent(), FRAME_PACKET_SIZE);
+	frames = reinterpret_cast<SAMPLE *>(chunkList[0].getContent());
 	if (frames == NULL)
 		return ;
 	i = 0;
 	while (i < FRAME_PACKET_SIZE)
 	{
-		if (fRdOut >= fMaxOut)
-			fRdOut = 0;
 		if (fWrOut >= fMaxOut)
 			fWrOut = 0;
 		output[fWrOut++] = frames[i++];
-		if (fWrOut == fRdOut)
-			return ;
+//		if (fWrOut == fRdOut)
+//			return ;
 	}
 }
 
@@ -41,7 +43,7 @@ void			PAudioBuffer::sendToNetwork()
   std::vector<AudioChunk>	vect;
   AudioChunk				chunk;
 
-  while (ABS(fRdIn - fWrIn) >= FRAME_PACKET_SIZE)
+  if (ABS(fRdIn - fWrIn) >= FRAME_PACKET_SIZE)
     {
       toReach = fRdIn + FRAME_PACKET_SIZE;
 	  if (toReach >= fMaxIn)
@@ -52,12 +54,10 @@ void			PAudioBuffer::sendToNetwork()
 	  _frameBuff[i++] = input[fRdIn++];
 	  if (fRdIn >= fMaxIn)
 	    fRdIn = 0;
-	  if (fWrIn >= fMaxIn)
-	    fWrIn = 0;
-	}
+	  }
       encodedSize = 0;
 //    compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE, encodedSize);
-	  chunk.assign(reinterpret_cast<unsigned char *>(_frameBuff), (FRAME_PACKET_SIZE * sizeof(float)));
+	  chunk.assign(reinterpret_cast<unsigned char *>(_frameBuff), (FRAME_PACKET_SIZE * sizeof(SAMPLE)));
 //    chunk.assign(compressed, encodedSize);
 	  vect.push_back(chunk);
 //      qDebug() << QThread::currentThreadId() << "Sending packet";
@@ -76,17 +76,17 @@ int				PAudioBuffer::streamCallBack(const void *inputBuff, void *outputBuff,
 	return (paContinue);
 }
 
-int				PAudioBuffer::recordCallBack(const void *inputBuff,
+int						PAudioBuffer::recordCallBack(const void *inputBuff,
 					     void *outputBuff,
 					     unsigned long framesPerBuff,
 					     const PaStreamCallbackTimeInfo *timeInfo,
 					     PaStreamCallbackFlags statusFlags,
 					     void *userData)
 {
-  PAudioBuffer	*data = (PAudioBuffer *)(userData);
-  SAMPLE		*readPtr = (SAMPLE *)(inputBuff);
-  SAMPLE		*writePtr = data->input;
-  long			i;
+  PAudioBuffer			*data = (PAudioBuffer *)(userData);
+  SAMPLE				*readPtr = (SAMPLE *)(inputBuff);
+  SAMPLE				*writePtr = data->input;
+  unsigned long			i;
 
   (void)outputBuff;
   (void)timeInfo;
@@ -138,17 +138,13 @@ int				PAudioBuffer::playCallBack(const void *inputBuff, void *outputBuff,
   PAudioBuffer		*data = (PAudioBuffer *)(userData);
   SAMPLE			*readPtr = data->output;
   SAMPLE			*writePtr = (SAMPLE *)(outputBuff);
-  AudioBridge::output_buffer	chunkList;
-  long				i = 0;
+  unsigned long		i = 0;
 
   (void)inputBuff;
   (void)timeInfo;
   (void)statusFlags;
   (void)userData;
 
-  _bridge.outputRead(chunkList, 1, false);
-  if (chunkList.size() != 0)
-	  data->feed(chunkList[0]);
   while ((ABS(data->fRdOut - data->fWrOut) > 0) && (i < framesPerBuff))
   {
 	  writePtr[i++] = readPtr[data->fRdOut++];
@@ -157,6 +153,7 @@ int				PAudioBuffer::playCallBack(const void *inputBuff, void *outputBuff,
 	  if (data->fWrOut >= data->fMaxOut)
 	    data->fWrOut = 0;
   }
+  data->feed();
   return (paContinue);
 }
 
@@ -176,9 +173,6 @@ PAudioBuffer::PAudioBuffer(IAudioCodec *codec, AudioBridge &bridge) :
   _frameBuff = new (SAMPLE[FRAME_PACKET_SIZE]);
   if (_frameBuff != NULL)
     memset(_frameBuff, 0, FRAME_PACKET_SIZE);
-//  _compressedBuff = new (unsigned char[1105]);
-//  if (_compressedBuff != NULL)
-//	  memset(_compressedBuff, 0, 1105);
 }
 
 PAudioBuffer::~PAudioBuffer()

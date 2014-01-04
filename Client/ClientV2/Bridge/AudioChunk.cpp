@@ -33,5 +33,4 @@ AudioChunk::AudioChunk() :
 
 AudioChunk::~AudioChunk()
 {
-	delete [] _content;
 }

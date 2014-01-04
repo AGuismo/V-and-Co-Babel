@@ -16,35 +16,34 @@ class			PAudioBuffer
 private:
 	SAMPLE			*_frameBuff;
 //	unsigned char	*_compressedBuff;
-	IAudioCodec	*_codec;
-	std::ofstream	myFile;
+	IAudioCodec		*_codec;
 
 public:
-	int			fRdIn;
-	int			fWrIn;
-	int			fMaxIn;
-	SAMPLE		*input;
+	int				fRdIn;
+	int				fWrIn;
+	int				fMaxIn;
+	SAMPLE			*input;
 
-	int			fRdOut;
-	int			fWrOut;
-	int			fMaxOut;
-	SAMPLE		*output;
+	int				fRdOut;
+	int				fWrOut;
+	int				fMaxOut;
+	SAMPLE			*output;
 
 	AudioBridge		&_bridge;
 
 public:
-	void		sendToNetwork();
-	void		feed(AudioChunk &chunk);
-	static int	streamCallBack(const void *inputBuff, void *outputBuff,
-				unsigned long framesPerBuff, const PaStreamCallbackTimeInfo *timeInfo,
-				PaStreamCallbackFlags statusFlags, void *userData);
+	void			sendToNetwork();
+	void			feed();
+	static int		streamCallBack(const void *inputBuff, void *outputBuff,
+					unsigned long framesPerBuff, const PaStreamCallbackTimeInfo *timeInfo,
+					PaStreamCallbackFlags statusFlags, void *userData);
 
-	int			recordCallBack(const void *inputBuff, void *outputBuff,
-				unsigned long framesPerBuff, const PaStreamCallbackTimeInfo *timeInfo,
-				PaStreamCallbackFlags statusFlags, void *userData);
-	int			playCallBack(const void *inputBuff, void *outputBuff,
-				unsigned long framesPerBuff, const PaStreamCallbackTimeInfo *timeInfo,
-				PaStreamCallbackFlags statusFlags, void *userData);
+	int				recordCallBack(const void *inputBuff, void *outputBuff,
+					unsigned long framesPerBuff, const PaStreamCallbackTimeInfo *timeInfo,
+					PaStreamCallbackFlags statusFlags, void *userData);
+	int				playCallBack(const void *inputBuff, void *outputBuff,
+					unsigned long framesPerBuff, const PaStreamCallbackTimeInfo *timeInfo,
+					PaStreamCallbackFlags statusFlags, void *userData);
 
 public:
 	PAudioBuffer(IAudioCodec *codec, AudioBridge &bridge);

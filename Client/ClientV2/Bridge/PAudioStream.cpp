@@ -61,9 +61,12 @@ void			PAudioStream::run()
   _start = true;
   while (_start && (error = Pa_IsStreamActive(_stream)) == 1)
     {
-      //_bridge.outputRead(buff, 65000);
-      //qDebug() << QThread::currentThreadId() << "Receiving " << buff.size() << " packets";
-	  //_buffer->feed(buff);
+//		lock(audioLock);
+//		if (record.empty() && play.empty())
+//		waitCondition(dataAvailable);
+//		unlock(audioLock);
+		_buffer->sendToNetwork();
+		_buffer->feed();
     }
   if (Pa_IsStreamActive(_stream) == 1)
     Pa_StopStream(_stream);
