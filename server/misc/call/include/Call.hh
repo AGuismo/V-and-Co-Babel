@@ -3,8 +3,7 @@
 
 # include	<list>
 # include	"IRequestPlugin.hh"
-
-class	Database;
+# include	"Database.hh"
 
 class Call : public request::IRequestPlugin
 {
@@ -26,6 +25,7 @@ void	call(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, c
 void	accept(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req);
 void	refuse(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req);
 void	hangup(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req);
+  bool	verifCall(IClient::Pointer sender, IClient::Pointer receiver, Database::list_friend friends, const std::list<IClient::Pointer> &clients);
 
 public:
 Call(Call const&);

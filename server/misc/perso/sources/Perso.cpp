@@ -154,6 +154,7 @@ void	Perso::get_missed(const std::list<IClient::Pointer> &clients, IClient::Poin
 	    }
 	  catch (const Protocol::ConstructRequest &e)
 	    {
+			break;
 	    }
 	  sender->serialize_data(*tmpReq);
 	}

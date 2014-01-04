@@ -6,9 +6,11 @@
 #include	"RequestPlugin.hh"
 #include	"RequestCaller.hh"
 #include	"ServerRequest.hh"
+#include	"Database.hh"
+#include	"FriendRequest.hh"
 
 Server::Server(boost::asio::io_service &service, Database &db) :
-  _service(service), _acceptor(service), _plugs(new request::PluginManager(db, Env::getInstance())),
+  _service(service), _db(db), _acceptor(service), _plugs(new request::PluginManager(db, Env::getInstance())),
   _calls(new request::PluginCaller(this->_clientList))
 {
 
@@ -94,8 +96,28 @@ void	Server::handle_accept(IClient::Pointer new_connection,
   start_accept();
 }
 
+void		Server::clientAboutToClose(IClient::Pointer &client)
+{
+	Database::list_friend	friends;
+
+	_db.listFriend(client->Username(), friends);
+	for (std::list<IClient::Pointer>::const_iterator itClient = _clientList.begin();
+		itClient != _clientList.end(); ++itClient)
+	{
+		for (Database::list_friend::const_iterator it = friends.begin();
+		it != friends.end(); ++it)
+		{
+			if ((*itClient)->Username() == *it && (*itClient)->Authenticated())
+			{
+				(*itClient)->serialize_data(request::friends::server::Update(request::User::Status::DISCONNECTED, std::string(), client->Username()));
+			}
+		}
+    }
+}
+
 void	Server::handleClientClose(IClient::Pointer clientClosed)
 {
+  clientAboutToClose(clientClosed);
   _clientList.remove(clientClosed);
 }
 

@@ -83,29 +83,26 @@ void		FakeMenu::readPendingDatagrams()
 
 void				FakeMenu::handleOutputWrite(const QByteArray &bytes)
 {
-  AudioBridge::input_buffer	buff;
-  AudioChunk				chunk;
+  AudioChunk				*chunk = _bridge.popUnused();
   std::ostringstream		ss;
-  std::size_t			i = 0;
 
-  chunk.assign(reinterpret_cast<const unsigned char*>(bytes.data()), bytes.size());
-  buff.push_back(chunk);
-  //_ui->Display->setPlainText(QString(ss.str().c_str()));
-  _bridge.outputWrite(buff);
+  chunk->assign(reinterpret_cast<const unsigned char*>(bytes.data()), bytes.size());
+  _bridge.outputPush(chunk);
 }
 
 void				FakeMenu::handleInputRead()
 {
-  AudioBridge::input_buffer	buff;
+  AudioChunk		*chunk;
   unsigned char			*str;
   QMutexLocker			_locker(&_sockLocker);
 
   qDebug() << QThread::currentThreadId() << "HandleInputRead";
   if (!_sock)
     return ;
-  _bridge.inputRead(buff, 1, false);
-  str = buff.front().getContent();
-  QByteArray			bytes(reinterpret_cast<char *>(str), buff.front().size());
+  chunk = _bridge.inputPop();
+  str = chunk->getContent();
+  QByteArray			bytes(reinterpret_cast<char *>(chunk->getContent()), chunk->size());
   qDebug() << QThread::currentThreadId() << "Write " << bytes.size() << "octets";
   _sock->writeDatagram(bytes, QHostAddress(_clientIP), _clientPort);
+  _bridge.pushUnused(chunk);
 }

@@ -2,6 +2,7 @@
 #define GRAPHIC_H
 
 #include		<QtWidgets/QMainWindow>
+#include		<QTime>
 #include		"ui_Graphic.h"
 #include		"AGraphic.hh"
 #include		"ConnectWindow.h"
@@ -27,6 +28,10 @@ private:
 	AccountManagementWindow	_accountManagementWindow;
 	AddFriendWindow			_addFriendWindow;
 
+private:
+	QLabel					*_timeLabel;
+	QTime					_time;
+
 public slots:
 	void			on_connect_window_triggered();
 	void			on_login_window_triggered();
@@ -46,6 +51,7 @@ public slots:
 	void			on_unset_auto_answer_triggered();
 
 	void			on_friend_list_selection_changed();
+	void			showTime();
 
 public slots:
 	void			on_try_connect(const std::string &ipAddress, unsigned short int port);
@@ -55,10 +61,10 @@ public slots:
 	void			on_try_change_password(const std::string &currentPassword, const std::string &newPassword);
 	void			on_try_change_privacy(bool newPrivacy);
 	void			enable_status_txt_change();
-
 	void			on_try_add_friend(const std::string &);
 
-
+private:
+	bool			eventFilter(QObject *target, QEvent *event);
 public:
 	void			on_connection_error(enum ANetwork::SocketState);
 	void			on_connection_success();

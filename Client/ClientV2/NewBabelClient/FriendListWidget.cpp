@@ -36,7 +36,7 @@ void						FriendListWidget::insertFriend(const std::string &name, const Status s
 		tmp = new QIcon(QPixmap("./Img/Invisible.png"));
 		break;
 	}
-	this->setIconSize(QSize(32, 39));
+	this->setIconSize(QSize(37, 44));
 	addItem(new QListWidgetItem(*tmp, QString(name.c_str())));
 }
 

@@ -1,5 +1,6 @@
 #include						"FriendList.hh"
 #include						"Env.hh"
+#include						<QTime>
 
 Friend							*FriendList::getFriend(const std::string &friendName)
 {
@@ -60,10 +61,16 @@ bool							FriendList::insertOutcomingMsg(const std::string &friendName, const s
 {
 	Friend						*tmpFriend;
 	Message						newMsg;
+	QTime						timeMsg;
 
 	if ((tmpFriend = getFriend(friendName)) != NULL)
 	{
-		newMsg.header = " [a timestamp to code]: "; // need work here ++ ENV HERE
+		newMsg.header += "[";
+		newMsg.header +=  timeMsg.currentTime().toString().toStdString();
+		newMsg.header += "]:[";
+		newMsg.header += Env::getInstance().userInfo.login;
+		newMsg.header += "]:";
+		newMsg.header += msg;
 		newMsg.content = msg;
 		tmpFriend->conversation.push_back(newMsg);
 		return true;
@@ -71,14 +78,20 @@ bool							FriendList::insertOutcomingMsg(const std::string &friendName, const s
 	return false;
 }
 
-bool							FriendList::insertIncomingMsg(const std::string &friendName, const std::string &header, const std::string &msg)
+bool							FriendList::insertIncomingMsg(const std::string &friendName, const std::string &msg)
 {
 	Friend						*tmpFriend;
 	Message						newMsg;
+	QTime						timeMsg;
 
 	if ((tmpFriend = getFriend(friendName)) != NULL)
 	{
-		newMsg.header = header; // need work here probably
+		newMsg.header += "[";
+		newMsg.header += timeMsg.currentTime().toString().toStdString();
+		newMsg.header += "]:[";
+		newMsg.header += friendName;
+		newMsg.header += "]:";
+		newMsg.header += msg;
 		newMsg.content = msg;
 		tmpFriend->conversation.push_back(newMsg);
 		return true;
