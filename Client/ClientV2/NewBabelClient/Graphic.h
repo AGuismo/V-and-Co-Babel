@@ -3,6 +3,7 @@
 
 #include		<QtWidgets/QMainWindow>
 #include		<QTime>
+#include		<QMessageBox>
 #include		"ui_Graphic.h"
 #include		"AGraphic.hh"
 #include		"ConnectWindow.h"
@@ -28,9 +29,13 @@ private:
 	AccountManagementWindow	_accountManagementWindow;
 	AddFriendWindow			_addFriendWindow;
 
+	QMessageBox				_confirmationMessage;
+
 private:
 	QLabel					*_timeLabel;
 	QTime					_time;
+	QMovie					*_inCallAnimation;
+	QMovie					*_callWaitingAnimation;
 
 private:
 	void			closeEvent(QCloseEvent *);
@@ -87,6 +92,10 @@ public:
 	void			on_call_request_success();
 	void			on_call_request_error();
 
+	void			callingAnimation();
+	void			inCallAnimation();
+	void			noAnimation();
+
 	void			on_select_friend();// à coder
 	void			on_add_friend_success();
 	void			on_add_friend_error(const std::string &error);
@@ -98,7 +107,7 @@ public:
 	bool			request_server_response(const std::string &title, const std::string &content);
 	void			updateFriendList(const friend_list_type	&);
 
-private:
+public:
 	void			connected();
 	void			disconnected();
 	void			loggedIn();

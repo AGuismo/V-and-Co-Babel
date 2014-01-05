@@ -186,7 +186,7 @@ void		Application::get_call_request_handler(const ARequest &req)
 		Env::getInstance().callInfo.friendAddressIp = ip;
 		Env::getInstance().callInfo.friendName = name;
 		Env::getInstance().callInfo.friendPortUDP = port;
-
+		_graphic.on_call_request_success();
 		qDebug() << "request call accepted" << port << QHostAddress(ip).toString();
 		if (!init_UDP())
 			goto fail;
@@ -197,6 +197,7 @@ void		Application::get_call_request_handler(const ARequest &req)
 	else
 	{
 		fail:
+		_graphic.on_call_request_error();
 		send_request(request::call::client::RefuseClient(Env::getInstance().userInfo.login, name));
 		_waitedResponses.push(response_handler(&Application::ignore_response, this));
 		_inCommunication = false;
@@ -226,6 +227,7 @@ void	Application::get_call_timeout_handler(const ARequest &req)
 {
 	stop_UDP();
 	_inCommunication = false;
+	_graphic.on_call_request_error();
 }
 
 void		Application::get_call_refuse_handler(const ARequest &req)
@@ -263,6 +265,7 @@ void		Application::get_friend_request_handler(const ARequest &req)
 void	Application::get_call_hang_up_handler(const ARequest &req)
 {
 	stop_UDP();
+	_graphic.on_call_request_error();
 }
 
 // Responses
