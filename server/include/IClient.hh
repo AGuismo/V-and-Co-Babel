@@ -23,6 +23,10 @@ public:
 public:
   virtual const request::Username	&Username() const = 0;
   virtual void				Username(const request::Username &) = 0;
+  virtual const request::PasswordType	&Password() const = 0;
+  virtual void				Password(const request::Username &) = 0;
+  virtual const request::PasswordType	&OldPassword() const = 0;
+  virtual void				OldPassword(const request::Username &) = 0;
   virtual bool				Authenticated() const = 0;
   virtual void				Authenticated(bool) = 0;
   virtual bool				Communication() const = 0;

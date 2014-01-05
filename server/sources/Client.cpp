@@ -156,6 +156,8 @@ bool		Client::unserialize_data(buffer &buff)
     }
   catch (const Serializer::invalid_argument &e)
     {
+      if (std::string(e.what()) == "Invalid Code")
+	close();
       return (false);
     }
   buff.erase(buff.begin(), buff.begin() + extracted);

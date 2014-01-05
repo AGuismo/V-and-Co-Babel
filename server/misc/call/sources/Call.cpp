@@ -87,6 +87,7 @@ void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sen
   const request::call::client::CallClient	*origin = dynamic_cast<const request::call::client::CallClient *>(req);
   IClient::Pointer				receiver;
 
+
   if (sender->Authenticated() &&
       sender->status() == request::User::Status::CONNECTED &&
       _db.clientExist(origin->_from) &&
@@ -149,6 +150,7 @@ void	Call::accept(const std::list<IClient::Pointer> &clients, IClient::Pointer s
 	    {
 	      receiver->status(request::User::Status::OCCUPIED);
 	      sender->status(request::User::Status::OCCUPIED);
+	      sender->serialize_data(request::server::Ok());
 	      receiver->serialize_data(fwd);
 	    }
 	  else
@@ -182,12 +184,16 @@ void	Call::refuse(const std::list<IClient::Pointer> &clients, IClient::Pointer s
 #endif
 	  if (receiver->Authenticated() &&
 	      receiver->status() == request::User::Status::CONNECTED)
-	    receiver->serialize_data(*origin);
+	    {
+	      receiver->serialize_data(*origin);
+	      sender->serialize_data(request::server::Ok());
+	    }
 	  else
 	    sender->serialize_data(request::server::Forbidden());
 	  return ;
 	}
     }
+  sender->serialize_data(request::server::Forbidden());
 }
 
 void	Call::hangup(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
