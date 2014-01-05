@@ -15,22 +15,32 @@ public:
 
 public:
   void  tryConnect(unsigned short port, const std::string &ipAddress);
+  void  tryConnect(unsigned short port, int ip);
   void  sendData(const ANetwork::ByteArray &);
-  void  closeConnection();
   unsigned short  localPort() const;
 
 public:
-  void  init();
-  void  run();
+  bool  init();
+  void  start();
   void  stop();
-
-private slots:
-  void  handleRead();
+  bool	reset();
 
 private:
-  QUdpSocket    _sock;
-  QHostAddress  _receiverIP;
-  quint16       _receiverPort;
+	void	run();
+	void	closeConnection();
+
+private slots:
+  void  handleOutputRead();
+
+signals:
+  void	serverStarted();
+  void	serverStopped();
+
+private:
+	QUdpSocket		*_sock;
+	QHostAddress	_receiverIP;
+	quint16			_receiverPort;
+	QMutex			_lock;
 };
 
 #endif // UDPNETWORK_H

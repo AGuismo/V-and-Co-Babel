@@ -319,8 +319,7 @@ void					Graphic::on_call_friend_push_button_released()
 void					Graphic::on_hang_up_push_button_released()
 {
 	qDebug() << "hanging up here mtfck !";
-	if (ui.friendListWidget->currentItem() != NULL)
-		_callHandler(ui.friendListWidget->currentItem()->text().toStdString());
+	_hangupHandler();
 }
 
 void					Graphic::on_change_status_triggered(int newStatus)
