@@ -1,13 +1,15 @@
 #ifndef APPLICATION_HH
 #define APPLICATION_HH
 
-# include "IApplication.hh"
-# include "Graphic.h"
-# include "TCPNetwork.h"
-# include "UDPNetwork.h"
-# include "Protocol.hpp"
-# include  "FriendList.hh"
-# include <stack>
+# include	<stack>
+# include	"IApplication.hh"
+# include	"Graphic.h"
+# include	"TCPNetwork.h"
+# include	"UDPNetwork.h"
+# include	"Protocol.hpp"
+# include	"FriendList.hh"
+# include	"audio.h"
+# include	"QTBridge.h"
 
 class Application : public IApplication
 {
@@ -29,6 +31,7 @@ private:
   void  triggerTryLogin(const request::Username &, const request::PasswordType &);
   void  triggerAvailableData(const ANetwork::ByteArray);
   void  triggerUdpError(enum ANetwork::SocketState);
+  void	triggerUdpDataAvailable(const ANetwork::ByteArray);
   void	triggerDesAuthentification();
   void	triggerTryCreateAccount(const request::Username &, const request::PasswordType &);
   void	triggerTryDeleteAccount(const request::Username &, const request::PasswordType &);
@@ -89,8 +92,10 @@ private:
   int						_ac;
   QApplication				_app;
   Graphic					_graphic;
+  Bridge					_bridge;
   TCPNetwork				_tcpNetwork;
   UDPNetwork				_udpNetwork;
+  Audio						_audioStarter;
   Protocol::serialized_data	_buffer;
   stack_response_handler	_waitedResponses;
   request_callback			_requestActions;

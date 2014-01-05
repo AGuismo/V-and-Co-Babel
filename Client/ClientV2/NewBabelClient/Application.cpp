@@ -11,7 +11,7 @@
 #include	<QDebug>
 
 Application::Application(int ac, char *av[]):
-  _ac(ac), _app(_ac, av)
+  _ac(ac), _app(_ac, av), _bridge(150), _audioStarter(_bridge)
 {
   _requestActions[request::server::perso::PING] = callback_handler(&Application::ping_handler, this);
   _requestActions[request::server::friends::UPDATE] = callback_handler(&Application::update_friend_handler, this);
@@ -91,6 +91,7 @@ void  Application::init()
   _tcpNetwork.setOnConnectHandler(Function<void ()>(&Graphic::on_connection_success, &_graphic));
   _tcpNetwork.setAvailableData(Function<void (const ANetwork::ByteArray)>(&Application::triggerAvailableData, this));
   _udpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Application::triggerUdpError, this));
+  _udpNetwork.setAvailableData(Function<void (const ANetwork::ByteArray)>(&Application::triggerUdpDataAvailable, this));
   _graphic.setTryConnectHandler(Function<void (unsigned short, const std::string &)>(&TCPNetwork::tryConnect, &_tcpNetwork));
   _graphic.setTryAuthentificationHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryLogin, this));
   _graphic.setTryCreateAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryCreateAccount, this));
@@ -174,6 +175,10 @@ void	Application::triggerChatHandler(const request::Username &friendName, const 
 	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
 
+void	Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
+{
+	qDebug("UDP Data Available");
+}
 
 void	Application::triggerCallHandler(const request::Username &friendName)
 {
