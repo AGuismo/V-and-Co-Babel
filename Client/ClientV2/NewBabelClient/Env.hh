@@ -21,9 +21,12 @@ public:
 
   struct
   {
-    std::string				name;
-	int						addressIp;
-	unsigned short int		portUDP;
+    std::string				friendName;
+	int						friendAddressIp;
+	unsigned short int		friendPortUDP;
+    std::string				userName;
+	int						userAddressIp;
+	unsigned short int		userPortUDP;
   }							callInfo;
 
 

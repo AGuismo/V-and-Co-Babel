@@ -3,9 +3,12 @@
 
 void			Env::initCallInfo()
 {
-  callInfo.name = "";
-  callInfo.addressIp = 0;
-  callInfo.portUDP = 0;
+  callInfo.friendName = "";
+  callInfo.friendAddressIp = 0;
+  callInfo.friendPortUDP = 0;
+  callInfo.userName = "";
+  callInfo.userAddressIp = 0;
+  callInfo.userPortUDP = 40546;
 }
 
 void			Env::initSelectedFriend()

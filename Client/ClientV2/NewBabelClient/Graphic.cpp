@@ -319,6 +319,8 @@ void					Graphic::on_call_friend_push_button_released()
 void					Graphic::on_hang_up_push_button_released()
 {
 	qDebug() << "hanging up here mtfck !";
+	if (ui.friendListWidget->currentItem() != NULL)
+		_callHandler(ui.friendListWidget->currentItem()->text().toStdString());
 }
 
 void					Graphic::on_change_status_triggered(int newStatus)
@@ -493,7 +495,6 @@ void					Graphic::loggedOut()
 
 void		Graphic::showTime()
 {
-	qDebug() << "Showtime";
 	_timeLabel->setText(_time.currentTime().toString());
 }
 
@@ -521,6 +522,18 @@ Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _
 	movie->start();
 	//ui.callLabel->setMovie(NULL);
 }
+
+void					Graphic::on_call_request_success()
+{
+	qDebug() << "call request succes here mtf";
+}
+
+void					Graphic::on_call_request_error()
+{
+	qDebug() << "call request error here mtf";
+}
+
+
 
 Graphic::~Graphic()
 {

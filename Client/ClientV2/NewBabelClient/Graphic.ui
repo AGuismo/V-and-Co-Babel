@@ -545,7 +545,7 @@ padding: 2px;</string>
                   <property name="maximumSize">
                    <size>
                     <width>300</width>
-                    <height>42</height>
+                    <height>55</height>
                    </size>
                   </property>
                   <property name="font">
@@ -635,7 +635,7 @@ QPushButton#callFriendRightPushButton:hover
                  <widget class="QLabel" name="selectedFriendPersonalMsgLabel">
                   <property name="minimumSize">
                    <size>
-                    <width>164</width>
+                    <width>134</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -769,7 +769,7 @@ QPushButton#hangUpPushButton:hover
               </property>
               <property name="minimumSize">
                <size>
-                <width>164</width>
+                <width>134</width>
                 <height>0</height>
                </size>
               </property>
@@ -907,7 +907,7 @@ QPushButton#sendBoxPushButton:hover
      <x>0</x>
      <y>0</y>
      <width>860</width>
-     <height>23</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuVBabel">

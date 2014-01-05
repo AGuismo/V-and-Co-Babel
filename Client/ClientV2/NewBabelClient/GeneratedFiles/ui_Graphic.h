@@ -547,7 +547,7 @@ public:
 
         selectedFriendIconStatusLabel = new QLabel(layoutWidget_15);
         selectedFriendIconStatusLabel->setObjectName(QStringLiteral("selectedFriendIconStatusLabel"));
-        selectedFriendIconStatusLabel->setMaximumSize(QSize(300, 42));
+        selectedFriendIconStatusLabel->setMaximumSize(QSize(300, 55));
         QFont font4;
         font4.setPointSize(14);
         selectedFriendIconStatusLabel->setFont(font4);
@@ -605,7 +605,7 @@ public:
 
         selectedFriendPersonalMsgLabel = new QLabel(layoutWidget_15);
         selectedFriendPersonalMsgLabel->setObjectName(QStringLiteral("selectedFriendPersonalMsgLabel"));
-        selectedFriendPersonalMsgLabel->setMinimumSize(QSize(164, 0));
+        selectedFriendPersonalMsgLabel->setMinimumSize(QSize(134, 0));
         selectedFriendPersonalMsgLabel->setFont(font3);
         selectedFriendPersonalMsgLabel->setStyleSheet(QLatin1String("background-color: rgba(190, 190, 190, 200);\n"
 "border-width: 2px;\n"
@@ -692,7 +692,7 @@ public:
         sizePolicy1.setVerticalStretch(3);
         sizePolicy1.setHeightForWidth(friendMsgBox->sizePolicy().hasHeightForWidth());
         friendMsgBox->setSizePolicy(sizePolicy1);
-        friendMsgBox->setMinimumSize(QSize(164, 0));
+        friendMsgBox->setMinimumSize(QSize(134, 0));
         friendMsgBox->setMaximumSize(QSize(800, 16777215));
         friendMsgBox->setSizeIncrement(QSize(3, 0));
         QFont font6;
@@ -777,7 +777,7 @@ public:
         GraphicClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(GraphicClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 860, 23));
+        menuBar->setGeometry(QRect(0, 0, 860, 18));
         menuVBabel = new QMenu(menuBar);
         menuVBabel->setObjectName(QStringLiteral("menuVBabel"));
         menuConnection = new QMenu(menuBar);
