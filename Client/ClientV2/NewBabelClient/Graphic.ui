@@ -910,13 +910,6 @@ QPushButton#sendBoxPushButton:hover
      <height>18</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuVBabel">
-    <property name="title">
-     <string>VBabel</string>
-    </property>
-    <addaction name="actionCall"/>
-    <addaction name="actionExit"/>
-   </widget>
    <widget class="QMenu" name="menuConnection">
     <property name="title">
      <string>Connection</string>
@@ -950,7 +943,6 @@ QPushButton#sendBoxPushButton:hover
     <addaction name="actionAddFriend"/>
     <addaction name="actionDeleteFriend"/>
    </widget>
-   <addaction name="menuVBabel"/>
    <addaction name="menuConnection"/>
    <addaction name="menuManage_account"/>
    <addaction name="menuFriends_list"/>
