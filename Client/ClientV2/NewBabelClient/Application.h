@@ -1,6 +1,7 @@
 #ifndef APPLICATION_HH
 #define APPLICATION_HH
 
+# include	<QObject>
 # include	<stack>
 # include	"IApplication.hh"
 # include	"Graphic.h"
@@ -11,8 +12,9 @@
 # include	"audio.h"
 # include	"QTBridge.h"
 
-class Application : public IApplication
+class Application : public QObject, public IApplication
 {
+	Q_OBJECT
 public:
   typedef Function<void (const ARequest &)>		response_handler;
   typedef Function<void (const ARequest &)>		callback_handler;
@@ -37,6 +39,7 @@ private:
   void	triggerTryDeleteAccount(const request::Username &, const request::PasswordType &);
   void	triggerTryChangeAccountPassword(const request::PasswordType &, const request::PasswordType &);
   void	triggerTryChangeAccountPrivacy(const request::Privacy &);
+  void	triggerAboutToClose();
 
   // Work needed here
   void	triggerStatusHandler(const request::Status &, const request::Message &);
@@ -46,7 +49,7 @@ private:
   void	triggerGetFriendHandler(const request::Username &);
 
   void	triggerCallHandler(const request::Username &);
-  void	triggerHangUpHandler(const request::Username &);
+  void	triggerHangUpHandler();
   void	triggerChatHandler(const request::Username &, const request::Message &);
   void	triggerSetAnswerHandler();
   void	triggerUnSetAnswerHandler();
@@ -69,6 +72,7 @@ private:
   // Work needed here
   void	add_friend_response(const ARequest &);		
   void	call_response(const ARequest &);
+  void	accept_response(const ARequest &);
   void	hang_up_response(const ARequest &);
   void	set_answer_response(const ARequest &);
   void	unset_answer_response(const ARequest &);
@@ -85,6 +89,15 @@ private:
 
   void  get_call_accept_handler(const ARequest &);
   void  get_call_refuse_handler(const ARequest &);
+  void	get_call_hang_up_handler(const ARequest &);
+  void	get_call_timeout_handler(const ARequest &);
+
+private:
+	bool	init_UDP();
+	void	stop_UDP();
+
+private slots:
+	void	handle_udp_input_read();
 
 public:
   void  init();
@@ -102,6 +115,7 @@ private:
   Protocol::serialized_data	_buffer;
   stack_response_handler	_waitedResponses;
   request_callback			_requestActions;
+  bool						_inCommunication;
 };
 
 #endif // APPLICATION_HH

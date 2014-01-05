@@ -1,4 +1,4 @@
-#include		"Application.hh"
+#include		"Application.h"
 #include		<QApplication>
 #include		"Salt.hpp"
 

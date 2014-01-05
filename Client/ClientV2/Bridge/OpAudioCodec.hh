@@ -11,18 +11,17 @@
 class				OpAudioCodec : public IAudioCodec
 {
 private:
-  unsigned char			*_encBuffer;
-  SAMPLE				*_decBuffer;
   OpusEncoder			*_encoder;
   OpusDecoder			*_decoder;
-  opus_int32			_encodedSize;
+  unsigned char			*_encodeBuff;
+  SAMPLE				*_decodeBuff;
 
 public:
   virtual bool			init();
   virtual bool			stop();
-  virtual opus_int32	getEncodedSize() const;
-  virtual unsigned char	*encode(SAMPLE *frame, unsigned int frameSize, unsigned int &encodedSize);
-  virtual SAMPLE		*decode(unsigned char *compressed, unsigned int frameSize);
+  virtual unsigned int	encode(SAMPLE *in, unsigned int inSize, unsigned char *out, unsigned int outSize);
+  virtual unsigned int	decode(const unsigned char *in, unsigned int inSize, SAMPLE *out, unsigned int outSize);
+  bool					printOpusError(int error) const;
 
 public:
   OpAudioCodec();

@@ -18,7 +18,7 @@ void							FriendList::insertFriend(const std::string &friendName, const std::st
 	newFriend.name = friendName;
 	newFriend.personalMsg = friendPersonalMsg;
 	newFriend.status = friendStatus;
-	_friendList[friendName] = newFriend;
+	_friendList.insert( std::pair<std::string, Friend>(friendName, newFriend));
 }
 
 bool							FriendList::removeFriend(std::string &friendName)

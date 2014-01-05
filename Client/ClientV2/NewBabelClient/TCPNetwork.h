@@ -12,7 +12,7 @@ public:
   TCPNetwork();
 
 public:
-  void  init();
+  bool  init();
   void  run();
 
 public:

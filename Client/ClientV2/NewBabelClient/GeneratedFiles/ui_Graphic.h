@@ -101,7 +101,6 @@ public:
     QPushButton *sendBoxPushButton;
     QSpacerItem *horizontalSpacer_7;
     QMenuBar *menuBar;
-    QMenu *menuVBabel;
     QMenu *menuConnection;
     QMenu *menuManage_account;
     QMenu *menuVoicemail;
@@ -778,8 +777,6 @@ public:
         menuBar = new QMenuBar(GraphicClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 860, 18));
-        menuVBabel = new QMenu(menuBar);
-        menuVBabel->setObjectName(QStringLiteral("menuVBabel"));
         menuConnection = new QMenu(menuBar);
         menuConnection->setObjectName(QStringLiteral("menuConnection"));
         menuManage_account = new QMenu(menuBar);
@@ -794,13 +791,10 @@ public:
         statusBar->setObjectName(QStringLiteral("statusBar"));
         GraphicClass->setStatusBar(statusBar);
 
-        menuBar->addAction(menuVBabel->menuAction());
         menuBar->addAction(menuConnection->menuAction());
         menuBar->addAction(menuManage_account->menuAction());
         menuBar->addAction(menuFriends_list->menuAction());
         menuBar->addAction(menuVoicemail->menuAction());
-        menuVBabel->addAction(actionCall);
-        menuVBabel->addAction(actionExit);
         menuConnection->addAction(actionConnect);
         menuConnection->addAction(actionLogin);
         menuConnection->addAction(actionLogout);
@@ -844,7 +838,6 @@ public:
         hangUpPushButton->setText(QApplication::translate("GraphicClass", "Hang-up", 0));
         callLabel->setText(QApplication::translate("GraphicClass", "Call Status", 0));
         sendBoxPushButton->setText(QApplication::translate("GraphicClass", "Send", 0));
-        menuVBabel->setTitle(QApplication::translate("GraphicClass", "VBabel", 0));
         menuConnection->setTitle(QApplication::translate("GraphicClass", "Connection", 0));
         menuManage_account->setTitle(QApplication::translate("GraphicClass", "Manage account", 0));
         menuVoicemail->setTitle(QApplication::translate("GraphicClass", "Voicemail", 0));

@@ -1,16 +1,16 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'UDPNetwork.h'
+** Meta object code from reading C++ file 'QTBridge.h'
 **
 ** Created by: The Qt Meta Object Compiler version 67 (Qt 5.1.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../UDPNetwork.h"
+#include "../../QTBridge.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'UDPNetwork.h' doesn't include <QObject>."
+#error "The header file 'QTBridge.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
 #error "This file was generated using the moc from 5.1.1. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -18,35 +18,33 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_UDPNetwork_t {
-    QByteArrayData data[5];
-    char stringdata[58];
+struct qt_meta_stringdata_Bridge_t {
+    QByteArrayData data[4];
+    char stringdata[40];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    offsetof(qt_meta_stringdata_UDPNetwork_t, stringdata) + ofs \
+    offsetof(qt_meta_stringdata_Bridge_t, stringdata) + ofs \
         - idx * sizeof(QByteArrayData) \
     )
-static const qt_meta_stringdata_UDPNetwork_t qt_meta_stringdata_UDPNetwork = {
+static const qt_meta_stringdata_Bridge_t qt_meta_stringdata_Bridge = {
     {
-QT_MOC_LITERAL(0, 0, 10),
-QT_MOC_LITERAL(1, 11, 13),
-QT_MOC_LITERAL(2, 25, 0),
-QT_MOC_LITERAL(3, 26, 13),
-QT_MOC_LITERAL(4, 40, 16)
+QT_MOC_LITERAL(0, 0, 6),
+QT_MOC_LITERAL(1, 7, 14),
+QT_MOC_LITERAL(2, 22, 0),
+QT_MOC_LITERAL(3, 23, 15)
     },
-    "UDPNetwork\0serverStarted\0\0serverStopped\0"
-    "handleOutputRead\0"
+    "Bridge\0inputReadReady\0\0outputReadReady\0"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_UDPNetwork[] = {
+static const uint qt_meta_data_Bridge[] = {
 
  // content:
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -54,44 +52,37 @@ static const uint qt_meta_data_UDPNetwork[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   29,    2, 0x05,
-       3,    0,   30,    2, 0x05,
-
- // slots: name, argc, parameters, tag, flags
-       4,    0,   31,    2, 0x08,
+       1,    0,   24,    2, 0x05,
+       3,    0,   25,    2, 0x05,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void,
 
- // slots: parameters
-    QMetaType::Void,
-
        0        // eod
 };
 
-void UDPNetwork::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void Bridge::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        UDPNetwork *_t = static_cast<UDPNetwork *>(_o);
+        Bridge *_t = static_cast<Bridge *>(_o);
         switch (_id) {
-        case 0: _t->serverStarted(); break;
-        case 1: _t->serverStopped(); break;
-        case 2: _t->handleOutputRead(); break;
+        case 0: _t->inputReadReady(); break;
+        case 1: _t->outputReadReady(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (UDPNetwork::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&UDPNetwork::serverStarted)) {
+            typedef void (Bridge::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Bridge::inputReadReady)) {
                 *result = 0;
             }
         }
         {
-            typedef void (UDPNetwork::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&UDPNetwork::serverStopped)) {
+            typedef void (Bridge::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Bridge::outputReadReady)) {
                 *result = 1;
             }
         }
@@ -99,52 +90,52 @@ void UDPNetwork::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     Q_UNUSED(_a);
 }
 
-const QMetaObject UDPNetwork::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_UDPNetwork.data,
-      qt_meta_data_UDPNetwork,  qt_static_metacall, 0, 0}
+const QMetaObject Bridge::staticMetaObject = {
+    { &QObject::staticMetaObject, qt_meta_stringdata_Bridge.data,
+      qt_meta_data_Bridge,  qt_static_metacall, 0, 0}
 };
 
 
-const QMetaObject *UDPNetwork::metaObject() const
+const QMetaObject *Bridge::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *UDPNetwork::qt_metacast(const char *_clname)
+void *Bridge::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_UDPNetwork.stringdata))
-        return static_cast<void*>(const_cast< UDPNetwork*>(this));
-    if (!strcmp(_clname, "ANetwork"))
-        return static_cast< ANetwork*>(const_cast< UDPNetwork*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_Bridge.stringdata))
+        return static_cast<void*>(const_cast< Bridge*>(this));
+    if (!strcmp(_clname, "AudioBridge"))
+        return static_cast< AudioBridge*>(const_cast< Bridge*>(this));
     return QObject::qt_metacast(_clname);
 }
 
-int UDPNetwork::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int Bridge::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 2)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 2;
     }
     return _id;
 }
 
 // SIGNAL 0
-void UDPNetwork::serverStarted()
+void Bridge::inputReadReady()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }
 
 // SIGNAL 1
-void UDPNetwork::serverStopped()
+void Bridge::outputReadReady()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, 0);
 }

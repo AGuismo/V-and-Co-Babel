@@ -14,14 +14,14 @@ Bridge::~Bridge()
 
 void  Bridge::inputReady()
 {
-//	qDebug() << QThread::currentThreadId() << "InputReady()";
+	qDebug() << QThread::currentThreadId() << "InputReady()";
   _inputReady.wakeAll();
   emit(inputReadReady());
 }
 
 void  Bridge::outputReady()
 {
-//	qDebug() << QThread::currentThreadId() << "OutputReady()";
+	qDebug() << QThread::currentThreadId() << "OutputReady()";
   _outputReady.wakeAll();
   emit(outputReadReady());
 }

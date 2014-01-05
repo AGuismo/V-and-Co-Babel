@@ -1,9 +1,10 @@
 #ifndef FAKEMENU_H
 #define FAKEMENU_H
 
-#include <QMainWindow>
-#include  <QUdpSocket>
-#include  "QTBridge.h"
+#include	<QMainWindow>
+#include	<QUdpSocket>
+#include	"QTBridge.h"
+#include	"IAudioCodec.hh"
 
 namespace Ui {
   class FakeMenu;
@@ -33,12 +34,13 @@ signals:
 
 private:
   Bridge        &_bridge;
-  Ui::FakeMenu *_ui;
+  Ui::FakeMenu	*_ui;
   quint16       _serverPort;
   QString       _clientIP;
   quint16       _clientPort;
-  QUdpSocket   *_sock;
-  QMutex	_sockLocker;
+  QUdpSocket	*_sock;
+  QMutex		_sockLocker;
+  IAudioCodec	*_codec;
 };
 
 #endif // FAKEMENU_H

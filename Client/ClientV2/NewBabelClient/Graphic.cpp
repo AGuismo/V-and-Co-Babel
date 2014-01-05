@@ -6,9 +6,13 @@
 #include				<QSplashScreen>
 #include				<QDebug> // à virer
 
+//ui.friendMsgBox->clear()
 
 void					Graphic::init()
 {
+	QPixmap					*tmp;
+	tmp = new QPixmap("./Img/Invisible.png");
+	ui.selectedFriendIconStatusLabel->setPixmap(*tmp);
 	ui.statusComboBox->addItem(QIcon("./Img/Online.png"), "Online", QVariant("e"));
 	ui.statusComboBox->addItem(QIcon("./Img/Away.png"), "Away", QVariant("e"));
 	ui.statusComboBox->addItem(QIcon("./Img/Occuped.png"), "Occuped", QVariant("e"));
@@ -301,26 +305,35 @@ void					Graphic::on_delete_friend_triggered()
 
 void					Graphic::on_send_box_push_button_released()
 {
-	qDebug() << "sending here mtfk !" << ui.sendBoxTextEdit->text(); // warning pseufo
+	qDebug() << "sending here mtfk !" << ui.sendBoxTextEdit->text(); // warning pseudo
 	
 	if (ui.friendListWidget->currentItem() != NULL)
 		_chatHandler(ui.friendListWidget->currentItem()->text().toStdString(), ui.sendBoxTextEdit->text().toStdString());
 	ui.sendBoxTextEdit->clear();
 }
 
+void					Graphic::closeEvent(QCloseEvent *ev)
+{
+	qDebug("Close Event");
+	_aboutToCloseHandler();
+	QMainWindow::closeEvent(ev);
+}
 
 void					Graphic::on_call_friend_push_button_released()
 {
 	qDebug() << "calling here mtfck !";
 	if (ui.friendListWidget->currentItem() != NULL)
+	{
+		callingAnimation();
 		_callHandler(ui.friendListWidget->currentItem()->text().toStdString());
+	}
 }
 
 void					Graphic::on_hang_up_push_button_released()
 {
 	qDebug() << "hanging up here mtfck !";
-	if (ui.friendListWidget->currentItem() != NULL)
-		_callHandler(ui.friendListWidget->currentItem()->text().toStdString());
+	_hangupHandler();
+	noAnimation();
 }
 
 void					Graphic::on_change_status_triggered(int newStatus)
@@ -335,6 +348,9 @@ void					Graphic::on_change_status_triggered(int newStatus)
 void					Graphic::on_change_status_txt_triggered()
 {
 	qDebug() << "changing status txt here mtfk !";
+	_confirmationMessage.show();
+
+
 	if (ui.statusComboBox->currentIndex() + 1 == 4)
 		_statusHandler(ui.statusComboBox->currentIndex() + 2, ui.statusLineEdit->text().toStdString());		else
 		_statusHandler(ui.statusComboBox->currentIndex() + 1, ui.statusLineEdit->text().toStdString());
@@ -371,7 +387,6 @@ bool					Graphic::request_server_response(const std::string &title, const std::s
 void					Graphic::updateFriendList(const friend_list_type &friendList)
 {
 	ui.friendListWidget->updateFriendListWidget(friendList);
-//	_friendListWidget.updateFriendListWidget(friendList);
 }
 
 
@@ -384,6 +399,10 @@ void					Graphic::receiveFriendInformation(Friend *friendInfo)
 {
 	if (friendInfo != NULL)
 	{
+
+	if (Env::getInstance().selectedFriend.name != friendInfo->name)
+		return;
+
 		ui.selectedFriendNameLabel->setText(QString(friendInfo->name.c_str()));
 		ui.selectedFriendPersonalMsgLabel->setText(QString(friendInfo->personalMsg.c_str()));
 		ui.friendMsgBox->clear();
@@ -414,10 +433,7 @@ void					Graphic::receiveFriendInformation(Friend *friendInfo)
 		ui.selectedFriendIconStatusLabel->setPixmap(*tmp);
 
 		for ( convers_type::const_iterator it =	friendInfo->conversation.begin(); it != friendInfo->conversation.end(); ++it)
-		{
 			ui.friendMsgBox->append(QString(it->header.c_str()));
-		//	ui.friendMsgBox->append(QString(it->content.c_str()));
-		}
 	}
 }
 
@@ -498,39 +514,51 @@ void		Graphic::showTime()
 	_timeLabel->setText(_time.currentTime().toString());
 }
 
-Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this), _deleteAccountWindow(this), _accountManagementWindow(this), _addFriendWindow(this)
+
+void			Graphic::callingAnimation()
+{
+	ui.callLabel->clear();
+	ui.callLabel->setMovie(_callWaitingAnimation);
+}
+
+void			Graphic::inCallAnimation()
+{
+	ui.callLabel->clear();
+	ui.callLabel->setMovie(_inCallAnimation);
+}
+
+void			Graphic::noAnimation()
+{
+	ui.callLabel->clear();
+}
+
+
+Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this), _deleteAccountWindow(this), _accountManagementWindow(this), _addFriendWindow(this), _confirmationMessage(QMessageBox::Information, "Delete contact", "dldo", QMessageBox::Yes|QMessageBox::No)
 {
 	ui.setupUi(this);
-
-	QPixmap					*tmp;
-	tmp = new QPixmap("./Img/Invisible.png");
-	ui.selectedFriendIconStatusLabel->setPixmap(*tmp);
-	
 	QTimer *timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
 	timer->start(1000);
-
 	_timeLabel = new QLabel(_time.currentTime().toString());
 	ui.statusBar->addPermanentWidget(_timeLabel);
-
-	//showTime();
-	
 	setWindowIcon(QIcon("./Img/logoBabel.png"));
-	QMovie *movie = new QMovie("./Img/appel_en_cours.gif", QByteArray(), this);
-	//QMovie *movie = new QMovie("./Img/en_communication.gif", QByteArray(), this);
-	ui.callLabel->setMovie(movie);
-	movie->start();
-	//ui.callLabel->setMovie(NULL);
+	_callWaitingAnimation = new QMovie("./Img/appel_en_cours.gif", QByteArray(), this);
+	_inCallAnimation = new QMovie("./Img/en_communication.gif", QByteArray(), this);
+	_inCallAnimation->start();
+	_callWaitingAnimation->start();
+	ui.callLabel->clear();
 }
 
 void					Graphic::on_call_request_success()
 {
 	qDebug() << "call request succes here mtf";
+	inCallAnimation();
 }
 
 void					Graphic::on_call_request_error()
 {
 	qDebug() << "call request error here mtf";
+	noAnimation();
 }
 
 

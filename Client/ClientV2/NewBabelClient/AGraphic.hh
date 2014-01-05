@@ -41,7 +41,7 @@ protected:
   
   // Calls
   Function<void (const request::Username &)>					_callHandler;
-  Function<void (const request::Username &)>					_hangupHandler;
+  Function<void ()>												_hangupHandler;
 
   // Chat
   Function<void (const request::Username &, const request::Message &)> _chatHandler;
@@ -49,6 +49,9 @@ protected:
   // Answering machine
   Function<void ()>												_setAnswerHandler;
   Function<void ()>												_unSetAnswerHandler;
+
+  // Other Events
+  Function<void ()>												_aboutToCloseHandler;
 
 public:
   // Connection
@@ -82,7 +85,7 @@ public:
 
   // Calls
   virtual void		setCallHandler(Function<void (const request::Username &)>);
-  virtual void		setHangUpHandler(Function<void (const request::Username &)>);
+  virtual void		setHangUpHandler(Function<void ()>);
 
   // Chat
   virtual void		setChatHandler(Function<void (const request::Username &, const request::Message &)>);
@@ -90,6 +93,9 @@ public:
   // Answering machine
   virtual void		setSetAnswerHandler(Function<void ()>);
   virtual void		setUnSetAnswerHandler(Function<void ()>);
+
+  // Other
+  virtual void		setAboutToCloseHandler(Function<void ()>);
 
 public:
   virtual void		init() = 0;

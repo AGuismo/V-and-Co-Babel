@@ -59,7 +59,7 @@ void		AGraphic::setCallHandler(Function<void (const request::Username &)> handle
 	_callHandler = handle;
 }
 
-void		AGraphic::setHangUpHandler(Function<void (const request::Username &)> handle)
+void		AGraphic::setHangUpHandler(Function<void ()> handle)
 {
 	_hangupHandler = handle;
 }
@@ -83,4 +83,9 @@ void		AGraphic::setSetAnswerHandler(Function<void ()> handle)
 void		AGraphic::setUnSetAnswerHandler(Function<void ()> handle)
 {
 	_unSetAnswerHandler = handle;
+}
+
+void		AGraphic::setAboutToCloseHandler(Function<void ()> handle)
+{
+	_aboutToCloseHandler = handle;
 }

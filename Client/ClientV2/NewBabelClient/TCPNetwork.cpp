@@ -6,9 +6,10 @@ TCPNetwork::TCPNetwork()
 
 }
 
-void  TCPNetwork::init()
+bool  TCPNetwork::init()
 {
   QObject::connect(&_sock, SIGNAL(readyRead()), this, SLOT(onRead()));
+  return (true);
 }
 
 void  TCPNetwork::run()

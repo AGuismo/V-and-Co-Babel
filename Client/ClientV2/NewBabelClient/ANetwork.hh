@@ -35,7 +35,7 @@ public:
   virtual void                  closeConnection() = 0;
 
 public:
-  virtual void			init() = 0;
+  virtual bool			init() = 0;
   virtual void			run() = 0;
 
 public:
