@@ -39,6 +39,7 @@ private:
   void	triggerTryDeleteAccount(const request::Username &, const request::PasswordType &);
   void	triggerTryChangeAccountPassword(const request::PasswordType &, const request::PasswordType &);
   void	triggerTryChangeAccountPrivacy(const request::Privacy &);
+  void	triggerAboutToClose();
 
   // Work needed here
   void	triggerStatusHandler(const request::Status &, const request::Message &);

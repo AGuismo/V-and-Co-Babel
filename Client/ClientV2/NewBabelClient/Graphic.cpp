@@ -308,6 +308,12 @@ void					Graphic::on_send_box_push_button_released()
 	ui.sendBoxTextEdit->clear();
 }
 
+void					Graphic::closeEvent(QCloseEvent *ev)
+{
+	qDebug("Close Event");
+	_aboutToCloseHandler();
+	QMainWindow::closeEvent(ev);
+}
 
 void					Graphic::on_call_friend_push_button_released()
 {
