@@ -412,7 +412,49 @@ namespace	request
       }
 
 
-    } // !server
+    } // !client
+
+    namespace server
+    {
+      Timeout::Timeout():
+	Call(request::server::call::TIMEOUT)
+      {
+      }
+
+      Timeout::~Timeout()
+      {
+      }
+
+      Timeout::Timeout(const Timeout &src) :
+	Call(request::server::call::TIMEOUT)
+      {
+	(void)src;
+      }
+
+      Timeout	&Timeout::operator=(const Timeout &src)
+      {
+	(void)src;
+	return (*this);
+      }
+
+      ARequest	*Timeout::clone() const
+      {
+	return (new Timeout(*this));
+      }
+
+      Protocol		&Timeout::serialize(Protocol &rhs) const
+      {
+	Call::serialize(rhs);
+	return (rhs);
+      }
+
+      Protocol	&Timeout::unserialize(Protocol &rhs)
+      {
+	Call::unserialize(rhs);
+	return (rhs);
+      }
+
+    } //!server
 
   } // !call
 

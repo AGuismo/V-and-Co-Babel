@@ -75,6 +75,7 @@ void	Friends::request(const std::list<IClient::Pointer> &clients, IClient::Point
     }
   if (sender->Authenticated() &&
       sender->Username() == origin->from &&
+      sender->Username() != origin->to &&
       !_db.bothFriend(origin->to, origin->from))
     {
 #if defined(DEBUG)

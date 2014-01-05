@@ -74,6 +74,10 @@ public:
   { return (InfosClient._privacy); };
   void				privacy(request::Privacy privacy)
   { InfosClient._privacy = privacy; };
+  const request::Username		&Caller()
+  { return (InfosClient._caller); };
+  void				Caller(const request::Username &caller)
+  { InfosClient._caller = caller; };
   request::Status		status() const
   { return (InfosClient._status); };
   void				status(request::Status status)
@@ -124,6 +128,7 @@ public:
     request::Status		_status;
     request::StatusDetail	_statusDetail;
     request::Stream		_autoAnswer;
+    request::Username		_caller;
   }				InfosClient;
 };
 #endif /* CLIENT_H_ */

@@ -31,6 +31,8 @@ public:
   virtual void				Authenticated(bool) = 0;
   virtual bool				Communication() const = 0;
   virtual void				Communication(bool) = 0;
+  virtual const request::Username	&Caller() = 0;
+  virtual void				Caller(const request::Username &) = 0;
   virtual request::Privacy		privacy() const = 0;
   virtual void				privacy(request::Privacy) = 0;
   virtual request::Status		status() const = 0;

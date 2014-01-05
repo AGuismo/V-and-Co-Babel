@@ -90,6 +90,7 @@ void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sen
 
   if (sender->Authenticated() &&
       sender->status() == request::User::Status::CONNECTED &&
+      sender->Communication() == false &&
       _db.clientExist(origin->_from) &&
       _db.clientExist(origin->_to))
     {
@@ -111,8 +112,13 @@ void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sen
 
 	      if (receiver->Authenticated() &&
 		  receiver->status() == request::User::Status::CONNECTED &&
+		  receiver->Communication() == false &&
 		  verifCall(sender, receiver, friends, clients))
-		receiver->serialize_data(fwd);
+		{
+		  sender->Communication(true);
+		  receiver->serialize_data(fwd);
+		  sender->serialize_data(request::server::Ok());
+		}
 	      else
 		sender->serialize_data(request::server::Forbidden());
 	      return ;
@@ -148,10 +154,11 @@ void	Call::accept(const std::list<IClient::Pointer> &clients, IClient::Pointer s
 	  if (receiver->Authenticated() &&
 	      receiver->status() == request::User::Status::CONNECTED)
 	    {
-	      receiver->status(request::User::Status::OCCUPIED);
-	      sender->status(request::User::Status::OCCUPIED);
+	      sender->Communication(true);
 	      sender->serialize_data(request::server::Ok());
 	      receiver->serialize_data(fwd);
+	      receiver->Caller(sender->Username());
+	      sender->Caller(receiver->Username());
 	    }
 	  else
 	    sender->serialize_data(request::server::Forbidden());
@@ -185,6 +192,7 @@ void	Call::refuse(const std::list<IClient::Pointer> &clients, IClient::Pointer s
 	  if (receiver->Authenticated() &&
 	      receiver->status() == request::User::Status::CONNECTED)
 	    {
+	      receiver->Communication(false);
 	      receiver->serialize_data(*origin);
 	      sender->serialize_data(request::server::Ok());
 	    }
@@ -201,10 +209,6 @@ void	Call::hangup(const std::list<IClient::Pointer> &clients, IClient::Pointer s
   const request::call::client::HangupClient	*origin = dynamic_cast<const request::call::client::HangupClient *>(req);
   IClient::Pointer				receiver;
 
-  std::cout << "Call::Hangup()" << std::endl;
-  std::cout << "From : " << origin->_from << std::endl;
-  std::cout << "To : " << origin->_to << std::endl;
-
   if (sender->Authenticated() &&
       _db.clientExist(origin->_from) &&
       _db.clientExist(origin->_to))
@@ -219,9 +223,12 @@ void	Call::hangup(const std::list<IClient::Pointer> &clients, IClient::Pointer s
 #endif
 	  if (receiver->Authenticated())
 	    {
-	      receiver->status(request::User::Status::CONNECTED);
-	      sender->status(request::User::Status::CONNECTED);
+	      sender->Communication(false);
+	      receiver->Communication(false);
 	      receiver->serialize_data(*origin);
+	      sender->serialize_data(request::server::Ok());
+	      receiver->Caller("");
+	      sender->Caller("");
 	    }
 	  else
 	    sender->serialize_data(request::server::Forbidden());
