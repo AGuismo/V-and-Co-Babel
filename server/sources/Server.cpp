@@ -109,7 +109,12 @@ void		Server::clientAboutToClose(IClient::Pointer &client)
 	   it != friends.end(); ++it)
 	{
 	  if ((*itClient)->Username() == client->Caller())
-	    (*itClient)->serialize_data(request::call::server::Timeout());
+	    {
+#if defined(DEBUG)
+	      std::cout << "Timeout send to : [" << (*itClient)->Username() << "]" << std::endl;
+#endif
+	      (*itClient)->serialize_data(request::call::server::Timeout());
+	    }
 	  if ((*itClient)->Username() == *it && (*itClient)->Authenticated())
 	    {
 	      (*itClient)->serialize_data(request::friends::server::Update(request::User::Status::DISCONNECTED, std::string(), client->Username()));
