@@ -107,7 +107,7 @@ int						PAudioBuffer::recordCallBack(const void *inputBuff,
 		  {
 			  if (!CHECK_CIRCULAR_IN(data))
 				  data->fWrIn = 0;
-			  writePtr[data->fWrIn++] = *(readPtr++);
+			  writePtr[data->fWrIn++] = SAMPLE_SILENCE;
 		  }
 		  i++;
 	  }
@@ -119,12 +119,12 @@ int						PAudioBuffer::recordCallBack(const void *inputBuff,
 	  {
 		  if (!CHECK_CIRCULAR_IN(data))
 			  data->fWrIn = 0;
-		  writePtr[data->fWrIn++] = (*readPtr++);
+		  writePtr[data->fWrIn++] = *readPtr++;
 		  if (NUM_CHANNELS == 2 && CHECK_CIRCULAR_IN(data))
 		  {
 			  if (!CHECK_CIRCULAR_IN(data))
 				  data->fWrIn = 0;
-			  writePtr[data->fWrIn++] = *(readPtr++);
+			  writePtr[data->fWrIn++] = *readPtr++;
 		  }
 		  i++;
 	  }
