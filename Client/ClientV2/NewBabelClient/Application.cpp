@@ -476,6 +476,8 @@ void	Application::triggerAddFriendHandler(const request::Username &newFriend)
 
 void	Application::triggerCallHandler(const request::Username &friendName)
 {
+	if (_inCommunication)
+		return ;
 	if (!init_UDP())
 		_graphic.on_call_request_error();
 	else

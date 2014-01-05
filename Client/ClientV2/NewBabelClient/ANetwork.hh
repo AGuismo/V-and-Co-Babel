@@ -23,11 +23,13 @@ protected:
   Function<void ()>				_onConnectHandler;
   Function<void (enum ANetwork::SocketState)>	_onErrorHandler;
   Function<void (const ByteArray)>		_onAvailableData;
+  Function<void ()>				_aboutToCloseHandler;
 
 public:
   virtual void			setOnConnectHandler(Function<void ()>);
   virtual void			setErrorHandler(Function<void (enum ANetwork::SocketState)>);
   virtual void			setAvailableData(Function<void (const ByteArray)>);
+  virtual void			setAboutToCloseHandler(Function<void ()>);
 
 public:
   virtual void					tryConnect(unsigned short port, const std::string &ipAddress) = 0;

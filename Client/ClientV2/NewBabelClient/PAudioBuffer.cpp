@@ -58,7 +58,7 @@ void			PAudioBuffer::sendToNetwork()
       encodedSize = 0;
 //    compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE, encodedSize);
 	  chunk = _bridge.popUnused();
-	  chunk->assign(_frameBuff, (FRAME_PACKET_SIZE * sizeof(float)));
+	  chunk->assign(_frameBuff, (FRAME_PACKET_SIZE * sizeof(SAMPLE)));
 //    chunk.assign(compressed, encodedSize);
 //      qDebug() << QThread::currentThreadId() << "Sending packet";
       _bridge.inputPush(chunk);

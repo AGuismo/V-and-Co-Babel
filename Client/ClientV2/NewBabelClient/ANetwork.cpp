@@ -23,3 +23,8 @@ void  ANetwork::setAvailableData(Function<void (const ByteArray)> handler)
 {
   _onAvailableData = handler;
 }
+
+void	ANetwork::setAboutToCloseHandler(Function<void ()> handler)
+{
+	_aboutToCloseHandler = handler;
+}
