@@ -9,7 +9,7 @@
 # include		<fstream>
 
 #define			CHECK_CIRCULAR_IN(data)		((data->fWrIn < data->fMaxIn) ? (true) : (false))
-#define			CHECK_CIRCULAR_OUT(data)	((data->fWrOut < data->fMaxOut) ? (true) : (false))
+#define			CHECK_CIRCULAR_OUT(data)	((data->fRdOut < data->fMaxOut) ? (true) : (false))
 
 class			PAudioBuffer
 {

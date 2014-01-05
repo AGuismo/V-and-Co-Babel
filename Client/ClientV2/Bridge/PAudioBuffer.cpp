@@ -107,7 +107,7 @@ int						PAudioBuffer::recordCallBack(const void *inputBuff,
 		  {
 			  if (!CHECK_CIRCULAR_IN(data))
 				  data->fWrIn = 0;
-			  writePtr[data->fWrIn++] = *(readPtr++);
+			  writePtr[data->fWrIn++] = SAMPLE_SILENCE;
 		  }
 		  i++;
 	  }
@@ -119,12 +119,12 @@ int						PAudioBuffer::recordCallBack(const void *inputBuff,
 	  {
 		  if (!CHECK_CIRCULAR_IN(data))
 			  data->fWrIn = 0;
-		  writePtr[data->fWrIn++] = (*readPtr++);
+		  writePtr[data->fWrIn++] = *readPtr++;
 		  if (NUM_CHANNELS == 2 && CHECK_CIRCULAR_IN(data))
 		  {
 			  if (!CHECK_CIRCULAR_IN(data))
 				  data->fWrIn = 0;
-			  writePtr[data->fWrIn++] = *(readPtr++);
+			  writePtr[data->fWrIn++] = *readPtr++;
 		  }
 		  i++;
 	  }
@@ -140,19 +140,52 @@ int				PAudioBuffer::playCallBack(const void *inputBuff, void *outputBuff,
   SAMPLE			*readPtr = data->output;
   SAMPLE			*writePtr = (SAMPLE *)(outputBuff);
   unsigned long		i = 0;
+  unsigned long		framesLeft;
 
   (void)inputBuff;
   (void)timeInfo;
   (void)statusFlags;
   (void)userData;
 
-  while ((ABS(data->fRdOut - data->fWrOut) > 0) && (i < framesPerBuff))
+  framesLeft = ((ABS(data->fRdOut - data->fWrOut)) / NUM_CHANNELS);
+  if (framesLeft < framesPerBuff)
   {
-	  writePtr[i++] = readPtr[data->fRdOut++];
-	  if (data->fRdOut >= data->fMaxOut)
-	    data->fRdOut = 0;
-	  if (data->fWrOut >= data->fMaxOut)
-	    data->fWrOut = 0;
+	  while (i < framesLeft)
+	  {
+		  if (!CHECK_CIRCULAR_OUT(data))
+			  data->fRdOut = 0;
+		  *writePtr++ = readPtr[data->fRdOut++];
+		  if (NUM_CHANNELS == 2)
+		  {
+			  if (!CHECK_CIRCULAR_OUT(data))
+				  data->fRdOut = 0;
+			  *writePtr++ = readPtr[data->fRdOut++];
+		  }
+		  i++;
+	  }
+	  while (i < framesPerBuff)
+	  {
+		  *writePtr++ = SAMPLE_SILENCE;
+		  if (NUM_CHANNELS == 2)
+			  *writePtr++ = SAMPLE_SILENCE;
+		  i++;
+	  }
+  }
+  else
+  {
+	  while (i < framesPerBuff)
+	  {
+		  if (!CHECK_CIRCULAR_OUT(data))
+			  data->fRdOut = 0;
+		  *writePtr++ = readPtr[data->fRdOut++];
+		  if (NUM_CHANNELS == 2)
+		  {
+			  if (!CHECK_CIRCULAR_OUT(data))
+				  data->fRdOut = 0;
+			  *writePtr++ = readPtr[data->fRdOut++];
+		  }
+		  i++;
+	  }
   }
   return (paContinue);
 }

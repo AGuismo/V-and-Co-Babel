@@ -2,7 +2,7 @@
 # define		 AUDIOPARAMS_H
 
 # define		ABS(value)			((value < 0) ? (- (value)) : (value))
-# define		SAMPLE_RATE			(24000)
+# define		SAMPLE_RATE			(48000)
 # define		CBUFF_SIZE			(65536)
 # define		FRAME_PACKET_SIZE	(4096)
 # define		FRAMES_PER_BUFFER	(480)
