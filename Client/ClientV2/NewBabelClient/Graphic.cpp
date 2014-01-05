@@ -306,9 +306,7 @@ void					Graphic::on_delete_friend_triggered()
 void					Graphic::on_send_box_push_button_released()
 {
 	qDebug() << "sending here mtfk !" << ui.sendBoxTextEdit->text(); // warning pseudo
-	
-	if (ui.friendListWidget->currentItem() != NULL)
-		_chatHandler(ui.friendListWidget->currentItem()->text().toStdString(), ui.sendBoxTextEdit->text().toStdString());
+	_chatHandler(Env::getInstance().selectedFriend.name, ui.sendBoxTextEdit->text().toStdString());
 	ui.sendBoxTextEdit->clear();
 }
 
@@ -400,8 +398,8 @@ void					Graphic::receiveFriendInformation(Friend *friendInfo)
 	if (friendInfo != NULL)
 	{
 
-	if (Env::getInstance().selectedFriend.name != friendInfo->name)
-		return;
+//	if (Env::getInstance().selectedFriend.name != friendInfo->name)
+//		return;
 
 		ui.selectedFriendNameLabel->setText(QString(friendInfo->name.c_str()));
 		ui.selectedFriendPersonalMsgLabel->setText(QString(friendInfo->personalMsg.c_str()));
