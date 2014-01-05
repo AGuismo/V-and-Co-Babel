@@ -400,7 +400,7 @@ void					Graphic::receiveFriendInformation(Friend *friendInfo)
 
 //	if (Env::getInstance().selectedFriend.name != friendInfo->name)
 //		return;
-
+		qDebug() << "receive info HERE";
 		ui.selectedFriendNameLabel->setText(QString(friendInfo->name.c_str()));
 		ui.selectedFriendPersonalMsgLabel->setText(QString(friendInfo->personalMsg.c_str()));
 		ui.friendMsgBox->clear();

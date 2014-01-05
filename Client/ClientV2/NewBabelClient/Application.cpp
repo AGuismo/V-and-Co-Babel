@@ -139,7 +139,7 @@ void		Application::update_friend_handler(const ARequest &req)
 {
 	_friendList.insertFriend(dynamic_cast<const request::friends::server::Update &>(req).username,  dynamic_cast<const request::friends::server::Update &>(req).detail, (Status)dynamic_cast<const request::friends::server::Update &>(req).status);
 	_graphic.updateFriendList(_friendList.getFriendList());
-	if (dynamic_cast<const request::friends::server::Update &>(req).username == Env::getInstance().selectedFriend.name)
+//	if (dynamic_cast<const request::friends::server::Update &>(req).username == Env::getInstance().selectedFriend.name)
 		_graphic.receiveFriendInformation(_friendList.getFriend(dynamic_cast<const request::friends::server::Update &>(req).username));
 
 }
@@ -150,7 +150,7 @@ void		Application::get_msg_handler(const ARequest &req)
 	std::string			msg(dynamic_cast<const request::chat::client::Message &>(req).msg);
 
 	_friendList.insertIncomingMsg(friendName, msg);
-	if (friendName == Env::getInstance().selectedFriend.name)
+//	if (friendName == Env::getInstance().selectedFriend.name)
 		_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
 }
 

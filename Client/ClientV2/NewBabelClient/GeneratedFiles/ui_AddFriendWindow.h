@@ -76,6 +76,7 @@ public:
         font1.setBold(true);
         font1.setWeight(75);
         serverResponseLabel->setFont(font1);
+        serverResponseLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
 
         gridLayout->addWidget(serverResponseLabel, 2, 0, 1, 1);
 
