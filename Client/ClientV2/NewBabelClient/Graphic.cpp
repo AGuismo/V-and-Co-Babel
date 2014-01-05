@@ -6,6 +6,7 @@
 #include				<QSplashScreen>
 #include				<QDebug> // à virer
 
+//ui.friendMsgBox->clear()
 
 void					Graphic::init()
 {
@@ -398,6 +399,10 @@ void					Graphic::receiveFriendInformation(Friend *friendInfo)
 {
 	if (friendInfo != NULL)
 	{
+
+	if (Env::getInstance().selectedFriend.name != friendInfo->name)
+		return;
+
 		ui.selectedFriendNameLabel->setText(QString(friendInfo->name.c_str()));
 		ui.selectedFriendPersonalMsgLabel->setText(QString(friendInfo->personalMsg.c_str()));
 		ui.friendMsgBox->clear();

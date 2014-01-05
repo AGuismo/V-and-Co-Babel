@@ -147,13 +147,10 @@ void		Application::update_friend_handler(const ARequest &req)
 void		Application::get_msg_handler(const ARequest &req)
 {
 	std::string			friendName(dynamic_cast<const request::chat::client::Message &>(req).from);
+	std::string			msg(dynamic_cast<const request::chat::client::Message &>(req).msg);
 
-	_friendList.insertIncomingMsg(friendName, dynamic_cast<const request::chat::client::Message &>(req).msg);
-
-	if (Env::getInstance().selectedFriend.name == dynamic_cast<const request::chat::client::Message &>(req).from)
-	{
-		_graphic.receiveFriendInformation(_friendList.getFriend(dynamic_cast<const request::chat::client::Message &>(req).from));
-	}
+	_friendList.insertIncomingMsg(friendName, msg);
+	_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
 }
 
 void		Application::handle_udp_input_read()
