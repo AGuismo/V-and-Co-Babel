@@ -37,6 +37,9 @@ private:
 	QMovie					*_inCallAnimation;
 	QMovie					*_callWaitingAnimation;
 
+private:
+	void			closeEvent(QCloseEvent *);
+
 public slots:
 	void			on_connect_window_triggered();
 	void			on_login_window_triggered();
