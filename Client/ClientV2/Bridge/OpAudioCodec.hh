@@ -15,14 +15,13 @@ private:
   OpusDecoder			*_decoder;
   unsigned char			*_encodeBuff;
   SAMPLE				*_decodeBuff;
-  opus_int32			_encodedSize;
 
 public:
   virtual bool			init();
   virtual bool			stop();
-  virtual int			getEncodedSize() const;
-  virtual unsigned char	*encode(SAMPLE *frame, unsigned int frameSize);
-  virtual SAMPLE		*decode(const unsigned char *compressed, unsigned int frameSize);
+  virtual unsigned int	encode(SAMPLE *in, unsigned int inSize, unsigned char *out, unsigned int outSize);
+  virtual unsigned int	decode(const unsigned char *in, unsigned int inSize, SAMPLE *out, unsigned int outSize);
+  bool					printOpusError(int error) const;
 
 public:
   OpAudioCodec();

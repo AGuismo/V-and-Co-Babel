@@ -3,50 +3,80 @@
 
 // Codec
 
-unsigned char	*OpAudioCodec::encode(SAMPLE *frame, unsigned int frameSize)
+unsigned int	OpAudioCodec::encode(SAMPLE *in, unsigned int inSize, unsigned char *out, unsigned int outSize)
 {
-	unsigned char *compressed = new (unsigned char[_encodedSize]);
+	int			numBytes;
 
-  opus_encode(_encoder, frame, frameSize, compressed, _encodedSize);
-  return (compressed);
+	numBytes = opus_encode(_encoder, in, inSize, out, outSize);
+	if (numBytes < 0)
+		printOpusError(numBytes);
+	return (numBytes);
 }
 
-SAMPLE			*OpAudioCodec::decode(const unsigned char *compressed, unsigned int frameSize)
+unsigned int	OpAudioCodec::decode(const unsigned char *in, unsigned int inSize, SAMPLE *out, unsigned int outSize)
 {
-	SAMPLE		*frame = new (SAMPLE[frameSize * NUM_CHANNELS]);
+	int			numSamples;
 
-  opus_packet_get_nb_channels(compressed);
-  opus_decode(_decoder, compressed, _encodedSize, frame, frameSize, 0);
-  return (frame);
+	numSamples = opus_decode(_decoder, in, inSize, out, outSize, 0);
+	if (numSamples < 0)
+		printOpusError(numSamples);
+	return (numSamples);
 }
 
 // Methods
 
-int			OpAudioCodec::getEncodedSize() const
+bool			OpAudioCodec::printOpusError(int error) const
 {
-	return (_encodedSize);
+  if (error == OPUS_OK)
+    return (false);
+
+  switch (error)
+    {
+    case OPUS_BAD_ARG:
+		qDebug() << "One or more invalid/out of range arguments.";
+		break;
+    case OPUS_BUFFER_TOO_SMALL:
+		qDebug() << "The mode struct passed is invalid.";
+		break;
+    case OPUS_INTERNAL_ERROR:
+		qDebug() << "An internal error was detected.";
+		break;
+    case OPUS_INVALID_PACKET:
+		qDebug() << "The compressed data passed is corrupted.";
+		break;
+    case OPUS_UNIMPLEMENTED:
+		qDebug() << "Invalid/unsupported request number.";
+		break;
+    case OPUS_INVALID_STATE:
+		qDebug() << "An encoder or decoder structure is invalid or already freed";
+		break;
+    case OPUS_ALLOC_FAIL:
+		qDebug() << "Memory allocation has failed";
+		break;
+    default:
+      return (false);
+    }
+  return (true);
 }
 
 bool		OpAudioCodec::init()
 {
-  opus_int32	rate;
-  int		error;
-
-  _encoder = 0;
-  _decoder = 0;
+  int			error;
 
   _encoder = opus_encoder_create(SAMPLE_RATE, NUM_CHANNELS, OPUS_APPLICATION_VOIP, &error);
-  _decoder = opus_decoder_create(SAMPLE_RATE, NUM_CHANNELS, &error);
-
-  if (_encoder == 0 || _decoder == 0)
+  if (error < 0)
   {
-	  qDebug() << "ERROR : ENCODER/DECODER FAILED";
+	  qDebug() << "ERROR : ENCODER ERROR";
 	  return (false);
   }
-  opus_encoder_ctl(_encoder, OPUS_GET_BANDWIDTH(&rate));
-  _encodedSize = rate;
-  _encodeBuff = new unsigned char[_encodedSize];
-  _decodeBuff = new SAMPLE[FRAME_PACKET_SIZE];
+  _decoder = opus_decoder_create(SAMPLE_RATE, NUM_CHANNELS, &error);
+
+  if (error < 0)
+  {
+	  qDebug() << "ERROR : DECODER ERROR";
+	  return (false);
+  }
+  opus_encoder_ctl(_encoder, OPUS_SET_BITRATE(BITRATE));
   return (true);
 }
 
@@ -62,7 +92,7 @@ bool		OpAudioCodec::stop()
 // Constructor / Destructor
 
 OpAudioCodec::OpAudioCodec() :
-  _encoder(0), _decoder(0), _encodeBuff(0), _decodeBuff(0), _encodedSize(0)
+  _encoder(0), _decoder(0)
 {
 }
 

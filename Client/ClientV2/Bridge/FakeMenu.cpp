@@ -87,27 +87,43 @@ void		FakeMenu::readPendingDatagrams()
 
 void				FakeMenu::handleOutputWrite(const QByteArray &bytes)
 {
-	SAMPLE					*decoded;
+	SAMPLE					decoded[MAX_FRAME_SIZE];
 	AudioChunk				*chunk = _bridge.popUnused();
+	unsigned int			numSamples;
 	std::ostringstream		ss;
 
-	decoded = _codec->decode(reinterpret_cast<const unsigned char *>(bytes.data()), bytes.size());
-	chunk->assign(decoded, FRAME_PACKET_SIZE);
+	chunk->clean();
+//	chunk->assign(reinterpret_cast<const SAMPLE *>(bytes.data()), (bytes.size() / sizeof(SAMPLE)));
+	numSamples = _codec->decode(reinterpret_cast<const unsigned char *>(bytes.data()), bytes.size(), decoded, sizeof(decoded));
+	chunk->assign(decoded, numSamples);
 	_bridge.outputPush(chunk);
 }
 
 void				FakeMenu::handleInputRead()
 {
   AudioChunk		*chunk;
-  unsigned char		*str;
-  QMutexLocker			_locker(&_sockLocker);
+  unsigned char		str[MAX_PACKET_SIZE];
+  SAMPLE			sample[MAX_FRAME_SIZE];
+  int				numBytes;
+  int				numSamples;
+  QMutexLocker		_locker(&_sockLocker);
 
   qDebug() << QThread::currentThreadId() << "HandleInputRead";
   if (!_sock)
     return ;
   chunk = _bridge.inputPop();
-  str = _codec->encode(chunk->getContent(), FRAME_PACKET_SIZE);
-  QByteArray			bytes(reinterpret_cast<char *>(str), _codec->getEncodedSize());
+
+//  memset(str, 0, MAX_PACKET_SIZE);
+//  memset(sample, 0, MAX_FRAME_SIZE);
+//  qDebug() << QThread::currentThreadId() << "Size Before" << chunk->size();
+  numBytes = _codec->encode(chunk->getContent(), FRAMES_PER_BUFFER, str, sizeof(str));
+//  numSamples = _codec->decode(str, numBytes, sample, MAX_FRAME_SIZE);
+//  chunk->clean();
+//  chunk->assign(sample, numSamples);
+//  qDebug() << QThread::currentThreadId() << "Size After" << chunk->size();
+
+  QByteArray			bytes(reinterpret_cast<char *>(str), numBytes);
+//  QByteArray			bytes(reinterpret_cast<char *>(chunk->getContent()), (chunk->size() * sizeof(SAMPLE)));
   qDebug() << QThread::currentThreadId() << "Write " << bytes.size() << "octets";
   _sock->writeDatagram(bytes, QHostAddress(_clientIP), _clientPort);
   _bridge.pushUnused(chunk);

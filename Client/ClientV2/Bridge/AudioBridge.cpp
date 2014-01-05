@@ -5,7 +5,7 @@ AudioBridge::AudioBridge(std::size_t capacity) :
 	ABridge<input, output>(capacity)
 {
 	for (std::size_t it = 0; it < (capacity * 2); ++it)
-		_unused.push(new AudioChunk(FRAME_PACKET_SIZE));
+		_unused.push(new AudioChunk(MAX_FRAME_SIZE));
 }
 
 AudioBridge::~AudioBridge()
