@@ -18,13 +18,13 @@ public:
   void			inputRead(input_buffer &, std::size_t, bool blocking = true);
   void			inputWrite(const input_buffer &);
   void			inputPush(input &);
-  input			&inputPop();
+  input			inputPop();
   void			inputReady();
 
   void			outputRead(output_buffer &, std::size_t size, bool blocking = true);
   void			outputWrite(const output_buffer &);
   void			outputPush(input &);
-  output		&outputPop();
+  output		outputPop();
   void			outputReady();
 
   void			pushUnused(AudioChunk *);

@@ -1,4 +1,5 @@
 #include		"AudioChunk.hh"
+#include		"AudioParams.hh"
 
 // Methods
 
@@ -12,7 +13,7 @@ unsigned int			AudioChunk::size() const
 	return (_size);
 }
 
-unsigned char			*AudioChunk::getContent() const
+SAMPLE					*AudioChunk::getContent() const
 {
 	return (_content);
 }
@@ -22,7 +23,7 @@ void					AudioChunk::clean()
 	_size = 0;
 }
 
-void					AudioChunk::assign(const unsigned char *str, unsigned int size)
+void					AudioChunk::assign(const SAMPLE *str, unsigned int size)
 {
 	if (size > _capacity)
 		_size = _capacity;
@@ -34,9 +35,9 @@ void					AudioChunk::assign(const unsigned char *str, unsigned int size)
 // Constructor & Destructor
 
 AudioChunk::AudioChunk(std::size_t capacity) :
-	_content(NULL)
+	_content(NULL), _capacity(capacity)
 {
-	_content = new unsigned char[capacity];
+	_content = new SAMPLE[capacity];
 }
 
 AudioChunk::~AudioChunk()

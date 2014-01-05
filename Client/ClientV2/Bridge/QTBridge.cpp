@@ -53,7 +53,7 @@ void  Bridge::inputPush(input &buff)
   AudioBridge::inputPush(buff);
 }
 
-Bridge::input	&Bridge::inputPop()
+Bridge::input	Bridge::inputPop()
 {
   QMutexLocker  lock(&_inputLock);
 
@@ -80,7 +80,7 @@ void  Bridge::outputWrite(const output_buffer &buff)
   AudioBridge::outputWrite(buff);
 }
 
-Bridge::output	&Bridge::outputPop()
+Bridge::output	Bridge::outputPop()
 {
   QMutexLocker  lock(&_outputLock);
 

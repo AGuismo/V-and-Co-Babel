@@ -21,13 +21,13 @@ public:
   virtual void			inputRead(input_buffer &, std::size_t, bool blocking = true);
   virtual void			inputWrite(const input_buffer &);
   virtual void			inputPush(input &);
-  virtual input			&inputPop();
+  virtual input			inputPop();
   virtual bool			inputEmpty() const;
 
   virtual void			outputRead(output_buffer &, std::size_t size, bool blocking = true);
   virtual void			outputWrite(const output_buffer &);
   virtual void			outputPush(output &);
-  virtual output		&outputPop();
+  virtual output		outputPop();
   virtual bool			outputEmpty() const;
 
   virtual void			pushUnused(AudioChunk *);

@@ -2,11 +2,12 @@
 # define						 AUDIOCHUNK
 
 # include						<vector>
+# include						"AudioParams.hh"
 
 class							AudioChunk
 {
 private:
-	unsigned char				*_content;
+	SAMPLE						*_content;
 	unsigned int				_size;
 	unsigned int				_capacity;
 
@@ -14,8 +15,8 @@ public:
 	bool						empty() const;
 	void						clean();
 	unsigned int				size() const;
-	unsigned char				*getContent() const;
-	void						assign(const unsigned char *str, unsigned int size);
+	SAMPLE						*getContent() const;
+	void						assign(const SAMPLE *str, unsigned int size);
 
 	AudioChunk(std::size_t capacity);
 	~AudioChunk();

@@ -28,7 +28,7 @@ void  AudioBridge::inputPush(input &buff)
   ABridge<input, output>::inputPush(buff);
 }
 
-AudioBridge::input	&AudioBridge::inputPop()
+AudioBridge::input	AudioBridge::inputPop()
 {
 	return (ABridge<input, output>::inputPop());
 }
@@ -53,7 +53,7 @@ void  AudioBridge::outputPush(output &buff)
   ABridge<input, output>::outputPush(buff);
 }
 
-AudioBridge::output	&AudioBridge::outputPop()
+AudioBridge::output	AudioBridge::outputPop()
 {
 	return (ABridge<input, output>::outputPop());
 }

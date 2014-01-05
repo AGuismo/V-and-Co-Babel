@@ -86,14 +86,14 @@ void				FakeMenu::handleOutputWrite(const QByteArray &bytes)
   AudioChunk				*chunk = _bridge.popUnused();
   std::ostringstream		ss;
 
-  chunk->assign(reinterpret_cast<const unsigned char*>(bytes.data()), bytes.size());
+  chunk->assign(reinterpret_cast<const SAMPLE *>(bytes.data()), (bytes.size() / sizeof(SAMPLE)));
   _bridge.outputPush(chunk);
 }
 
 void				FakeMenu::handleInputRead()
 {
   AudioChunk		*chunk;
-  unsigned char			*str;
+  SAMPLE			*str;
   QMutexLocker			_locker(&_sockLocker);
 
   qDebug() << QThread::currentThreadId() << "HandleInputRead";
@@ -101,7 +101,7 @@ void				FakeMenu::handleInputRead()
     return ;
   chunk = _bridge.inputPop();
   str = chunk->getContent();
-  QByteArray			bytes(reinterpret_cast<char *>(chunk->getContent()), chunk->size());
+  QByteArray			bytes(reinterpret_cast<char *>(chunk->getContent()), (chunk->size() * sizeof(SAMPLE)));
   qDebug() << QThread::currentThreadId() << "Write " << bytes.size() << "octets";
   _sock->writeDatagram(bytes, QHostAddress(_clientIP), _clientPort);
   _bridge.pushUnused(chunk);

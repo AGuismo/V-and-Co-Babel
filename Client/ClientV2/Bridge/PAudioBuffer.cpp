@@ -19,10 +19,8 @@ void			PAudioBuffer::feed()
 		return ;
 //	if (chunkList[0].size() == 0)
 //		return ;
-	if (chunk->empty())
-		return ;
 //	frames = _codec->decode(chunkList[0].getContent(), FRAME_PACKET_SIZE);
-	frames = reinterpret_cast<SAMPLE *>(chunk->getContent());
+	frames = chunk->getContent();
 	if (frames == NULL)
 		return ;
 	i = 0;
@@ -34,6 +32,7 @@ void			PAudioBuffer::feed()
 //		if (fWrOut == fRdOut)
 //			return ;
 	}
+	_bridge.pushUnused(chunk);
 }
 
 void			PAudioBuffer::sendToNetwork()
@@ -59,7 +58,7 @@ void			PAudioBuffer::sendToNetwork()
       encodedSize = 0;
 //    compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE, encodedSize);
 	  chunk = _bridge.popUnused();
-	  chunk->assign(reinterpret_cast<unsigned char *>(_frameBuff), (FRAME_PACKET_SIZE * sizeof(float)));
+	  chunk->assign(_frameBuff, (FRAME_PACKET_SIZE * sizeof(float)));
 //    chunk.assign(compressed, encodedSize);
 //      qDebug() << QThread::currentThreadId() << "Sending packet";
       _bridge.inputPush(chunk);
@@ -73,6 +72,8 @@ int				PAudioBuffer::streamCallBack(const void *inputBuff, void *outputBuff,
 	PAudioBuffer	*data = (PAudioBuffer *)(userData);
 
 	data->recordCallBack(inputBuff, outputBuff, framesPerBuff, timeInfo, statusFlags, userData);
+	data->sendToNetwork();
+	data->feed();
 	data->playCallBack(inputBuff, outputBuff, framesPerBuff, timeInfo, statusFlags, userData);
 	return (paContinue);
 }
@@ -128,7 +129,6 @@ int						PAudioBuffer::recordCallBack(const void *inputBuff,
 		  i++;
 	  }
   }
-  data->sendToNetwork();
   return (paContinue);
 }
 
@@ -154,7 +154,6 @@ int				PAudioBuffer::playCallBack(const void *inputBuff, void *outputBuff,
 	  if (data->fWrOut >= data->fMaxOut)
 	    data->fWrOut = 0;
   }
-  data->feed();
   return (paContinue);
 }
 

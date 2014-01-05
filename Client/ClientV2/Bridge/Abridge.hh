@@ -19,14 +19,14 @@ public:
   virtual void    inputRead(input_buffer &, std::size_t, bool blocking = true);
   virtual void    inputWrite(const input_buffer &);
   virtual void    inputPush(T &);
-  virtual T		  &inputPop();
+  virtual T		  inputPop();
   virtual bool    inputEmpty() const;
   virtual void    inputReady() = 0;
 
   virtual void    outputRead(output_buffer &, std::size_t, bool blocking = true);
   virtual void    outputWrite(const output_buffer &);
   virtual void    outputPush(U &);
-  virtual U		  &outputPop();
+  virtual U		  outputPop();
   virtual bool    outputEmpty() const;
   virtual void    outputReady() = 0;
 
@@ -38,11 +38,14 @@ private:
 template <typename T, typename U>
 ABridge<T, U>::ABridge(std::size_t capacity)
 {
+	(void)(capacity);
+/*
 	if (capacity != 0)
 	{
 		_input.resize(capacity);
 		_output.resize(capacity);
 	}
+	*/
 }
 
 template <typename T, typename U>
@@ -72,8 +75,11 @@ void  ABridge<T, U>::inputPush(T &buff)
 }
 
 template <typename T, typename U>
-T  &ABridge<T, U>::inputPop()
+T  ABridge<T, U>::inputPop()
 {
+	if (_input.empty())
+		return (0);
+
 	U	&dat = _input.front();
 
 	_input.pop_front();
@@ -113,8 +119,11 @@ void  ABridge<T, U>::outputPush(U &buff)
 }
 
 template <typename T, typename U>
-U  &ABridge<T, U>::outputPop()
+U  ABridge<T, U>::outputPop()
 {
+	if (_output.empty())
+		return (0);
+
 	U	&dat = _output.front();
 
 	_output.pop_front();
