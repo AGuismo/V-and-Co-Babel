@@ -1,4 +1,4 @@
-#include	"Application.hh"
+#include	"Application.h"
 #include	"Function.hpp"
 #include	"AuthRequest.hh"
 #include	"PersoRequest.hh"
@@ -7,11 +7,11 @@
 #include	"FriendRequest.hh"
 #include	"Protocol.hpp"
 #include	"Env.hh"
-
+#include	<QObject>
 #include	<QDebug>
 
 Application::Application(int ac, char *av[]):
-  _ac(ac), _app(_ac, av), _bridge(150), _audioStarter(_bridge)
+  _ac(ac), _app(_ac, av), _bridge(150), _audioStarter(_bridge), _inCommunication(false)
 {
   _requestActions[request::server::perso::PING] = callback_handler(&Application::ping_handler, this);
   _requestActions[request::server::friends::UPDATE] = callback_handler(&Application::update_friend_handler, this);
@@ -22,7 +22,117 @@ Application::Application(int ac, char *av[]):
 
 	_requestActions[request::client::call::ACCEPT] = callback_handler(&Application::get_call_accept_handler, this);
 	_requestActions[request::client::call::REFUSE] = callback_handler(&Application::get_call_refuse_handler, this);
+	_requestActions[request::client::call::HANG_UP] = callback_handler(&Application::get_call_hang_up_handler, this);
+	_requestActions[request::server::call::TIMEOUT] = callback_handler(&Application::get_call_timeout_handler, this);
+
+	QObject::connect(&_graphic, SIGNAL(destroyed()), &_audioStarter, SLOT(stop()));
+	QObject::connect(&_udpNetwork, SIGNAL(serverStarted()), &_audioStarter, SLOT(run()));
+	QObject::connect(&_udpNetwork, SIGNAL(serverStopped()), &_audioStarter, SLOT(stop()));
 }
+
+Application::~Application()
+{
+}
+
+void  Application::init()
+{
+	_tcpNetwork.init();
+	_graphic.init();
+	_tcpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Graphic::on_connection_error, &_graphic));
+	_tcpNetwork.setOnConnectHandler(Function<void ()>(&Graphic::on_connection_success, &_graphic));
+	_tcpNetwork.setAvailableData(Function<void (const ANetwork::ByteArray)>(&Application::triggerAvailableData, this));
+	_udpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Application::triggerUdpError, this));
+	_udpNetwork.setAvailableData(Function<void (const ANetwork::ByteArray)>(&Application::triggerUdpDataAvailable, this));
+	_graphic.setTryConnectHandler(Function<void (unsigned short, const std::string &)>(&TCPNetwork::tryConnect, &_tcpNetwork));
+	_graphic.setTryAuthentificationHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryLogin, this));
+	_graphic.setTryCreateAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryCreateAccount, this));
+	_graphic.setTryChangeAccountPasswordHandler(Function<void (const request::PasswordType &, const request::PasswordType &)>(&Application::triggerTryChangeAccountPassword, this));
+	_graphic.setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)>(&Application::triggerTryChangeAccountPrivacy, this));
+	_graphic.setTryDeleteAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryDeleteAccount, this));
+	_graphic.setDesAuthentificationHandler(Function<void ()>(&Application::triggerDesAuthentification, this));
+
+  // Here we go !
+	_graphic.setStatusHandler(Function<void (const request::Status &, const request::Message &)>(&Application::triggerStatusHandler, this));	
+	_graphic.setAddFriendHandler(Function<void (const request::Username &)>(&Application::triggerAddFriendHandler, this));
+	_graphic.setDelFriendHandler(Function<void (const request::Username &)>(&Application::triggerDelFriendHandler, this));
+	_graphic.setGetFriendHandler(Function<void (const request::Username &)>(&Application::triggerGetFriendHandler, this));
+	_graphic.setChatHandler(Function<void (const request::Username &, const request::Message &)>(&Application::triggerChatHandler, this));
+	_graphic.setCallHandler(Function<void (const request::Username &)>(&Application::triggerCallHandler, this));
+	_graphic.setHangUpHandler(Function<void ()>(&Application::triggerHangUpHandler, this));
+}
+
+void  Application::run()
+{
+  _tcpNetwork.run();
+  _graphic.run();
+  _app.exec();
+}
+
+void  Application::stop()
+{
+}
+
+void		Application::stop_UDP()
+{
+	_udpNetwork.stop();
+	_udpNetwork.reset();
+	disconnect(&_bridge, SIGNAL(inputReadReady()), this, SLOT(handle_udp_input_read()));
+}
+
+bool		Application::init_UDP()
+{
+	if (!_udpNetwork.init())
+		return (false);
+	connect(&_bridge, SIGNAL(inputReadReady()), this, SLOT(handle_udp_input_read()), Qt::QueuedConnection);
+	return (true);
+}
+
+void  Application::bufferise(const ANetwork::ByteArray &data)
+{
+  qDebug() << "Data Received: " << data.size();
+  _buffer.insert(_buffer.end(), data.begin(), data.end());
+}
+
+void  Application::send_request(const ARequest &req)
+{
+  _tcpNetwork.sendData(Protocol::product(req));
+}
+
+bool  Application::handle_request()
+{
+  ARequest *req;
+  int      consumed;
+
+  try
+    {
+      req = Protocol::consume(_buffer, consumed);
+    }
+  catch (const Serializer::invalid_argument &e)
+    {
+      qDebug() << e.what();
+      return (false);
+    }
+  _buffer.erase(_buffer.begin(), _buffer.begin() + consumed);
+  qDebug() << req->code();
+  if (!_waitedResponses.empty() && (req->code() >= 1000 && req->code() <= 1100))
+    {
+      response_handler  handle = _waitedResponses.top();
+
+      handle(*req);
+      _waitedResponses.pop();
+    }
+  else
+    {
+      request_callback::iterator	it = _requestActions.find(req->code());
+
+      if (it != _requestActions.end())
+	it->second(*req);
+    }
+  delete req;
+  return (true);
+}
+
+// Handlers
 
 void		Application::update_friend_handler(const ARequest &req)
 {
@@ -45,6 +155,21 @@ void		Application::get_msg_handler(const ARequest &req)
 	}
 }
 
+void		Application::handle_udp_input_read()
+{
+	AudioChunk		*chunk;
+	SAMPLE			*str;
+
+  chunk = _bridge.inputPop();
+  if (chunk == 0)
+	  return ;
+  str = chunk->getContent();
+  ANetwork::ByteArray			bytes(reinterpret_cast<unsigned char *>(chunk->getContent()),
+									  reinterpret_cast<unsigned char *>(chunk->getContent()) + (chunk->size() * sizeof(SAMPLE)));
+	_udpNetwork.sendData(bytes);
+	_bridge.pushUnused(chunk);
+}
+
 void		Application::get_call_request_handler(const ARequest &req)
 {
 	std::string			content("\"");
@@ -57,22 +182,24 @@ void		Application::get_call_request_handler(const ARequest &req)
 	Env::getInstance().callInfo.userName = Env::getInstance().userInfo.login;
 	if (_graphic.request_server_response("Call incoming !", content))
 	{
-		qDebug() << "request call accepted";
-		request::call::client::AcceptClient(Env::getInstance().userInfo.login, name, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.friendPortUDP);
-
-		send_request(request::call::client::AcceptClient(request::call::client::AcceptClient(Env::getInstance().userInfo.login, name, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.friendPortUDP)));
-		_waitedResponses.push(response_handler(&Application::ignore_response, this));
 		Env::getInstance().callInfo.friendAddressIp = ip;
 		Env::getInstance().callInfo.friendName = name;
 		Env::getInstance().callInfo.friendPortUDP = port;
-		_graphic.on_call_request_success();
+
+		qDebug() << "request call accepted" << port << QHostAddress(ip).toString();
+		if (!init_UDP())
+			goto fail;
+		send_request(request::call::client::AcceptClient(request::call::client::AcceptClient(Env::getInstance().userInfo.login, name, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.userPortUDP)));
+		_waitedResponses.push(response_handler(&Application::accept_response, this));
+		_inCommunication = true;
 	}
 	else
 	{
-	send_request(request::call::client::RefuseClient(Env::getInstance().userInfo.login, name));
-	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-	_graphic.on_call_request_error();
-	qDebug() << "request call rejected";
+		fail:
+		send_request(request::call::client::RefuseClient(Env::getInstance().userInfo.login, name));
+		_waitedResponses.push(response_handler(&Application::ignore_response, this));
+		_inCommunication = false;
+		qDebug() << "request call rejected";
 	}
 }
 
@@ -87,17 +214,31 @@ void		Application::get_call_accept_handler(const ARequest &req)
 	Env::getInstance().callInfo.friendName = name;
 	Env::getInstance().callInfo.friendPortUDP = port;
 	Env::getInstance().callInfo.userName = Env::getInstance().userInfo.login;
+	_udpNetwork.tryConnect(port, ip);
+	_udpNetwork.start();
 	_graphic.on_call_request_success();
-	qDebug() << "request call accepted";
+	_inCommunication = true;
+	qDebug() << "request call accepted" << port << QHostAddress(ip).toString();
+}
+
+void	Application::get_call_timeout_handler(const ARequest &req)
+{
+	_udpNetwork.stop();
+	_udpNetwork.reset();
+	_inCommunication = false;
 }
 
 void		Application::get_call_refuse_handler(const ARequest &req)
 {
-	_graphic.on_call_request_error();
+	_udpNetwork.stop();
+	_udpNetwork.reset();
+	_inCommunication = false;
 }
 
-
-
+void	Application::ping_handler(const ARequest &req)
+{
+  send_request(request::perso::client::Pong(dynamic_cast<const request::perso::server::Ping &>(req)._id));
+}
 
 void		Application::get_friend_request_handler(const ARequest &req)
 {
@@ -119,175 +260,13 @@ void		Application::get_friend_request_handler(const ARequest &req)
 	}
 }
 
-Application::~Application()
+
+void	Application::get_call_hang_up_handler(const ARequest &req)
 {
+	stop_UDP();
 }
 
-void  Application::init()
-{
-  _tcpNetwork.init();
-  _graphic.init();
-  _tcpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Graphic::on_connection_error, &_graphic));
-  _tcpNetwork.setOnConnectHandler(Function<void ()>(&Graphic::on_connection_success, &_graphic));
-  _tcpNetwork.setAvailableData(Function<void (const ANetwork::ByteArray)>(&Application::triggerAvailableData, this));
-  _udpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Application::triggerUdpError, this));
-  _udpNetwork.setAvailableData(Function<void (const ANetwork::ByteArray)>(&Application::triggerUdpDataAvailable, this));
-  _graphic.setTryConnectHandler(Function<void (unsigned short, const std::string &)>(&TCPNetwork::tryConnect, &_tcpNetwork));
-  _graphic.setTryAuthentificationHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryLogin, this));
-  _graphic.setTryCreateAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryCreateAccount, this));
-  _graphic.setTryChangeAccountPasswordHandler(Function<void (const request::PasswordType &, const request::PasswordType &)>(&Application::triggerTryChangeAccountPassword, this));
-  _graphic.setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)>(&Application::triggerTryChangeAccountPrivacy, this));
-  _graphic.setTryDeleteAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryDeleteAccount, this));
-  _graphic.setDesAuthentificationHandler(Function<void ()>(&Application::triggerDesAuthentification, this));
-
-  // Here we go !
-  _graphic.setStatusHandler(Function<void (const request::Status &, const request::Message &)>(&Application::triggerStatusHandler, this));	
-  _graphic.setAddFriendHandler(Function<void (const request::Username &)>(&Application::triggerAddFriendHandler, this));
-  _graphic.setDelFriendHandler(Function<void (const request::Username &)>(&Application::triggerDelFriendHandler, this));
- _graphic.setGetFriendHandler(Function<void (const request::Username &)>(&Application::triggerGetFriendHandler, this));
-  _graphic.setChatHandler(Function<void (const request::Username &, const request::Message &)>(&Application::triggerChatHandler, this));
- _graphic.setCallHandler(Function<void (const request::Username &)>(&Application::triggerCallHandler, this));
-  _graphic.setHangUpHandler(Function<void (const request::Username &)>(&Application::triggerHangUpHandler, this));
-
-}
-
-
-void	Application::triggerStatusHandler(const request::Status &newStatus, const request::Message &msgStatus)
-{
-	send_request(request::perso::client::StatusClient(newStatus, msgStatus));
-	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-	//à virer !!!!!
-	_friendList.insertFriend("toto1", "feeff", ABSENT);
-	_friendList.insertFriend("toto2", "pas top", CONNECTED);
-	_friendList.insertFriend("toto3", "gdfg", INVISIBLE);
-	_friendList.insertFriend("toto44", "gdfg4255", OCCUPIED);
-	_friendList.insertFriend("totoaze1", "feeff", ABSENT);
-	_friendList.insertFriend("tofefto2", "pas top", CONNECTED);
-	_friendList.insertFriend("totefafo3", "gdfg", INVISIBLE);
-	_friendList.insertFriend("tazezfoto44", "gdfg4255", OCCUPIED);
-	_friendList.insertFriend("tobrbrbto1", "feeff", ABSENT);
-	_friendList.insertFriend("togzergto2", "pas top", CONNECTED);
-	_friendList.insertFriend("tosbdfsbdto3", "gdfg", INVISIBLE);
-	_friendList.insertFriend("towcvcxto44", "gdfg4255", OCCUPIED);
-	_friendList.insertFriend("totqfgro1", "feeff", ABSENT);
-	_friendList.insertFriend("totbnztikruo2", "pas top", CONNECTED);
-	_friendList.insertFriend("totruitio3", "gdfg", INVISIBLE);
-	_friendList.insertFriend("totheto44", "gdfg4255", OCCUPIED);
-
-	_graphic.updateFriendList(_friendList.getFriendList());
-}
-
-void	Application::triggerAddFriendHandler(const request::Username &newFriend)
-{
-	send_request(request::friends::client::Request(Env::getInstance().userInfo.login, newFriend));
-	_waitedResponses.push(response_handler(&Application::add_friend_response, this));
-}
-
-void  Application::add_friend_response(const ARequest &req)
-{
-  if (req.code() == request::server::OK)
-    {
-      _graphic.on_add_friend_success();
-      return ;
-    }
-	_graphic.on_add_friend_error("User do not exist");
-}
-
-void	Application::triggerDelFriendHandler(const request::Username &friendName)
-{
-	send_request(request::friends::client::DelFriend(friendName));
-	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-}
-
-void	Application::triggerGetFriendHandler(const request::Username &friendName)
-{
-	_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
-}
-
-
-
-void	Application::triggerChatHandler(const request::Username &friendName, const request::Message &msg)
-{
-	qDebug() << "msg : " << msg.c_str();
-	send_request(request::chat::client::Message(Env::getInstance().userInfo.login, friendName, 45, msg));
-	
-	_friendList.insertOutcomingMsg(friendName, msg);
-	qDebug() << "msg : " << msg.c_str();
-	_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
-
-	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-}
-
-void	Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
-{
-	qDebug("UDP Data Available");
-}
-
-void	Application::triggerCallHandler(const request::Username &friendName)
-{
-	send_request(request::call::client::CallClient(Env::getInstance().userInfo.login, friendName, request::options::AUDIO, 0x7F000001, 40284));
-
-//	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-}
-
-/*void	Application::triggerHandler(const request: &)
-{
-	send_request(request:);
-	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-}
-
-void  Application::_response(const ARequest &req)
-{
-  if (req.code() == request::server::OK)
-    {
-//      _graphic
-      return ;
-    }
-//  _graphic
-}*/
-
-void	Application::triggerHangUpHandler(const request::Username &friendName)
-{
-	request::call::client::HangupClient(Env::getInstance().userInfo.login, friendName);
-	//send_request(request::friends::client::Request(Env::getInstance().userInfo.login, newFriend));
-	//_waitedResponses.push(response_handler(&Application::ignore_response, this));
-}
-
-
-
-
-
-
-
-
-void  Application::triggerUdpError(ANetwork::SocketState st)
-{
-
-}
-
-void  Application::triggerTryConnect(const std::string &ip, unsigned short port)
-{
-  _tcpNetwork.tryConnect(port, ip);
-}
-
-
-void	Application::triggerTryChangeAccountPassword(const request::PasswordType &currentPassword, const request::PasswordType &newPassword)
-{
-	send_request(request::auth::client::ModifyClient(Env::getInstance().userInfo.loginTry, md5(currentPassword), md5(newPassword)));
-	_waitedResponses.push(response_handler(&Application::change_account_password_response, this));
-}
-
-void	Application::triggerTryChangeAccountPrivacy(const request::Privacy &newPrivacy)
-{
-	send_request(request::perso::client::ModifyPrivacy(newPrivacy));
-	_waitedResponses.push(response_handler(&Application::change_account_privacy_response, this));
-}
-
-void  Application::triggerDesAuthentification()
-{
-  _tcpNetwork.sendData(Protocol::product(request::auth::client::DisconnectClient()));
-  _waitedResponses.push(response_handler(&Application::desauthentification_response, this));
-}
+// Responses
 
 void  Application::connection_response(const ARequest &req)
 {
@@ -376,6 +355,190 @@ void  Application::ignore_response(const ARequest & req)
 	(void)req;
 }
 
+void		Application::accept_response(const ARequest &resp)
+{
+	if (resp.code() != request::server::OK)
+	{
+		_udpNetwork.stop();
+		_udpNetwork.reset();
+		_inCommunication = false;
+	}
+	else
+	{
+		_udpNetwork.tryConnect(Env::getInstance().callInfo.friendPortUDP, Env::getInstance().callInfo.friendAddressIp);
+		_udpNetwork.start();
+		_inCommunication = true;
+	}
+}
+
+void  Application::add_friend_response(const ARequest &req)
+{
+  if (req.code() == request::server::OK)
+    {
+      _graphic.on_add_friend_success();
+      return ;
+    }
+	_graphic.on_add_friend_error("User do not exist");
+}
+
+void	Application::hang_up_response(const ARequest &resp)
+{
+	if (resp.code() == request::server::OK)
+	{
+		_udpNetwork.stop();
+		_udpNetwork.reset();
+		_inCommunication = false;
+	}
+}
+
+void	Application::call_response(const ARequest &resp)
+{
+	if (resp.code() != request::server::OK)
+	{
+		_udpNetwork.stop();
+		_udpNetwork.reset();
+		_graphic.on_call_request_error();
+		_inCommunication = false;
+		return ;
+	}
+	_inCommunication = true;
+	_graphic.on_call_request_success();
+}
+
+// Triggers
+
+void	Application::triggerDelFriendHandler(const request::Username &friendName)
+{
+	send_request(request::friends::client::DelFriend(friendName));
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+}
+
+void	Application::triggerGetFriendHandler(const request::Username &friendName)
+{
+	_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
+}
+
+
+
+void	Application::triggerChatHandler(const request::Username &friendName, const request::Message &msg)
+{
+	qDebug() << "msg : " << msg.c_str();
+	send_request(request::chat::client::Message(Env::getInstance().userInfo.login, friendName, 45, msg));
+	
+	_friendList.insertOutcomingMsg(friendName, msg);
+	qDebug() << "msg : " << msg.c_str();
+	_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
+
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+}
+
+void	Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
+{
+	AudioChunk				*chunk = _bridge.popUnused();
+
+	chunk->assign(reinterpret_cast<const SAMPLE *>(bytes.data()), (bytes.size() / sizeof(SAMPLE)));
+	_bridge.outputPush(chunk);
+}
+
+void	Application::triggerStatusHandler(const request::Status &newStatus, const request::Message &msgStatus)
+{
+	send_request(request::perso::client::StatusClient(newStatus, msgStatus));
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+	//à virer !!!!!
+/*	_friendList.insertFriend("toto1", "feeff", ABSENT);
+	_friendList.insertFriend("toto2", "pas top", CONNECTED);
+	_friendList.insertFriend("toto3", "gdfg", INVISIBLE);
+	_friendList.insertFriend("toto44", "gdfg4255", OCCUPIED);
+	_friendList.insertFriend("totoaze1", "feeff", ABSENT);
+	_friendList.insertFriend("tofefto2", "pas top", CONNECTED);
+	_friendList.insertFriend("totefafo3", "gdfg", INVISIBLE);
+	_friendList.insertFriend("tazezfoto44", "gdfg4255", OCCUPIED);
+	_friendList.insertFriend("tobrbrbto1", "feeff", ABSENT);
+	_friendList.insertFriend("togzergto2", "pas top", CONNECTED);
+	_friendList.insertFriend("tosbdfsbdto3", "gdfg", INVISIBLE);
+	_friendList.insertFriend("towcvcxto44", "gdfg4255", OCCUPIED);
+	_friendList.insertFriend("totqfgro1", "feeff", ABSENT);
+	_friendList.insertFriend("totbnztikruo2", "pas top", CONNECTED);
+	_friendList.insertFriend("totruitio3", "gdfg", INVISIBLE);
+	_friendList.insertFriend("totheto44", "gdfg4255", OCCUPIED);*/
+
+	_graphic.updateFriendList(_friendList.getFriendList());
+}
+
+void	Application::triggerAddFriendHandler(const request::Username &newFriend)
+{
+	send_request(request::friends::client::Request(Env::getInstance().userInfo.login, newFriend));
+	_waitedResponses.push(response_handler(&Application::add_friend_response, this));
+}
+
+void	Application::triggerCallHandler(const request::Username &friendName)
+{
+	if (!init_UDP())
+		_graphic.on_call_request_error();
+	else
+	{
+		_inCommunication = true;
+		send_request(request::call::client::CallClient(Env::getInstance().userInfo.login, friendName, request::options::AUDIO, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.userPortUDP));
+		_waitedResponses.push(response_handler(&Application::call_response, this));
+	}
+}
+
+/*void	Application::triggerHandler(const request: &)
+{
+	send_request(request:);
+	_waitedResponses.push(response_handler(&Application::ignore_response, this));
+}
+
+void  Application::_response(const ARequest &req)
+{
+  if (req.code() == request::server::OK)
+    {
+//      _graphic
+      return ;
+    }
+//  _graphic
+}*/
+
+void	Application::triggerHangUpHandler()
+{
+	if (_inCommunication)
+	{
+		send_request(request::call::client::HangupClient(Env::getInstance().userInfo.login, Env::getInstance().callInfo.friendName));
+		stop_UDP();
+		_inCommunication = false;
+	}
+}
+
+void  Application::triggerUdpError(ANetwork::SocketState st)
+{
+
+}
+
+void  Application::triggerTryConnect(const std::string &ip, unsigned short port)
+{
+  _tcpNetwork.tryConnect(port, ip);
+}
+
+
+void	Application::triggerTryChangeAccountPassword(const request::PasswordType &currentPassword, const request::PasswordType &newPassword)
+{
+	send_request(request::auth::client::ModifyClient(Env::getInstance().userInfo.loginTry, md5(currentPassword), md5(newPassword)));
+	_waitedResponses.push(response_handler(&Application::change_account_password_response, this));
+}
+
+void	Application::triggerTryChangeAccountPrivacy(const request::Privacy &newPrivacy)
+{
+	send_request(request::perso::client::ModifyPrivacy(newPrivacy));
+	_waitedResponses.push(response_handler(&Application::change_account_privacy_response, this));
+}
+
+void  Application::triggerDesAuthentification()
+{
+  _tcpNetwork.sendData(Protocol::product(request::auth::client::DisconnectClient()));
+  _waitedResponses.push(response_handler(&Application::desauthentification_response, this));
+}
+
+
 void  Application::triggerTryLogin(const request::Username &login, const request::PasswordType &password)
 {
   send_request(request::auth::client::ConnectClient(login, md5(password)));
@@ -394,70 +557,9 @@ void  Application::triggerTryDeleteAccount(const request::Username &login, const
   _waitedResponses.push(response_handler(&Application::delete_account_response, this));
 }
 
-void  Application::bufferise(const ANetwork::ByteArray &data)
-{
-  qDebug() << "Data Received: " << data.size();
-  _buffer.insert(_buffer.end(), data.begin(), data.end());
-
-}
-
-void  Application::send_request(const ARequest &req)
-{
-  _tcpNetwork.sendData(Protocol::product(req));
-}
-
-bool  Application::handle_request()
-{
-  ARequest *req;
-  int      consumed;
-
-  try
-    {
-      req = Protocol::consume(_buffer, consumed);
-    }
-  catch (const Serializer::invalid_argument &e)
-    {
-      qDebug() << e.what();
-      return (false);
-    }
-  _buffer.erase(_buffer.begin(), _buffer.begin() + consumed);
-  qDebug() << req->code();
-  if (!_waitedResponses.empty() && (req->code() >= 1000 && req->code() <= 1100))
-    {
-      response_handler  handle = _waitedResponses.top();
-
-      handle(*req);
-      _waitedResponses.pop();
-    }
-  else
-    {
-      request_callback::iterator	it = _requestActions.find(req->code());
-
-      if (it != _requestActions.end())
-	it->second(*req);
-    }
-  delete req;
-  return (true);
-}
-
 void  Application::triggerAvailableData(const ANetwork::ByteArray data)
 {
   bufferise(data);
   while (_buffer.size() && handle_request());
 }
 
-void	Application::ping_handler(const ARequest &req)
-{
-  send_request(request::perso::client::Pong(dynamic_cast<const request::perso::server::Ping &>(req)._id));
-}
-
-void  Application::run()
-{
-  _tcpNetwork.run();
-  _graphic.run();
-  _app.exec();
-}
-
-void  Application::stop()
-{
-}

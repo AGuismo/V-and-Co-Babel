@@ -239,6 +239,12 @@
     <ClCompile Include="QTBridge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Application.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Application.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Graphic.h">
@@ -310,6 +316,9 @@
     <CustomBuild Include="QTBridge.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="Application.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Function.hpp">
@@ -348,9 +357,6 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="IApplication.hh">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="Application.hh">
       <Filter>Header Files</Filter>
     </None>
     <None Include="FriendList.hh">

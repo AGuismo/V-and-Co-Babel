@@ -41,7 +41,7 @@ protected:
   
   // Calls
   Function<void (const request::Username &)>					_callHandler;
-  Function<void (const request::Username &)>					_hangupHandler;
+  Function<void ()>												_hangupHandler;
 
   // Chat
   Function<void (const request::Username &, const request::Message &)> _chatHandler;
@@ -82,7 +82,7 @@ public:
 
   // Calls
   virtual void		setCallHandler(Function<void (const request::Username &)>);
-  virtual void		setHangUpHandler(Function<void (const request::Username &)>);
+  virtual void		setHangUpHandler(Function<void ()>);
 
   // Chat
   virtual void		setChatHandler(Function<void (const request::Username &, const request::Message &)>);
