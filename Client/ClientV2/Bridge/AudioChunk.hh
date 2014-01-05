@@ -16,7 +16,7 @@ public:
 	void						clean();
 	unsigned int				size() const;
 	SAMPLE						*getContent() const;
-	void						assign(const SAMPLE *str, unsigned int size);
+	void						assign(SAMPLE *str, unsigned int size);
 
 	AudioChunk(std::size_t capacity);
 	~AudioChunk();

@@ -23,7 +23,7 @@ void					AudioChunk::clean()
 	_size = 0;
 }
 
-void					AudioChunk::assign(const SAMPLE *str, unsigned int size)
+void					AudioChunk::assign(SAMPLE *str, unsigned int size)
 {
 	if (size > _capacity)
 		_size = _capacity;
