@@ -59,7 +59,7 @@ void		AGraphic::setCallHandler(Function<void (const request::Username &)> handle
 	_callHandler = handle;
 }
 
-void		AGraphic::setHangUpHandler(Function<void ()> handle)
+void		AGraphic::setHangUpHandler(Function<void (const request::Username &)> handle)
 {
 	_hangupHandler = handle;
 }

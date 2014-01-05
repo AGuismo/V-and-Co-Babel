@@ -43,7 +43,7 @@ private:
   void	triggerGetFriendHandler(const request::Username &);
 
   void	triggerCallHandler(const request::Username &);
-  void	triggerHangUpHandler();
+  void	triggerHangUpHandler(const request::Username &);
   void	triggerChatHandler(const request::Username &, const request::Message &);
   void	triggerSetAnswerHandler();
   void	triggerUnSetAnswerHandler();
@@ -79,6 +79,9 @@ private:
   void	get_friend_request_handler(const ARequest &);
   void	get_msg_handler(const ARequest &);
   void	get_call_request_handler(const ARequest &);
+
+  void  get_call_accept_handler(const ARequest &);
+  void  get_call_refuse_handler(const ARequest &);
 
 public:
   void  init();
