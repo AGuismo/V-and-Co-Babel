@@ -197,6 +197,48 @@
     <ClCompile Include="GeneratedFiles\Release\moc_AddFriendWindow.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_audio.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_audio.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_AudioWorker.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_AudioWorker.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QTBridge.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QTBridge.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioChunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioWorker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpAudioCodec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PAudioBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PAudioStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QTBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Graphic.h">
@@ -259,6 +301,15 @@
     <CustomBuild Include="AddFriendWindow.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="audio.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="AudioWorker.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QTBridge.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Function.hpp">
@@ -306,6 +357,33 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Env.hh">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Abridge.hh">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="AudioBridge.hh">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="AudioChunk.hh">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="AudioParams.hh">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="IAudioCodec.hh">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="IAudioStream.hh">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="OpAudioCodec.hh">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="PAudioBuffer.hh">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="PAudioStream.hh">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

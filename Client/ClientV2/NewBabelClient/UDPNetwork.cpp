@@ -50,7 +50,14 @@ void  UDPNetwork::stop()
 
 void  UDPNetwork::handleRead()
 {
-  QByteArray bytes = _sock.readAll();
+	if (_sock.hasPendingDatagrams())
+	{
+		QByteArray		bytes;
+		QHostAddress	sender;
+		quint16			senderPort;
 
-  _onAvailableData(ByteArray(bytes.begin(), bytes.end()));
+		bytes.resize(_sock.pendingDatagramSize());
+		_sock.readDatagram(bytes.data(), bytes.size(), &sender, &senderPort);
+		_onAvailableData(ByteArray(bytes.begin(), bytes.end()));
+	}
 }

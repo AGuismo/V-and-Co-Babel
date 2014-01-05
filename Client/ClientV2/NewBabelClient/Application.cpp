@@ -78,70 +78,22 @@ void		Application::get_call_request_handler(const ARequest &req)
 
 void		Application::get_call_accept_handler(const ARequest &req)
 {
-	_graphic.on_call_request_success();
-/*	std::string			content("\"");
-	std::string			name(dynamic_cast<const request::call::client::CallClient &>(req)._from);
-	unsigned short int port = dynamic_cast<const request::call::client::CallClient &>(req)._port;
-	int					ip = dynamic_cast<const request::call::client::CallClient &>(req)._ip;
+	const request::call::client::AcceptClient &origin = dynamic_cast<const request::call::client::AcceptClient &>(req);
+	std::string			name(origin._from);
+	unsigned short int	port(origin._port);
+	int					ip(origin._ip);
 
-dynamic_cast<const request::call::client::CallClient &>(req)
-
-	content += name;
-	content += "\" is calling you ! Are you going to respond ?";
+	Env::getInstance().callInfo.friendAddressIp = ip;
+	Env::getInstance().callInfo.friendName = name;
+	Env::getInstance().callInfo.friendPortUDP = port;
 	Env::getInstance().callInfo.userName = Env::getInstance().userInfo.login;
-	if (_graphic.request_server_response("Call incoming !", content))
-	{
-		qDebug() << "request call accepted";
-		request::call::client::AcceptClient(Env::getInstance().userInfo.login, name, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.friendPortUDP);
-
-		send_request(request::call::client::AcceptClient(request::call::client::AcceptClient(Env::getInstance().userInfo.login, name, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.friendPortUDP)));
-		_waitedResponses.push(response_handler(&Application::ignore_response, this));
-		Env::getInstance().callInfo.friendAddressIp = ip;
-		Env::getInstance().callInfo.friendName = name;
-		Env::getInstance().callInfo.friendPortUDP = port;
-		_graphic.on_call_request_success();
-	}
-	else
-	{
-	send_request(request::call::client::RefuseClient(Env::getInstance().userInfo.login, name));
-	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-	_graphic.on_call_request_error();
-	qDebug() << "request call rejected";
-	}*/
+	_graphic.on_call_request_success();
+	qDebug() << "request call accepted";
 }
 
 void		Application::get_call_refuse_handler(const ARequest &req)
 {
 	_graphic.on_call_request_error();
-/*	std::string			content("\"");
-	std::string			name(dynamic_cast<const request::call::client::CallClient &>(req)._from);
-	unsigned short int port = dynamic_cast<const request::call::client::CallClient &>(req)._port;
-	int					ip = dynamic_cast<const request::call::client::CallClient &>(req)._ip;
-
-dynamic_cast<const request::call::client::CallClient &>(req)
-
-	content += name;
-	content += "\" is calling you ! Are you going to respond ?";
-	Env::getInstance().callInfo.userName = Env::getInstance().userInfo.login;
-	if (_graphic.request_server_response("Call incoming !", content))
-	{
-		qDebug() << "request call accepted";
-		request::call::client::AcceptClient(Env::getInstance().userInfo.login, name, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.friendPortUDP);
-
-		send_request(request::call::client::AcceptClient(request::call::client::AcceptClient(Env::getInstance().userInfo.login, name, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.friendPortUDP)));
-		_waitedResponses.push(response_handler(&Application::ignore_response, this));
-		Env::getInstance().callInfo.friendAddressIp = ip;
-		Env::getInstance().callInfo.friendName = name;
-		Env::getInstance().callInfo.friendPortUDP = port;
-		_graphic.on_call_request_success();
-	}
-	else
-	{
-	send_request(request::call::client::RefuseClient(Env::getInstance().userInfo.login, name));
-	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-	_graphic.on_call_request_error();
-	qDebug() << "request call rejected";
-	}*/
 }
 
 
