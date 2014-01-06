@@ -8,6 +8,7 @@
 #include	"ServerRequest.hh"
 #include	"Database.hh"
 #include	"FriendRequest.hh"
+#include	"CallRequest.hh"
 
 Server::Server(boost::asio::io_service &service, Database &db) :
   _service(service), _db(db), _acceptor(service), _plugs(new request::PluginManager(db, Env::getInstance())),
@@ -98,20 +99,27 @@ void	Server::handle_accept(IClient::Pointer new_connection,
 
 void		Server::clientAboutToClose(IClient::Pointer &client)
 {
-	Database::list_friend	friends;
+  Database::list_friend	friends;
 
-	_db.listFriend(client->Username(), friends);
-	for (std::list<IClient::Pointer>::const_iterator itClient = _clientList.begin();
-		itClient != _clientList.end(); ++itClient)
+  _db.listFriend(client->Username(), friends);
+  for (std::list<IClient::Pointer>::const_iterator itClient = _clientList.begin();
+       itClient != _clientList.end(); ++itClient)
+    {
+      for (Database::list_friend::const_iterator it = friends.begin();
+	   it != friends.end(); ++it)
 	{
-		for (Database::list_friend::const_iterator it = friends.begin();
-		it != friends.end(); ++it)
-		{
-			if ((*itClient)->Username() == *it && (*itClient)->Authenticated())
-			{
-				(*itClient)->serialize_data(request::friends::server::Update(request::User::Status::DISCONNECTED, std::string(), client->Username()));
-			}
-		}
+	  if ((*itClient)->Username() == client->Caller())
+	    {
+#if defined(DEBUG)
+	      std::cout << "Timeout send to : [" << (*itClient)->Username() << "]" << std::endl;
+#endif
+	      (*itClient)->serialize_data(request::call::server::Timeout());
+	    }
+	  if ((*itClient)->Username() == *it && (*itClient)->Authenticated())
+	    {
+	      (*itClient)->serialize_data(request::friends::server::Update(request::User::Status::DISCONNECTED, std::string(), client->Username()));
+	    }
+	}
     }
 }
 

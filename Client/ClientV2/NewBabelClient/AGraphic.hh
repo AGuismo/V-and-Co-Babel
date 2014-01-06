@@ -50,6 +50,9 @@ protected:
   Function<void ()>												_setAnswerHandler;
   Function<void ()>												_unSetAnswerHandler;
 
+  // Other Events
+  Function<void ()>												_aboutToCloseHandler;
+
 public:
   // Connection
   virtual void		setTryConnectHandler(Function<void (unsigned short, const std::string &)>);
@@ -90,6 +93,9 @@ public:
   // Answering machine
   virtual void		setSetAnswerHandler(Function<void ()>);
   virtual void		setUnSetAnswerHandler(Function<void ()>);
+
+  // Other
+  virtual void		setAboutToCloseHandler(Function<void ()>);
 
 public:
   virtual void		init() = 0;

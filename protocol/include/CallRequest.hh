@@ -127,8 +127,20 @@ namespace	request
 
     namespace	server
     {
+      struct	Timeout : public Call
+      {
+	static const char	*TIMEOUT;
 
+	Timeout();
+	~Timeout();
+	Timeout(const Timeout &);
+	Timeout	&operator=(const Timeout &);
 
+	ARequest			*clone() const;
+	Protocol			&serialize(Protocol &) const;
+	Protocol			&unserialize(Protocol &);
+
+      };
     } // !server
   } // !call
 

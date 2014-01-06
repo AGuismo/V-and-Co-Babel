@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ConnectWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.1.1
+** Created by: Qt User Interface Compiler version 5.2.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -198,7 +198,7 @@ public:
         portTcpLineEdit->setText(QApplication::translate("ConnectWindow", "40202", 0));
         passwordLabel->setText(QApplication::translate("ConnectWindow", "TCP Port :", 0));
         connectPushButton->setText(QApplication::translate("ConnectWindow", "Connect", 0));
-        ipLineEdit->setText(QApplication::translate("ConnectWindow", "78.230.102.179", 0));
+        ipLineEdit->setText(QApplication::translate("ConnectWindow", "10.16.253.216", 0));
         serverResponseLabel->setText(QApplication::translate("ConnectWindow", "Disconnected", 0));
         closePushButton->setText(QApplication::translate("ConnectWindow", "Close", 0));
         loginLabel->setText(QApplication::translate("ConnectWindow", "Ip Address :", 0));

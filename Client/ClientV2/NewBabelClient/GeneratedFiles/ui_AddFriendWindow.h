@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'AddFriendWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.1.1
+** Created by: Qt User Interface Compiler version 5.2.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -76,6 +76,7 @@ public:
         font1.setBold(true);
         font1.setWeight(75);
         serverResponseLabel->setFont(font1);
+        serverResponseLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
 
         gridLayout->addWidget(serverResponseLabel, 2, 0, 1, 1);
 

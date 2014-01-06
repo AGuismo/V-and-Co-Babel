@@ -29,7 +29,7 @@
     <widget class="QPushButton" name="changePasswordPushButton">
      <property name="minimumSize">
       <size>
-       <width>78</width>
+       <width>66</width>
        <height>30</height>
       </size>
      </property>
@@ -80,7 +80,7 @@ QPushButton#changePasswordPushButton:hover
     <widget class="QPushButton" name="changePrivacyPushButton">
      <property name="minimumSize">
       <size>
-       <width>78</width>
+       <width>66</width>
        <height>30</height>
       </size>
      </property>
@@ -186,7 +186,7 @@ padding: 2px;</string>
     <widget class="QLineEdit" name="currentPasswordLineEdit">
      <property name="minimumSize">
       <size>
-       <width>164</width>
+       <width>134</width>
        <height>0</height>
       </size>
      </property>
@@ -300,6 +300,9 @@ padding: 2px;</string>
        <weight>75</weight>
        <bold>true</bold>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string/>

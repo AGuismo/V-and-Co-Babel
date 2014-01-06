@@ -84,3 +84,8 @@ void		AGraphic::setUnSetAnswerHandler(Function<void ()> handle)
 {
 	_unSetAnswerHandler = handle;
 }
+
+void		AGraphic::setAboutToCloseHandler(Function<void ()> handle)
+{
+	_aboutToCloseHandler = handle;
+}

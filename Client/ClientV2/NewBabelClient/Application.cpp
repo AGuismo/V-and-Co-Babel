@@ -50,6 +50,7 @@ void  Application::init()
 	_graphic.setTryChangeAccountPrivacyHandler(Function<void (const request::Privacy &)>(&Application::triggerTryChangeAccountPrivacy, this));
 	_graphic.setTryDeleteAccountHandler(Function<void (const request::Username &, const request::PasswordType &)>(&Application::triggerTryDeleteAccount, this));
 	_graphic.setDesAuthentificationHandler(Function<void ()>(&Application::triggerDesAuthentification, this));
+	_graphic.setAboutToCloseHandler(Function<void ()>(&Application::triggerAboutToClose, this));
 
   // Here we go !
 	_graphic.setStatusHandler(Function<void (const request::Status &, const request::Message &)>(&Application::triggerStatusHandler, this));	
@@ -138,21 +139,19 @@ void		Application::update_friend_handler(const ARequest &req)
 {
 	_friendList.insertFriend(dynamic_cast<const request::friends::server::Update &>(req).username,  dynamic_cast<const request::friends::server::Update &>(req).detail, (Status)dynamic_cast<const request::friends::server::Update &>(req).status);
 	_graphic.updateFriendList(_friendList.getFriendList());
-	if (Env::getInstance().selectedFriend.name == dynamic_cast<const request::friends::server::Update &>(req).username)
-		_graphic.receiveFriendInformation(_friendList.getFriend(dynamic_cast<const request::friends::server::Update &>(req).username));
+//	if (dynamic_cast<const request::friends::server::Update &>(req).username == Env::getInstance().selectedFriend.name)
+	_graphic.receiveFriendInformation(_friendList.getFriend(dynamic_cast<const request::friends::server::Update &>(req).username));
 
 }
 
 void		Application::get_msg_handler(const ARequest &req)
 {
 	std::string			friendName(dynamic_cast<const request::chat::client::Message &>(req).from);
+	std::string			msg(dynamic_cast<const request::chat::client::Message &>(req).msg);
 
-	_friendList.insertIncomingMsg(friendName, dynamic_cast<const request::chat::client::Message &>(req).msg);
-
-	if (Env::getInstance().selectedFriend.name == dynamic_cast<const request::chat::client::Message &>(req).from)
-	{
-		_graphic.receiveFriendInformation(_friendList.getFriend(dynamic_cast<const request::chat::client::Message &>(req).from));
-	}
+	_friendList.insertIncomingMsg(friendName, msg);
+//	if (friendName == Env::getInstance().selectedFriend.name)
+		_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
 }
 
 void		Application::handle_udp_input_read()
@@ -185,7 +184,7 @@ void		Application::get_call_request_handler(const ARequest &req)
 		Env::getInstance().callInfo.friendAddressIp = ip;
 		Env::getInstance().callInfo.friendName = name;
 		Env::getInstance().callInfo.friendPortUDP = port;
-
+		_graphic.on_call_request_success();
 		qDebug() << "request call accepted" << port << QHostAddress(ip).toString();
 		if (!init_UDP())
 			goto fail;
@@ -196,6 +195,7 @@ void		Application::get_call_request_handler(const ARequest &req)
 	else
 	{
 		fail:
+		_graphic.on_call_request_error();
 		send_request(request::call::client::RefuseClient(Env::getInstance().userInfo.login, name));
 		_waitedResponses.push(response_handler(&Application::ignore_response, this));
 		_inCommunication = false;
@@ -223,15 +223,14 @@ void		Application::get_call_accept_handler(const ARequest &req)
 
 void	Application::get_call_timeout_handler(const ARequest &req)
 {
-	_udpNetwork.stop();
-	_udpNetwork.reset();
+	stop_UDP();
 	_inCommunication = false;
+	_graphic.on_call_request_error();
 }
 
 void		Application::get_call_refuse_handler(const ARequest &req)
 {
-	_udpNetwork.stop();
-	_udpNetwork.reset();
+	stop_UDP();
 	_inCommunication = false;
 }
 
@@ -264,6 +263,7 @@ void		Application::get_friend_request_handler(const ARequest &req)
 void	Application::get_call_hang_up_handler(const ARequest &req)
 {
 	stop_UDP();
+	_graphic.on_call_request_error();
 }
 
 // Responses
@@ -359,8 +359,7 @@ void		Application::accept_response(const ARequest &resp)
 {
 	if (resp.code() != request::server::OK)
 	{
-		_udpNetwork.stop();
-		_udpNetwork.reset();
+		stop_UDP();
 		_inCommunication = false;
 	}
 	else
@@ -385,8 +384,7 @@ void	Application::hang_up_response(const ARequest &resp)
 {
 	if (resp.code() == request::server::OK)
 	{
-		_udpNetwork.stop();
-		_udpNetwork.reset();
+		stop_UDP();
 		_inCommunication = false;
 	}
 }
@@ -395,8 +393,7 @@ void	Application::call_response(const ARequest &resp)
 {
 	if (resp.code() != request::server::OK)
 	{
-		_udpNetwork.stop();
-		_udpNetwork.reset();
+		stop_UDP();
 		_graphic.on_call_request_error();
 		_inCommunication = false;
 		return ;
@@ -418,7 +415,14 @@ void	Application::triggerGetFriendHandler(const request::Username &friendName)
 	_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
 }
 
-
+void	Application::triggerAboutToClose()
+{
+	if (_inCommunication)
+	{
+		send_request(request::call::client::HangupClient());
+		stop_UDP();
+	}
+}
 
 void	Application::triggerChatHandler(const request::Username &friendName, const request::Message &msg)
 {
