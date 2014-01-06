@@ -822,7 +822,7 @@ padding: 2px;</string>
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgba(255, 255, 255, 230);
+                 <string notr="true">background-color: rgba(255, 255, 255, 200);
 border-width: 2px;
 border-radius: 8px;
 border-color: rgb(0, 0, 0);
