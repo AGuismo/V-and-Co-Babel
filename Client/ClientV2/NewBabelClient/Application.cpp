@@ -399,7 +399,6 @@ void	Application::call_response(const ARequest &resp)
 		return ;
 	}
 	_inCommunication = true;
-	_graphic.on_call_request_success();
 }
 
 // Triggers

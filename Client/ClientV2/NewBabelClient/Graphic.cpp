@@ -15,7 +15,7 @@ void					Graphic::init()
 	ui.selectedFriendIconStatusLabel->setPixmap(*tmp);
 	ui.statusComboBox->addItem(QIcon("./Img/Online.png"), "Online", QVariant("e"));
 	ui.statusComboBox->addItem(QIcon("./Img/Away.png"), "Away", QVariant("e"));
-	ui.statusComboBox->addItem(QIcon("./Img/Occuped.png"), "Occuped", QVariant("e"));
+	ui.statusComboBox->addItem(QIcon("./Img/Occuped.png"), "Occupied", QVariant("e"));
 	ui.statusComboBox->addItem(QIcon("./Img/Invisible.png"), "Invisible", QVariant("e"));
 	ui.statusComboBox->setIconSize(QSize(34, 41));
 
