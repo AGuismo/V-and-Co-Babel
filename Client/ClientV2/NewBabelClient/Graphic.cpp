@@ -346,7 +346,6 @@ void					Graphic::on_change_status_triggered(int newStatus)
 void					Graphic::on_change_status_txt_triggered()
 {
 	qDebug() << "changing status txt here mtfk !";
-	_confirmationMessage.show();
 
 
 	if (ui.statusComboBox->currentIndex() + 1 == 4)
