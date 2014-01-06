@@ -42,7 +42,8 @@ void	TCPNetwork::on_disconnect()
 
 void  TCPNetwork::closeConnection()
 {
-  _sock.close();
+	_sock.disconnectFromHost();
+	_sock.close();
 }
 
 void  TCPNetwork::sendData(const ANetwork::ByteArray &data)

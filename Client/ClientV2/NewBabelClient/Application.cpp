@@ -442,6 +442,8 @@ void	Application::triggerAboutToClose()
 	{
 		send_request(request::call::client::HangupClient());
 		stop_UDP();
+		_inCommunication = false;
+		_tcpNetwork.closeConnection();
 	}
 }
 
