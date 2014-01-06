@@ -41,6 +41,7 @@ void  Application::init()
 	_tcpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Graphic::on_connection_error, &_graphic));
 	_tcpNetwork.setOnConnectHandler(Function<void ()>(&Graphic::on_connection_success, &_graphic));
 	_tcpNetwork.setAvailableData(Function<void (const ANetwork::ByteArray)>(&Application::triggerAvailableData, this));
+	_tcpNetwork.setAboutToCloseHandler(Function<void ()>(&Application::triggerDisconnectedFromServer, this));
 	_udpNetwork.setErrorHandler(Function<void (enum ANetwork::SocketState)>(&Application::triggerUdpError, this));
 	_udpNetwork.setAvailableData(Function<void (const ANetwork::ByteArray)>(&Application::triggerUdpDataAvailable, this));
 	_graphic.setTryConnectHandler(Function<void (unsigned short, const std::string &)>(&TCPNetwork::tryConnect, &_tcpNetwork));
@@ -156,17 +157,29 @@ void		Application::get_msg_handler(const ARequest &req)
 	}
 }
 
-void		Application::handle_udp_input_read()
+void				Application::handle_udp_input_read()
 {
 	AudioChunk		*chunk;
 	SAMPLE			*str;
+	Serializer		serialize;
+	Ruint8			opt;
+	Ruint16			size;
+	request::Time	time;
 
   chunk = _bridge.inputPop();
   if (chunk == 0)
 	  return ;
+  SET_STREAM_VER(opt, request::audio::VERSION);
+  SET_STREAM_TYPE(opt, request::options::AUDIO);
+  size = sizeof(opt) + sizeof(size) + sizeof(time) + chunk->size() + sizeof(Ruint16);
+  time = QDateTime::currentMSecsSinceEpoch() / 1000;
   str = chunk->getContent();
-  ANetwork::ByteArray			bytes(reinterpret_cast<unsigned char *>(chunk->getContent()),
-									  reinterpret_cast<unsigned char *>(chunk->getContent()) + (chunk->size() * sizeof(SAMPLE)));
+  serialize << opt << size << time << (request::StreamLen)chunk->size();
+  for (std::size_t it = 0; it < chunk->size(); ++it)
+  {
+	  serialize << str[it];
+  }
+  ANetwork::ByteArray			bytes(serialize.data(), serialize.data() + serialize.size());
 	_udpNetwork.sendData(bytes);
 	_bridge.pushUnused(chunk);
 }
@@ -406,6 +419,17 @@ void	Application::call_response(const ARequest &resp)
 
 // Triggers
 
+void	Application::triggerDisconnectedFromServer()
+{
+	if (_inCommunication)
+	{
+		stop_UDP();
+		_inCommunication = false;
+	}
+	_tcpNetwork.closeConnection();
+	_graphic.disconnected();
+}
+
 void	Application::triggerDelFriendHandler(const request::Username &friendName)
 {
 	send_request(request::friends::client::DelFriend(friendName));
@@ -438,12 +462,27 @@ void	Application::triggerChatHandler(const request::Username &friendName, const 
 	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
 
-void	Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
+void					Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
 {
-	AudioChunk				*chunk = _bridge.popUnused();
+	Serializer			serialize;
+	Ruint8				opt;
+	request::StreamLen	streamLen;			
+	Ruint16				Totalsize;
+	request::Time		time;
 
-	chunk->assign(reinterpret_cast<const SAMPLE *>(bytes.data()), (bytes.size() / sizeof(SAMPLE)));
-	_bridge.outputPush(chunk);
+	for (std::size_t it = 0; it < bytes.size(); ++it)
+		serialize << bytes[it];
+	serialize >> opt >> Totalsize >> time >> streamLen;
+	if (GET_STREAM_VER(opt) != request::audio::VERSION || Totalsize != bytes.size())
+		return ;
+	if ((QDateTime::currentMSecsSinceEpoch() / 1000) - time > 2)
+		return ;
+	{
+		AudioChunk		*chunk = _bridge.popUnused();
+
+		chunk->assign(reinterpret_cast<const SAMPLE *>(serialize.data()), (streamLen / sizeof(SAMPLE)));
+		_bridge.outputPush(chunk);
+	}
 }
 
 void	Application::triggerStatusHandler(const request::Status &newStatus, const request::Message &msgStatus)

@@ -33,9 +33,20 @@ void	TCPNetwork::translateError()
     }
 }
 
+void	TCPNetwork::stateChanged(QAbstractSocket::SocketState st)
+{
+	switch (st)
+	{
+	case QAbstractSocket::ClosingState:
+		_aboutToCloseHandler();
+		break;
+	}
+}
+
 void  TCPNetwork::closeConnection()
 {
   _sock.close();
+  QObject::connect(&_sock, SIGNAL(stateChanged(SocketState)), this, SLOT(stateChanged(SocketState)));
 }
 
 void  TCPNetwork::sendData(const ANetwork::ByteArray &data)
