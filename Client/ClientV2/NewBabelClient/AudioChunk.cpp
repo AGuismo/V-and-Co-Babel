@@ -1,4 +1,3 @@
-#define			_SCL_SECURE_NO_WARNINGS
 #include		"AudioChunk.hh"
 #include		"AudioParams.hh"
 
@@ -21,7 +20,7 @@ SAMPLE					*AudioChunk::getContent() const
 
 void					AudioChunk::clean()
 {
-	_size = 0;
+	memset(_content, 0, _capacity);
 }
 
 void					AudioChunk::assign(const SAMPLE *str, unsigned int size)
@@ -30,7 +29,8 @@ void					AudioChunk::assign(const SAMPLE *str, unsigned int size)
 		_size = _capacity;
 	else
 		_size = size;
-	std::copy(str, str + _size, _content);
+	for (std::size_t it = 0; it < _size; ++it)
+		_content[it] = str[it];
 }
 
 // Constructor & Destructor

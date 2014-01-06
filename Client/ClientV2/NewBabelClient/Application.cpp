@@ -7,12 +7,15 @@
 #include	"FriendRequest.hh"
 #include	"Protocol.hpp"
 #include	"Env.hh"
+#include	"OpAudioCodec.hh"
 #include	<QObject>
 #include	<QDebug>
 
 Application::Application(int ac, char *av[]):
   _ac(ac), _app(_ac, av), _bridge(150), _audioStarter(_bridge), _inCommunication(false)
 {
+	_codec = new OpAudioCodec();
+	_codec->init();
   _requestActions[request::server::perso::PING] = callback_handler(&Application::ping_handler, this);
   _requestActions[request::server::friends::UPDATE] = callback_handler(&Application::update_friend_handler, this);
   _requestActions[request::client::friends::REQUEST] = callback_handler(&Application::get_friend_request_handler, this);
@@ -157,16 +160,17 @@ void		Application::get_msg_handler(const ARequest &req)
 void		Application::handle_udp_input_read()
 {
 	AudioChunk		*chunk;
-	SAMPLE			*str;
+	unsigned char	str[MAX_PACKET_SIZE];
+	int				nBytes;
 
   chunk = _bridge.inputPop();
   if (chunk == 0)
 	  return ;
-  str = chunk->getContent();
-  ANetwork::ByteArray			bytes(reinterpret_cast<unsigned char *>(chunk->getContent()),
-									  reinterpret_cast<unsigned char *>(chunk->getContent()) + (chunk->size() * sizeof(SAMPLE)));
-	_udpNetwork.sendData(bytes);
-	_bridge.pushUnused(chunk);
+  nBytes = _codec->encode(chunk->getContent(), FRAMES_PER_BUFFER, str, MAX_PACKET_SIZE);
+//  str = chunk->getContent();
+  ANetwork::ByteArray			bytes(str, str + nBytes);
+  _udpNetwork.sendData(bytes);
+  _bridge.pushUnused(chunk);
 }
 
 void		Application::get_call_request_handler(const ARequest &req)
@@ -438,8 +442,12 @@ void	Application::triggerChatHandler(const request::Username &friendName, const 
 void	Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
 {
 	AudioChunk				*chunk = _bridge.popUnused();
+	SAMPLE					sample[SOUNDBUFF_SIZE];
+	int						numFrames;
 
-	chunk->assign(reinterpret_cast<const SAMPLE *>(bytes.data()), (bytes.size() / sizeof(SAMPLE)));
+	numFrames = _codec->decode(bytes.data(), bytes.size(), sample, MAX_FRAME_SIZE);
+	chunk->assign(sample, (numFrames * NUM_CHANNELS));
+//	chunk->assign(reinterpret_cast<const SAMPLE *>(bytes.data()), (bytes.size() / sizeof(SAMPLE)));
 	_bridge.outputPush(chunk);
 }
 
