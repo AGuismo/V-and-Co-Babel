@@ -159,13 +159,13 @@ public:
         actionConnect->setFont(font);
         actionCreateAccount = new QAction(GraphicClass);
         actionCreateAccount->setObjectName(QStringLiteral("actionCreateAccount"));
-        actionCreateAccount->setEnabled(true);
+        actionCreateAccount->setEnabled(false);
         QFont font1;
         font1.setFamily(QStringLiteral("MS Reference Sans Serif"));
         actionCreateAccount->setFont(font1);
         actionLogin = new QAction(GraphicClass);
         actionLogin->setObjectName(QStringLiteral("actionLogin"));
-        actionLogin->setEnabled(true);
+        actionLogin->setEnabled(false);
         actionLogin->setFont(font1);
         actionExit = new QAction(GraphicClass);
         actionExit->setObjectName(QStringLiteral("actionExit"));
@@ -184,15 +184,15 @@ public:
         actionCall->setFont(font1);
         actionDeleteAccount = new QAction(GraphicClass);
         actionDeleteAccount->setObjectName(QStringLiteral("actionDeleteAccount"));
-        actionDeleteAccount->setEnabled(true);
+        actionDeleteAccount->setEnabled(false);
         actionDeleteAccount->setFont(font1);
         actionAddFriend = new QAction(GraphicClass);
         actionAddFriend->setObjectName(QStringLiteral("actionAddFriend"));
-        actionAddFriend->setEnabled(true);
+        actionAddFriend->setEnabled(false);
         actionAddFriend->setFont(font1);
         actionDeleteFriend = new QAction(GraphicClass);
         actionDeleteFriend->setObjectName(QStringLiteral("actionDeleteFriend"));
-        actionDeleteFriend->setEnabled(true);
+        actionDeleteFriend->setEnabled(false);
         actionDeleteFriend->setFont(font1);
         actionLogout = new QAction(GraphicClass);
         actionLogout->setObjectName(QStringLiteral("actionLogout"));
@@ -200,7 +200,7 @@ public:
         actionLogout->setFont(font1);
         actionAccountOptions = new QAction(GraphicClass);
         actionAccountOptions->setObjectName(QStringLiteral("actionAccountOptions"));
-        actionAccountOptions->setEnabled(true);
+        actionAccountOptions->setEnabled(false);
         actionAccountOptions->setFont(font1);
         centralWidget = new QWidget(GraphicClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
@@ -604,7 +604,7 @@ public:
 
         selectedFriendPersonalMsgLabel = new QLabel(layoutWidget_15);
         selectedFriendPersonalMsgLabel->setObjectName(QStringLiteral("selectedFriendPersonalMsgLabel"));
-        selectedFriendPersonalMsgLabel->setMinimumSize(QSize(164, 0));
+        selectedFriendPersonalMsgLabel->setMinimumSize(QSize(134, 0));
         selectedFriendPersonalMsgLabel->setFont(font3);
         selectedFriendPersonalMsgLabel->setStyleSheet(QLatin1String("background-color: rgba(190, 190, 190, 200);\n"
 "border-width: 2px;\n"
@@ -691,7 +691,7 @@ public:
         sizePolicy1.setVerticalStretch(3);
         sizePolicy1.setHeightForWidth(friendMsgBox->sizePolicy().hasHeightForWidth());
         friendMsgBox->setSizePolicy(sizePolicy1);
-        friendMsgBox->setMinimumSize(QSize(164, 0));
+        friendMsgBox->setMinimumSize(QSize(134, 0));
         friendMsgBox->setMaximumSize(QSize(800, 16777215));
         friendMsgBox->setSizeIncrement(QSize(3, 0));
         QFont font6;
@@ -776,7 +776,7 @@ public:
         GraphicClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(GraphicClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 860, 23));
+        menuBar->setGeometry(QRect(0, 0, 860, 18));
         menuConnection = new QMenu(menuBar);
         menuConnection->setObjectName(QStringLiteral("menuConnection"));
         menuManage_account = new QMenu(menuBar);

@@ -4,9 +4,6 @@
 #include				<QMessageBox>
 #include				<QMovie>
 #include				<QSplashScreen>
-#include				<QDebug> // à virer
-
-//ui.friendMsgBox->clear()
 
 void					Graphic::init()
 {
@@ -74,6 +71,7 @@ void					Graphic::init()
 
 	// Friend list Item changed
 	connect(ui.friendListWidget, SIGNAL(itemSelectionChanged()), this, SLOT(on_friend_list_selection_changed()));
+	disconnected();
 }
 
 
@@ -81,7 +79,6 @@ void					Graphic::on_friend_list_selection_changed()
 {
 	if (ui.friendListWidget->currentItem() == NULL)
 		return;
-	qDebug() << "item changed: " << ui.friendListWidget->currentItem()->text();
 	Env::getInstance().selectedFriend.name = ui.friendListWidget->currentItem()->text().toStdString();
 	askFriendInformation(ui.friendListWidget->currentItem()->text().toStdString());
 }
@@ -206,6 +203,8 @@ void					Graphic::run()
 	screen.hide();
 
 	show();
+	_connectWindow.show();
+
 }
 
 void					Graphic::on_connect_window_triggered()
@@ -268,7 +267,6 @@ void					Graphic::on_add_friend_window_triggered()
 
 void					Graphic::on_try_add_friend(const std::string &friendName)
 {
-	qDebug() << "adding friend here mtfk";
 	_addFriendHandler(friendName);
 }
 
@@ -297,29 +295,23 @@ void					Graphic::on_delete_friend_triggered()
 	if (QMessageBox::Yes == QMessageBox(QMessageBox::Information, "Delete contact", msg, QMessageBox::Yes|QMessageBox::No).exec()) 
 	{
 		_delFriendHandler(ui.friendListWidget->currentItem()->text().toStdString());
-		qDebug() << "deleting friend here mtfk !";
 	}
-	else
-		qDebug() << "deletion aborted";
 }
 
 void					Graphic::on_send_box_push_button_released()
 {
-	qDebug() << "sending here mtfk !" << ui.sendBoxTextEdit->text(); // warning pseudo
 	_chatHandler(Env::getInstance().selectedFriend.name, ui.sendBoxTextEdit->text().toStdString());
 	ui.sendBoxTextEdit->clear();
 }
 
 void					Graphic::closeEvent(QCloseEvent *ev)
 {
-	qDebug("Close Event");
 	_aboutToCloseHandler();
 	QMainWindow::closeEvent(ev);
 }
 
 void					Graphic::on_call_friend_push_button_released()
 {
-	qDebug() << "calling here mtfck !";
 	if (ui.friendListWidget->currentItem() != NULL)
 	{
 		callingAnimation();
@@ -329,15 +321,12 @@ void					Graphic::on_call_friend_push_button_released()
 
 void					Graphic::on_hang_up_push_button_released()
 {
-	qDebug() << "hanging up here mtfck !";
 	_hangupHandler();
 	noAnimation();
 }
 
 void					Graphic::on_change_status_triggered(int newStatus)
 {
-	qDebug() << "changing status here mtfk !";
-	qDebug() << "[" << newStatus << ui.statusComboBox->currentIndex()  + 1 << "]";
 	if (ui.statusComboBox->currentIndex() + 1 == 4)
 		_statusHandler(ui.statusComboBox->currentIndex() + 2, ui.statusLineEdit->text().toStdString());		else
 		_statusHandler(ui.statusComboBox->currentIndex() + 1, ui.statusLineEdit->text().toStdString());
@@ -345,9 +334,6 @@ void					Graphic::on_change_status_triggered(int newStatus)
 
 void					Graphic::on_change_status_txt_triggered()
 {
-	qDebug() << "changing status txt here mtfk !";
-
-
 	if (ui.statusComboBox->currentIndex() + 1 == 4)
 		_statusHandler(ui.statusComboBox->currentIndex() + 2, ui.statusLineEdit->text().toStdString());		else
 		_statusHandler(ui.statusComboBox->currentIndex() + 1, ui.statusLineEdit->text().toStdString());
@@ -357,12 +343,10 @@ void					Graphic::on_change_status_txt_triggered()
 
 void					Graphic::on_set_auto_answer_triggered()
 {
-	qDebug() << "setting auto answer here mtfk !";
 }
 
 void					Graphic::on_unset_auto_answer_triggered()
 {
-	qDebug() << "unsetting auto answer here mtfk !";
 }
 
 
@@ -372,11 +356,9 @@ bool					Graphic::request_server_response(const std::string &title, const std::s
 
 	if (QMessageBox::Yes == QMessageBox(QMessageBox::Information, QString(title.c_str()), QString(content.c_str()), QMessageBox::Yes|QMessageBox::No).exec()) 
 	{
-		qDebug() << "Accepted !";
 		return true;
 	}
 	return false;
-	qDebug() << "Decline !";
 }
 
 
@@ -472,16 +454,44 @@ void					Graphic::enable_status_txt_change()
 void					Graphic::disconnected()
 {
 	ui.actionConnect->setEnabled(true);
-	// everything else disabled
+	ui.friendListWidget->clear();
+	ui.selectedFriendNameLabel->clear();
+	ui.selectedFriendPersonalMsgLabel->clear();
+	ui.friendMsgBox->clear();
+	ui.userNameLabel->clear();
+	ui.statusLineEdit->clear();
+	ui.callFriendLeftPushButton->setEnabled(false);
+	ui.callFriendRightPushButton->setEnabled(false);
+	ui.addFriendPushButton->setEnabled(false);
+	ui.deleteFriendPushButton->setEnabled(false);
+	ui.hangUpPushButton->setEnabled(false);
+	ui.sendBoxPushButton->setEnabled(false);
+	ui.actionDeleteAccount->setEnabled(false);
+	ui.actionCreateAccount->setEnabled(false);
+	ui.actionAccountOptions->setEnabled(false);
+	ui.actionLogin->setEnabled(false);
+	ui.actionLogout->setEnabled(false);
+	ui.actionAddFriend->setEnabled(false);
+	ui.actionDeleteFriend->setEnabled(false);
+	ui.actionAccountOptions->setEnabled(false);
+	_connectWindow.setEnabled(true);
+	
 }
 
 void					Graphic::connected()
 {
-  ui.actionLogin->setEnabled(true);
-  ui.actionCreateAccount->setEnabled(true);
-  ui.actionConnect->setEnabled(false);
-  ui.actionDeleteAccount->setEnabled(true);
-  _connectWindow.setEnabled(false);
+	ui.actionLogin->setEnabled(true);
+	ui.actionCreateAccount->setEnabled(true);
+	ui.actionConnect->setEnabled(false);
+	ui.actionDeleteAccount->setEnabled(true);
+	_connectWindow.setEnabled(false);
+	ui.friendListWidget->clear();
+	ui.callFriendLeftPushButton->setEnabled(false);
+	ui.callFriendRightPushButton->setEnabled(false);
+	ui.addFriendPushButton->setEnabled(false);
+	ui.deleteFriendPushButton->setEnabled(false);
+	ui.hangUpPushButton->setEnabled(false);
+	ui.sendBoxPushButton->setEnabled(false);
 }
 
 void					Graphic::loggedIn()
@@ -491,8 +501,21 @@ void					Graphic::loggedIn()
 	ui.actionAccountOptions->setEnabled(true);
 	ui.actionDeleteAccount->setEnabled(false);
 	ui.actionCreateAccount->setEnabled(false);
-	_loginWindow.setEnabled(false);
+	ui.actionAddFriend->setEnabled(true);
+	ui.actionDeleteFriend->setEnabled(true);
+	ui.friendListWidget->clear();
+	ui.selectedFriendNameLabel->clear();
+	ui.selectedFriendPersonalMsgLabel->clear();
+	ui.friendMsgBox->clear();
+	ui.userNameLabel->clear();
+	ui.statusLineEdit->clear();
 	ui.userNameLabel->setText(QString(Env::getInstance().userInfo.login.c_str()));
+	ui.callFriendLeftPushButton->setEnabled(true);
+	ui.callFriendRightPushButton->setEnabled(true);
+	ui.addFriendPushButton->setEnabled(true);
+	ui.deleteFriendPushButton->setEnabled(true);
+	ui.hangUpPushButton->setEnabled(true);
+	ui.sendBoxPushButton->setEnabled(true);
 }
 
 void					Graphic::loggedOut()
@@ -502,6 +525,21 @@ void					Graphic::loggedOut()
 	ui.actionAccountOptions->setEnabled(false);
 	ui.actionLogin->setEnabled(true);
 	ui.actionLogout->setEnabled(false);
+	ui.actionAddFriend->setEnabled(false);
+	ui.actionDeleteFriend->setEnabled(false);
+	ui.actionAccountOptions->setEnabled(false);
+	ui.friendListWidget->clear();
+	ui.selectedFriendNameLabel->clear();
+	ui.selectedFriendPersonalMsgLabel->clear();
+	ui.friendMsgBox->clear();
+	ui.userNameLabel->clear();
+	ui.statusLineEdit->clear();
+	ui.callFriendLeftPushButton->setEnabled(false);
+	ui.callFriendRightPushButton->setEnabled(false);
+	ui.addFriendPushButton->setEnabled(false);
+	ui.deleteFriendPushButton->setEnabled(false);
+	ui.hangUpPushButton->setEnabled(false);
+	ui.sendBoxPushButton->setEnabled(false);
 }
 
 void		Graphic::showTime()
@@ -546,13 +584,11 @@ Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _
 
 void					Graphic::on_call_request_success()
 {
-	qDebug() << "call request succes here mtf";
 	inCallAnimation();
 }
 
 void					Graphic::on_call_request_error()
 {
-	qDebug() << "call request error here mtf";
 	noAnimation();
 }
 

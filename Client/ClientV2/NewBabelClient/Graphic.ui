@@ -635,7 +635,7 @@ QPushButton#callFriendRightPushButton:hover
                  <widget class="QLabel" name="selectedFriendPersonalMsgLabel">
                   <property name="minimumSize">
                    <size>
-                    <width>164</width>
+                    <width>134</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -769,7 +769,7 @@ QPushButton#hangUpPushButton:hover
               </property>
               <property name="minimumSize">
                <size>
-                <width>164</width>
+                <width>134</width>
                 <height>0</height>
                </size>
               </property>
@@ -907,7 +907,7 @@ QPushButton#sendBoxPushButton:hover
      <x>0</x>
      <y>0</y>
      <width>860</width>
-     <height>23</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConnection">
@@ -963,7 +963,7 @@ QPushButton#sendBoxPushButton:hover
   </action>
   <action name="actionCreateAccount">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Create account</string>
@@ -976,7 +976,7 @@ QPushButton#sendBoxPushButton:hover
   </action>
   <action name="actionLogin">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Log in</string>
@@ -1038,7 +1038,7 @@ QPushButton#sendBoxPushButton:hover
   </action>
   <action name="actionDeleteAccount">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Delete account</string>
@@ -1051,7 +1051,7 @@ QPushButton#sendBoxPushButton:hover
   </action>
   <action name="actionAddFriend">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Add friend</string>
@@ -1064,7 +1064,7 @@ QPushButton#sendBoxPushButton:hover
   </action>
   <action name="actionDeleteFriend">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Delete friend</string>
@@ -1090,7 +1090,7 @@ QPushButton#sendBoxPushButton:hover
   </action>
   <action name="actionAccountOptions">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Account options</string>

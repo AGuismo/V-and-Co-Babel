@@ -1,6 +1,7 @@
 #include  "TCPNetwork.h"
 #include  <QtNetwork>
 
+
 TCPNetwork::TCPNetwork()
 {
 
@@ -9,6 +10,7 @@ TCPNetwork::TCPNetwork()
 bool  TCPNetwork::init()
 {
   QObject::connect(&_sock, SIGNAL(readyRead()), this, SLOT(onRead()));
+  QObject::connect(&_sock, SIGNAL(disconnected()), this, SLOT(on_disconnect()));
   return (true);
 }
 
@@ -33,20 +35,14 @@ void	TCPNetwork::translateError()
     }
 }
 
-void	TCPNetwork::stateChanged(QAbstractSocket::SocketState st)
+void	TCPNetwork::on_disconnect()
 {
-	switch (st)
-	{
-	case QAbstractSocket::ClosingState:
-		_aboutToCloseHandler();
-		break;
-	}
+	_aboutToCloseHandler();
 }
 
 void  TCPNetwork::closeConnection()
 {
   _sock.close();
-  QObject::connect(&_sock, SIGNAL(stateChanged(SocketState)), this, SLOT(stateChanged(SocketState)));
 }
 
 void  TCPNetwork::sendData(const ANetwork::ByteArray &data)

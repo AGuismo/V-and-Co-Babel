@@ -94,7 +94,6 @@ bool		Application::init_UDP()
 
 void  Application::bufferise(const ANetwork::ByteArray &data)
 {
-  qDebug() << "Data Received: " << data.size();
   _buffer.insert(_buffer.end(), data.begin(), data.end());
 }
 
@@ -143,7 +142,6 @@ void		Application::update_friend_handler(const ARequest &req)
 {
 	_friendList.insertFriend(dynamic_cast<const request::friends::server::Update &>(req).username,  dynamic_cast<const request::friends::server::Update &>(req).detail, (Status)dynamic_cast<const request::friends::server::Update &>(req).status);
 	_graphic.updateFriendList(_friendList.getFriendList());
-//	if (dynamic_cast<const request::friends::server::Update &>(req).username == Env::getInstance().selectedFriend.name)
 	_graphic.receiveFriendInformation(_friendList.getFriend(dynamic_cast<const request::friends::server::Update &>(req).username));
 
 }
@@ -154,8 +152,7 @@ void		Application::get_msg_handler(const ARequest &req)
 	std::string			msg(dynamic_cast<const request::chat::client::Message &>(req).msg);
 
 	_friendList.insertIncomingMsg(friendName, msg);
-//	if (friendName == Env::getInstance().selectedFriend.name)
-		_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
+	_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
 }
 
 void				Application::handle_udp_input_read()
@@ -181,7 +178,6 @@ void				Application::handle_udp_input_read()
   time = QDateTime::currentMSecsSinceEpoch() / 1000;
   serialize << opt << size << time << (request::StreamLen)nBytes;
 	serialize.push((const unsigned char *)str, nBytes);
-	qDebug() << "handle_udp_input_read()" << serialize.size() << size << nBytes;
 
 	Serializer::Byte	*data = serialize.data();
 	ANetwork::ByteArray	bytes(data, data + serialize.size());
@@ -206,7 +202,6 @@ void		Application::get_call_request_handler(const ARequest &req)
 		Env::getInstance().callInfo.friendName = name;
 		Env::getInstance().callInfo.friendPortUDP = port;
 		_graphic.on_call_request_success();
-		qDebug() << "request call accepted" << port << QHostAddress(ip).toString();
 		if (!init_UDP())
 			goto fail;
 		send_request(request::call::client::AcceptClient(request::call::client::AcceptClient(Env::getInstance().userInfo.login, name, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.userPortUDP)));
@@ -220,7 +215,6 @@ void		Application::get_call_request_handler(const ARequest &req)
 		send_request(request::call::client::RefuseClient(Env::getInstance().userInfo.login, name));
 		_waitedResponses.push(response_handler(&Application::ignore_response, this));
 		_inCommunication = false;
-		qDebug() << "request call rejected";
 	}
 }
 
@@ -239,7 +233,6 @@ void		Application::get_call_accept_handler(const ARequest &req)
 	_udpNetwork.start();
 	_graphic.on_call_request_success();
 	_inCommunication = true;
-	qDebug() << "request call accepted" << port << QHostAddress(ip).toString();
 }
 
 void	Application::get_call_timeout_handler(const ARequest &req)
@@ -262,13 +255,11 @@ void	Application::ping_handler(const ARequest &req)
 
 void		Application::get_friend_request_handler(const ARequest &req)
 {
-	qDebug() << "request friend received";
 	std::string content("\"");
 	content += dynamic_cast<const request::friends::client::Request &>(req).from;
 	content += "\" just asked you to be his friend.";
 	if (_graphic.request_server_response("Friend request", content))
 	{
-		qDebug() << "request friend accepted";
 		send_request(request::friends::client::Accept(Env::getInstance().userInfo.login, dynamic_cast<const request::friends::client::Request &>(req).from));
 		_waitedResponses.push(response_handler(&Application::ignore_response, this));
 	}
@@ -276,7 +267,6 @@ void		Application::get_friend_request_handler(const ARequest &req)
 	{
 	send_request(request::friends::client::Refuse(Env::getInstance().userInfo.login, dynamic_cast<const request::friends::client::Request &>(req).from));
 	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-	qDebug() << "request friend rejected";
 	}
 }
 
@@ -328,7 +318,6 @@ void  Application::create_account_response(const ARequest &req)
 
 void  Application::change_account_password_response(const ARequest &req)
 {
-	qDebug() << "return change : " << req.code();
   if (req.code() == request::server::OK)
     {
       _graphic.on_change_account_password_success();
@@ -364,11 +353,9 @@ void  Application::desauthentification_response(const ARequest &req)
   if (req.code() == request::server::OK)
     {
       _graphic.on_desauthentification_success();
-      qDebug() << "(des-response ok)";
       return ;
     }
   _graphic.on_desauthentification_error();
-  qDebug() << "(des-response not ok)";
 }
 
 void  Application::ignore_response(const ARequest & req)
@@ -457,13 +444,9 @@ void	Application::triggerAboutToClose()
 
 void	Application::triggerChatHandler(const request::Username &friendName, const request::Message &msg)
 {
-	qDebug() << "msg : " << msg.c_str();
 	send_request(request::chat::client::Message(Env::getInstance().userInfo.login, friendName, 45, msg));
-	
 	_friendList.insertOutcomingMsg(friendName, msg);
-	qDebug() << "msg : " << msg.c_str();
 	_graphic.receiveFriendInformation(_friendList.getFriend(friendName));
-
 	_waitedResponses.push(response_handler(&Application::ignore_response, this));
 }
 
@@ -480,12 +463,10 @@ void					Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
 	serialize >> opt >> Totalsize >> time >> streamLen;
 	if (GET_STREAM_VER(opt) != request::audio::VERSION || Totalsize != bytes.size())
 	{
-		qDebug() << "Don't match" << GET_STREAM_VER(opt) << Totalsize;
 		return ;
 	}
 	if ((QDateTime::currentMSecsSinceEpoch() / 1000) - time > 2)
 	{
-		qDebug() << "Timeout" << time << (QDateTime::currentMSecsSinceEpoch() / 1000);
 		return ;
 	}
 	{
@@ -494,7 +475,6 @@ void					Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
 		int				numFrames;
 
 		memset(sample, 0, SOUNDBUFF_SIZE);
-		qDebug() << "triggerUdpDataAvailable()" << bytes.size() << numFrames;
 		numFrames = _codec->decode(bytes.data() + 13, bytes.size() - 13, sample, MAX_FRAME_SIZE);
 		chunk->assign(sample, (FRAMES_PER_BUFFER * NUM_CHANNELS));
 		_bridge.outputPush(chunk);
@@ -505,24 +485,6 @@ void	Application::triggerStatusHandler(const request::Status &newStatus, const r
 {
 	send_request(request::perso::client::StatusClient(newStatus, msgStatus));
 	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-	//à virer !!!!!
-/*	_friendList.insertFriend("toto1", "feeff", ABSENT);
-	_friendList.insertFriend("toto2", "pas top", CONNECTED);
-	_friendList.insertFriend("toto3", "gdfg", INVISIBLE);
-	_friendList.insertFriend("toto44", "gdfg4255", OCCUPIED);
-	_friendList.insertFriend("totoaze1", "feeff", ABSENT);
-	_friendList.insertFriend("tofefto2", "pas top", CONNECTED);
-	_friendList.insertFriend("totefafo3", "gdfg", INVISIBLE);
-	_friendList.insertFriend("tazezfoto44", "gdfg4255", OCCUPIED);
-	_friendList.insertFriend("tobrbrbto1", "feeff", ABSENT);
-	_friendList.insertFriend("togzergto2", "pas top", CONNECTED);
-	_friendList.insertFriend("tosbdfsbdto3", "gdfg", INVISIBLE);
-	_friendList.insertFriend("towcvcxto44", "gdfg4255", OCCUPIED);
-	_friendList.insertFriend("totqfgro1", "feeff", ABSENT);
-	_friendList.insertFriend("totbnztikruo2", "pas top", CONNECTED);
-	_friendList.insertFriend("totruitio3", "gdfg", INVISIBLE);
-	_friendList.insertFriend("totheto44", "gdfg4255", OCCUPIED);*/
-
 	_graphic.updateFriendList(_friendList.getFriendList());
 }
 
@@ -545,22 +507,6 @@ void	Application::triggerCallHandler(const request::Username &friendName)
 		_waitedResponses.push(response_handler(&Application::call_response, this));
 	}
 }
-
-/*void	Application::triggerHandler(const request: &)
-{
-	send_request(request:);
-	_waitedResponses.push(response_handler(&Application::ignore_response, this));
-}
-
-void  Application::_response(const ARequest &req)
-{
-  if (req.code() == request::server::OK)
-    {
-//      _graphic
-      return ;
-    }
-//  _graphic
-}*/
 
 void	Application::triggerHangUpHandler()
 {

@@ -22,7 +22,7 @@ public:
 
 private slots:
   void  onRead();
-  void	stateChanged(QAbstractSocket::SocketState st);
+  void	on_disconnect();
 
 private:
   void	translateError();
