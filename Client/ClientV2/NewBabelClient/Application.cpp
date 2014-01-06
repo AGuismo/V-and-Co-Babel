@@ -388,7 +388,7 @@ void  Application::add_friend_response(const ARequest &req)
       _graphic.on_add_friend_success();
       return ;
     }
-	_graphic.on_add_friend_error("User do not exist");
+	_graphic.on_add_friend_error("You can not add this user");
 }
 
 void	Application::hang_up_response(const ARequest &resp)

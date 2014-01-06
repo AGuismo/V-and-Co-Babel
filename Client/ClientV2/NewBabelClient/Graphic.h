@@ -45,7 +45,6 @@ public slots:
 	void			on_create_account_window_triggered();
 	void			on_delete_account_window_triggered();
 	void			on_account_management_window_triggered();
-
 	void			on_add_friend_window_triggered();
 	void			on_delete_friend_triggered();
 	void			on_send_box_push_button_released();
@@ -55,7 +54,6 @@ public slots:
 	void			on_change_status_txt_triggered();
 	void			on_set_auto_answer_triggered();
 	void			on_unset_auto_answer_triggered();
-
 	void			on_friend_list_selection_changed();
 	void			showTime();
 
@@ -71,6 +69,7 @@ public slots:
 
 private:
 	bool			eventFilter(QObject *target, QEvent *event);
+
 public:
 	void			on_connection_error(enum ANetwork::SocketState);
 	void			on_connection_success();
@@ -94,7 +93,7 @@ public:
 	void			inCallAnimation();
 	void			noAnimation();
 
-	void			on_select_friend();// à coder
+	void			on_select_friend();
 	void			on_add_friend_success();
 	void			on_add_friend_error(const std::string &error);
 
