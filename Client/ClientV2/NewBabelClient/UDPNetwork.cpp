@@ -64,7 +64,7 @@ void  UDPNetwork::sendData(const ANetwork::ByteArray &bytes)
 
 	if (_sock == 0)
 		return ;
-	//qDebug("sendData()");
+	qDebug("sendData()");
 	_sock->writeDatagram(QByteArray(reinterpret_cast<const char *>(bytes.data()), bytes.size()), _receiverIP, _receiverPort);
 }
 
@@ -118,7 +118,7 @@ void  UDPNetwork::handleOutputRead()
 
 		bytes.resize(_sock->pendingDatagramSize());
 		_sock->readDatagram(bytes.data(), bytes.size(), &sender, &senderPort);
-		//qDebug("readDatagram()");
+		qDebug("readDatagram()");
 		if (sender == _receiverIP && senderPort == _receiverPort)
 			_onAvailableData(ByteArray(bytes.begin(), bytes.end()));
 		++atMost;

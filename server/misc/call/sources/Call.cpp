@@ -53,7 +53,7 @@ bool	Call::searchClient(const std::list<IClient::Pointer> &clients, const std::s
 {
   for (Server::client_list::const_iterator it = clients.begin(); it != clients.end(); ++it)
     {
-      if ((*it)->Username() == name)
+      if ((*it)->Username() == name && (*it)->Authenticated())
 	{
 	  client = *it;
 	  return (true);
@@ -76,10 +76,11 @@ bool	Call::verifCall(IClient::Pointer sender, IClient::Pointer receiver, Databas
 	    }
 	}
     }
-  if (receiver->privacy() == request::User::PRIVATE)
+/*  if (receiver->privacy() == request::User::PRIVATE)
     return false;
   else
-    return true;
+    return true;*/
+  return (false);
 }
 
 void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sender, const ARequest *req)
@@ -110,11 +111,14 @@ void	Call::call(const std::list<IClient::Pointer> &clients, IClient::Pointer sen
 	      request::call::client::CallClient fwd(*origin);
 	      fwd._ip = sender->IP();
 
+		  // verifCall(sender, receiver, friends, clients)
 	      if (receiver->Authenticated() &&
-		  receiver->status() == request::User::Status::CONNECTED &&
-		  receiver->Communication() == false &&
-		  verifCall(sender, receiver, friends, clients))
+		  receiver->Communication() == false)
 		{
+#if defined(DEBUG)
+	      std::cout << "Call: receiver Auth, no in communic already" << std::endl;
+#endif
+
 		  sender->Communication(true);
 		  receiver->serialize_data(fwd);
 		  sender->serialize_data(request::server::Ok());
