@@ -93,9 +93,9 @@ void				FakeMenu::handleOutputWrite(const QByteArray &bytes)
 	std::ostringstream		ss;
 
 	chunk->clean();
-//	chunk->assign(reinterpret_cast<const SAMPLE *>(bytes.data()), (bytes.size() / sizeof(SAMPLE)));
-	numSamples = _codec->decode(reinterpret_cast<const unsigned char *>(bytes.data()), bytes.size(), decoded, sizeof(decoded));
-	chunk->assign(decoded, numSamples);
+	chunk->assign(reinterpret_cast<const SAMPLE *>(bytes.data()), (bytes.size() / sizeof(SAMPLE)));
+//	numSamples = _codec->decode(reinterpret_cast<const unsigned char *>(bytes.data()), bytes.size(), decoded, sizeof(decoded));
+//	chunk->assign(decoded, numSamples);
 	_bridge.outputPush(chunk);
 }
 
@@ -103,9 +103,9 @@ void				FakeMenu::handleInputRead()
 {
   AudioChunk		*chunk;
   unsigned char		str[MAX_PACKET_SIZE];
-  SAMPLE			sample[MAX_FRAME_SIZE];
+  SAMPLE			sample[SOUNDBUFF_SIZE];
   int				numBytes;
-  int				numSamples;
+  int				numFrames;
   QMutexLocker		_locker(&_sockLocker);
 
   qDebug() << QThread::currentThreadId() << "HandleInputRead";
@@ -113,17 +113,17 @@ void				FakeMenu::handleInputRead()
     return ;
   chunk = _bridge.inputPop();
 
-//  memset(str, 0, MAX_PACKET_SIZE);
-//  memset(sample, 0, MAX_FRAME_SIZE);
-//  qDebug() << QThread::currentThreadId() << "Size Before" << chunk->size();
-  numBytes = _codec->encode(chunk->getContent(), FRAMES_PER_BUFFER, str, sizeof(str));
-//  numSamples = _codec->decode(str, numBytes, sample, MAX_FRAME_SIZE);
-//  chunk->clean();
-//  chunk->assign(sample, numSamples);
-//  qDebug() << QThread::currentThreadId() << "Size After" << chunk->size();
+  memset(str, 0, MAX_PACKET_SIZE);
+  memset(sample, 0, SOUNDBUFF_SIZE);
+  qDebug() << QThread::currentThreadId() << "Size Before" << chunk->size();
+  numBytes = _codec->encode(chunk->getContent(), FRAMES_PER_BUFFER, str, MAX_PACKET_SIZE);
+  qDebug() << QThread::currentThreadId() << "NumBytes = " << numBytes;
+  numFrames = _codec->decode(str, numBytes, sample, MAX_FRAME_SIZE);
+  chunk->clean();
+  chunk->assign(sample, (numFrames * NUM_CHANNELS));
 
-  QByteArray			bytes(reinterpret_cast<char *>(str), numBytes);
-//  QByteArray			bytes(reinterpret_cast<char *>(chunk->getContent()), (chunk->size() * sizeof(SAMPLE)));
+//  QByteArray			bytes(reinterpret_cast<char *>(str), numBytes);
+  QByteArray			bytes(reinterpret_cast<char *>(chunk->getContent()), (chunk->size() * sizeof(SAMPLE)));
   qDebug() << QThread::currentThreadId() << "Write " << bytes.size() << "octets";
   _sock->writeDatagram(bytes, QHostAddress(_clientIP), _clientPort);
   _bridge.pushUnused(chunk);

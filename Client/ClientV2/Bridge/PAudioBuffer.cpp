@@ -38,9 +38,9 @@ void			PAudioBuffer::sendToNetwork()
   int						i;
   AudioChunk				*chunk;
 
-  if (ABS(fRdIn - fWrIn) >= FRAMES_PER_BUFFER)
+  if (ABS(fRdIn - fWrIn) >= SOUNDBUFF_SIZE)
     {
-		toReach = fRdIn + FRAMES_PER_BUFFER;
+		toReach = fRdIn + SOUNDBUFF_SIZE;
 		if (toReach >= fMaxIn)
 			toReach -= fMaxIn;
 		i = 0;
@@ -57,7 +57,7 @@ void			PAudioBuffer::sendToNetwork()
 		//compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE, encodedSize);
 		//chunk->assign(_frameBuff, (FRAME_PACKET_SIZE * sizeof(float)));
 		// Raw Mode
-		chunk->assign(_frameBuff, FRAMES_PER_BUFFER);
+		chunk->assign(_frameBuff, SOUNDBUFF_SIZE);
 		_bridge.inputPush(chunk);
 	}
 }
@@ -70,8 +70,6 @@ int				PAudioBuffer::streamCallBack(const void *inputBuff, void *outputBuff,
 
 	data->recordCallBack(inputBuff, outputBuff, framesPerBuff, timeInfo, statusFlags, userData);
 	data->sendToNetwork();
-	data->sendToNetwork();
-	data->feed();
 	data->feed();
 	data->playCallBack(inputBuff, outputBuff, framesPerBuff, timeInfo, statusFlags, userData);
 	return (paContinue);
@@ -202,9 +200,9 @@ PAudioBuffer::PAudioBuffer(IAudioCodec *codec, AudioBridge &bridge) :
   output = new (SAMPLE[CBUFF_SIZE]);
   if (output != NULL)
     memset(output, 0, CBUFF_SIZE);
-  _frameBuff = new (SAMPLE[FRAMES_PER_BUFFER]);
+  _frameBuff = new (SAMPLE[SOUNDBUFF_SIZE]);
   if (_frameBuff != NULL)
-    memset(_frameBuff, 0, FRAMES_PER_BUFFER);
+    memset(_frameBuff, 0, SOUNDBUFF_SIZE);
 }
 
 PAudioBuffer::~PAudioBuffer()

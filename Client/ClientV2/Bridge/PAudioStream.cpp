@@ -16,7 +16,7 @@ bool			PAudioStream::initInput()
       qDebug() << "No default input device.";
       return (false);
     }
-  _inputParam.channelCount = 2;
+  _inputParam.channelCount = NUM_CHANNELS;
   _inputParam.sampleFormat = PA_SAMPLE_TYPE;
   _inputParam.suggestedLatency = (Pa_GetDeviceInfo(_inputParam.device))->defaultLowInputLatency;
   _inputParam.hostApiSpecificStreamInfo = NULL;
@@ -32,7 +32,7 @@ bool			PAudioStream::initOutput()
       qDebug() << "No default output device.";
       return (false);
     }
-  _outputParam.channelCount = 2;
+  _outputParam.channelCount = NUM_CHANNELS;
   _outputParam.sampleFormat = PA_SAMPLE_TYPE;
   _outputParam.suggestedLatency = (Pa_GetDeviceInfo(_outputParam.device))->defaultLowOutputLatency;
   _outputParam.hostApiSpecificStreamInfo = NULL;
