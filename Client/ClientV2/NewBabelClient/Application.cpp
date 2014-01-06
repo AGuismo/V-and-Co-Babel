@@ -58,7 +58,7 @@ void  Application::init()
 	_graphic.setAboutToCloseHandler(Function<void ()>(&Application::triggerAboutToClose, this));
 
   // Here we go !
-	_graphic.setStatusHandler(Function<void (const request::Status &, const request::Message &)>(&Application::triggerStatusHandler, this));	
+	_graphic.setStatusHandler(Function<void (const request::Status &, const request::Message &)>(&Application::triggerStatusHandler, this));
 	_graphic.setAddFriendHandler(Function<void (const request::Username &)>(&Application::triggerAddFriendHandler, this));
 	_graphic.setDelFriendHandler(Function<void (const request::Username &)>(&Application::triggerDelFriendHandler, this));
 	_graphic.setGetFriendHandler(Function<void (const request::Username &)>(&Application::triggerGetFriendHandler, this));
@@ -457,7 +457,7 @@ void					Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
 {
 	Serializer			serialize;
 	Ruint8				opt;
-	request::StreamLen	streamLen;			
+	request::StreamLen	streamLen;
 	Ruint16				Totalsize;
 	request::Time		time;
 
@@ -479,7 +479,6 @@ void					Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
 
 		memset(sample, 0, SOUNDBUFF_SIZE);
 		numFrames = _codec->decode(bytes.data() + 13, bytes.size() - 13, sample, MAX_FRAME_SIZE);
-		qDebug() << "triggerUdpDataAvailable()" << bytes.size() << numFrames;
 		chunk->assign(sample, (FRAMES_PER_BUFFER * NUM_CHANNELS));
 		_bridge.outputPush(chunk);
 	}
@@ -575,4 +574,3 @@ void  Application::triggerAvailableData(const ANetwork::ByteArray data)
   bufferise(data);
   while (_buffer.size() && handle_request());
 }
-

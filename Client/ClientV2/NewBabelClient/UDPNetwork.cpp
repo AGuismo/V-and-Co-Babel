@@ -64,7 +64,6 @@ void  UDPNetwork::sendData(const ANetwork::ByteArray &bytes)
 
 	if (_sock == 0)
 		return ;
-	qDebug() << "UDPNetwork::sendData():" << "Port:" << _receiverPort << ", IP:" << _receiverIP.toString() << ", PacketSize:" << bytes.size();
 	_sock->writeDatagram(QByteArray(reinterpret_cast<const char *>(bytes.data()), bytes.size()), _receiverIP, _receiverPort);
 }
 
@@ -106,8 +105,7 @@ void  UDPNetwork::stop()
 void  UDPNetwork::handleOutputRead()
 {
 	QMutexLocker	_locker(&_lock);
-	
-	qDebug("handleOutputRead()");
+
 	if (_sock == 0)
 		return ;
 	if (_sock->hasPendingDatagrams())
@@ -120,7 +118,5 @@ void  UDPNetwork::handleOutputRead()
 		_sock->readDatagram(bytes.data(), bytes.size(), &sender, &senderPort);
 		if (sender == _receiverIP && senderPort == _receiverPort)
 			_onAvailableData(ByteArray(bytes.begin(), bytes.end()));
-		else
-			qDebug("Invalid Send: Client is not the good one");
 	}
 }
