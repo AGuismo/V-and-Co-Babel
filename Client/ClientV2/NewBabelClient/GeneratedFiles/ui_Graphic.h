@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'Graphic.ui'
 **
-** Created by: Qt User Interface Compiler version 5.2.0
+** Created by: Qt User Interface Compiler version 5.1.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -423,7 +423,7 @@ public:
         statusComboBox = new QComboBox(widget);
         statusComboBox->setObjectName(QStringLiteral("statusComboBox"));
         statusComboBox->setEnabled(true);
-        statusComboBox->setMinimumSize(QSize(110, 0));
+        statusComboBox->setMinimumSize(QSize(125, 0));
         statusComboBox->setFont(font1);
         statusComboBox->setStyleSheet(QLatin1String("QComboBox#statusComboBox\n"
 "{\n"
@@ -604,7 +604,7 @@ public:
 
         selectedFriendPersonalMsgLabel = new QLabel(layoutWidget_15);
         selectedFriendPersonalMsgLabel->setObjectName(QStringLiteral("selectedFriendPersonalMsgLabel"));
-        selectedFriendPersonalMsgLabel->setMinimumSize(QSize(134, 0));
+        selectedFriendPersonalMsgLabel->setMinimumSize(QSize(164, 0));
         selectedFriendPersonalMsgLabel->setFont(font3);
         selectedFriendPersonalMsgLabel->setStyleSheet(QLatin1String("background-color: rgba(190, 190, 190, 200);\n"
 "border-width: 2px;\n"
@@ -691,7 +691,7 @@ public:
         sizePolicy1.setVerticalStretch(3);
         sizePolicy1.setHeightForWidth(friendMsgBox->sizePolicy().hasHeightForWidth());
         friendMsgBox->setSizePolicy(sizePolicy1);
-        friendMsgBox->setMinimumSize(QSize(134, 0));
+        friendMsgBox->setMinimumSize(QSize(164, 0));
         friendMsgBox->setMaximumSize(QSize(800, 16777215));
         friendMsgBox->setSizeIncrement(QSize(3, 0));
         QFont font6;
@@ -776,7 +776,7 @@ public:
         GraphicClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(GraphicClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 860, 18));
+        menuBar->setGeometry(QRect(0, 0, 860, 23));
         menuConnection = new QMenu(menuBar);
         menuConnection->setObjectName(QStringLiteral("menuConnection"));
         menuManage_account = new QMenu(menuBar);
@@ -830,11 +830,11 @@ public:
         addFriendPushButton->setText(QApplication::translate("GraphicClass", "Add", 0));
         deleteFriendPushButton->setText(QApplication::translate("GraphicClass", "Delete", 0));
         userNameLabel->setText(QApplication::translate("GraphicClass", "User", 0));
-        statusLineEdit->setText(QApplication::translate("GraphicClass", "Personnal message...", 0));
+        statusLineEdit->setText(QApplication::translate("GraphicClass", "Personnal message", 0));
         selectedFriendNameLabel->setText(QApplication::translate("GraphicClass", "Selected Friend", 0));
         selectedFriendIconStatusLabel->setText(QString());
         callFriendRightPushButton->setText(QApplication::translate("GraphicClass", "Call", 0));
-        selectedFriendPersonalMsgLabel->setText(QApplication::translate("GraphicClass", "Selected Friend Personal Message", 0));
+        selectedFriendPersonalMsgLabel->setText(QApplication::translate("GraphicClass", "Friend Personal Message", 0));
         hangUpPushButton->setText(QApplication::translate("GraphicClass", "Hang-up", 0));
         callLabel->setText(QApplication::translate("GraphicClass", "Call Status", 0));
         sendBoxPushButton->setText(QApplication::translate("GraphicClass", "Send", 0));
