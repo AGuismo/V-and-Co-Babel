@@ -508,6 +508,7 @@ void	Application::triggerCallHandler(const request::Username &friendName)
 	else
 	{
 		_inCommunication = true;
+		_graphic.callingAnimation();
 		send_request(request::call::client::CallClient(Env::getInstance().userInfo.login, friendName, 1, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.userPortUDP));
 		_waitedResponses.push(response_handler(&Application::call_response, this));
 	}
