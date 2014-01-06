@@ -11,6 +11,7 @@
 # include	"FriendList.hh"
 # include	"audio.h"
 # include	"QTBridge.h"
+# include	"IAudioCodec.hh"
 
 class Application : public QObject, public IApplication
 {
@@ -117,6 +118,7 @@ private:
   stack_response_handler	_waitedResponses;
   request_callback			_requestActions;
   bool						_inCommunication;
+  IAudioCodec				*_codec;
 };
 
 #endif // APPLICATION_HH

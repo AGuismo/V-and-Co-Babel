@@ -129,12 +129,15 @@ protected:
   }
 };
 
+//#include	<QDebug>
+
 template <typename T>
 void			Serializer::push(const T *val, size_type count)
 {
 	const Byte	*buffer = reinterpret_cast<const Byte*>(val);
-	_container.resize(_container.size() + (count * sizeof(T)));
+	//_container.resize(_container.size() + (count * sizeof(T)));
 
+//	qDebug() << sizeof(T);
   for (size_t size = 0; size < (sizeof(T) * count); size += sizeof(Byte))
     {
       _container.push_back(buffer[size]);

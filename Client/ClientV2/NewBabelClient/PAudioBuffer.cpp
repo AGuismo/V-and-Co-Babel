@@ -4,7 +4,7 @@
 #include		<QThread>
 #include		"PAudioBuffer.hh"
 
-// CallBacks
+// CallBack Functions
 
 void			PAudioBuffer::feed()
 {
@@ -17,20 +17,15 @@ void			PAudioBuffer::feed()
 		return ;
 	if (chunk->size() == 0)
 		return ;
-//	if (chunkList[0].size() == 0)
-//		return ;
-//	frames = _codec->decode(chunkList[0].getContent(), FRAME_PACKET_SIZE);
 	frames = chunk->getContent();
 	if (frames == NULL)
 		return ;
 	i = 0;
-	while (i < FRAME_PACKET_SIZE)
+	while (i < chunk->size())
 	{
 		if (fWrOut >= fMaxOut)
 			fWrOut = 0;
 		output[fWrOut++] = frames[i++];
-//		if (fWrOut == fRdOut)
-//			return ;
 	}
 	_bridge.pushUnused(chunk);
 }
@@ -39,30 +34,27 @@ void			PAudioBuffer::sendToNetwork()
 {
   int						toReach;
   int						i;
-  unsigned char				*compressed;
-  unsigned int				encodedSize;
   AudioChunk				*chunk;
 
-  if (ABS(fRdIn - fWrIn) >= FRAME_PACKET_SIZE)
+  if (ABS(fRdIn - fWrIn) >= SOUNDBUFF_SIZE)
     {
-      toReach = fRdIn + FRAME_PACKET_SIZE;
-	  if (toReach >= fMaxIn)
-		  toReach -= fMaxIn;
-      i = 0;
-      while (fRdIn != toReach)
-	{
-	  _frameBuff[i++] = input[fRdIn++];
-	  if (fRdIn >= fMaxIn)
-	    fRdIn = 0;
-	  }
-      encodedSize = 0;
-//    compressed = _codec->encode(_frameBuff, FRAME_PACKET_SIZE, encodedSize);
-	  chunk = _bridge.popUnused();
-	  chunk->assign(_frameBuff, (FRAME_PACKET_SIZE * sizeof(SAMPLE)));
-//    chunk.assign(compressed, encodedSize);
-//      qDebug() << QThread::currentThreadId() << "Sending packet";
-      _bridge.inputPush(chunk);
-    }
+		toReach = fRdIn + SOUNDBUFF_SIZE;
+		if (toReach >= fMaxIn)
+			toReach -= fMaxIn;
+		i = 0;
+		while (fRdIn != toReach)
+		{
+			_frameBuff[i++] = input[fRdIn++];
+			if (fRdIn >= fMaxIn)
+			fRdIn = 0;
+		}
+		chunk = _bridge.popUnused();
+		if (chunk == NULL)
+			return ;
+		chunk->clean();
+		chunk->assign(_frameBuff, SOUNDBUFF_SIZE);
+		_bridge.inputPush(chunk);
+	}
 }
 
 int				PAudioBuffer::streamCallBack(const void *inputBuff, void *outputBuff,
@@ -203,9 +195,9 @@ PAudioBuffer::PAudioBuffer(IAudioCodec *codec, AudioBridge &bridge) :
   output = new (SAMPLE[CBUFF_SIZE]);
   if (output != NULL)
     memset(output, 0, CBUFF_SIZE);
-  _frameBuff = new (SAMPLE[FRAME_PACKET_SIZE]);
+  _frameBuff = new (SAMPLE[SOUNDBUFF_SIZE]);
   if (_frameBuff != NULL)
-    memset(_frameBuff, 0, FRAME_PACKET_SIZE);
+    memset(_frameBuff, 0, SOUNDBUFF_SIZE);
 }
 
 PAudioBuffer::~PAudioBuffer()

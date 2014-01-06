@@ -7,12 +7,15 @@
 #include	"FriendRequest.hh"
 #include	"Protocol.hpp"
 #include	"Env.hh"
+#include	"OpAudioCodec.hh"
 #include	<QObject>
 #include	<QDebug>
 
 Application::Application(int ac, char *av[]):
   _ac(ac), _app(_ac, av), _bridge(150), _audioStarter(_bridge), _inCommunication(false)
 {
+	_codec = new OpAudioCodec();
+	_codec->init();
   _requestActions[request::server::perso::PING] = callback_handler(&Application::ping_handler, this);
   _requestActions[request::server::friends::UPDATE] = callback_handler(&Application::update_friend_handler, this);
   _requestActions[request::client::friends::REQUEST] = callback_handler(&Application::get_friend_request_handler, this);
@@ -158,25 +161,33 @@ void		Application::get_msg_handler(const ARequest &req)
 void				Application::handle_udp_input_read()
 {
 	AudioChunk		*chunk;
-	SAMPLE			*str;
 	Serializer		serialize;
 	Ruint8			opt;
 	Ruint16			size;
 	request::Time	time;
+	unsigned char	str[MAX_PACKET_SIZE];
+	int				nBytes;
 
   chunk = _bridge.inputPop();
   if (chunk == 0)
 	  return ;
+
+  memset(str, 0, MAX_PACKET_SIZE);
+  nBytes = _codec->encode(chunk->getContent(), FRAMES_PER_BUFFER, str, MAX_PACKET_SIZE);
+
   SET_STREAM_VER(opt, request::audio::VERSION);
   SET_STREAM_TYPE(opt, request::options::AUDIO);
-  size = sizeof(opt) + sizeof(size) + sizeof(time) + chunk->size() * sizeof(SAMPLE) + sizeof(request::StreamLen);
+  size = sizeof(opt) + sizeof(size) + sizeof(time) + nBytes + sizeof(request::StreamLen);
   time = QDateTime::currentMSecsSinceEpoch() / 1000;
-  str = chunk->getContent();
-  serialize << opt << size << time << (request::StreamLen)chunk->size();
-	serialize.push(chunk->getContent(), chunk->size());
-  ANetwork::ByteArray			bytes(serialize.data(), serialize.data() + serialize.size());
+  serialize << opt << size << time << (request::StreamLen)nBytes;
+	serialize.push((const unsigned char *)str, nBytes);
+	qDebug() << "handle_udp_input_read()" << serialize.size() << size << nBytes;
+
+	Serializer::Byte	*data = serialize.data();
+	ANetwork::ByteArray	bytes(data, data + serialize.size());
 	_udpNetwork.sendData(bytes);
 	_bridge.pushUnused(chunk);
+
 }
 
 void		Application::get_call_request_handler(const ARequest &req)
@@ -479,8 +490,13 @@ void					Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
 	}
 	{
 		AudioChunk		*chunk = _bridge.popUnused();
+		SAMPLE			sample[SOUNDBUFF_SIZE];
+		int				numFrames;
 
-		chunk->assign(reinterpret_cast<const SAMPLE *>(serialize.data()), (streamLen / sizeof(SAMPLE)));
+		memset(sample, 0, SOUNDBUFF_SIZE);
+		qDebug() << "triggerUdpDataAvailable()" << bytes.size() << numFrames;
+		numFrames = _codec->decode(bytes.data() + 13, bytes.size() - 13, sample, MAX_FRAME_SIZE);
+		chunk->assign(sample, (FRAMES_PER_BUFFER * NUM_CHANNELS));
 		_bridge.outputPush(chunk);
 	}
 }

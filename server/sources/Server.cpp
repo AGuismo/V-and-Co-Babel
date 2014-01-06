@@ -114,6 +114,7 @@ void		Server::clientAboutToClose(IClient::Pointer &client)
 	      std::cout << "Timeout send to : [" << (*itClient)->Username() << "]" << std::endl;
 #endif
 	      (*itClient)->serialize_data(request::call::server::Timeout());
+		  (*itClient)->Communication(false);
 	    }
 	  if ((*itClient)->Username() == *it && (*itClient)->Authenticated())
 	    {
