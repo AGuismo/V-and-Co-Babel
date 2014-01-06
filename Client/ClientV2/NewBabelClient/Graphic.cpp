@@ -22,7 +22,6 @@ void					Graphic::init()
 	connect(ui.actionLogin, SIGNAL(triggered()), this, SLOT(on_login_window_triggered()));
 	// Logout Window Triggered
 	connect(ui.actionLogout, SIGNAL(triggered()), this, SLOT(on_logout_window_triggered()));
-
 	// Add Friend Window Triggered
 	connect(ui.actionAddFriend, SIGNAL(triggered()), this, SLOT(on_add_friend_window_triggered()));
 	// Add Friend Window Push Button Released
@@ -46,7 +45,7 @@ void					Graphic::init()
 	// Set answer Triggered
 	connect(ui.actionSetVoicemail, SIGNAL(triggered()), this, SLOT(on_set_auto_answer_triggered()));
 	// Unset answer Triggered
-	connect(ui.actionUnsetVoicemail, SIGNAL(triggered()), this, SLOT(on_unset_auto_answer_triggered()));	
+	connect(ui.actionUnsetVoicemail, SIGNAL(triggered()), this, SLOT(on_unset_auto_answer_triggered()));
 	// Create Account Window Triggered
 	connect(ui.actionCreateAccount, SIGNAL(triggered()), this, SLOT(on_create_account_window_triggered()));
 	// Delete Account Window Triggered
@@ -65,10 +64,8 @@ void					Graphic::init()
 	connect(&_createAccountWindow, SIGNAL(create_account_try(const std::string &, const std::string &)), this, SLOT(on_try_create(const std::string &, const std::string &)));
 	// Delete account try triggered
 	connect(&_deleteAccountWindow, SIGNAL(delete_account_try(const std::string &, const std::string &)), this, SLOT(on_try_delete(const std::string &, const std::string &)));
-
 	// Add friend try triggered
 	connect(&_addFriendWindow, SIGNAL(add_try(const std::string &)), this, SLOT(on_try_add_friend(const std::string &)));
-
 	// Friend list Item changed
 	connect(ui.friendListWidget, SIGNAL(itemSelectionChanged()), this, SLOT(on_friend_list_selection_changed()));
 	disconnected();
@@ -191,20 +188,15 @@ bool					Graphic::eventFilter(QObject *target, QEvent *event)
 void					Graphic::run()
 {
 	QSplashScreen screen;
-
 	screen.setPixmap(QPixmap("./Img/logoBabelSplash.png"));
 	screen.show();
 	screen.installEventFilter(this);
-	
 	QEventLoop evtLoop;
 	QTimer::singleShot(2000, &evtLoop, SLOT(quit()));
 	evtLoop.exec();
-
 	screen.hide();
-
 	show();
 	_connectWindow.show();
-
 }
 
 void					Graphic::on_connect_window_triggered()
@@ -255,15 +247,6 @@ void					Graphic::on_add_friend_window_triggered()
 	_addFriendWindow.clearServerResponse();
 
 }
-
-
-
-
-
-
-
-
-
 
 void					Graphic::on_try_add_friend(const std::string &friendName)
 {
@@ -591,8 +574,6 @@ void					Graphic::on_call_request_error()
 {
 	noAnimation();
 }
-
-
 
 Graphic::~Graphic()
 {
