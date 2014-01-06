@@ -156,7 +156,6 @@ void	Auth::modify(const std::list<IClient::Pointer> &clients, IClient::Pointer s
       sender->serialize_data(request::server::NoContent());
       return ;
     }
-  std::cout << "Auth::modify()" << std::endl;
   if (sender->Authenticated() &&
       _db.modClientPass(origin->_name, origin->_oldPassword, origin->_newPassword))
     {
@@ -194,7 +193,6 @@ void	Auth::remove(const std::list<IClient::Pointer> &clients, IClient::Pointer s
 {
   const request::auth::client::DelClient	*origin = dynamic_cast<const request::auth::client::DelClient *>(req);
 
-  std::cout << "Auth::delete()" << std::endl;
   if (origin->_name.empty() || origin->_password.empty())
     {
       sender->serialize_data(request::server::NoContent());
@@ -228,7 +226,6 @@ void	Auth::disconnect(const std::list<IClient::Pointer> &clients, IClient::Point
 {
   const request::auth::client::DisconnectClient	*origin = dynamic_cast<const request::auth::client::DisconnectClient *>(req);
 
-  std::cout << "Auth::disconnect()" << std::endl;
   (void)origin;
 
   if (sender->Authenticated() == true)

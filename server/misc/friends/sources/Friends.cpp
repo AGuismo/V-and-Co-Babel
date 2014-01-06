@@ -201,8 +201,6 @@ void	Friends::sendFriendStatus(IClient::Pointer &sender,
 
   if (searchClient(clients, username, receiver))
     {
-      std::cout << "Moi" <<  sender->Username() << std::endl;
-      std::cout << "Amis ajouter" <<  receiver->Username() << std::endl;
       sender->serialize_data(request::friends::server::Update(receiver->status(),
 							    receiver->statusDetail(),
 							    username));
@@ -225,7 +223,6 @@ void	Friends::list(const std::list<IClient::Pointer> &clients, IClient::Pointer 
       _db.clientExist(sender->Username()) &&
       _db.listFriend(sender->Username(), friends))
     {
-      // sender->serialize_data(request::server::Ok());
       for (Database::list_friend::const_iterator it = friends.begin(); it != friends.end(); ++it)
 	{
 	  if (!_db.clientExist(*it))

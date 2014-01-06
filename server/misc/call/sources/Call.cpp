@@ -137,9 +137,6 @@ void	Call::accept(const std::list<IClient::Pointer> &clients, IClient::Pointer s
   const request::call::client::AcceptClient	*origin = dynamic_cast<const request::call::client::AcceptClient *>(req);
   IClient::Pointer				receiver;
 
-  std::cout << "Call::accept()" << std::endl;
-  std::cout << "From : " << origin->_from << std::endl;
-  std::cout << "To : " << origin->_to << std::endl;
   if (sender->Authenticated() &&
       sender->status() == request::User::Status::CONNECTED &&
       _db.clientExist(origin->_from) &&
@@ -177,9 +174,6 @@ void	Call::refuse(const std::list<IClient::Pointer> &clients, IClient::Pointer s
   const request::call::client::RefuseClient	*origin = dynamic_cast<const request::call::client::RefuseClient *>(req);
   IClient::Pointer				receiver;
 
-  std::cout << "Call::refuse()" << std::endl;
-  std::cout << "From : " << origin->_from << std::endl;
-  std::cout << "To : " << origin->_to << std::endl;
   if (sender->Authenticated() &&
       sender->status() == request::User::Status::CONNECTED &&
       _db.clientExist(origin->_from) &&

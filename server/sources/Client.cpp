@@ -77,7 +77,6 @@ void		Client::close()
 void		Client::handle_write(const boost::system::error_code &error,
 				     std::size_t bytes_transferred)
 {
-  std::cout << "Client::handle_write" << std::endl;
   if (!error)
     {
 #if defined(DEBUG)
@@ -213,7 +212,9 @@ bool	Client::serialize_data(const ARequest &req)
 void	Client::async_write(const IClient::buffer &buff)
 {
   _output = buff;
-  std::cout << _output.size() << std::endl;
+#if defined(DEBUG)
+  std::cout << "Client::async_write(): " << _output.size() << std::endl;
+#endif
   boost::asio::async_write(_socket, boost::asio::buffer(_output),
 			   boost::bind(&Client::handle_write, boost::dynamic_pointer_cast<Client>(shared_from_this()),
 				       boost::asio::placeholders::error,
