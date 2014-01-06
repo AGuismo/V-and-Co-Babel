@@ -374,7 +374,7 @@ padding: 2px;</string>
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>110</width>
+                    <width>125</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -462,7 +462,7 @@ border-color: rgb(0, 0, 0);
 padding: 2px;</string>
                   </property>
                   <property name="text">
-                   <string>Personnal message...</string>
+                   <string>Personnal message</string>
                   </property>
                   <property name="maxLength">
                    <number>86</number>
@@ -635,7 +635,7 @@ QPushButton#callFriendRightPushButton:hover
                  <widget class="QLabel" name="selectedFriendPersonalMsgLabel">
                   <property name="minimumSize">
                    <size>
-                    <width>134</width>
+                    <width>164</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -656,7 +656,7 @@ min-width: 10em;
 padding: 2px;</string>
                   </property>
                   <property name="text">
-                   <string>Selected Friend Personal Message</string>
+                   <string>Friend Personal Message</string>
                   </property>
                  </widget>
                 </item>
@@ -769,7 +769,7 @@ QPushButton#hangUpPushButton:hover
               </property>
               <property name="minimumSize">
                <size>
-                <width>134</width>
+                <width>164</width>
                 <height>0</height>
                </size>
               </property>
@@ -907,7 +907,7 @@ QPushButton#sendBoxPushButton:hover
      <x>0</x>
      <y>0</y>
      <width>860</width>
-     <height>18</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConnection">
