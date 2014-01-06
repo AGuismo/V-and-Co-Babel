@@ -67,6 +67,7 @@ void			PAudioStream::run()
 //		unlock(audioLock);
 //		_buffer->sendToNetwork();
 //		_buffer->feed();
+		Pa_Sleep(40);
     }
   if (Pa_IsStreamActive(_stream) == 1)
     Pa_StopStream(_stream);
