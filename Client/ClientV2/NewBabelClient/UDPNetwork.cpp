@@ -64,6 +64,7 @@ void  UDPNetwork::sendData(const ANetwork::ByteArray &bytes)
 
 	if (_sock == 0)
 		return ;
+	//qDebug("sendData()");
 	_sock->writeDatagram(QByteArray(reinterpret_cast<const char *>(bytes.data()), bytes.size()), _receiverIP, _receiverPort);
 }
 
@@ -105,10 +106,11 @@ void  UDPNetwork::stop()
 void  UDPNetwork::handleOutputRead()
 {
 	QMutexLocker	_locker(&_lock);
+	std::size_t		atMost = 0;
 
 	if (_sock == 0)
 		return ;
-	if (_sock->hasPendingDatagrams())
+	while (_sock->hasPendingDatagrams() && atMost < 5)
 	{
 		QByteArray		bytes;
 		QHostAddress	sender;
@@ -116,7 +118,9 @@ void  UDPNetwork::handleOutputRead()
 
 		bytes.resize(_sock->pendingDatagramSize());
 		_sock->readDatagram(bytes.data(), bytes.size(), &sender, &senderPort);
+		//qDebug("readDatagram()");
 		if (sender == _receiverIP && senderPort == _receiverPort)
 			_onAvailableData(ByteArray(bytes.begin(), bytes.end()));
+		++atMost;
 	}
 }
