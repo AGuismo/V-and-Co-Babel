@@ -1,4 +1,4 @@
-#include	"FriendListWidget.h"
+#include	"friendlistwidget.h"
 
 
 FriendListWidget::FriendListWidget(QWidget *parent)

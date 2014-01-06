@@ -3,6 +3,7 @@
 
 # include <QUdpSocket>
 # include <QObject>
+# include <QMutex>
 # include "ANetwork.hh"
 
 class UDPNetwork : public QObject, public ANetwork

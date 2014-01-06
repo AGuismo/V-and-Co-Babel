@@ -185,9 +185,8 @@ int				PAudioBuffer::playCallBack(const void *inputBuff, void *outputBuff,
 // Constructors & Destructors
 
 PAudioBuffer::PAudioBuffer(IAudioCodec *codec, AudioBridge &bridge) :
-  fRdIn(0), fWrIn(0), fMaxIn(CBUFF_SIZE), input(NULL),
-  fRdOut(0), fWrOut(0), fMaxOut(CBUFF_SIZE), output(NULL),
-  _frameBuff(NULL), _codec(codec), _bridge(bridge)
+  _frameBuff(NULL), _codec(codec), fRdIn(0), fWrIn(0), fMaxIn(CBUFF_SIZE), input(NULL),
+  fRdOut(0), fWrOut(0), fMaxOut(CBUFF_SIZE), output(NULL), _bridge(bridge)
 {
   input = new (SAMPLE[CBUFF_SIZE]);
   if (input != NULL)

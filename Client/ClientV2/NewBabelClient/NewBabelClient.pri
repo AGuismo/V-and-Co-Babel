@@ -4,20 +4,10 @@
 
 # This is a reminder that you are using a generated .pro file.
 # Remove it when you are finished editing this file.
-message("You are running qmake on a generated .pro file. This may not work!")
+# message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./Graphic.h  \
-./AGraphic.hh   \
-./ANetwork.hh       \
-./Function.hpp \
-Application.hh \
-IApplication.hh \
-ConnectWindow.h \
-TCPNetwork.h \
-CreateAccountWindow.h \
-FriendList.hh \
-../../../protocol/API/types.hh \
+HEADERS +=     ../../../protocol/API/types.hh \
 ../../../protocol/API/RequestCode.hh \
 ../../../protocol/API/ITransformers.hh \
 ../../../serializer/include/Serializer.hpp \
@@ -33,37 +23,38 @@ FriendList.hh \
 ../../../protocol/include/CallRequest.hh \
 ../../../protocol/include/AuthRequest.hh \
 ../../../protocol/include/ARequest.hh \
-LoginWindow.h \
-UDPNetwork.h \
-    IAudioCodec.hh \
-    IAudioStream.hh \
-    OpAudioCodec.hh \
-    PAudioBuffer.hh \
-    PAudioStream.hh \
-    AudioBridge.hh \
-    AudioChunk.hh \
-    AudioParams.hh \
-    Abridge.hh \
-    FriendListWidget.h \
+    Graphic.h \
+    Function.hpp \
+    FriendList.hh \
     Env.hh \
     DeleteAccountWindow.h \
+    CreateAccountWindow.h \
+    ConnectWindow.h \
     AudioWorker.h \
+    AudioParams.hh \
+    AudioChunk.hh \
+    AudioBridge.hh \
     audio.h \
+    Application.h \
+    ANetwork.hh \
+    AGraphic.hh \
     AddFriendWindow.h \
     AccountManagementWindow.h \
+    Abridge.hh \
+    LoginWindow.h \
+    IAudioStream.hh \
+    IAudioCodec.hh \
+    IApplication.hh \
+    PAudioBuffer.hh \
+    OpAudioCodec.hh \
     ManageFriendWindow.h \
-    QTBridge.h
+    UDPNetwork.h \
+    TCPNetwork.h \
+    QTBridge.h \
+    PAudioStream.hh \
+    friendlistwidget.h
 
-SOURCES += ./Graphic.cpp \
-./main.cpp \
-./AGraphic.cpp \
-ANetwork.cpp \
-TCPNetwork.cpp \
-Application.cpp \
-ConnectWindow.cpp \
-FriendList.cpp \
-CreateAccountWindow.cpp \
-../../../serializer/sources/Serializer.cpp \
+SOURCES +=	../../../serializer/sources/Serializer.cpp \
 ../../../serializer/sources/Salt.cpp \
 ../../../serializer/sources/MD5.cpp \
 ../../../protocol/sources/ServerRequest.cpp \
@@ -75,34 +66,40 @@ CreateAccountWindow.cpp \
 ../../../protocol/sources/CallRequest.cpp \
 ../../../protocol/sources/AuthRequest.cpp \
 ../../../protocol/sources/ARequest.cpp \
-LoginWindow.cpp \
-UDPNetwork.cpp \
-    audio.cpp \
-    AudioBridge.cpp \
-    AudioChunk.cpp \
-    AudioWorker.cpp \
-    ConnectWindow.cpp \
-    CreateAccountWindow.cpp \
-    DeleteAccountWindow.cpp \
-    Env.cpp \
-    FriendList.cpp \
+    Graphic.cpp \
     FriendListWidget.cpp \
-    OpAudioCodec.cpp \
-    PAudioBuffer.cpp \
-    PAudioStream.cpp \
-    QTBridge.cpp \
+    FriendList.cpp \
+    Env.cpp \
+    DeleteAccountWindow.cpp \
+    CreateAccountWindow.cpp \
+    ConnectWindow.cpp \
+    AudioWorker.cpp \
+    AudioChunk.cpp \
+    AudioBridge.cpp \
+    audio.cpp \
+    Application.cpp \
+    ANetwork.cpp \
+    AGraphic.cpp \
     AddFriendWindow.cpp \
     AccountManagementWindow.cpp \
-    ManageFriendWindow.cpp
+    main.cpp \
+    LoginWindow.cpp \
+    PAudioBuffer.cpp \
+    OpAudioCodec.cpp \
+    ManageFriendWindow.cpp \
+    UDPNetwork.cpp \
+    TCPNetwork.cpp \
+    QTBridge.cpp \
+    PAudioStream.cpp
 
 FORMS += ./Graphic.ui \
 ConnectWindow.ui \
 LoginWindow.ui	\
 CreateAccountWindow.ui	\
-    DeleteAccountWindow.ui \
-    AddFriendWindow.ui \
-    AccountManagementWindow.ui \
-    ManageFriendWindow.ui
+DeleteAccountWindow.ui \
+AddFriendWindow.ui \
+AccountManagementWindow.ui \
+ManageFriendWindow.ui
 
 
-RESOURCES += Graphic.qrc
+#RESOURCES += Graphic.qrc

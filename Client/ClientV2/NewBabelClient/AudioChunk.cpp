@@ -1,3 +1,4 @@
+#include		<cstring>
 #include		"AudioChunk.hh"
 #include		"AudioParams.hh"
 

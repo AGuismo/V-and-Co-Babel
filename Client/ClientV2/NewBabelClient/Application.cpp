@@ -8,6 +8,7 @@
 #include	"Protocol.hpp"
 #include	"Env.hh"
 #include	"OpAudioCodec.hh"
+#include        "types.hh"
 #include	<QObject>
 #include	<QDebug>
 
@@ -162,7 +163,7 @@ void				Application::handle_udp_input_read()
 {
 	AudioChunk		*chunk;
 	Serializer		serialize;
-	Ruint8			opt;
+	Ruint8			opt = 0;
 	Ruint16			size;
 	request::Time	time;
 	unsigned char	str[MAX_PACKET_SIZE];
@@ -494,8 +495,8 @@ void					Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
 		int				numFrames;
 
 		memset(sample, 0, SOUNDBUFF_SIZE);
-		qDebug() << "triggerUdpDataAvailable()" << bytes.size() << numFrames;
 		numFrames = _codec->decode(bytes.data() + 13, bytes.size() - 13, sample, MAX_FRAME_SIZE);
+		qDebug() << "triggerUdpDataAvailable()" << bytes.size() << numFrames;
 		chunk->assign(sample, (FRAMES_PER_BUFFER * NUM_CHANNELS));
 		_bridge.outputPush(chunk);
 	}
@@ -541,7 +542,7 @@ void	Application::triggerCallHandler(const request::Username &friendName)
 	else
 	{
 		_inCommunication = true;
-		send_request(request::call::client::CallClient(Env::getInstance().userInfo.login, friendName, request::options::AUDIO, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.userPortUDP));
+		send_request(request::call::client::CallClient(Env::getInstance().userInfo.login, friendName, 1, Env::getInstance().callInfo.userAddressIp, Env::getInstance().callInfo.userPortUDP));
 		_waitedResponses.push(response_handler(&Application::call_response, this));
 	}
 }

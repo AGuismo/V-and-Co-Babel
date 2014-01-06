@@ -40,6 +40,8 @@ void	TCPNetwork::stateChanged(QAbstractSocket::SocketState st)
 	case QAbstractSocket::ClosingState:
 		_aboutToCloseHandler();
 		break;
+	  default:
+	    break;
 	}
 }
 

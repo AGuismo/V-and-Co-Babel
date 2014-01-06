@@ -2,6 +2,8 @@
 #include	"QTBridge.h"
 #include	"Env.hh"
 #include	<QtNetwork>
+#include	<QMutexLocker>
+#include	<QMutex>
 
 UDPNetwork::UDPNetwork():
 	_sock(0)
@@ -15,7 +17,7 @@ UDPNetwork::~UDPNetwork()
 
 bool	UDPNetwork::init()
 {
-	QMutexLocker	_lock(&_lock);
+	QMutexLocker	_locker(&_lock);
 
 	_sock = new QUdpSocket;
 	if (!_sock->bind())
@@ -34,7 +36,7 @@ bool	UDPNetwork::init()
 
 void  UDPNetwork::tryConnect(unsigned short port, const std::string &ipAddress)
 {
-	QMutexLocker	_lock(&_lock);
+	QMutexLocker	_locker(&_lock);
 
 	_receiverIP.setAddress(ipAddress.c_str());
 	_receiverPort = port;
@@ -44,7 +46,7 @@ void  UDPNetwork::tryConnect(unsigned short port, const std::string &ipAddress)
 
 void  UDPNetwork::tryConnect(unsigned short port, int ipAddress)
 {
-	QMutexLocker	_lock(&_lock);
+	QMutexLocker	_locker(&_lock);
 
 	_receiverIP.setAddress(ipAddress);
 	_receiverPort = port;
@@ -58,7 +60,7 @@ unsigned short  UDPNetwork::localPort() const
 
 void  UDPNetwork::sendData(const ANetwork::ByteArray &bytes)
 {
-	QMutexLocker	_lock(&_lock);
+	QMutexLocker	_locker(&_lock);
 
 	if (_sock == 0)
 		return ;
@@ -68,7 +70,7 @@ void  UDPNetwork::sendData(const ANetwork::ByteArray &bytes)
 
 void  UDPNetwork::closeConnection()
 {
-	QMutexLocker	_lock(&_lock);
+	QMutexLocker	_locker(&_lock);
 
 	if (_sock == 0)
 		return ;
@@ -78,7 +80,7 @@ void  UDPNetwork::closeConnection()
 
 bool	UDPNetwork::reset()
 {
-	QMutexLocker	_lock(&_lock);
+	QMutexLocker	_locker(&_lock);
 
 	delete _sock;
 	_sock = 0;
@@ -103,7 +105,7 @@ void  UDPNetwork::stop()
 
 void  UDPNetwork::handleOutputRead()
 {
-	QMutexLocker	_lock(&_lock);
+	QMutexLocker	_locker(&_lock);
 	
 	qDebug("handleOutputRead()");
 	if (_sock == 0)
