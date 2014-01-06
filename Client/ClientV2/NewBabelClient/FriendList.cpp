@@ -14,7 +14,14 @@ Friend							*FriendList::getFriend(const std::string &friendName)
 void							FriendList::insertFriend(const std::string &friendName, const std::string &friendPersonalMsg, Status friendStatus)
 {
 	Friend						newFriend;
+	friend_list_type::iterator	it = _friendList.find(friendName);
 
+	if (it != _friendList.end())
+	{
+		it->second.personalMsg = friendPersonalMsg;
+		it->second.status = friendStatus;
+		return;
+	}
 	newFriend.name = friendName;
 	newFriend.personalMsg = friendPersonalMsg;
 	newFriend.status = friendStatus;
