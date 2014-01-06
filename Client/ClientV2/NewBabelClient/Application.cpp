@@ -128,10 +128,10 @@ bool  Application::handle_request()
     }
   else
     {
-      request_callback::iterator	it = _requestActions.find(req->code());
+		request_callback::iterator	it = _requestActions.find(req->code());
 
-      if (it != _requestActions.end())
-	it->second(*req);
+		if (it != _requestActions.end())
+			it->second(*req);
     }
   delete req;
   return (true);
@@ -309,6 +309,7 @@ void  Application::login_response(const ARequest &req)
 {
   if (req.code() == request::server::OK)
     {
+		_inCommunication = false;
       _graphic.on_login_success();
       return ;
     }
@@ -363,12 +364,11 @@ void  Application::desauthentification_response(const ARequest &req)
 {
   if (req.code() == request::server::OK)
     {
-      _graphic.on_desauthentification_success();
-      qDebug() << "(des-response ok)";
+		_inCommunication = false;
+		_graphic.on_desauthentification_success();
       return ;
     }
   _graphic.on_desauthentification_error();
-  qDebug() << "(des-response not ok)";
 }
 
 void  Application::ignore_response(const ARequest & req)
