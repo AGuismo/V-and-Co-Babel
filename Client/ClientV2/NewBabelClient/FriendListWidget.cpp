@@ -1,6 +1,5 @@
 #include	"FriendListWidget.h"
 
-#include	<QDebug> // à virer
 
 FriendListWidget::FriendListWidget(QWidget *parent)
 	: QListWidget(parent)

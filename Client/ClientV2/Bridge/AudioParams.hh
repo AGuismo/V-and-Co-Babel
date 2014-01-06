@@ -7,15 +7,16 @@
 typedef			short				SAMPLE;
 
 # define		ABS(value)			((value < 0) ? (- (value)) : (value))
-# define		SAMPLE_RATE			(24000)
+# define		SAMPLE_RATE			(48000)
 # define		CBUFF_SIZE			(65536)
 # define		MAX_PACKET_SIZE		(3 * 1276)
 # define		FRAMES_PER_BUFFER	(960)
+# define		SOUNDBUFF_SIZE		(FRAMES_PER_BUFFER * NUM_CHANNELS)
 # define		NUM_SECONDS			(5)
 # define		NUM_CHANNELS		(2)
 # define		DITHER_FLAG			(0)
 # define		MAX_FRAME_SIZE		(FRAMES_PER_BUFFER * 6)
 # define		NUM_BYTES			(FRAMES_PER_BUFFER * NUM_CHANNELS * 2)
-# define		BITRATE				(128000)
+# define		BITRATE				(64000)
 
 #endif
