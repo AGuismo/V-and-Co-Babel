@@ -34,7 +34,26 @@ FriendList.hh \
 ../../../protocol/include/AuthRequest.hh \
 ../../../protocol/include/ARequest.hh \
 LoginWindow.h \
-UDPNetwork.h
+UDPNetwork.h \
+    IAudioCodec.hh \
+    IAudioStream.hh \
+    OpAudioCodec.hh \
+    PAudioBuffer.hh \
+    PAudioStream.hh \
+    AudioBridge.hh \
+    AudioChunk.hh \
+    AudioParams.hh \
+    Abridge.hh \
+    FriendListWidget.h \
+    Env.hh \
+    DeleteAccountWindow.h \
+    AudioWorker.h \
+    audio.h \
+    AddFriendWindow.h \
+    AccountManagementWindow.h \
+    ManageFriendWindow.h \
+    QTBridge.h
+
 SOURCES += ./Graphic.cpp \
 ./main.cpp \
 ./AGraphic.cpp \
@@ -57,11 +76,33 @@ CreateAccountWindow.cpp \
 ../../../protocol/sources/AuthRequest.cpp \
 ../../../protocol/sources/ARequest.cpp \
 LoginWindow.cpp \
-UDPNetwork.cpp
+UDPNetwork.cpp \
+    audio.cpp \
+    AudioBridge.cpp \
+    AudioChunk.cpp \
+    AudioWorker.cpp \
+    ConnectWindow.cpp \
+    CreateAccountWindow.cpp \
+    DeleteAccountWindow.cpp \
+    Env.cpp \
+    FriendList.cpp \
+    FriendListWidget.cpp \
+    OpAudioCodec.cpp \
+    PAudioBuffer.cpp \
+    PAudioStream.cpp \
+    QTBridge.cpp \
+    AddFriendWindow.cpp \
+    AccountManagementWindow.cpp \
+    ManageFriendWindow.cpp
+
 FORMS += ./Graphic.ui \
 ConnectWindow.ui \
 LoginWindow.ui	\
 CreateAccountWindow.ui	\
+    DeleteAccountWindow.ui \
+    AddFriendWindow.ui \
+    AccountManagementWindow.ui \
+    ManageFriendWindow.ui
 
 
 RESOURCES += Graphic.qrc

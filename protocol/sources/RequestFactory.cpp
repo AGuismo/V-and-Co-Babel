@@ -53,6 +53,7 @@ namespace	request
     _lnk[request::client::call::ACCEPT] = new request::call::client::AcceptClient;
     _lnk[request::client::call::REFUSE] = new request::call::client::RefuseClient;
     _lnk[request::client::call::HANG_UP] = new request::call::client::HangupClient;
+    _lnk[request::server::call::TIMEOUT] = new request::call::server::Timeout;
 
     _lnk[request::client::chat::MESSAGE] = new request::chat::client::Message;
 

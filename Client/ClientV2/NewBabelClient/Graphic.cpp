@@ -6,6 +6,7 @@
 #include				<QSplashScreen>
 #include				<QDebug> // à virer
 
+//ui.friendMsgBox->clear()
 
 void					Graphic::init()
 {
@@ -305,9 +306,7 @@ void					Graphic::on_delete_friend_triggered()
 void					Graphic::on_send_box_push_button_released()
 {
 	qDebug() << "sending here mtfk !" << ui.sendBoxTextEdit->text(); // warning pseudo
-	
-	if (ui.friendListWidget->currentItem() != NULL)
-		_chatHandler(ui.friendListWidget->currentItem()->text().toStdString(), ui.sendBoxTextEdit->text().toStdString());
+	_chatHandler(Env::getInstance().selectedFriend.name, ui.sendBoxTextEdit->text().toStdString());
 	ui.sendBoxTextEdit->clear();
 }
 
@@ -347,7 +346,6 @@ void					Graphic::on_change_status_triggered(int newStatus)
 void					Graphic::on_change_status_txt_triggered()
 {
 	qDebug() << "changing status txt here mtfk !";
-	_confirmationMessage.show();
 
 
 	if (ui.statusComboBox->currentIndex() + 1 == 4)
@@ -398,6 +396,8 @@ void					Graphic::receiveFriendInformation(Friend *friendInfo)
 {
 	if (friendInfo != NULL)
 	{
+		if (Env::getInstance().selectedFriend.name != friendInfo->name)
+			return;
 		ui.selectedFriendNameLabel->setText(QString(friendInfo->name.c_str()));
 		ui.selectedFriendPersonalMsgLabel->setText(QString(friendInfo->personalMsg.c_str()));
 		ui.friendMsgBox->clear();
@@ -528,7 +528,7 @@ void			Graphic::noAnimation()
 }
 
 
-Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this), _deleteAccountWindow(this), _accountManagementWindow(this), _addFriendWindow(this), _confirmationMessage(QMessageBox::Information, "Delete contact", "dldo", QMessageBox::Yes|QMessageBox::No)
+Graphic::Graphic(QWidget *parent) : QMainWindow(parent), _connectWindow(this), _loginWindow(this), _createAccountWindow(this), _deleteAccountWindow(this), _accountManagementWindow(this), _addFriendWindow(this)
 {
 	ui.setupUi(this);
 	QTimer *timer = new QTimer(this);

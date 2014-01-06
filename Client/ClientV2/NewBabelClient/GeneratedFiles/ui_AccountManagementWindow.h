@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'AccountManagementWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.1.1
+** Created by: Qt User Interface Compiler version 5.2.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -61,7 +61,7 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         changePasswordPushButton = new QPushButton(AccountManagementWindow);
         changePasswordPushButton->setObjectName(QStringLiteral("changePasswordPushButton"));
-        changePasswordPushButton->setMinimumSize(QSize(78, 30));
+        changePasswordPushButton->setMinimumSize(QSize(66, 30));
         changePasswordPushButton->setMaximumSize(QSize(100, 16777215));
         changePasswordPushButton->setFont(font);
         changePasswordPushButton->setStyleSheet(QLatin1String("QPushButton#changePasswordPushButton\n"
@@ -94,7 +94,7 @@ public:
 
         changePrivacyPushButton = new QPushButton(AccountManagementWindow);
         changePrivacyPushButton->setObjectName(QStringLiteral("changePrivacyPushButton"));
-        changePrivacyPushButton->setMinimumSize(QSize(78, 30));
+        changePrivacyPushButton->setMinimumSize(QSize(66, 30));
         changePrivacyPushButton->setMaximumSize(QSize(100, 100));
         changePrivacyPushButton->setFont(font);
         changePrivacyPushButton->setStyleSheet(QLatin1String("QPushButton#changePrivacyPushButton\n"
@@ -153,7 +153,7 @@ public:
 
         currentPasswordLineEdit = new QLineEdit(AccountManagementWindow);
         currentPasswordLineEdit->setObjectName(QStringLiteral("currentPasswordLineEdit"));
-        currentPasswordLineEdit->setMinimumSize(QSize(164, 0));
+        currentPasswordLineEdit->setMinimumSize(QSize(134, 0));
         currentPasswordLineEdit->setMaximumSize(QSize(100, 16777215));
         currentPasswordLineEdit->setStyleSheet(QLatin1String("background-color: rgba(255, 255, 255, 230);\n"
 "border-width: 2px;\n"
@@ -223,6 +223,7 @@ public:
         font3.setBold(true);
         font3.setWeight(75);
         serverResponseLabel->setFont(font3);
+        serverResponseLabel->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         serverResponseLabel->setAlignment(Qt::AlignCenter);
 
         gridLayout->addWidget(serverResponseLabel, 7, 0, 1, 2);

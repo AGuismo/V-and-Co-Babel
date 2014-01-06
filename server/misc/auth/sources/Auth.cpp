@@ -52,6 +52,11 @@ void	Auth::new_account(const std::list<IClient::Pointer> &clients, IClient::Poin
 {
   const request::auth::client::NewClient	*origin = dynamic_cast<const request::auth::client::NewClient *>(req);
 
+  if (origin->_name.empty() || origin->_password.empty())
+    {
+      sender->serialize_data(request::server::NoContent());
+      return ;
+    }
   if (_db.newClient(origin->_name, origin->_password))
     {
 #if defined(DEBUG)
@@ -77,24 +82,25 @@ void	Auth::sendStatusFriends(const IClient::Pointer &sender,
 				const std::list<IClient::Pointer> &clients,
 				const request::Status st) const
 {
-  for (std::list<IClient::Pointer>::const_iterator itClient = clients.begin();
-       itClient != clients.end(); ++itClient)
+  bool		found = false;
+
+  for (Database::list_friend::const_iterator it = friends.begin();
+       it != friends.end(); ++it)
     {
-      for (Database::list_friend::const_iterator it = friends.begin();
-	   it != friends.end(); ++it)
+      for (std::list<IClient::Pointer>::const_iterator itClient = clients.begin();
+	   itClient != clients.end(); ++itClient)
 	{
-	  if ((*itClient)->Username() == *it)
+	  if ((*itClient)->Username() == *it && (*itClient)->Authenticated())
 	    {
-	      if ((*itClient)->Authenticated())
-		{
-		  sender->serialize_data(request::friends::server::Update((*itClient)->status(), (*itClient)->statusDetail(), (*itClient)->Username()));
-		  (*itClient)->serialize_data(request::friends::server::Update(st, std::string(),
+	      sender->serialize_data(request::friends::server::Update((*itClient)->status(), (*itClient)->statusDetail(), (*itClient)->Username()));
+	      (*itClient)->serialize_data(request::friends::server::Update(st, std::string(),
 									   sender->Username()));
-		}
-	      else
-		sender->serialize_data(request::friends::server::Update(request::User::Status::DISCONNECTED, std::string(), (*itClient)->Username()));
+	      found = true;
 	    }
 	}
+      if (found == false)
+	sender->serialize_data(request::friends::server::Update(request::User::Status::DISCONNECTED, std::string(),
+								(*it)));
     }
 }
 
@@ -102,6 +108,11 @@ void	Auth::connect(const std::list<IClient::Pointer> &clients, IClient::Pointer 
 {
   const request::auth::client::ConnectClient	*origin = dynamic_cast<const request::auth::client::ConnectClient *>(req);
 
+  if (origin->_name.empty() || origin->_password.empty())
+    {
+      sender->serialize_data(request::server::NoContent());
+      return ;
+    }
   if (sender->Authenticated() == false &&
       _db.clientExist(origin->_name, origin->_password))
     {
@@ -140,6 +151,11 @@ void	Auth::modify(const std::list<IClient::Pointer> &clients, IClient::Pointer s
 {
   const request::auth::client::ModifyClient	*origin = dynamic_cast<const request::auth::client::ModifyClient *>(req);
 
+  if (origin->_name.empty() || origin->_newPassword.empty() || origin->_oldPassword.empty())
+    {
+      sender->serialize_data(request::server::NoContent());
+      return ;
+    }
   std::cout << "Auth::modify()" << std::endl;
   if (sender->Authenticated() &&
       _db.modClientPass(origin->_name, origin->_oldPassword, origin->_newPassword))
@@ -179,6 +195,11 @@ void	Auth::remove(const std::list<IClient::Pointer> &clients, IClient::Pointer s
   const request::auth::client::DelClient	*origin = dynamic_cast<const request::auth::client::DelClient *>(req);
 
   std::cout << "Auth::delete()" << std::endl;
+  if (origin->_name.empty() || origin->_password.empty())
+    {
+      sender->serialize_data(request::server::NoContent());
+      return ;
+    }
   if (sender->Authenticated() == false && _db.clientExist(origin->_name, origin->_password))
     {
       Database::list_friend	friends;

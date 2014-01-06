@@ -54,6 +54,14 @@ public:
   { return (InfosClient._name); };
   void				Username(const request::Username &uname)
   { InfosClient._name = uname; };
+  const request::PasswordType	&Password() const
+  { return (InfosClient._password); };
+  void				Password(const request::PasswordType &password)
+  { InfosClient._password = password; };
+  const request::PasswordType	&OldPassword() const
+  { return (InfosClient._oldPassword); };
+  void				OldPassword(const request::PasswordType &oldPassword)
+  { InfosClient._oldPassword = oldPassword; };
   bool				Authenticated() const
   { return (InfosClient._isConnect); };
   void				Authenticated(bool auth)
@@ -66,6 +74,10 @@ public:
   { return (InfosClient._privacy); };
   void				privacy(request::Privacy privacy)
   { InfosClient._privacy = privacy; };
+  const request::Username		&Caller()
+  { return (InfosClient._caller); };
+  void				Caller(const request::Username &caller)
+  { InfosClient._caller = caller; };
   request::Status		status() const
   { return (InfosClient._status); };
   void				status(request::Status status)
@@ -108,12 +120,15 @@ public:
   struct
   {
     bool			_isConnect;
-	bool			_inCommunication;
-    std::string	       		_name;
+    bool			_inCommunication;
+    request::Username  		_name;
+    request::PasswordType	_password;
+    request::PasswordType	_oldPassword;
     request::Privacy		_privacy;
     request::Status		_status;
     request::StatusDetail	_statusDetail;
     request::Stream		_autoAnswer;
+    request::Username		_caller;
   }				InfosClient;
 };
 #endif /* CLIENT_H_ */

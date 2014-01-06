@@ -68,9 +68,14 @@ void	Friends::request(const std::list<IClient::Pointer> &clients, IClient::Point
   const request::friends::client::Request	*origin = dynamic_cast<const request::friends::client::Request *>(req);
   IClient::Pointer				receiver;
 
-
+  if (origin->to.empty())
+    {
+      sender->serialize_data(request::server::NoContent());
+      return ;
+    }
   if (sender->Authenticated() &&
       sender->Username() == origin->from &&
+      sender->Username() != origin->to &&
       !_db.bothFriend(origin->to, origin->from))
     {
 #if defined(DEBUG)

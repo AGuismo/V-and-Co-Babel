@@ -29,8 +29,6 @@ private:
 	AccountManagementWindow	_accountManagementWindow;
 	AddFriendWindow			_addFriendWindow;
 
-	QMessageBox				_confirmationMessage;
-
 private:
 	QLabel					*_timeLabel;
 	QTime					_time;
