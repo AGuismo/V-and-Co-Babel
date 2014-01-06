@@ -57,7 +57,7 @@ Serializer::container_type const	&Serializer::content() const
 #define LC(T, val)				\
   <<(const T val)				\
   {						\
-    push(val, 1);				\
+    push(val);				\
     return (*this);				\
   }
 

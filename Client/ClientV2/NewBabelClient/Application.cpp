@@ -169,14 +169,11 @@ void				Application::handle_udp_input_read()
 	  return ;
   SET_STREAM_VER(opt, request::audio::VERSION);
   SET_STREAM_TYPE(opt, request::options::AUDIO);
-  size = sizeof(opt) + sizeof(size) + sizeof(time) + chunk->size() + sizeof(Ruint16);
+  size = sizeof(opt) + sizeof(size) + sizeof(time) + chunk->size() * sizeof(SAMPLE) + sizeof(request::StreamLen);
   time = QDateTime::currentMSecsSinceEpoch() / 1000;
   str = chunk->getContent();
   serialize << opt << size << time << (request::StreamLen)chunk->size();
-  for (std::size_t it = 0; it < chunk->size(); ++it)
-  {
-	  serialize << str[it];
-  }
+	serialize.push(chunk->getContent(), chunk->size());
   ANetwork::ByteArray			bytes(serialize.data(), serialize.data() + serialize.size());
 	_udpNetwork.sendData(bytes);
 	_bridge.pushUnused(chunk);

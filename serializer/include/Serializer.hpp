@@ -63,15 +63,16 @@ public:
 
 private:
   template <typename T>
-  T		push(const T, size_type count = 1);
-  template <typename T>
-  T		&pop(T&);
+  T			&pop(T&);
   char		*&pop(char *&);
-  char		*push(const char *, size_type count = 1);
 
 public:
+  template <typename T>
+  void			push(const T *, size_type count = 1);
+  template <typename T>
+  T				push(const T);
   std::string	push(const std::string);
-  std::string	push(const std::string val, size_type count);
+  std::string	push(const std::string, size_type count);
   std::string	&pop(std::string &, size_type count = 1);
 
 
@@ -129,11 +130,23 @@ protected:
 };
 
 template <typename T>
-T		Serializer::push(const T val, size_type count)
+void			Serializer::push(const T *val, size_type count)
+{
+	const Byte	*buffer = reinterpret_cast<const Byte*>(val);
+	_container.resize(_container.size() + (count * sizeof(T)));
+
+  for (size_t size = 0; size < (sizeof(T) * count); size += sizeof(Byte))
+    {
+      _container.push_back(buffer[size]);
+    }
+}
+
+template <typename T>
+T		Serializer::push(const T val)
 {
   const Byte*	buffer = reinterpret_cast<const Byte*>(&val);
 
-  for (size_t size = 0; size < sizeof(val) * count; size += sizeof(Byte))
+  for (size_t size = 0; size < sizeof(val); size += sizeof(Byte))
     {
       _container.push_back(buffer[size]);
     }
