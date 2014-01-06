@@ -474,9 +474,15 @@ void					Application::triggerUdpDataAvailable(const ANetwork::ByteArray bytes)
 		serialize << bytes[it];
 	serialize >> opt >> Totalsize >> time >> streamLen;
 	if (GET_STREAM_VER(opt) != request::audio::VERSION || Totalsize != bytes.size())
+	{
+		qDebug() << "Don't match" << GET_STREAM_VER(opt) << Totalsize;
 		return ;
+	}
 	if ((QDateTime::currentMSecsSinceEpoch() / 1000) - time > 2)
+	{
+		qDebug() << "Timeout" << time << (QDateTime::currentMSecsSinceEpoch() / 1000);
 		return ;
+	}
 	{
 		AudioChunk		*chunk = _bridge.popUnused();
 
