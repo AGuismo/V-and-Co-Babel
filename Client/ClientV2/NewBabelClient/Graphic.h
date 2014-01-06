@@ -4,7 +4,6 @@
 #include		<QtWidgets/QMainWindow>
 #include		<QTime>
 #include		<QMessageBox>
-#include		"ui_Graphic.h"
 #include		"AGraphic.hh"
 #include		"ConnectWindow.h"
 #include		"CreateAccountWindow.h"
@@ -12,7 +11,8 @@
 #include		"DeleteAccountWindow.h"
 #include		"AccountManagementWindow.h"
 #include		"AddFriendWindow.h"
-#include		"FriendListWidget.h"
+#include		"friendlistwidget.h"
+#include		"ui_Graphic.h"
 
 class Graphic : public QMainWindow, public AGraphic
 {

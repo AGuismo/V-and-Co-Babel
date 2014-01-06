@@ -52,7 +52,6 @@ void  TCPNetwork::sendData(const ANetwork::ByteArray &data)
 
 void  TCPNetwork::tryConnect(unsigned short port, const std::string &ipAddress)
 {
-  qDebug() << ipAddress.c_str() << ":" << port;
   _sock.connectToHost(QString(ipAddress.c_str()), port);
   if (_sock.waitForConnected(1000))
     _onConnectHandler();
